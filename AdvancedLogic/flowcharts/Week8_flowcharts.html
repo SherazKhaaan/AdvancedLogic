@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AdvancedLogic — Week 8: Lukasiewicz Logic and McNaughton's Theorem</title>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dagre@0.8.5/dist/dagre.min.js"></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  display: flex;
+  height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #0d1117;
+  color: #e6edf3;
+  overflow: hidden;
+}
+
+/* ── Sidebar ─────────────────────────────────────────────────────────────── */
+#sidebar {
+  width: 268px;
+  min-width: 268px;
+  background: #161b22;
+  border-right: 1px solid #30363d;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+#sidebar-header {
+  padding: 20px 16px 14px;
+  border-bottom: 1px solid #30363d;
+  flex-shrink: 0;
+}
+.sb-module {
+  font-size: 0.67rem;
+  color: #8b949e;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.sb-week  { font-size: 0.76rem; color: #8b949e; margin-bottom: 2px; }
+.sb-title { font-size: 0.96rem; font-weight: 700; color: #f0f6fc; line-height: 1.35; }
+.sb-count {
+  display: inline-block;
+  background: #21262d;
+  color: #8b949e;
+  font-size: 0.65rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 10px;
+  margin-top: 8px;
+  border: 1px solid #30363d;
+}
+
+#chart-list { padding: 8px 6px; flex: 1; overflow-y: auto; }
+#chart-list::-webkit-scrollbar { width: 3px; }
+#chart-list::-webkit-scrollbar-thumb { background: #30363d; border-radius: 3px; }
+
+.chart-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 9px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-bottom: 2px;
+  transition: background 0.1s;
+  color: #8b949e;
+  user-select: none;
+  border: 1px solid transparent;
+}
+.chart-item:hover { background: #21262d; color: #c9d1d9; }
+.chart-item.active {
+  background: #1f3a6e;
+  color: #f0f6fc;
+  border-color: #388bfd;
+}
+.chart-item.active .ci-type { color: #79c0ff; opacity: 1; }
+.ci-icon  { font-size: 0.95rem; flex-shrink: 0; margin-top: 2px; }
+.ci-title { font-size: 0.83rem; font-weight: 600; line-height: 1.3; }
+.ci-type  { font-size: 0.66rem; opacity: 0.6; margin-top: 3px; text-transform: uppercase; letter-spacing: 0.07em; }
+
+/* ── Main ────────────────────────────────────────────────────────────────── */
+#main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+
+#chart-header {
+  padding: 13px 22px 11px;
+  background: #161b22;
+  border-bottom: 1px solid #30363d;
+  flex-shrink: 0;
+}
+#chart-title-el { font-size: 1rem; font-weight: 700; color: #79c0ff; margin-bottom: 2px; }
+#chart-desc-el  { font-size: 0.81rem; color: #8b949e; font-style: italic; }
+
+#diagram-area {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background: #0d1117;
+  background-image:
+    radial-gradient(circle at 1px 1px, #21262d 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+#diagram-svg { width: 100%; height: 100%; display: block; cursor: grab; }
+#diagram-svg:active { cursor: grabbing; }
+
+/* ── Zoom controls ───────────────────────────────────────────────────────── */
+#zoom-controls {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  z-index: 10;
+}
+.zoom-btn {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #30363d;
+  background: #161b22;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+  transition: all 0.1s;
+  color: #8b949e;
+}
+.zoom-btn:hover { background: #21262d; color: #79c0ff; border-color: #388bfd; }
+
+/* ── Hint bar ────────────────────────────────────────────────────────────── */
+#hint {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.7rem;
+  color: #484f58;
+  pointer-events: none;
+  white-space: nowrap;
+  transition: opacity 0.2s;
+}
+#hint.hidden { opacity: 0; }
+
+.state-msg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #484f58;
+  font-size: 0.9rem;
+  text-align: center;
+  pointer-events: none;
+}
+.state-msg.err { color: #f85149; }
+
+/* ── Info panel (slides in from the left of the diagram area) ──────────── */
+#info-panel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 440px;
+  max-width: 50vw;
+  background: #161b22;
+  border-right: 1px solid #30363d;
+  z-index: 30;
+  transform: translateX(-100%);
+  transition: transform 0.26s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 12px 0 32px rgba(0, 0, 0, 0.45);
+}
+#info-panel.visible { transform: translateX(0); }
+
+#info-panel-header {
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid #21262d;
+  flex-shrink: 0;
+  position: relative;
+}
+#info-panel-header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+#info-node-badge {
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 3px 11px;
+  border-radius: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  flex-shrink: 0;
+  display: inline-block;
+}
+#info-node-label {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #f0f6fc;
+  line-height: 1.35;
+  word-break: break-word;
+}
+
+.badge-decision { background: #2d2209; color: #e3b341; border: 1px solid #d29922; }
+.badge-step     { background: #0d1f38; color: #79c0ff; border: 1px solid #388bfd; }
+.badge-start    { background: #0d1f38; color: #79c0ff; border: 1px solid #388bfd; }
+.badge-success  { background: #0d1f12; color: #56d364; border: 1px solid #3fb950; }
+.badge-failure  { background: #1c0f0e; color: #ff7b72; border: 1px solid #f85149; }
+.badge-topic    { background: #1a1036; color: #c084fc; border: 1px solid #a371f7; }
+.badge-subtopic { background: #0d2020; color: #2dd4bf; border: 1px solid #14b8a6; }
+
+#info-close {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #30363d;
+  background: #0d1117;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #8b949e;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.1s;
+}
+#info-close:hover { background: #21262d; color: #f0f6fc; border-color: #8b949e; }
+
+#info-panel-body {
+  padding: 20px 24px 24px;
+  overflow-y: auto;
+  flex: 1;
+  scrollbar-width: thin;
+  scrollbar-color: #30363d transparent;
+}
+#info-panel-body::-webkit-scrollbar { width: 6px; }
+#info-panel-body::-webkit-scrollbar-track { background: transparent; }
+#info-panel-body::-webkit-scrollbar-thumb { background: #30363d; border-radius: 3px; }
+#info-panel-body::-webkit-scrollbar-thumb:hover { background: #484f58; }
+
+#info-section-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #6e7681;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 10px;
+}
+#info-note-text {
+  font-size: 1rem;
+  color: #c9d1d9;
+  line-height: 1.75;
+}
+#info-note-text.empty {
+  color: #484f58;
+  font-style: italic;
+}
+</style>
+</head>
+<body>
+
+<div id="sidebar">
+  <div id="sidebar-header">
+    <div class="sb-module" id="sb-module"></div>
+    <div class="sb-week"   id="sb-week"></div>
+    <div class="sb-title"  id="sb-title"></div>
+    <div class="sb-count"  id="sb-count"></div>
+  </div>
+  <div id="chart-list"></div>
+</div>
+
+<div id="main">
+  <div id="chart-header">
+    <div id="chart-title-el">Select a chart</div>
+    <div id="chart-desc-el"></div>
+  </div>
+  <div id="diagram-area">
+    <svg id="diagram-svg"></svg>
+    <div id="zoom-controls">
+      <button class="zoom-btn" id="btn-zi" title="Zoom in">+</button>
+      <button class="zoom-btn" id="btn-zo" title="Zoom out">−</button>
+      <button class="zoom-btn" id="btn-zr" title="Fit to view">⊙</button>
+    </div>
+    <div id="hint">Scroll to zoom · Drag to pan · Click a node for details</div>
+    <div id="info-panel">
+      <div id="info-panel-header">
+        <div id="info-panel-header-top">
+          <span id="info-node-badge"></span>
+          <button id="info-close" title="Close (Esc)">✕</button>
+        </div>
+        <div id="info-node-label"></div>
+      </div>
+      <div id="info-panel-body">
+        <div id="info-section-label">Explanation</div>
+        <div id="info-note-text"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═════════════════════════════════════════════════════════════════════════════
+// DATA
+// ═════════════════════════════════════════════════════════════════════════════
+const DATA = {"module": "AdvancedLogic", "week": 8, "title": "Lukasiewicz Logic and McNaughton's Theorem", "charts": [{"id": "chart-1", "type": "mindmap", "title": "Topic Map", "description": "Overview of why Lukasiewicz logic is preferred, the McNaughton characterisation, the tree algorithm, and key supporting lemmas.", "nodes": [{"id": "root", "label": "Week 8\nMcNaughton", "note": "Week 8 zooms in on Lukasiewicz logic F3 and proves McNaughton's Theorem, which characterises exactly which functions on [0,1] can be represented by F3 propositional formulas."}, {"id": "why", "label": "Why F3?", "note": "F3 is the only one of the three standard fuzzy logics that satisfies the law of excluded middle and lets us define min and max as compound operators."}, {"id": "lem", "label": "Excluded\nMiddle (LEM)", "note": "In F3 the formula p or not-p evaluates to 1 for every value of p. This fails in F1 and F2."}, {"id": "ext", "label": "F3 extends\nF1", "note": "Inside F3 we can define new operators that compute min and max on truth values, so any reasoning in F1 can be replicated in F3."}, {"id": "mcn", "label": "McNaughton\nTheorem", "note": "A function f : [0,1] -> [0,1] is the truth function of some F3 formula iff it is continuous, piecewise linear, and uses only integer coefficients."}, {"id": "lem82", "label": "Lemma 8.2", "note": "Every truth function of an F3 formula is continuous, piecewise linear, and uses integer coefficients. Proved by induction on formula structure."}, {"id": "lem83", "label": "Lemma 8.3", "note": "For every pair of integers n and m there is an F3 formula whose truth function equals the clamped linear function [nx+m]_0^1."}, {"id": "tree", "label": "Tree\nAlgorithm", "note": "Constructive procedure that turns the recursive proof of Lemma 8.3 into a binary tree which yields the actual formula for any [nx+m]_0^1."}, {"id": "wedge", "label": "Wedge\nCombination", "note": "Once we have formulas for individual clamped linear pieces we combine them using min and max into wedge-shaped functions to realise any continuous piecewise linear target."}, {"id": "lem84", "label": "Lemma 8.4\n(non-exam)", "note": "Sharp approximation lemma using Bezout's identity. Provides the converse direction of McNaughton for arbitrary rational breakpoints."}, {"id": "id", "label": "Lukasiewicz\nIdentities", "note": "De Morgan laws and the equivalence of implication with not-p or q hold in F3, mirroring classical propositional logic."}, {"id": "part", "label": "Partition\nLemma", "note": "Intersecting two partitions of [0,1] gives another partition. Used to merge the partitions induced by sub-formulas in the proof of Lemma 8.2."}, {"id": "clamp", "label": "Clamping\n[z]_0^1", "note": "The clamping operator [z]_0^1 = min(1, max(0, z)) is the basic building block for representable functions in McNaughton's theorem."}], "edges": [{"from": "root", "to": "why"}, {"from": "root", "to": "mcn"}, {"from": "root", "to": "lem82"}, {"from": "root", "to": "lem83"}, {"from": "root", "to": "tree"}, {"from": "root", "to": "wedge"}, {"from": "root", "to": "id"}, {"from": "root", "to": "part"}, {"from": "why", "to": "lem"}, {"from": "why", "to": "ext"}, {"from": "mcn", "to": "clamp"}, {"from": "wedge", "to": "lem84"}]}, {"id": "chart-2", "type": "flowchart", "title": "Tree Algorithm for [nx+m]_0^1", "description": "Recursive procedure that constructs an F3 propositional formula whose truth function equals the clamped linear function [nx+m]_0^1.", "nodes": [{"id": "start", "label": "Want formula for\n[nx + m]_0^1", "shape": "terminal", "variant": "start", "note": "We start with integer parameters n and m and want to build an F3 propositional formula whose truth function equals the clamped linear function [nx+m]_0^1."}, {"id": "n0", "label": "n = 0?", "shape": "diamond", "note": "Check whether the slope is zero. If n is zero we have reached a base case and the function is a constant 0 or 1."}, {"id": "const", "label": "m <= 0 ?", "shape": "diamond", "note": "Decide whether the constant is below the lower clamp or above the upper clamp. The result is either falsity or tautology."}, {"id": "bot", "label": "Use bottom\n(p and not p)", "shape": "rect", "note": "The clamped value is 0, so any contradiction such as p and not p suffices as the formula."}, {"id": "top", "label": "Use top\n(p or not p)", "shape": "rect", "note": "The clamped value is 1, so any tautology such as p or not p suffices as the formula."}, {"id": "pos", "label": "n > 0?", "shape": "diamond", "note": "Decide which recursive case applies depending on the sign of n. Positive slopes use p; negative slopes use not p."}, {"id": "rpos", "label": "Recurse on\n(n-1)x+m and (n-1)x+(m+1)", "shape": "rect", "note": "Generate two child sub-problems: the slope decreases by 1, with m unchanged for the left child and incremented by 1 for the right child."}, {"id": "cpos", "label": "Combine:\n(F_left or p) and F_right", "shape": "rect", "note": "The parent formula is built by disjoining the left child's formula with p and conjoining the result with the right child's formula."}, {"id": "rneg", "label": "Recurse on\n(n+1)x+(m-1) and (n+1)x+m", "shape": "rect", "note": "For negative n, generate two child sub-problems with n increased by 1, and decremented m for the left child."}, {"id": "cneg", "label": "Combine:\n(F_left or not p) and F_right", "shape": "rect", "note": "Combine using disjunction with not p instead of p, then conjoin with the right child's formula."}, {"id": "out", "label": "Output formula\nF_n,m", "shape": "terminal", "variant": "success", "note": "Walk back up the recursion tree, building the parent formula from its two children at each step. The root yields the desired formula."}], "edges": [{"from": "start", "to": "n0"}, {"from": "n0", "to": "const", "label": "Yes"}, {"from": "n0", "to": "pos", "label": "No"}, {"from": "const", "to": "bot", "label": "Yes"}, {"from": "const", "to": "top", "label": "No"}, {"from": "pos", "to": "rpos", "label": "Yes"}, {"from": "pos", "to": "rneg", "label": "No"}, {"from": "rpos", "to": "cpos"}, {"from": "rneg", "to": "cneg"}, {"from": "cpos", "to": "out"}, {"from": "cneg", "to": "out"}, {"from": "bot", "to": "out"}, {"from": "top", "to": "out"}]}, {"id": "chart-3", "type": "flowchart", "title": "Lemma 8.2 Proof Structure", "description": "Induction on formula structure showing every F3 truth function is continuous piecewise linear with integer coefficients.", "nodes": [{"id": "start", "label": "Formula F\nin F3", "shape": "terminal", "variant": "start", "note": "We want to prove by induction on the size of F that its F3 truth function is continuous, piecewise linear, and has integer coefficients."}, {"id": "atom", "label": "F is a\npropositional variable?", "shape": "diamond", "note": "Base case of the induction. If F is just p then its truth function is the identity x, which is trivially piecewise linear with integer coefficients."}, {"id": "base", "label": "Truth function = x\n(slope 1, b 0)", "shape": "terminal", "variant": "success", "note": "The function is a single linear piece with integer slope 1 and intercept 0, so the property holds in the base case."}, {"id": "kind", "label": "Top connective\nin F?", "shape": "diamond", "note": "Identify the outermost connective of F and apply the corresponding inductive case (negation, conjunction, disjunction, or implication)."}, {"id": "neg", "label": "Negation:\nuse 1 - g(x)", "shape": "rect", "note": "If F = not G, the truth function is 1 - g(x). Replacing each linear piece a*x + b by -a*x + (1-b) keeps integer coefficients."}, {"id": "and", "label": "Conjunction:\nuse max(0,g+h-1)", "shape": "rect", "note": "If F = G and H, refine the partitions to a common one and replace each pair of linear pieces by max(0, g(x) + h(x) - 1)."}, {"id": "or", "label": "Disjunction:\nde Morgan reduction", "shape": "rect", "note": "If F = G or H, rewrite as not (not G and not H) and reuse the negation and conjunction cases inductively."}, {"id": "imp", "label": "Implication:\nrewrite to or", "shape": "rect", "note": "If F = G to H, rewrite as not G or H and reduce to the disjunction case via De Morgan."}, {"id": "done", "label": "Truth function is\ninteger piecewise linear", "shape": "terminal", "variant": "success", "note": "All four cases preserve continuity, piecewise-linearity, and integer coefficients, so by induction the property holds for every F3 formula."}], "edges": [{"from": "start", "to": "atom"}, {"from": "atom", "to": "base", "label": "Yes"}, {"from": "atom", "to": "kind", "label": "No"}, {"from": "kind", "to": "neg", "label": "not"}, {"from": "kind", "to": "and", "label": "and"}, {"from": "kind", "to": "or", "label": "or"}, {"from": "kind", "to": "imp", "label": "to"}, {"from": "neg", "to": "done"}, {"from": "and", "to": "done"}, {"from": "or", "to": "done"}, {"from": "imp", "to": "done"}]}, {"id": "chart-4", "type": "flowchart", "title": "Building Formulas for Piecewise-Linear Functions", "description": "High-level procedure for constructing an F3 formula whose truth function equals an arbitrary continuous piecewise-linear target.", "nodes": [{"id": "start", "label": "Target function f\n(continuous PL, integer coeffs)", "shape": "terminal", "variant": "start", "note": "We are given a target function on [0,1] that is continuous, piecewise linear, and uses only integer coefficients - precisely the McNaughton-representable functions."}, {"id": "decomp", "label": "Decompose f into\nwedges or pieces", "shape": "rect", "note": "Identify the basic linear pieces or wedge shapes that compose f. Each wedge is a function that rises and falls linearly between integer-coefficient lines."}, {"id": "loop", "label": "Pieces remaining?", "shape": "diamond", "note": "Check whether all pieces have been processed. If yes, combine the formulas; if no, build a formula for the next piece."}, {"id": "tree", "label": "Apply tree algorithm\nfor each [nx+m]", "shape": "rect", "note": "For each linear piece, use the tree algorithm of Lemma 8.3 to construct an F3 formula whose truth function equals that clamped linear function."}, {"id": "wedge", "label": "Combine pair using\nunderscore-and = min", "shape": "rect", "note": "Pairs of clamped linear formulas can be combined into a wedge by taking their minimum, which is the defined operator underscore-and in F3."}, {"id": "max", "label": "Combine wedges using\nunderscore-or = max", "shape": "rect", "note": "Combine all wedges by taking the maximum (defined operator underscore-or). The resulting formula realises the target piecewise linear function."}, {"id": "done", "label": "Final F3 formula\nrealises f", "shape": "terminal", "variant": "success", "note": "All pieces have been combined into a single F3 propositional formula whose truth function is exactly the target f, completing the converse direction of McNaughton's theorem."}], "edges": [{"from": "start", "to": "decomp"}, {"from": "decomp", "to": "loop"}, {"from": "loop", "to": "tree", "label": "Yes"}, {"from": "loop", "to": "max", "label": "No"}, {"from": "tree", "to": "wedge"}, {"from": "wedge", "to": "loop"}, {"from": "max", "to": "done"}]}, {"id": "chart-5", "type": "flowchart", "title": "Why F3 (Lukasiewicz) over F1 and F2", "description": "Taxonomy of the desirable properties that distinguish Lukasiewicz logic from the other standard fuzzy logics.", "nodes": [{"id": "want", "label": "Desirable\nproperties", "shape": "rect", "note": "We list the properties we want a fuzzy logic to satisfy, then check which of F1, F2, F3 actually delivers them."}, {"id": "lem", "label": "LEM:\np or not-p = 1", "shape": "rect", "note": "We want the law of excluded middle to hold so that the disjunction of any proposition with its negation is fully true."}, {"id": "minmax", "label": "Express min\nand max as defined", "shape": "rect", "note": "We want to be able to define new operators for min and max inside the logic, so that anything F1 can do can also be done in our chosen logic."}, {"id": "f1", "label": "F1 (Min-Max)", "shape": "rect", "note": "Has min and max as primitives but fails LEM: at p = 0.5 the value of p or not-p is just 0.5."}, {"id": "f2", "label": "F2 (Product)", "shape": "rect", "note": "Has continuous-to-classical limits but fails LEM: at p = 0.5 the value of p or not-p is 0.75."}, {"id": "f3", "label": "F3 (Lukasiewicz)", "shape": "rect", "note": "Satisfies LEM and lets us define min and max via the implication operator. This is why F3 is preferred."}, {"id": "underand", "label": "x and y =\n(x to y) and x", "shape": "rect", "note": "Defined conjunction operator that produces min in F3. Allows F3 to simulate F1 inside its own language."}, {"id": "underor", "label": "x or y =\n(x to y) to y", "shape": "rect", "note": "Defined disjunction operator that produces max in F3. Together with the defined min, F3 contains an internal copy of F1."}], "edges": [{"from": "want", "to": "lem"}, {"from": "want", "to": "minmax"}, {"from": "lem", "to": "f1"}, {"from": "lem", "to": "f2"}, {"from": "lem", "to": "f3"}, {"from": "minmax", "to": "f3"}, {"from": "f3", "to": "underand"}, {"from": "f3", "to": "underor"}]}]};
+
+// ═════════════════════════════════════════════════════════════════════════════
+// COLOUR PALETTE
+// ═════════════════════════════════════════════════════════════════════════════
+const C = {
+  // Flowchart node fill / stroke / text by role
+  node: {
+    default:  { fill: '#1c2333', stroke: '#388bfd', text: '#79c0ff' },
+    decision: { fill: '#1c1f2b', stroke: '#d29922', text: '#e3b341' },
+    success:  { fill: '#0d1f12', stroke: '#3fb950', text: '#56d364' },
+    failure:  { fill: '#1c0f0e', stroke: '#f85149', text: '#ff7b72' },
+    start:    { fill: '#0d1f38', stroke: '#388bfd', text: '#79c0ff' },
+  },
+  // Mindmap level colours
+  levels: ['#388bfd','#3fb950','#d29922','#a371f7','#f78166','#56d364','#79c0ff'],
+  edge:      '#30363d',
+  edgeHover: '#58a6ff',
+  edgeLabel: '#8b949e',
+  arrow:     '#484f58',
+  bg:        '#0d1117',
+  surface:   '#161b22',
+};
+
+// ═════════════════════════════════════════════════════════════════════════════
+// TEXT MEASUREMENT
+// ═════════════════════════════════════════════════════════════════════════════
+const _c = document.createElement('canvas').getContext('2d');
+function measure(text, fs = 13, fw = '500') {
+  _c.font = `${fw} ${fs}px -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif`;
+  const lines = String(text).split('\n');
+  return {
+    w: Math.max(...lines.map(l => _c.measureText(l).width)),
+    h: lines.length * (fs * 1.45),
+    lines,
+  };
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// SVG + ZOOM
+// ═════════════════════════════════════════════════════════════════════════════
+const svg   = d3.select('#diagram-svg');
+const root  = svg.append('g').attr('id', 'root-layer');
+
+const zoom = d3.zoom()
+  .scaleExtent([0.04, 12])
+  .on('zoom', ev => root.attr('transform', ev.transform));
+
+svg.call(zoom)
+   .on('dblclick.zoom', () => fitAll());
+
+function fitAll() {
+  const svgEl = svg.node();
+  const W = svgEl.clientWidth  || 900;
+  const H = svgEl.clientHeight || 600;
+  const bb = root.node().getBBox();
+  if (!bb.width || !bb.height) return;
+  const scale = Math.min(0.88 * W / bb.width, 0.88 * H / bb.height, 4);
+  const tx = W / 2 - (bb.x + bb.width  / 2) * scale;
+  const ty = H / 2 - (bb.y + bb.height / 2) * scale;
+  svg.transition().duration(380)
+     .call(zoom.transform, d3.zoomIdentity.translate(tx, ty).scale(scale));
+}
+
+document.getElementById('btn-zi').addEventListener('click', () =>
+  svg.transition().duration(220).call(zoom.scaleBy, 1.45));
+document.getElementById('btn-zo').addEventListener('click', () =>
+  svg.transition().duration(220).call(zoom.scaleBy, 0.69));
+document.getElementById('btn-zr').addEventListener('click', fitAll);
+
+// ═════════════════════════════════════════════════════════════════════════════
+// INFO PANEL
+// ═════════════════════════════════════════════════════════════════════════════
+const infoPanel = document.getElementById('info-panel');
+const infoLabel = document.getElementById('info-node-label');
+const infoBadge = document.getElementById('info-node-badge');
+const infoNote  = document.getElementById('info-note-text');
+const hintEl    = document.getElementById('hint');
+
+function badgeFor(node, depth) {
+  if (depth !== undefined) {
+    // Mindmap node
+    if (depth === 0) return { text: 'Root',      cls: 'badge-start' };
+    if (depth === 1) return { text: 'Main Topic', cls: 'badge-topic' };
+    return               { text: 'Sub-topic',   cls: 'badge-subtopic' };
+  }
+  if (node.shape === 'diamond')                    return { text: 'Decision',    cls: 'badge-decision' };
+  if (node.shape === 'terminal' && node.variant === 'success') return { text: 'Success',    cls: 'badge-success'  };
+  if (node.shape === 'terminal' && node.variant === 'failure') return { text: 'Failure',    cls: 'badge-failure'  };
+  if (node.shape === 'terminal')                   return { text: 'Start / End', cls: 'badge-start'    };
+  return                                                   { text: 'Step',       cls: 'badge-step'     };
+}
+
+function showInfo(node, depth) {
+  const label = (node.label || '').replace(/\n/g, ' ');
+  infoLabel.textContent = label;
+
+  const b = badgeFor(node, depth);
+  infoBadge.textContent  = b.text;
+  infoBadge.className    = 'badge-class ' + b.cls; // reset then set
+
+  if (node.note) {
+    infoNote.textContent = node.note;
+    infoNote.className   = '';
+  } else {
+    infoNote.textContent = 'No description available for this node.';
+    infoNote.className   = 'empty';
+  }
+
+  infoPanel.classList.add('visible');
+  hintEl.classList.add('hidden');
+}
+
+function hideInfo() {
+  infoPanel.classList.remove('visible');
+  hintEl.classList.remove('hidden');
+}
+
+document.getElementById('info-close').addEventListener('click', hideInfo);
+document.addEventListener('keydown', e => { if (e.key === 'Escape') hideInfo(); });
+
+// Click on SVG background closes panel
+svg.on('click', (event) => {
+  if (event.target === svg.node() || event.target.id === 'root-layer') hideInfo();
+});
+
+// ═════════════════════════════════════════════════════════════════════════════
+// SIDEBAR
+// ═════════════════════════════════════════════════════════════════════════════
+document.getElementById('sb-module').textContent = DATA.module;
+document.getElementById('sb-week'  ).textContent = 'Week ' + DATA.week;
+document.getElementById('sb-title' ).textContent = DATA.title;
+document.getElementById('sb-count' ).textContent =
+  DATA.charts.length + ' chart' + (DATA.charts.length !== 1 ? 's' : '');
+
+const ICONS = { mindmap: '🧠', flowchart: '📊', graph: '🔗' };
+const listEl = document.getElementById('chart-list');
+let firstSel = null;
+
+DATA.charts.forEach((chart, i) => {
+  const el = document.createElement('div');
+  el.className = 'chart-item';
+  el.innerHTML =
+    `<span class="ci-icon">${ICONS[chart.type] || '📋'}</span>
+     <div>
+       <div class="ci-title">${chart.title}</div>
+       <div class="ci-type">${chart.type}</div>
+     </div>`;
+  el.addEventListener('click', () => selectChart(chart, el));
+  listEl.appendChild(el);
+  if (i === 0) firstSel = { chart, el };
+});
+
+// ═════════════════════════════════════════════════════════════════════════════
+// SELECTION
+// ═════════════════════════════════════════════════════════════════════════════
+function selectChart(chart, itemEl) {
+  document.querySelectorAll('.chart-item').forEach(e => e.classList.remove('active'));
+  itemEl.classList.add('active');
+  document.getElementById('chart-title-el').textContent = chart.title;
+  document.getElementById('chart-desc-el' ).textContent = chart.description || '';
+
+  root.selectAll('*').remove();
+
+  if (chart.type === 'mindmap') renderMindmap(chart);
+  else                          renderFlowchart(chart);
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// MINDMAP  (D3 radial tree)
+// ═════════════════════════════════════════════════════════════════════════════
+function renderMindmap(chart) {
+  const svgW = svg.node().clientWidth  || 900;
+  const svgH = svg.node().clientHeight || 600;
+  const R    = Math.min(svgW, svgH) * 0.40;
+
+  // Build parent-child map
+  const byId  = Object.fromEntries(chart.nodes.map(n => [n.id, { ...n, _children: [] }]));
+  const hasParent = new Set(chart.edges.map(e => e.to));
+  chart.edges.forEach(e => { if (byId[e.from] && byId[e.to]) byId[e.from]._children.push(byId[e.to]); });
+  const rootNode = chart.nodes.find(n => !hasParent.has(n.id)) || chart.nodes[0];
+
+  // D3 hierarchy + radial tree
+  const hier = d3.hierarchy(byId[rootNode.id], d => d._children.length ? d._children : null);
+  d3.tree()
+    .size([2 * Math.PI, R])
+    .separation((a, b) => (a.parent === b.parent ? 1.2 : 2.4) / a.depth)
+    (hier);
+
+  // ── Defs: drop shadow ──────────────────────────────────────────────────────
+  const defs = root.append('defs');
+  const filt = defs.append('filter').attr('id', 'mm-shadow').attr('x', '-20%').attr('y', '-20%').attr('width', '140%').attr('height', '140%');
+  filt.append('feDropShadow').attr('dx', 0).attr('dy', 2).attr('stdDeviation', 4).attr('flood-color', '#000').attr('flood-opacity', 0.5);
+
+  // ── Group centered ─────────────────────────────────────────────────────────
+  const grp = root.append('g').attr('transform', `translate(${svgW / 2},${svgH / 2})`);
+
+  // ── Links ──────────────────────────────────────────────────────────────────
+  const linkRadial = d3.linkRadial().angle(d => d.x).radius(d => d.y);
+
+  grp.append('g').selectAll('path')
+    .data(hier.links())
+    .join('path')
+    .attr('d', linkRadial)
+    .attr('fill', 'none')
+    .attr('stroke', d => C.levels[Math.min(d.target.depth - 1, C.levels.length - 1)])
+    .attr('stroke-width', d => Math.max(1, 3 - d.target.depth * 0.8))
+    .attr('opacity', 0.4)
+    .attr('stroke-linecap', 'round');
+
+  // ── Nodes ──────────────────────────────────────────────────────────────────
+  const nodeG = grp.append('g').selectAll('g')
+    .data(hier.descendants())
+    .join('g')
+    .attr('transform', d => {
+      const a = d.x - Math.PI / 2;
+      return `translate(${d.y * Math.cos(a)},${d.y * Math.sin(a)})`;
+    })
+    .style('cursor', 'default');
+
+  nodeG.each(function(d) {
+    const g      = d3.select(this);
+    const depth  = d.depth;
+    const label  = d.data.label || '';
+    const color  = depth === 0 ? C.levels[0] : C.levels[Math.min(depth - 1, C.levels.length - 1)];
+    const fs     = depth === 0 ? 15 : depth === 1 ? 12.5 : 11;
+    const fw     = depth <= 1 ? '700' : '500';
+    const m      = measure(label, fs, fw);
+    const px     = depth === 0 ? 18 : 12;
+    const py     = depth === 0 ? 12 : 8;
+    const rw     = m.w + px * 2;
+    const rh     = m.h + py * 2;
+
+    if (depth === 0) {
+      // Root: filled pill with glow
+      g.append('rect')
+        .attr('x', -rw / 2).attr('y', -rh / 2)
+        .attr('width', rw).attr('height', rh)
+        .attr('rx', rh / 2)
+        .attr('fill', color)
+        .attr('filter', 'url(#mm-shadow)');
+    } else {
+      // Child: bordered pill
+      g.append('rect')
+        .attr('x', -rw / 2).attr('y', -rh / 2)
+        .attr('width', rw).attr('height', rh)
+        .attr('rx', Math.min(rh / 2, 10))
+        .attr('fill', color + '18')
+        .attr('stroke', color)
+        .attr('stroke-width', 1.5);
+    }
+
+    // Text
+    m.lines.forEach((line, i) => {
+      const yOff = (i - (m.lines.length - 1) / 2) * (fs * 1.45);
+      g.append('text')
+        .text(line)
+        .attr('y', yOff)
+        .attr('text-anchor', 'middle')
+        .attr('dominant-baseline', 'middle')
+        .attr('font-size', fs + 'px')
+        .attr('font-weight', fw)
+        .attr('fill', depth === 0 ? '#fff' : color)
+        .attr('font-family', "-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif");
+    });
+
+    // Hover + click
+    const shapeEl = g.select(depth === 0 ? 'rect' : 'rect');
+    g.style('cursor', 'pointer')
+     .on('mouseenter', function() {
+        shapeEl.transition().duration(120)
+          .attr('fill', depth === 0 ? d3.color(color).brighter(0.3) : color + '32');
+      })
+     .on('mouseleave', function() {
+        shapeEl.transition().duration(120)
+          .attr('fill', depth === 0 ? color : color + '18');
+      })
+     .on('click', function(event) {
+        event.stopPropagation();
+        showInfo(d.data, depth);
+      });
+  });
+
+  setTimeout(fitAll, 60);
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// FLOWCHART  (Dagre layout + custom D3 SVG)
+// ═════════════════════════════════════════════════════════════════════════════
+function renderFlowchart(chart) {
+  const FS    = 13;
+  const PX    = 22;
+  const PY    = 13;
+  const DPAD  = 1.5; // diamond size multiplier
+
+  // ── Compute node sizes ────────────────────────────────────────────────────
+  const info = {};
+  chart.nodes.forEach(n => {
+    const m  = measure(n.label || '', FS);
+    let w    = Math.max(m.w + PX * 2, 90);
+    let h    = Math.max(m.h + PY * 2, 38);
+    if (n.shape === 'diamond') { w = (w + 20) * DPAD; h = (h + 10) * DPAD; }
+    info[n.id] = { ...m, w, h };
+  });
+
+  // ── Dagre graph ───────────────────────────────────────────────────────────
+  const gd = new dagre.graphlib.Graph({ multigraph: true });
+  gd.setGraph({ rankdir: 'TB', nodesep: 55, ranksep: 75, marginx: 50, marginy: 50, edgesep: 20 });
+  gd.setDefaultEdgeLabel(() => ({}));
+
+  chart.nodes.forEach(n  => gd.setNode(n.id, { width: info[n.id].w, height: info[n.id].h }));
+  chart.edges.forEach((e, i) => gd.setEdge(e.from, e.to, { label: e.label || '' }, 'e' + i));
+
+  dagre.layout(gd);
+
+  // ── Defs ──────────────────────────────────────────────────────────────────
+  const defs  = root.append('defs');
+
+  // Arrowhead
+  defs.append('marker')
+    .attr('id', 'arr').attr('viewBox', '0 -5 10 10')
+    .attr('refX', 8).attr('refY', 0)
+    .attr('markerWidth', 6).attr('markerHeight', 6)
+    .attr('orient', 'auto')
+    .append('path').attr('d', 'M0,-5L10,0L0,5').attr('fill', C.arrow);
+
+  // Glow filter for highlighted nodes
+  const glow = defs.append('filter').attr('id', 'glow').attr('x', '-30%').attr('y', '-30%').attr('width', '160%').attr('height', '160%');
+  glow.append('feGaussianBlur').attr('in', 'SourceGraphic').attr('stdDeviation', '3').attr('result', 'blur');
+  glow.append('feComposite').attr('in', 'SourceGraphic').attr('in2', 'blur').attr('operator', 'over');
+
+  // ── Edges ─────────────────────────────────────────────────────────────────
+  const edgeG = root.append('g').attr('class', 'edges');
+  const lineGen = d3.line().curve(d3.curveCatmullRom.alpha(0.5))
+    .x(d => d.x).y(d => d.y);
+
+  gd.edges().forEach(e => {
+    const ed  = gd.edge(e);
+    if (!ed || !ed.points || ed.points.length < 2) return;
+    const pts = ed.points;
+
+    edgeG.append('path')
+      .attr('d', lineGen(pts))
+      .attr('fill', 'none')
+      .attr('stroke', C.edge)
+      .attr('stroke-width', 1.5)
+      .attr('stroke-linecap', 'round')
+      .attr('marker-end', 'url(#arr)');
+
+    if (ed.label) {
+      const mid = pts[Math.floor(pts.length / 2)];
+      edgeG.append('text')
+        .text(ed.label)
+        .attr('x', mid.x + 6).attr('y', mid.y - 5)
+        .attr('font-size', '11px')
+        .attr('font-weight', '600')
+        .attr('fill', C.edgeLabel)
+        .attr('font-family', "-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif");
+    }
+  });
+
+  // ── Nodes ─────────────────────────────────────────────────────────────────
+  const nodeG = root.append('g').attr('class', 'nodes');
+
+  chart.nodes.forEach(n => {
+    const pos    = gd.node(n.id);
+    if (!pos) return;
+    const ninfo  = info[n.id];
+    const w      = pos.width;
+    const h      = pos.height;
+    const cx     = pos.x;
+    const cy     = pos.y;
+
+    // Pick colours
+    let pal;
+    if (n.shape === 'diamond')       pal = C.node.decision;
+    else if (n.variant === 'success') pal = C.node.success;
+    else if (n.variant === 'failure') pal = C.node.failure;
+    else if (n.variant === 'start')   pal = C.node.start;
+    else                              pal = C.node.default;
+
+    const g = nodeG.append('g')
+      .attr('transform', `translate(${cx - w/2},${cy - h/2})`)
+      .style('cursor', 'default');
+
+    // ── Shape ──────────────────────────────────────────────────────────────
+    if (n.shape === 'diamond') {
+      const hx = w / 2, hy = h / 2;
+      g.append('polygon')
+        .attr('points', `${hx},1 ${w-1},${hy} ${hx},${h-1} 1,${hy}`)
+        .attr('fill', pal.fill)
+        .attr('stroke', pal.stroke)
+        .attr('stroke-width', 1.5);
+    } else if (n.shape === 'terminal') {
+      g.append('rect')
+        .attr('x', 0).attr('y', 0)
+        .attr('width', w).attr('height', h)
+        .attr('rx', h / 2)
+        .attr('fill', pal.fill)
+        .attr('stroke', pal.stroke)
+        .attr('stroke-width', 1.5);
+    } else {
+      g.append('rect')
+        .attr('x', 0).attr('y', 0)
+        .attr('width', w).attr('height', h)
+        .attr('rx', 8)
+        .attr('fill', pal.fill)
+        .attr('stroke', pal.stroke)
+        .attr('stroke-width', 1.5);
+    }
+
+    // ── Label ──────────────────────────────────────────────────────────────
+    const textG = g.append('g').attr('transform', `translate(${w/2},${h/2})`);
+    ninfo.lines.forEach((line, li) => {
+      textG.append('text')
+        .text(line)
+        .attr('y', (li - (ninfo.lines.length - 1) / 2) * (FS * 1.45))
+        .attr('text-anchor', 'middle')
+        .attr('dominant-baseline', 'middle')
+        .attr('font-size', FS + 'px')
+        .attr('font-weight', n.shape === 'terminal' ? '700' : '500')
+        .attr('fill', pal.text)
+        .attr('font-family', "-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif");
+    });
+
+    // ── Hover glow + click ─────────────────────────────────────────────────
+    const shape = g.select(n.shape === 'diamond' ? 'polygon' : 'rect');
+    g.style('cursor', 'pointer')
+     .on('mouseenter', () => shape.attr('filter', 'url(#glow)').attr('stroke-width', 2.2))
+     .on('mouseleave', () => shape.attr('filter', null).attr('stroke-width', 1.5))
+     .on('click', function(event) {
+        event.stopPropagation();
+        showInfo(n);
+      });
+  });
+
+  setTimeout(fitAll, 60);
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// INIT
+// ═════════════════════════════════════════════════════════════════════════════
+if (firstSel) setTimeout(() => selectChart(firstSel.chart, firstSel.el), 120);
+</script>
+</body>
+</html>

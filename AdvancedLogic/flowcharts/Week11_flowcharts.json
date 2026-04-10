@@ -1,0 +1,157 @@
+{
+  "module": "AdvancedLogic",
+  "week": 11,
+  "title": "Correspondence Theory - Sahlqvist and van Benthem",
+  "charts": [
+    {
+      "id": "chart-1",
+      "type": "mindmap",
+      "title": "Topic Map",
+      "description": "Overview of standard translation, second-order obstruction, Sahlqvist formulas, and the van Benthem algorithm for computing first-order correspondents.",
+      "nodes": [
+        { "id": "root",   "label": "Week 11\nCorrespondence Theory",      "note": "Week 11 connects modal logic to first-order frame properties: when can a modal axiom be re-expressed as a first-order condition on the accessibility relation, and how to compute it." },
+        { "id": "apps",   "label": "Modal\nApplications",                  "note": "Different interpretations of box (knowledge, belief, obligation, time, programs) all need different frame classes to validate the desired axioms." },
+        { "id": "ep",     "label": "Epistemic\nAxioms",                    "note": "True Knowledge (Box p to p), Positive Introspection (Box p to BoxBox p), and Negative Introspection (not-Box p to Box not-Box p) characterise how knowledge or belief should behave." },
+        { "id": "st",     "label": "Standard\nTranslation",                "note": "Inductive translation ST_x(F) of a modal formula into first-order logic, mapping diamond to exists and box to forall over the accessibility relation." },
+        { "id": "thm112", "label": "Theorem 11.2",                         "note": "Modal satisfiability coincides with first-order satisfiability via the standard translation: M, w models F iff M*, h(x)=w models ST_x(F)." },
+        { "id": "so",     "label": "Second-Order\nProblem",                "note": "Frame validity quantifies over all valuations, and hence over all unary predicates. This makes the resulting formula second-order, not first-order." },
+        { "id": "chag",   "label": "Chagrova's\nTheorem",                  "note": "It is undecidable in general whether a given modal formula has a first-order correspondent, so no universal algorithm can exist for arbitrary modal axioms." },
+        { "id": "polar",  "label": "Positive vs\nNegative Formulas",       "note": "A formula is positive in p if every occurrence of p is under an even number of negations, negative if every occurrence is under an odd number. They are monotonic in opposite directions." },
+        { "id": "lemma5", "label": "Lemma 11.5\n(monotonicity)",           "note": "Positive formulas are preserved when valuations grow; negative formulas are preserved when valuations shrink. This monotonicity is the key to the Sahlqvist algorithm." },
+        { "id": "sahl",   "label": "Sahlqvist\nFormulas",                  "note": "A syntactically defined class of modal formulas built from atoms, boxed atoms, negative parts, and positive consequents. Every Sahlqvist formula has a first-order correspondent." },
+        { "id": "sahlthm","label": "Theorem 11.8",                         "note": "Sahlqvist's Theorem: every Sahlqvist formula has a first-order correspondent, and there is an algorithm to compute it - the Sahlqvist-van Benthem algorithm." },
+        { "id": "alg",    "label": "Sahlqvist-van\nBenthem Algorithm",     "note": "Five-step procedure: standard translation, pull out diamonds, group into REL/AT/BOX/NEG/POS, identify minimal valuation, substitute and simplify." },
+        { "id": "lambda", "label": "Lambda\nExpressions",                  "note": "Lambda notation is used to write the minimal valuation sigma(P) as a unary predicate. Application substitutes a term for the bound variable." },
+        { "id": "axioms", "label": "Standard\nAxiom Table",                "note": "T = reflexivity, 4 = transitivity, B = symmetry, 5 = euclidean, D = serial, K = always valid. Each gives a first-order frame condition computed by the algorithm." }
+      ],
+      "edges": [
+        { "from": "root",  "to": "apps" },
+        { "from": "root",  "to": "st" },
+        { "from": "root",  "to": "so" },
+        { "from": "root",  "to": "polar" },
+        { "from": "root",  "to": "sahl" },
+        { "from": "root",  "to": "alg" },
+        { "from": "root",  "to": "axioms" },
+        { "from": "apps",  "to": "ep" },
+        { "from": "st",    "to": "thm112" },
+        { "from": "so",    "to": "chag" },
+        { "from": "polar", "to": "lemma5" },
+        { "from": "sahl",  "to": "sahlthm" },
+        { "from": "alg",   "to": "lambda" }
+      ]
+    },
+    {
+      "id": "chart-2",
+      "type": "flowchart",
+      "title": "Standard Translation ST_x(F)",
+      "description": "Recursive procedure that converts a modal formula into a first-order formula via the standard translation.",
+      "nodes": [
+        { "id": "start", "label": "Modal formula F\nand variable x",      "shape": "terminal", "variant": "start",   "note": "We are given a modal formula F and a current world variable x. We will recursively build the first-order translation ST_x(F)." },
+        { "id": "kind",  "label": "Top connective\nof F?",                "shape": "diamond",                         "note": "Identify the outermost connective of F and apply the matching translation rule." },
+        { "id": "atom",  "label": "Use unary\npredicate P_i(x)",          "shape": "rect",                            "note": "If F = p_i, the translation is the unary predicate P_i applied to the current variable x." },
+        { "id": "neg",   "label": "Negate the\ntranslation of G",         "shape": "rect",                            "note": "If F = not G, the translation is not ST_x(G). Negation passes through unchanged." },
+        { "id": "bool",  "label": "Combine ST_x(G)\nand ST_x(H)",         "shape": "rect",                            "note": "If F is a binary Boolean connective, translate both sides separately and combine them with the same connective." },
+        { "id": "dia",   "label": "exists y. R(x,y)\nand ST_y(G)",        "shape": "rect",                            "note": "If F = diamond G, introduce a fresh variable y, assert R(x,y), and recursively translate G at y." },
+        { "id": "box",   "label": "forall y. R(x,y)\nimplies ST_y(G)",    "shape": "rect",                            "note": "If F = box G, introduce a fresh variable y and require that for every R-successor y the translation of G holds." },
+        { "id": "out",   "label": "Output ST_x(F)",                       "shape": "terminal", "variant": "success", "note": "Combine the recursive results into the full first-order translation. By Theorem 11.2 it preserves modal satisfiability." }
+      ],
+      "edges": [
+        { "from": "start","to": "kind" },
+        { "from": "kind", "to": "atom","label": "atom" },
+        { "from": "kind", "to": "neg", "label": "not" },
+        { "from": "kind", "to": "bool","label": "binary" },
+        { "from": "kind", "to": "dia", "label": "diamond" },
+        { "from": "kind", "to": "box", "label": "box" },
+        { "from": "atom", "to": "out" },
+        { "from": "neg",  "to": "out" },
+        { "from": "bool", "to": "out" },
+        { "from": "dia",  "to": "out" },
+        { "from": "box",  "to": "out" }
+      ]
+    },
+    {
+      "id": "chart-3",
+      "type": "flowchart",
+      "title": "Sahlqvist-van Benthem Algorithm",
+      "description": "Five-step procedure for computing the first-order frame correspondent of a Sahlqvist implication.",
+      "nodes": [
+        { "id": "start", "label": "Sahlqvist implication\nF -> G",          "shape": "terminal", "variant": "start",   "note": "We start with a modal formula that is known to be a Sahlqvist implication. The algorithm will compute its first-order frame correspondent." },
+        { "id": "s1",    "label": "Step 1: Compute\nST_x(F -> G)",          "shape": "rect",                            "note": "Apply the standard translation to the entire implication, producing a first-order formula with predicate variables for each propositional variable." },
+        { "id": "s2",    "label": "Step 2: Pull existentials\nfrom antecedent","shape": "rect",                          "note": "Move every existential quantifier in the antecedent to the front of the entire implication using the equivalence (exists y A) -> B = forall y (A -> B)." },
+        { "id": "s3",    "label": "Step 3: Group into\nREL ^ AT ^ BOX ^ NEG -> POS","shape": "rect",                  "note": "Identify the relational atoms (REL), atomic predicates on the current world (AT), boxed atoms (BOX), negative formulas (NEG), and the positive consequent (POS)." },
+        { "id": "s4",    "label": "Step 4: Read off minimal\nvaluation sigma(P)","shape": "rect",                       "note": "Construct the smallest unary predicate that makes AT ^ BOX trivially true. Express it as a lambda expression in terms of the existing variables." },
+        { "id": "s5",    "label": "Step 5: Substitute sigma(P)\nand simplify","shape": "rect",                          "note": "Replace every occurrence of P in ST_x(F->G) with sigma(P), beta-reduce, and simplify. The resulting formula contains no predicate variables." },
+        { "id": "more",  "label": "More propositional\nvariables remain?",   "shape": "diamond",                         "note": "If the original implication has multiple propositional variables, repeat steps 3-5 for each variable in turn until none remain." },
+        { "id": "done",  "label": "First-order\ncorrespondent",              "shape": "terminal", "variant": "success", "note": "The simplified universally-quantified formula is the first-order correspondent of the Sahlqvist implication, characterising the frame property it captures." }
+      ],
+      "edges": [
+        { "from": "start","to": "s1" },
+        { "from": "s1",   "to": "s2" },
+        { "from": "s2",   "to": "s3" },
+        { "from": "s3",   "to": "s4" },
+        { "from": "s4",   "to": "s5" },
+        { "from": "s5",   "to": "more" },
+        { "from": "more", "to": "s3",  "label": "Yes" },
+        { "from": "more", "to": "done","label": "No" }
+      ]
+    },
+    {
+      "id": "chart-4",
+      "type": "flowchart",
+      "title": "Identifying a Sahlqvist Formula",
+      "description": "Decision procedure for determining whether a candidate modal formula is a Sahlqvist formula and therefore amenable to the algorithm.",
+      "nodes": [
+        { "id": "start", "label": "Modal formula F",                       "shape": "terminal", "variant": "start",   "note": "We have a modal formula and want to decide whether it is a Sahlqvist formula and therefore guaranteed to have a computable first-order correspondent." },
+        { "id": "imp",   "label": "F is an\nimplication?",                 "shape": "diamond",                         "note": "Check whether F has the form A -> B at its top level. Sahlqvist implications must have this shape (possibly within the scope of box or wedge of variable-disjoint parts)." },
+        { "id": "no",    "label": "Not a Sahlqvist\nformula",              "shape": "terminal", "variant": "failure", "note": "The candidate fails one of the structural conditions, so the Sahlqvist-van Benthem algorithm does not apply directly. By Chagrova's theorem, the existence of a correspondent is undecidable in general." },
+        { "id": "ant",   "label": "Antecedent is built\nfrom T, F, atoms, boxed atoms,\nnegative parts via and/or?","shape": "diamond","note": "Check that the antecedent is a Sahlqvist antecedent: built using only conjunction and disjunction from atoms, boxed atoms, top, bottom, and negative formulas." },
+        { "id": "pos",   "label": "Consequent is\npositive?",              "shape": "diamond",                         "note": "Check that the consequent is a positive formula: every propositional variable occurs under an even number of negations." },
+        { "id": "sahl",  "label": "Sahlqvist\nimplication",                "shape": "rect",                            "note": "The implication itself is a Sahlqvist implication. It can be processed directly by the Sahlqvist-van Benthem algorithm." },
+        { "id": "comp",  "label": "Apply Sahlqvist-van\nBenthem algorithm","shape": "terminal", "variant": "success", "note": "By Theorem 11.8 the formula has a first-order correspondent, and the Sahlqvist-van Benthem algorithm computes it explicitly." }
+      ],
+      "edges": [
+        { "from": "start","to": "imp" },
+        { "from": "imp",  "to": "ant", "label": "Yes" },
+        { "from": "imp",  "to": "no",  "label": "No" },
+        { "from": "ant",  "to": "pos", "label": "Yes" },
+        { "from": "ant",  "to": "no",  "label": "No" },
+        { "from": "pos",  "to": "sahl","label": "Yes" },
+        { "from": "pos",  "to": "no",  "label": "No" },
+        { "from": "sahl", "to": "comp" }
+      ]
+    },
+    {
+      "id": "chart-5",
+      "type": "flowchart",
+      "title": "Common Modal Axioms and Frame Correspondents",
+      "description": "Taxonomy of standard modal axioms together with their corresponding first-order frame properties.",
+      "nodes": [
+        { "id": "ax",   "label": "Standard\nAxioms",                          "shape": "rect",                          "note": "Each named axiom corresponds to a structural property of the accessibility relation R, computable by the Sahlqvist-van Benthem algorithm." },
+        { "id": "T",    "label": "T: Box p to p",                             "shape": "rect",                          "note": "True knowledge axiom. Saying that knowledge implies truth corresponds to the relation being reflexive." },
+        { "id": "Tfo",  "label": "Reflexive\nforall x. R(x,x)",               "shape": "rect",                          "note": "Every world has an edge to itself. This is the simplest frame property and characterises modal logic KT." },
+        { "id": "four", "label": "4: Box p to BoxBox p",                      "shape": "rect",                          "note": "Positive introspection axiom. If we know p, we know that we know p. Corresponds to transitivity of R." },
+        { "id": "fofo", "label": "Transitive\nR(x,y) ^ R(y,z) -> R(x,z)",     "shape": "rect",                          "note": "If x sees y and y sees z, then x sees z. Characterises modal logic K4." },
+        { "id": "B",    "label": "B: p to BoxDiamond p",                      "shape": "rect",                          "note": "Brouwer-style axiom. If p is true here then p is necessarily possible. Corresponds to symmetry." },
+        { "id": "Bfo",  "label": "Symmetric\nR(x,y) -> R(y,x)",               "shape": "rect",                          "note": "Every relation pair is mirrored. Symmetry by itself characterises the modal logic KB." },
+        { "id": "five", "label": "5: Diamond p to BoxDiamond p",              "shape": "rect",                          "note": "Negative introspection axiom (in disguise). Whatever is possible is necessarily possible. Corresponds to the Euclidean property." },
+        { "id": "fivefo","label": "Euclidean\nR(x,y) ^ R(x,z) -> R(y,z)",     "shape": "rect",                          "note": "Any two successors of a world are themselves connected. Characterises the modal logic K5." },
+        { "id": "D",    "label": "D: Box p to Diamond p",                     "shape": "rect",                          "note": "Consistency axiom: necessary p implies possible p. Corresponds to seriality." },
+        { "id": "Dfo",  "label": "Serial\nforall x. exists y. R(x,y)",        "shape": "rect",                          "note": "Every world has at least one successor, so the agent always considers something possible." },
+        { "id": "K",    "label": "K: Box(p->q) -> (Box p -> Box q)",          "shape": "rect",                          "note": "The K axiom is valid in every Kripke frame, so its first-order correspondent is just top." }
+      ],
+      "edges": [
+        { "from": "ax",  "to": "T" },
+        { "from": "ax",  "to": "four" },
+        { "from": "ax",  "to": "B" },
+        { "from": "ax",  "to": "five" },
+        { "from": "ax",  "to": "D" },
+        { "from": "ax",  "to": "K" },
+        { "from": "T",   "to": "Tfo" },
+        { "from": "four","to": "fofo" },
+        { "from": "B",   "to": "Bfo" },
+        { "from": "five","to": "fivefo" },
+        { "from": "D",   "to": "Dfo" }
+      ]
+    }
+  ]
+}

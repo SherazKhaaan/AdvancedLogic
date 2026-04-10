@@ -1,0 +1,184 @@
+{
+  "module": "AdvancedLogic",
+  "week": 2,
+  "title": "Non-monotonic Reasoning, Argumentation and Dialogue",
+  "charts": [
+    {
+      "id": "chart-1",
+      "type": "mindmap",
+      "title": "Topic Map",
+      "description": "Overview of the three non-monotonic logics, argumentation frameworks, preferences, and labelling rules covered in Week 2.",
+      "nodes": [
+        { "id": "root",   "label": "Week 2\nNMR & Argumentation",       "note": "Week 2 (Modgil) presents three syntactic non-monotonic logics and shows how all of them can be unified under the argumentation framework view, where non-monotonic reasoning becomes a decision procedure between conflicting arguments." },
+        { "id": "lp",     "label": "Logic\nProgramming",                 "note": "Prolog-style logic programming uses negation as failure NOT, where NOT X succeeds iff X cannot be proved. This makes the consequence relation non-monotonic." },
+        { "id": "mcs",    "label": "Maxiconsistent\nApproaches",         "note": "When a classical KB is inconsistent, the maxiconsistent approach picks preferred maximal consistent subsets ordered by stratification, then takes credulous or sceptical consequences." },
+        { "id": "def",    "label": "Default\nLogic",                     "note": "Reiter-style default theories pair a consistent set W of facts with default rules that are applied when their antecedents hold and their consequents stay consistent." },
+        { "id": "args",   "label": "Argumentation\nFrameworks",          "note": "An argumentation framework is a directed graph of arguments connected by attacks. Dung 1995 showed it captures non-monotonic reasoning as a debate between conflicting arguments." },
+        { "id": "pref",   "label": "Preferences",                        "note": "When two arguments attack each other symmetrically, a preference ordering decides which attack succeeds. Preferences come from rule priorities, stratification, or goal orderings." },
+        { "id": "lab",    "label": "Labelling\nRules",                   "note": "Each argument is labelled IN, OUT, or UNDEC according to three legal-labelling rules. Multiple legal labellings may exist for one framework." },
+        { "id": "naf",    "label": "Negation\nas Failure",               "note": "NOT X holds whenever X is not provable from the current program. This is what makes adding new facts able to retract previous conclusions." },
+        { "id": "tweety", "label": "Tweety\nTrilogy",                    "note": "The Tweety knowledge base is extended three times: each addition either retracts or reinstates the conclusion that Tweety can fly, illustrating non-monotonicity." },
+        { "id": "strat",  "label": "Stratified\nKB",                     "note": "A KB is stratified into S1>S2>...>Sn equivalence classes by priority. The subclass principle (penguin rules over bird rules) is one common way to assign strata." },
+        { "id": "predm",  "label": "Preferred\nmcs",                     "note": "A preferred maximal consistent subset is built by starting with the highest stratum and adding lower-stratum formulas one at a time, keeping the set consistent." },
+        { "id": "ext",    "label": "Default\nExtensions",                "note": "A default extension is a maximally consistent set obtained by closing W under classical consequence and the consequents of applicable defaults." },
+        { "id": "prio",   "label": "Priority\nover Defaults",            "note": "Linear priorities over defaults ensure that higher-priority defaults are applied first. This typically reduces multiple extensions to a single preferred one." },
+        { "id": "dung",   "label": "Dung 1995\nSemantics",               "note": "Dung 1995 introduced AFs along with conflict-free, admissible, preferred, grounded, stable and complete extension semantics, and the monotonic characteristic function F_AF." },
+        { "id": "css",    "label": "Credulous vs\nSceptical",            "note": "Credulous consequences come from at least one preferred extension or labelling; sceptical consequences come from all of them. Grounded labelling is the sceptical one." }
+      ],
+      "edges": [
+        { "from": "root", "to": "lp" },
+        { "from": "root", "to": "mcs" },
+        { "from": "root", "to": "def" },
+        { "from": "root", "to": "args" },
+        { "from": "root", "to": "pref" },
+        { "from": "root", "to": "lab" },
+        { "from": "lp",   "to": "naf" },
+        { "from": "lp",   "to": "tweety" },
+        { "from": "mcs",  "to": "strat" },
+        { "from": "mcs",  "to": "predm" },
+        { "from": "def",  "to": "ext" },
+        { "from": "def",  "to": "prio" },
+        { "from": "args", "to": "dung" },
+        { "from": "lab",  "to": "css" }
+      ]
+    },
+    {
+      "id": "chart-2",
+      "type": "flowchart",
+      "title": "Logic Programming with Negation as Failure",
+      "description": "Procedure for deciding whether a query Q is a non-monotonic consequence of a Prolog-style KB.",
+      "nodes": [
+        { "id": "start", "label": "Query: KB |~ Q ?",                  "shape": "terminal", "variant": "start",   "note": "We are given a logic programming KB and want to decide whether the query Q is a non-monotonic consequence under the negation-as-failure semantics." },
+        { "id": "fact",  "label": "Q a fact in KB?",                   "shape": "diamond",                        "note": "Check whether Q appears directly as a ground fact in the program. Facts are immediately derivable without using any rule body." },
+        { "id": "rule",  "label": "Find rule with\nQ in head",         "shape": "rect",                           "note": "Look up any rule whose head matches Q (after unification). The body of this rule will give the next subgoals that must be proved." },
+        { "id": "exists","label": "Such a rule\nexists?",              "shape": "diamond",                        "note": "If no rule has Q in its head and Q is not a fact, then Q cannot be derived under the SLDNF resolution strategy used by logic programs." },
+        { "id": "body",  "label": "Try to prove\neach body literal",   "shape": "rect",                           "note": "For each literal in the rule body, try to prove it. Positive literals are recursively queried; NOT-literals require the negation-as-failure subroutine." },
+        { "id": "naf",   "label": "Body has\nNOT X literal?",          "shape": "diamond",                        "note": "Decide whether the body contains a negation-as-failure literal NOT X. These literals must be handled differently from positive subgoals." },
+        { "id": "nafok", "label": "X NOT provable\nfrom KB?",          "shape": "diamond",                        "note": "Recursively query whether X can be proved from the current KB. If proving X fails finitely, NOT X succeeds; otherwise NOT X fails." },
+        { "id": "all",   "label": "All body literals\nproved?",        "shape": "diamond",                        "note": "Check that every literal in the rule body has been successfully resolved (either positively or via successful negation as failure)." },
+        { "id": "yes",   "label": "KB |~ Q",                           "shape": "terminal", "variant": "success", "note": "All body literals have been satisfied so the rule fires and Q is derivable. Q is a non-monotonic consequence of the program." },
+        { "id": "no",    "label": "KB does NOT |~ Q",                  "shape": "terminal", "variant": "failure", "note": "No applicable rule lets Q succeed. Q is not a non-monotonic consequence under negation-as-failure semantics." }
+      ],
+      "edges": [
+        { "from": "start", "to": "fact" },
+        { "from": "fact",  "to": "yes",   "label": "Yes" },
+        { "from": "fact",  "to": "rule",  "label": "No" },
+        { "from": "rule",  "to": "exists" },
+        { "from": "exists","to": "body",  "label": "Yes" },
+        { "from": "exists","to": "no",    "label": "No" },
+        { "from": "body",  "to": "naf" },
+        { "from": "naf",   "to": "nafok", "label": "Yes" },
+        { "from": "naf",   "to": "all",   "label": "No" },
+        { "from": "nafok", "to": "all",   "label": "Yes" },
+        { "from": "nafok", "to": "no",    "label": "No" },
+        { "from": "all",   "to": "yes",   "label": "Yes" },
+        { "from": "all",   "to": "no",    "label": "No" }
+      ]
+    },
+    {
+      "id": "chart-3",
+      "type": "flowchart",
+      "title": "Constructing Preferred MCS from a Stratified KB",
+      "description": "Step-by-step procedure to build the preferred maximal consistent subsets of a stratified knowledge base.",
+      "nodes": [
+        { "id": "start", "label": "Stratified KB:\nS1, S2, ..., Sn",    "shape": "terminal", "variant": "start",   "note": "We are given the KB partitioned into priority strata S1>S2>...>Sn. We will construct the preferred maximal consistent subsets one stratum at a time." },
+        { "id": "init",  "label": "Compute mcs of S1",                  "shape": "rect",                           "note": "Find every maximal consistent subset of the highest-priority stratum S1. Each one will be the seed of a different preferred mcs." },
+        { "id": "set",   "label": "Set i = 2",                          "shape": "rect",                           "note": "Initialise the stratum index. We will iteratively process strata 2 through n, extending the partial mcs from each previous stratum." },
+        { "id": "loop",  "label": "i <= n ?",                           "shape": "diamond",                        "note": "Check whether more strata remain to be processed. If yes, extend the current partial mcs with the next stratum; otherwise we are done." },
+        { "id": "ext",   "label": "Extend each partial mcs\nwith Si maximally", "shape": "rect",                   "note": "For every partial mcs E built so far, find every maximal subset of E union Si that is still consistent. This may split one partial mcs into several." },
+        { "id": "incr",  "label": "i = i + 1",                          "shape": "rect",                           "note": "Move to the next lower-priority stratum. Continue extending until all strata have been processed." },
+        { "id": "done",  "label": "Preferred mcs\nE1, ..., Em",         "shape": "terminal", "variant": "success", "note": "After all strata have been processed, the resulting consistent sets are the preferred mcs of the KB. Their classical consequences give credulous and sceptical NM consequences." }
+      ],
+      "edges": [
+        { "from": "start", "to": "init" },
+        { "from": "init",  "to": "set" },
+        { "from": "set",   "to": "loop" },
+        { "from": "loop",  "to": "ext",  "label": "Yes" },
+        { "from": "loop",  "to": "done", "label": "No" },
+        { "from": "ext",   "to": "incr" },
+        { "from": "incr",  "to": "loop" }
+      ]
+    },
+    {
+      "id": "chart-4",
+      "type": "flowchart",
+      "title": "Constructing a Default Extension",
+      "description": "Procedure for constructing a default extension of a default theory (W, Defaults) with optional priority ordering.",
+      "nodes": [
+        { "id": "start",  "label": "Default theory\n(W, Defaults)",        "shape": "terminal", "variant": "start",   "note": "We start from a consistent set W of classical facts and a set of default rules. Each default has antecedents and a consequent." },
+        { "id": "init",   "label": "E := Cn(W)",                           "shape": "rect",                            "note": "Initialise the working extension E to the classical consequences of W. Defaults will be added one at a time as long as they remain consistent." },
+        { "id": "find",   "label": "Find applicable default\n(highest priority first)","shape": "rect",                "note": "Identify a default whose antecedents are already in E. If priorities are given, choose the highest-priority such default; otherwise pick any one." },
+        { "id": "any",    "label": "Any applicable\ndefault left?",        "shape": "diamond",                         "note": "Check whether any default not yet considered has antecedents that hold in the current extension. If none exist we are done." },
+        { "id": "cons",   "label": "Consequent consistent\nwith E?",       "shape": "diamond",                         "note": "Test whether adding the default's consequent to E would still leave E classically consistent. Defaults can only fire if they preserve consistency." },
+        { "id": "add",    "label": "E := Cn(E union\n{consequent})",       "shape": "rect",                            "note": "Add the consequent to the extension and close under classical consequence. The default has now fired and is removed from consideration." },
+        { "id": "skip",   "label": "Skip this default",                    "shape": "rect",                            "note": "The default cannot fire because its consequent is inconsistent with the current extension. Mark it as inapplicable and continue." },
+        { "id": "done",   "label": "Default extension E",                  "shape": "terminal", "variant": "success",  "note": "No more defaults can be applied. The current E is a maximal consistent set closed under classical consequence and is therefore a default extension." }
+      ],
+      "edges": [
+        { "from": "start", "to": "init" },
+        { "from": "init",  "to": "find" },
+        { "from": "find",  "to": "any" },
+        { "from": "any",   "to": "cons", "label": "Yes" },
+        { "from": "any",   "to": "done", "label": "No" },
+        { "from": "cons",  "to": "add",  "label": "Yes" },
+        { "from": "cons",  "to": "skip", "label": "No" },
+        { "from": "add",   "to": "find" },
+        { "from": "skip",  "to": "find" }
+      ]
+    },
+    {
+      "id": "chart-5",
+      "type": "flowchart",
+      "title": "Labelling Rules for Argumentation Frameworks",
+      "description": "Decision procedure for assigning IN, OUT, or UNDEC labels to an argument according to the three legal-labelling rules.",
+      "nodes": [
+        { "id": "start", "label": "Argument x in AF",                     "shape": "terminal", "variant": "start",   "note": "We are deciding the label of an argument x given the labels currently assigned to its attackers in the argumentation framework." },
+        { "id": "any",   "label": "x has any\nattackers?",                "shape": "diamond",                        "note": "Check whether any other argument attacks x in the AF. Unattacked arguments are special: Rule 1 applies vacuously and they are always IN." },
+        { "id": "in1",   "label": "Label x as IN\n(unattacked)",          "shape": "terminal", "variant": "success", "note": "x has no attackers, so all zero of its attackers are OUT vacuously. By Rule 1, x must be labelled IN." },
+        { "id": "anyin", "label": "Some attacker\nis IN?",                "shape": "diamond",                        "note": "Check whether at least one attacker of x has been labelled IN. If so, that successful attack defeats x by Rule 2." },
+        { "id": "out",   "label": "Label x as OUT",                       "shape": "terminal", "variant": "failure", "note": "At least one attacker of x is IN, so by Rule 2 the argument x must be labelled OUT - it is defeated by a winning attacker." },
+        { "id": "allout","label": "All attackers\nare OUT?",              "shape": "diamond",                        "note": "Check whether every attacker of x has been labelled OUT. If yes then x is acceptable and Rule 1 applies non-vacuously." },
+        { "id": "in2",   "label": "Label x as IN",                        "shape": "terminal", "variant": "success", "note": "Every attacker of x is OUT, so x is defended against all its attackers. By Rule 1 the argument x must be labelled IN." },
+        { "id": "undec", "label": "Label x as UNDEC",                     "shape": "terminal",                       "note": "No attacker of x is IN but at least one is UNDEC. By Rule 3, x must be labelled UNDEC - the argument is in an unresolved cycle of doubt." }
+      ],
+      "edges": [
+        { "from": "start", "to": "any" },
+        { "from": "any",   "to": "in1",   "label": "No" },
+        { "from": "any",   "to": "anyin", "label": "Yes" },
+        { "from": "anyin", "to": "out",   "label": "Yes" },
+        { "from": "anyin", "to": "allout","label": "No" },
+        { "from": "allout","to": "in2",   "label": "Yes" },
+        { "from": "allout","to": "undec", "label": "No" }
+      ]
+    },
+    {
+      "id": "chart-6",
+      "type": "flowchart",
+      "title": "Three Non-monotonic Logics - Comparison",
+      "description": "Taxonomy of the three non-monotonic logics covered in Week 2 with their key constructs.",
+      "nodes": [
+        { "id": "nm",   "label": "NM Logics",                  "shape": "rect",                          "note": "All three logics share the property that adding new information can retract previous conclusions, but they differ in how the KB is structured and how consequences are computed." },
+        { "id": "lp",   "label": "Logic\nProgramming",         "shape": "rect",                          "note": "Prolog-style programs with rules and facts. The non-monotonic flavour comes from negation as failure." },
+        { "id": "mc",   "label": "Maxiconsistent",             "shape": "rect",                          "note": "Classical KB possibly inconsistent, partitioned into priority strata. Reasoning is over preferred maximal consistent subsets." },
+        { "id": "dl",   "label": "Default Logic",              "shape": "rect",                          "note": "Reiter-style theories with classical facts W and a set of default rules. Consequences are over default extensions." },
+        { "id": "lpr",  "label": "NOT (negation\nas failure)", "shape": "rect",                          "note": "Negation as failure: NOT X succeeds whenever X cannot be proved from the program. This is what introduces non-monotonicity." },
+        { "id": "lpc",  "label": "Single relation\nKB |~ Q",  "shape": "rect",                          "note": "There is a single notion of consequence: KB |~ Q iff the Prolog query ?Q returns true under the SLDNF resolution strategy." },
+        { "id": "mcs",  "label": "Preferred mcs",              "shape": "rect",                          "note": "A maximal subset of the KB built by extending strata top-down, keeping consistency at every stage." },
+        { "id": "csc",  "label": "Credulous /\nSceptical",     "shape": "rect",                          "note": "Credulous consequences hold in some preferred mcs; sceptical consequences hold in all of them. Bottom is never credulous." },
+        { "id": "dext", "label": "Default extension",          "shape": "rect",                          "note": "A maximally consistent set built by closing W under defaults, where each default fires only if its consequent is consistent with the current extension." },
+        { "id": "ord",  "label": "Priority over\ndefaults",    "shape": "rect",                          "note": "A linear ordering on defaults selects which to apply first. Higher-priority defaults block conflicting lower-priority ones." }
+      ],
+      "edges": [
+        { "from": "nm", "to": "lp" },
+        { "from": "nm", "to": "mc" },
+        { "from": "nm", "to": "dl" },
+        { "from": "lp", "to": "lpr" },
+        { "from": "lp", "to": "lpc" },
+        { "from": "mc", "to": "mcs" },
+        { "from": "mc", "to": "csc" },
+        { "from": "dl", "to": "dext" },
+        { "from": "dl", "to": "ord" }
+      ]
+    }
+  ]
+}

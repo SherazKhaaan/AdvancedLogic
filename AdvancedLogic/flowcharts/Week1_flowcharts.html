@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AdvancedLogic — Week 1: Introduction to Non-monotonic Logics</title>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dagre@0.8.5/dist/dagre.min.js"></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  display: flex;
+  height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #0d1117;
+  color: #e6edf3;
+  overflow: hidden;
+}
+
+/* ── Sidebar ─────────────────────────────────────────────────────────────── */
+#sidebar {
+  width: 268px;
+  min-width: 268px;
+  background: #161b22;
+  border-right: 1px solid #30363d;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+#sidebar-header {
+  padding: 20px 16px 14px;
+  border-bottom: 1px solid #30363d;
+  flex-shrink: 0;
+}
+.sb-module {
+  font-size: 0.67rem;
+  color: #8b949e;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.sb-week  { font-size: 0.76rem; color: #8b949e; margin-bottom: 2px; }
+.sb-title { font-size: 0.96rem; font-weight: 700; color: #f0f6fc; line-height: 1.35; }
+.sb-count {
+  display: inline-block;
+  background: #21262d;
+  color: #8b949e;
+  font-size: 0.65rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 10px;
+  margin-top: 8px;
+  border: 1px solid #30363d;
+}
+
+#chart-list { padding: 8px 6px; flex: 1; overflow-y: auto; }
+#chart-list::-webkit-scrollbar { width: 3px; }
+#chart-list::-webkit-scrollbar-thumb { background: #30363d; border-radius: 3px; }
+
+.chart-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 9px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-bottom: 2px;
+  transition: background 0.1s;
+  color: #8b949e;
+  user-select: none;
+  border: 1px solid transparent;
+}
+.chart-item:hover { background: #21262d; color: #c9d1d9; }
+.chart-item.active {
+  background: #1f3a6e;
+  color: #f0f6fc;
+  border-color: #388bfd;
+}
+.chart-item.active .ci-type { color: #79c0ff; opacity: 1; }
+.ci-icon  { font-size: 0.95rem; flex-shrink: 0; margin-top: 2px; }
+.ci-title { font-size: 0.83rem; font-weight: 600; line-height: 1.3; }
+.ci-type  { font-size: 0.66rem; opacity: 0.6; margin-top: 3px; text-transform: uppercase; letter-spacing: 0.07em; }
+
+/* ── Main ────────────────────────────────────────────────────────────────── */
+#main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+
+#chart-header {
+  padding: 13px 22px 11px;
+  background: #161b22;
+  border-bottom: 1px solid #30363d;
+  flex-shrink: 0;
+}
+#chart-title-el { font-size: 1rem; font-weight: 700; color: #79c0ff; margin-bottom: 2px; }
+#chart-desc-el  { font-size: 0.81rem; color: #8b949e; font-style: italic; }
+
+#diagram-area {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background: #0d1117;
+  background-image:
+    radial-gradient(circle at 1px 1px, #21262d 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+#diagram-svg { width: 100%; height: 100%; display: block; cursor: grab; }
+#diagram-svg:active { cursor: grabbing; }
+
+/* ── Zoom controls ───────────────────────────────────────────────────────── */
+#zoom-controls {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  z-index: 10;
+}
+.zoom-btn {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #30363d;
+  background: #161b22;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+  transition: all 0.1s;
+  color: #8b949e;
+}
+.zoom-btn:hover { background: #21262d; color: #79c0ff; border-color: #388bfd; }
+
+/* ── Hint bar ────────────────────────────────────────────────────────────── */
+#hint {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.7rem;
+  color: #484f58;
+  pointer-events: none;
+  white-space: nowrap;
+  transition: opacity 0.2s;
+}
+#hint.hidden { opacity: 0; }
+
+.state-msg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #484f58;
+  font-size: 0.9rem;
+  text-align: center;
+  pointer-events: none;
+}
+.state-msg.err { color: #f85149; }
+
+/* ── Info panel (slides in from the left of the diagram area) ──────────── */
+#info-panel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 440px;
+  max-width: 50vw;
+  background: #161b22;
+  border-right: 1px solid #30363d;
+  z-index: 30;
+  transform: translateX(-100%);
+  transition: transform 0.26s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 12px 0 32px rgba(0, 0, 0, 0.45);
+}
+#info-panel.visible { transform: translateX(0); }
+
+#info-panel-header {
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid #21262d;
+  flex-shrink: 0;
+  position: relative;
+}
+#info-panel-header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+#info-node-badge {
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 3px 11px;
+  border-radius: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  flex-shrink: 0;
+  display: inline-block;
+}
+#info-node-label {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #f0f6fc;
+  line-height: 1.35;
+  word-break: break-word;
+}
+
+.badge-decision { background: #2d2209; color: #e3b341; border: 1px solid #d29922; }
+.badge-step     { background: #0d1f38; color: #79c0ff; border: 1px solid #388bfd; }
+.badge-start    { background: #0d1f38; color: #79c0ff; border: 1px solid #388bfd; }
+.badge-success  { background: #0d1f12; color: #56d364; border: 1px solid #3fb950; }
+.badge-failure  { background: #1c0f0e; color: #ff7b72; border: 1px solid #f85149; }
+.badge-topic    { background: #1a1036; color: #c084fc; border: 1px solid #a371f7; }
+.badge-subtopic { background: #0d2020; color: #2dd4bf; border: 1px solid #14b8a6; }
+
+#info-close {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #30363d;
+  background: #0d1117;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #8b949e;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.1s;
+}
+#info-close:hover { background: #21262d; color: #f0f6fc; border-color: #8b949e; }
+
+#info-panel-body {
+  padding: 20px 24px 24px;
+  overflow-y: auto;
+  flex: 1;
+  scrollbar-width: thin;
+  scrollbar-color: #30363d transparent;
+}
+#info-panel-body::-webkit-scrollbar { width: 6px; }
+#info-panel-body::-webkit-scrollbar-track { background: transparent; }
+#info-panel-body::-webkit-scrollbar-thumb { background: #30363d; border-radius: 3px; }
+#info-panel-body::-webkit-scrollbar-thumb:hover { background: #484f58; }
+
+#info-section-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #6e7681;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 10px;
+}
+#info-note-text {
+  font-size: 1rem;
+  color: #c9d1d9;
+  line-height: 1.75;
+}
+#info-note-text.empty {
+  color: #484f58;
+  font-style: italic;
+}
+</style>
+</head>
+<body>
+
+<div id="sidebar">
+  <div id="sidebar-header">
+    <div class="sb-module" id="sb-module"></div>
+    <div class="sb-week"   id="sb-week"></div>
+    <div class="sb-title"  id="sb-title"></div>
+    <div class="sb-count"  id="sb-count"></div>
+  </div>
+  <div id="chart-list"></div>
+</div>
+
+<div id="main">
+  <div id="chart-header">
+    <div id="chart-title-el">Select a chart</div>
+    <div id="chart-desc-el"></div>
+  </div>
+  <div id="diagram-area">
+    <svg id="diagram-svg"></svg>
+    <div id="zoom-controls">
+      <button class="zoom-btn" id="btn-zi" title="Zoom in">+</button>
+      <button class="zoom-btn" id="btn-zo" title="Zoom out">−</button>
+      <button class="zoom-btn" id="btn-zr" title="Fit to view">⊙</button>
+    </div>
+    <div id="hint">Scroll to zoom · Drag to pan · Click a node for details</div>
+    <div id="info-panel">
+      <div id="info-panel-header">
+        <div id="info-panel-header-top">
+          <span id="info-node-badge"></span>
+          <button id="info-close" title="Close (Esc)">✕</button>
+        </div>
+        <div id="info-node-label"></div>
+      </div>
+      <div id="info-panel-body">
+        <div id="info-section-label">Explanation</div>
+        <div id="info-note-text"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═════════════════════════════════════════════════════════════════════════════
+// DATA
+// ═════════════════════════════════════════════════════════════════════════════
+const DATA = {"module": "AdvancedLogic", "week": 1, "title": "Introduction to Non-monotonic Logics", "charts": [{"id": "chart-1", "type": "mindmap", "title": "Topic Map", "description": "High-level overview of all major topics covered in Week 1.", "nodes": [{"id": "root", "label": "Week 1\nNon-monotonic Logics", "note": "Week 1 introduces classical propositional logic, the failure of monotonicity for real-world reasoning, sequent calculi as proof systems, and the Gabbay-Makinson rules for non-monotonic consequence."}, {"id": "logics", "label": "What is\na Logic?", "note": "A logic is identified with a consequence relation between sets of formulas and individual formulas. This relation can be defined semantically (via models) or syntactically (via proof rules)."}, {"id": "motiv", "label": "Why\nNon-monotonic?", "note": "Classical logic is monotonic: adding premises never retracts conclusions. The Tweety/penguin example shows how this leads to contradictions when defeasible information is added."}, {"id": "sequent", "label": "Sequent\nCalculi", "note": "Sequent calculi (Gentzen 1935) operate on sequents (pairs of finite sets of formulas) rather than individual formulas, providing an alternative to natural deduction and Hilbert systems."}, {"id": "gm", "label": "Gabbay-Makinson\nRules", "note": "The Gabbay-Makinson proof system GM defines a non-monotonic consequence relation snake by seven rules that capture the intuitive notion of usually-follows."}, {"id": "derived", "label": "Derived Rules\nof GM", "note": "Several useful rules can be derived from the seven basic GM rules without adding expressive power, including superclassicality, conditionalisation, cautious cut, and disjunctive rationality."}, {"id": "examples", "label": "Worked\nExamples", "note": "Example proofs in GM include the penguin/bird knowledge base, showing how rational consequences can be derived from defeasible premises."}, {"id": "syntax", "label": "Syntax vs\nSemantics", "note": "Semantics defines truth via models and valuations; syntax defines provability via mechanical proof rules. The completeness theorem shows they coincide for classical logic."}, {"id": "tweety", "label": "Tweety\nExample", "note": "The Tweety/penguin example demonstrates that classical logic forces a contradiction (and explosion) when adding the fact that penguins cannot fly to a knowledge base where birds usually fly."}, {"id": "monotonic", "label": "Monotonicity\nDefinition", "note": "A logic is monotonic if adding premises never invalidates conclusions: Gamma entails F implies Gamma union Delta entails F. Classical propositional and predicate logic are both monotonic."}, {"id": "rules", "label": "Sequent\nRules", "note": "The sequent calculus S has reflexivity (REF) as its only axiom, left and right rules for each connective, and structural rules MON and CUT."}, {"id": "gmrules", "label": "The Seven\nGM Rules", "note": "The seven basic GM rules: REF, R-and, L-or, LLE (left logical equivalence), RWE (right weakening), CMON (cautious monotonicity), and RMON (rational monotonicity)."}, {"id": "rmon", "label": "Rational\nMonotonicity", "note": "RMON allows adding G to the left if not-G does not usually follow. Unlike other rules, it has a negative premise: proving that something does NOT usually follow."}, {"id": "penguin", "label": "Penguin/Bird\nKB", "note": "The penguin knowledge base shows that birds that are penguins usually do not fly, and that birds are usually not penguins, can both be derived as rational consequences."}], "edges": [{"from": "root", "to": "logics"}, {"from": "root", "to": "motiv"}, {"from": "root", "to": "sequent"}, {"from": "root", "to": "gm"}, {"from": "root", "to": "derived"}, {"from": "root", "to": "examples"}, {"from": "logics", "to": "syntax"}, {"from": "motiv", "to": "tweety"}, {"from": "motiv", "to": "monotonic"}, {"from": "sequent", "to": "rules"}, {"from": "gm", "to": "gmrules"}, {"from": "gm", "to": "rmon"}, {"from": "examples", "to": "penguin"}]}, {"id": "chart-2", "type": "flowchart", "title": "Sequent Calculus Proof Procedure", "description": "Backward proof search in the sequent calculus S, starting from the goal sequent and applying rules in reverse until all leaves are REF axioms.", "nodes": [{"id": "start", "label": "Goal: prove\nGamma => Delta", "shape": "terminal", "variant": "start", "note": "Begin with the sequent we want to prove. We work backwards from this root, applying sequent rules in reverse to reduce it to simpler sequents until we reach axioms."}, {"id": "isref", "label": "Is the sequent\nan instance of REF?", "shape": "diamond", "note": "Check whether the current sequent already has the form F => F (some formula on both sides). If so, this branch is closed by the reflexivity axiom and no further work is needed."}, {"id": "leafok", "label": "Leaf closed\nby REF", "shape": "rect", "note": "The branch terminates with an instance of the axiom schema REF, meaning F => F holds for the formula F that is shared by both sides."}, {"id": "pickf", "label": "Pick a non-atomic\nformula in sequent", "shape": "rect", "note": "Choose any compound formula in either the left or right of the sequent. Picking different formulas may give simpler or more complex proofs but the choice does not affect provability."}, {"id": "side", "label": "On left or\non right?", "shape": "diamond", "note": "Determine which side of the turnstile the chosen formula is on, since left rules and right rules are different and apply only on their respective sides."}, {"id": "lrule", "label": "Apply matching\nleft rule", "shape": "rect", "note": "Apply the left rule for the connective in the chosen formula (e.g. L-and for conjunction on the left). This produces one or two new sequent premises to prove instead."}, {"id": "rrule", "label": "Apply matching\nright rule", "shape": "rect", "note": "Apply the right rule for the connective in the chosen formula (e.g. R-and for conjunction on the right). This produces one or two new sequent premises to prove instead."}, {"id": "branches", "label": "All branches\nclosed by REF?", "shape": "diamond", "note": "Check whether every leaf of the proof tree built so far is an instance of REF. If yes the proof is finished; if no there are still open sequents to reduce."}, {"id": "done", "label": "Proof complete", "shape": "terminal", "variant": "success", "note": "Every leaf of the proof tree is an instance of REF, so the original goal sequent is derivable in the sequent calculus S. By completeness, it is also a logical consequence."}], "edges": [{"from": "start", "to": "isref"}, {"from": "isref", "to": "leafok", "label": "Yes"}, {"from": "isref", "to": "pickf", "label": "No"}, {"from": "pickf", "to": "side"}, {"from": "side", "to": "lrule", "label": "Left"}, {"from": "side", "to": "rrule", "label": "Right"}, {"from": "lrule", "to": "branches"}, {"from": "rrule", "to": "branches"}, {"from": "leafok", "to": "branches"}, {"from": "branches", "to": "done", "label": "Yes"}, {"from": "branches", "to": "isref", "label": "No"}]}, {"id": "chart-3", "type": "flowchart", "title": "Sequent Calculus S - Rules Taxonomy", "description": "Classification of all the rules of the sequent calculus S for classical propositional logic.", "nodes": [{"id": "S", "label": "Sequent\nCalculus S", "shape": "rect", "note": "The sequent calculus S adapted from Gentzen 1935. It is sound and complete for classical propositional logic."}, {"id": "axiom", "label": "Axiom Schema", "shape": "rect", "note": "Rules with zero premises that serve as the leaves of any proof tree."}, {"id": "ref", "label": "REF: F => F", "shape": "rect", "note": "The reflexivity axiom: any formula F implies itself, providing the base case for all proofs."}, {"id": "logical", "label": "Logical Rules", "shape": "rect", "note": "Rules that introduce or decompose logical connectives, with one left and one right version per connective."}, {"id": "land", "label": "L-and / R-and", "shape": "rect", "note": "Conjunction rules: L-and joins F and G on the left into F-and-G; R-and splits F-and-G on the right into two subgoals."}, {"id": "lor", "label": "L-or / R-or", "shape": "rect", "note": "Disjunction rules: L-or splits a disjunction on the left into two cases; R-or joins F and G on the right into F-or-G."}, {"id": "lneg", "label": "L-not / R-not", "shape": "rect", "note": "Negation rules: move a formula across the turnstile by adding a negation, switching sides between left and right."}, {"id": "limp", "label": "L-impl / R-impl", "shape": "rect", "note": "Implication rules: L-impl behaves like L-or (since F implies G is equivalent to not-F or G); R-impl moves the antecedent to the left."}, {"id": "struct", "label": "Structural Rules", "shape": "rect", "note": "Rules that manipulate the structure of sequents without dealing with specific connectives."}, {"id": "mon", "label": "MON\n(Monotonicity)", "shape": "rect", "note": "Add any extra formulas to the left of an already proven sequent. This directly captures the monotonicity of classical logic."}, {"id": "cut", "label": "CUT", "shape": "rect", "note": "Merge two sequents by cutting out a shared formula or list of formulas, removing intermediate lemmas from a proof."}], "edges": [{"from": "S", "to": "axiom"}, {"from": "S", "to": "logical"}, {"from": "S", "to": "struct"}, {"from": "axiom", "to": "ref"}, {"from": "logical", "to": "land"}, {"from": "logical", "to": "lor"}, {"from": "logical", "to": "lneg"}, {"from": "logical", "to": "limp"}, {"from": "struct", "to": "mon"}, {"from": "struct", "to": "cut"}]}, {"id": "chart-4", "type": "flowchart", "title": "Gabbay-Makinson Rules Taxonomy", "description": "The seven basic GM rules and four key derived rules for the non-monotonic consequence relation snake.", "nodes": [{"id": "GM", "label": "Gabbay-Makinson\nSystem", "shape": "rect", "note": "GM is the proof system that captures defeasible reasoning syntactically. Its rules describe how the snake (usually-follows) relation should behave."}, {"id": "basic", "label": "Basic Rules", "shape": "rect", "note": "The seven primitive rules of GM that define the non-monotonic consequence relation. All other rules can be derived from these."}, {"id": "ref", "label": "REF: F snake F", "shape": "rect", "note": "Reflexivity: any formula usually follows from itself. This is the only axiom schema with zero premises."}, {"id": "rand", "label": "R-and: combine\nconsequents", "shape": "rect", "note": "If G and H both usually follow from F, then their conjunction also usually follows from F."}, {"id": "lor", "label": "L-or: combine\npremises", "shape": "rect", "note": "If H usually follows from F and from G separately, then H usually follows from their disjunction."}, {"id": "lle", "label": "LLE: rewrite\nleft side", "shape": "rect", "note": "If F is classically equivalent to G, then F snake H gives G snake H. The equivalence is a side condition on the rule."}, {"id": "rwe", "label": "RWE: weaken\nright side", "shape": "rect", "note": "If H is a classical consequence of G, then F snake G gives F snake H. Allows replacing the consequent with a weaker formula."}, {"id": "cmon", "label": "CMON: cautious\nmonotonicity", "shape": "rect", "note": "If F snake G and F snake H, then F-and-G snake H. Adding a conjunct G that already usually holds preserves the conclusion."}, {"id": "rmon", "label": "RMON: rational\nmonotonicity", "shape": "rect", "note": "If F snake H and F does NOT snake not-G, then F-and-G snake H. Has a negative premise unlike the other rules."}, {"id": "der", "label": "Derived Rules", "shape": "rect", "note": "Useful rules that can be proved from the seven basic rules. They simplify proofs but add no new expressive power."}, {"id": "sc", "label": "SC: super-\nclassicality", "shape": "rect", "note": "Classical consequences are also defeasible: if F entails G classically, then F snake G. Derivable from REF and RWE."}, {"id": "con", "label": "CON: condi-\ntionalisation", "shape": "rect", "note": "If F-and-G snake H then F snake (G to H). Moves a conjunct from the left into an implication on the right."}, {"id": "cc", "label": "CC: cautious\ncut", "shape": "rect", "note": "If F snake G and F-and-G snake H then F snake H. Allows removing a redundant intermediate lemma G that was usually true."}, {"id": "nrat", "label": "NRAT: negation\nrationality", "shape": "rect", "note": "If F snake H and F-and-not-G does NOT snake H, then F-and-G snake H. Distinguishes which conjuncts matter for the conclusion."}], "edges": [{"from": "GM", "to": "basic"}, {"from": "GM", "to": "der"}, {"from": "basic", "to": "ref"}, {"from": "basic", "to": "rand"}, {"from": "basic", "to": "lor"}, {"from": "basic", "to": "lle"}, {"from": "basic", "to": "rwe"}, {"from": "basic", "to": "cmon"}, {"from": "basic", "to": "rmon"}, {"from": "der", "to": "sc"}, {"from": "der", "to": "con"}, {"from": "der", "to": "cc"}, {"from": "der", "to": "nrat"}]}, {"id": "chart-5", "type": "flowchart", "title": "Penguin Example: b and p snake not-f", "description": "Backward proof in GM that birds that are penguins usually do not fly, given the penguin knowledge base.", "nodes": [{"id": "goal", "label": "Goal:\nb and p snake not-f", "shape": "terminal", "variant": "start", "note": "We want to derive that birds-and-penguins usually do not fly, from the premises that penguins usually do not fly, that penguins not-being-birds is impossible, and that birds usually fly."}, {"id": "lle", "label": "Apply LLE:\np and b ~ b and p", "shape": "rect", "note": "Use left logical equivalence: p-and-b is classically equivalent to b-and-p, so it suffices to prove p and b snake not-f."}, {"id": "cmon", "label": "Apply CMON\nto get p and b snake not-f", "shape": "rect", "note": "Cautious monotonicity adds a conjunct that already usually holds. We need the two premises p snake not-f and p snake b."}, {"id": "premise", "label": "p snake not-f\n(premise 2)", "shape": "terminal", "variant": "success", "note": "This is one of the original defeasible premises in the penguin knowledge base: penguins usually do not fly. It serves as a leaf of the proof tree."}, {"id": "needpb", "label": "Need:\np snake b", "shape": "rect", "note": "We must show that penguins usually are birds. This is not a direct premise so we derive it from premise 3: penguins that are not birds are impossible."}, {"id": "con", "label": "Apply CON\nto premise 3", "shape": "rect", "note": "From premise 3 p-and-not-b snake bottom, conditionalisation gives p snake (not-b to bottom). This moves the conjunct not-b into an implication on the right."}, {"id": "rwe", "label": "Apply RWE:\nnot-b to bottom |= b", "shape": "rect", "note": "Classically, not-b implies bottom is logically equivalent to b. By right weakening we conclude p snake b, completing the proof of premise b for CMON."}, {"id": "done", "label": "b and p snake not-f\nproved", "shape": "terminal", "variant": "success", "note": "All branches of the proof tree are either premises or have been derived. The conclusion is therefore a rational consequence of the penguin knowledge base."}], "edges": [{"from": "goal", "to": "lle"}, {"from": "lle", "to": "cmon"}, {"from": "cmon", "to": "premise"}, {"from": "cmon", "to": "needpb"}, {"from": "needpb", "to": "con"}, {"from": "con", "to": "rwe"}, {"from": "rwe", "to": "done"}, {"from": "premise", "to": "done"}]}]};
+
+// ═════════════════════════════════════════════════════════════════════════════
+// COLOUR PALETTE
+// ═════════════════════════════════════════════════════════════════════════════
+const C = {
+  // Flowchart node fill / stroke / text by role
+  node: {
+    default:  { fill: '#1c2333', stroke: '#388bfd', text: '#79c0ff' },
+    decision: { fill: '#1c1f2b', stroke: '#d29922', text: '#e3b341' },
+    success:  { fill: '#0d1f12', stroke: '#3fb950', text: '#56d364' },
+    failure:  { fill: '#1c0f0e', stroke: '#f85149', text: '#ff7b72' },
+    start:    { fill: '#0d1f38', stroke: '#388bfd', text: '#79c0ff' },
+  },
+  // Mindmap level colours
+  levels: ['#388bfd','#3fb950','#d29922','#a371f7','#f78166','#56d364','#79c0ff'],
+  edge:      '#30363d',
+  edgeHover: '#58a6ff',
+  edgeLabel: '#8b949e',
+  arrow:     '#484f58',
+  bg:        '#0d1117',
+  surface:   '#161b22',
+};
+
+// ═════════════════════════════════════════════════════════════════════════════
+// TEXT MEASUREMENT
+// ═════════════════════════════════════════════════════════════════════════════
+const _c = document.createElement('canvas').getContext('2d');
+function measure(text, fs = 13, fw = '500') {
+  _c.font = `${fw} ${fs}px -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif`;
+  const lines = String(text).split('\n');
+  return {
+    w: Math.max(...lines.map(l => _c.measureText(l).width)),
+    h: lines.length * (fs * 1.45),
+    lines,
+  };
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// SVG + ZOOM
+// ═════════════════════════════════════════════════════════════════════════════
+const svg   = d3.select('#diagram-svg');
+const root  = svg.append('g').attr('id', 'root-layer');
+
+const zoom = d3.zoom()
+  .scaleExtent([0.04, 12])
+  .on('zoom', ev => root.attr('transform', ev.transform));
+
+svg.call(zoom)
+   .on('dblclick.zoom', () => fitAll());
+
+function fitAll() {
+  const svgEl = svg.node();
+  const W = svgEl.clientWidth  || 900;
+  const H = svgEl.clientHeight || 600;
+  const bb = root.node().getBBox();
+  if (!bb.width || !bb.height) return;
+  const scale = Math.min(0.88 * W / bb.width, 0.88 * H / bb.height, 4);
+  const tx = W / 2 - (bb.x + bb.width  / 2) * scale;
+  const ty = H / 2 - (bb.y + bb.height / 2) * scale;
+  svg.transition().duration(380)
+     .call(zoom.transform, d3.zoomIdentity.translate(tx, ty).scale(scale));
+}
+
+document.getElementById('btn-zi').addEventListener('click', () =>
+  svg.transition().duration(220).call(zoom.scaleBy, 1.45));
+document.getElementById('btn-zo').addEventListener('click', () =>
+  svg.transition().duration(220).call(zoom.scaleBy, 0.69));
+document.getElementById('btn-zr').addEventListener('click', fitAll);
+
+// ═════════════════════════════════════════════════════════════════════════════
+// INFO PANEL
+// ═════════════════════════════════════════════════════════════════════════════
+const infoPanel = document.getElementById('info-panel');
+const infoLabel = document.getElementById('info-node-label');
+const infoBadge = document.getElementById('info-node-badge');
+const infoNote  = document.getElementById('info-note-text');
+const hintEl    = document.getElementById('hint');
+
+function badgeFor(node, depth) {
+  if (depth !== undefined) {
+    // Mindmap node
+    if (depth === 0) return { text: 'Root',      cls: 'badge-start' };
+    if (depth === 1) return { text: 'Main Topic', cls: 'badge-topic' };
+    return               { text: 'Sub-topic',   cls: 'badge-subtopic' };
+  }
+  if (node.shape === 'diamond')                    return { text: 'Decision',    cls: 'badge-decision' };
+  if (node.shape === 'terminal' && node.variant === 'success') return { text: 'Success',    cls: 'badge-success'  };
+  if (node.shape === 'terminal' && node.variant === 'failure') return { text: 'Failure',    cls: 'badge-failure'  };
+  if (node.shape === 'terminal')                   return { text: 'Start / End', cls: 'badge-start'    };
+  return                                                   { text: 'Step',       cls: 'badge-step'     };
+}
+
+function showInfo(node, depth) {
+  const label = (node.label || '').replace(/\n/g, ' ');
+  infoLabel.textContent = label;
+
+  const b = badgeFor(node, depth);
+  infoBadge.textContent  = b.text;
+  infoBadge.className    = 'badge-class ' + b.cls; // reset then set
+
+  if (node.note) {
+    infoNote.textContent = node.note;
+    infoNote.className   = '';
+  } else {
+    infoNote.textContent = 'No description available for this node.';
+    infoNote.className   = 'empty';
+  }
+
+  infoPanel.classList.add('visible');
+  hintEl.classList.add('hidden');
+}
+
+function hideInfo() {
+  infoPanel.classList.remove('visible');
+  hintEl.classList.remove('hidden');
+}
+
+document.getElementById('info-close').addEventListener('click', hideInfo);
+document.addEventListener('keydown', e => { if (e.key === 'Escape') hideInfo(); });
+
+// Click on SVG background closes panel
+svg.on('click', (event) => {
+  if (event.target === svg.node() || event.target.id === 'root-layer') hideInfo();
+});
+
+// ═════════════════════════════════════════════════════════════════════════════
+// SIDEBAR
+// ═════════════════════════════════════════════════════════════════════════════
+document.getElementById('sb-module').textContent = DATA.module;
+document.getElementById('sb-week'  ).textContent = 'Week ' + DATA.week;
+document.getElementById('sb-title' ).textContent = DATA.title;
+document.getElementById('sb-count' ).textContent =
+  DATA.charts.length + ' chart' + (DATA.charts.length !== 1 ? 's' : '');
+
+const ICONS = { mindmap: '🧠', flowchart: '📊', graph: '🔗' };
+const listEl = document.getElementById('chart-list');
+let firstSel = null;
+
+DATA.charts.forEach((chart, i) => {
+  const el = document.createElement('div');
+  el.className = 'chart-item';
+  el.innerHTML =
+    `<span class="ci-icon">${ICONS[chart.type] || '📋'}</span>
+     <div>
+       <div class="ci-title">${chart.title}</div>
+       <div class="ci-type">${chart.type}</div>
+     </div>`;
+  el.addEventListener('click', () => selectChart(chart, el));
+  listEl.appendChild(el);
+  if (i === 0) firstSel = { chart, el };
+});
+
+// ═════════════════════════════════════════════════════════════════════════════
+// SELECTION
+// ═════════════════════════════════════════════════════════════════════════════
+function selectChart(chart, itemEl) {
+  document.querySelectorAll('.chart-item').forEach(e => e.classList.remove('active'));
+  itemEl.classList.add('active');
+  document.getElementById('chart-title-el').textContent = chart.title;
+  document.getElementById('chart-desc-el' ).textContent = chart.description || '';
+
+  root.selectAll('*').remove();
+
+  if (chart.type === 'mindmap') renderMindmap(chart);
+  else                          renderFlowchart(chart);
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// MINDMAP  (D3 radial tree)
+// ═════════════════════════════════════════════════════════════════════════════
+function renderMindmap(chart) {
+  const svgW = svg.node().clientWidth  || 900;
+  const svgH = svg.node().clientHeight || 600;
+  const R    = Math.min(svgW, svgH) * 0.40;
+
+  // Build parent-child map
+  const byId  = Object.fromEntries(chart.nodes.map(n => [n.id, { ...n, _children: [] }]));
+  const hasParent = new Set(chart.edges.map(e => e.to));
+  chart.edges.forEach(e => { if (byId[e.from] && byId[e.to]) byId[e.from]._children.push(byId[e.to]); });
+  const rootNode = chart.nodes.find(n => !hasParent.has(n.id)) || chart.nodes[0];
+
+  // D3 hierarchy + radial tree
+  const hier = d3.hierarchy(byId[rootNode.id], d => d._children.length ? d._children : null);
+  d3.tree()
+    .size([2 * Math.PI, R])
+    .separation((a, b) => (a.parent === b.parent ? 1.2 : 2.4) / a.depth)
+    (hier);
+
+  // ── Defs: drop shadow ──────────────────────────────────────────────────────
+  const defs = root.append('defs');
+  const filt = defs.append('filter').attr('id', 'mm-shadow').attr('x', '-20%').attr('y', '-20%').attr('width', '140%').attr('height', '140%');
+  filt.append('feDropShadow').attr('dx', 0).attr('dy', 2).attr('stdDeviation', 4).attr('flood-color', '#000').attr('flood-opacity', 0.5);
+
+  // ── Group centered ─────────────────────────────────────────────────────────
+  const grp = root.append('g').attr('transform', `translate(${svgW / 2},${svgH / 2})`);
+
+  // ── Links ──────────────────────────────────────────────────────────────────
+  const linkRadial = d3.linkRadial().angle(d => d.x).radius(d => d.y);
+
+  grp.append('g').selectAll('path')
+    .data(hier.links())
+    .join('path')
+    .attr('d', linkRadial)
+    .attr('fill', 'none')
+    .attr('stroke', d => C.levels[Math.min(d.target.depth - 1, C.levels.length - 1)])
+    .attr('stroke-width', d => Math.max(1, 3 - d.target.depth * 0.8))
+    .attr('opacity', 0.4)
+    .attr('stroke-linecap', 'round');
+
+  // ── Nodes ──────────────────────────────────────────────────────────────────
+  const nodeG = grp.append('g').selectAll('g')
+    .data(hier.descendants())
+    .join('g')
+    .attr('transform', d => {
+      const a = d.x - Math.PI / 2;
+      return `translate(${d.y * Math.cos(a)},${d.y * Math.sin(a)})`;
+    })
+    .style('cursor', 'default');
+
+  nodeG.each(function(d) {
+    const g      = d3.select(this);
+    const depth  = d.depth;
+    const label  = d.data.label || '';
+    const color  = depth === 0 ? C.levels[0] : C.levels[Math.min(depth - 1, C.levels.length - 1)];
+    const fs     = depth === 0 ? 15 : depth === 1 ? 12.5 : 11;
+    const fw     = depth <= 1 ? '700' : '500';
+    const m      = measure(label, fs, fw);
+    const px     = depth === 0 ? 18 : 12;
+    const py     = depth === 0 ? 12 : 8;
+    const rw     = m.w + px * 2;
+    const rh     = m.h + py * 2;
+
+    if (depth === 0) {
+      // Root: filled pill with glow
+      g.append('rect')
+        .attr('x', -rw / 2).attr('y', -rh / 2)
+        .attr('width', rw).attr('height', rh)
+        .attr('rx', rh / 2)
+        .attr('fill', color)
+        .attr('filter', 'url(#mm-shadow)');
+    } else {
+      // Child: bordered pill
+      g.append('rect')
+        .attr('x', -rw / 2).attr('y', -rh / 2)
+        .attr('width', rw).attr('height', rh)
+        .attr('rx', Math.min(rh / 2, 10))
+        .attr('fill', color + '18')
+        .attr('stroke', color)
+        .attr('stroke-width', 1.5);
+    }
+
+    // Text
+    m.lines.forEach((line, i) => {
+      const yOff = (i - (m.lines.length - 1) / 2) * (fs * 1.45);
+      g.append('text')
+        .text(line)
+        .attr('y', yOff)
+        .attr('text-anchor', 'middle')
+        .attr('dominant-baseline', 'middle')
+        .attr('font-size', fs + 'px')
+        .attr('font-weight', fw)
+        .attr('fill', depth === 0 ? '#fff' : color)
+        .attr('font-family', "-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif");
+    });
+
+    // Hover + click
+    const shapeEl = g.select(depth === 0 ? 'rect' : 'rect');
+    g.style('cursor', 'pointer')
+     .on('mouseenter', function() {
+        shapeEl.transition().duration(120)
+          .attr('fill', depth === 0 ? d3.color(color).brighter(0.3) : color + '32');
+      })
+     .on('mouseleave', function() {
+        shapeEl.transition().duration(120)
+          .attr('fill', depth === 0 ? color : color + '18');
+      })
+     .on('click', function(event) {
+        event.stopPropagation();
+        showInfo(d.data, depth);
+      });
+  });
+
+  setTimeout(fitAll, 60);
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// FLOWCHART  (Dagre layout + custom D3 SVG)
+// ═════════════════════════════════════════════════════════════════════════════
+function renderFlowchart(chart) {
+  const FS    = 13;
+  const PX    = 22;
+  const PY    = 13;
+  const DPAD  = 1.5; // diamond size multiplier
+
+  // ── Compute node sizes ────────────────────────────────────────────────────
+  const info = {};
+  chart.nodes.forEach(n => {
+    const m  = measure(n.label || '', FS);
+    let w    = Math.max(m.w + PX * 2, 90);
+    let h    = Math.max(m.h + PY * 2, 38);
+    if (n.shape === 'diamond') { w = (w + 20) * DPAD; h = (h + 10) * DPAD; }
+    info[n.id] = { ...m, w, h };
+  });
+
+  // ── Dagre graph ───────────────────────────────────────────────────────────
+  const gd = new dagre.graphlib.Graph({ multigraph: true });
+  gd.setGraph({ rankdir: 'TB', nodesep: 55, ranksep: 75, marginx: 50, marginy: 50, edgesep: 20 });
+  gd.setDefaultEdgeLabel(() => ({}));
+
+  chart.nodes.forEach(n  => gd.setNode(n.id, { width: info[n.id].w, height: info[n.id].h }));
+  chart.edges.forEach((e, i) => gd.setEdge(e.from, e.to, { label: e.label || '' }, 'e' + i));
+
+  dagre.layout(gd);
+
+  // ── Defs ──────────────────────────────────────────────────────────────────
+  const defs  = root.append('defs');
+
+  // Arrowhead
+  defs.append('marker')
+    .attr('id', 'arr').attr('viewBox', '0 -5 10 10')
+    .attr('refX', 8).attr('refY', 0)
+    .attr('markerWidth', 6).attr('markerHeight', 6)
+    .attr('orient', 'auto')
+    .append('path').attr('d', 'M0,-5L10,0L0,5').attr('fill', C.arrow);
+
+  // Glow filter for highlighted nodes
+  const glow = defs.append('filter').attr('id', 'glow').attr('x', '-30%').attr('y', '-30%').attr('width', '160%').attr('height', '160%');
+  glow.append('feGaussianBlur').attr('in', 'SourceGraphic').attr('stdDeviation', '3').attr('result', 'blur');
+  glow.append('feComposite').attr('in', 'SourceGraphic').attr('in2', 'blur').attr('operator', 'over');
+
+  // ── Edges ─────────────────────────────────────────────────────────────────
+  const edgeG = root.append('g').attr('class', 'edges');
+  const lineGen = d3.line().curve(d3.curveCatmullRom.alpha(0.5))
+    .x(d => d.x).y(d => d.y);
+
+  gd.edges().forEach(e => {
+    const ed  = gd.edge(e);
+    if (!ed || !ed.points || ed.points.length < 2) return;
+    const pts = ed.points;
+
+    edgeG.append('path')
+      .attr('d', lineGen(pts))
+      .attr('fill', 'none')
+      .attr('stroke', C.edge)
+      .attr('stroke-width', 1.5)
+      .attr('stroke-linecap', 'round')
+      .attr('marker-end', 'url(#arr)');
+
+    if (ed.label) {
+      const mid = pts[Math.floor(pts.length / 2)];
+      edgeG.append('text')
+        .text(ed.label)
+        .attr('x', mid.x + 6).attr('y', mid.y - 5)
+        .attr('font-size', '11px')
+        .attr('font-weight', '600')
+        .attr('fill', C.edgeLabel)
+        .attr('font-family', "-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif");
+    }
+  });
+
+  // ── Nodes ─────────────────────────────────────────────────────────────────
+  const nodeG = root.append('g').attr('class', 'nodes');
+
+  chart.nodes.forEach(n => {
+    const pos    = gd.node(n.id);
+    if (!pos) return;
+    const ninfo  = info[n.id];
+    const w      = pos.width;
+    const h      = pos.height;
+    const cx     = pos.x;
+    const cy     = pos.y;
+
+    // Pick colours
+    let pal;
+    if (n.shape === 'diamond')       pal = C.node.decision;
+    else if (n.variant === 'success') pal = C.node.success;
+    else if (n.variant === 'failure') pal = C.node.failure;
+    else if (n.variant === 'start')   pal = C.node.start;
+    else                              pal = C.node.default;
+
+    const g = nodeG.append('g')
+      .attr('transform', `translate(${cx - w/2},${cy - h/2})`)
+      .style('cursor', 'default');
+
+    // ── Shape ──────────────────────────────────────────────────────────────
+    if (n.shape === 'diamond') {
+      const hx = w / 2, hy = h / 2;
+      g.append('polygon')
+        .attr('points', `${hx},1 ${w-1},${hy} ${hx},${h-1} 1,${hy}`)
+        .attr('fill', pal.fill)
+        .attr('stroke', pal.stroke)
+        .attr('stroke-width', 1.5);
+    } else if (n.shape === 'terminal') {
+      g.append('rect')
+        .attr('x', 0).attr('y', 0)
+        .attr('width', w).attr('height', h)
+        .attr('rx', h / 2)
+        .attr('fill', pal.fill)
+        .attr('stroke', pal.stroke)
+        .attr('stroke-width', 1.5);
+    } else {
+      g.append('rect')
+        .attr('x', 0).attr('y', 0)
+        .attr('width', w).attr('height', h)
+        .attr('rx', 8)
+        .attr('fill', pal.fill)
+        .attr('stroke', pal.stroke)
+        .attr('stroke-width', 1.5);
+    }
+
+    // ── Label ──────────────────────────────────────────────────────────────
+    const textG = g.append('g').attr('transform', `translate(${w/2},${h/2})`);
+    ninfo.lines.forEach((line, li) => {
+      textG.append('text')
+        .text(line)
+        .attr('y', (li - (ninfo.lines.length - 1) / 2) * (FS * 1.45))
+        .attr('text-anchor', 'middle')
+        .attr('dominant-baseline', 'middle')
+        .attr('font-size', FS + 'px')
+        .attr('font-weight', n.shape === 'terminal' ? '700' : '500')
+        .attr('fill', pal.text)
+        .attr('font-family', "-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif");
+    });
+
+    // ── Hover glow + click ─────────────────────────────────────────────────
+    const shape = g.select(n.shape === 'diamond' ? 'polygon' : 'rect');
+    g.style('cursor', 'pointer')
+     .on('mouseenter', () => shape.attr('filter', 'url(#glow)').attr('stroke-width', 2.2))
+     .on('mouseleave', () => shape.attr('filter', null).attr('stroke-width', 1.5))
+     .on('click', function(event) {
+        event.stopPropagation();
+        showInfo(n);
+      });
+  });
+
+  setTimeout(fitAll, 60);
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// INIT
+// ═════════════════════════════════════════════════════════════════════════════
+if (firstSel) setTimeout(() => selectChart(firstSel.chart, firstSel.el), 120);
+</script>
+</body>
+</html>

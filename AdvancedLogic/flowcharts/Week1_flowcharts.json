@@ -1,0 +1,168 @@
+{
+  "module": "AdvancedLogic",
+  "week": 1,
+  "title": "Introduction to Non-monotonic Logics",
+  "charts": [
+    {
+      "id": "chart-1",
+      "type": "mindmap",
+      "title": "Topic Map",
+      "description": "High-level overview of all major topics covered in Week 1.",
+      "nodes": [
+        { "id": "root",      "label": "Week 1\nNon-monotonic Logics",     "note": "Week 1 introduces classical propositional logic, the failure of monotonicity for real-world reasoning, sequent calculi as proof systems, and the Gabbay-Makinson rules for non-monotonic consequence." },
+        { "id": "logics",    "label": "What is\na Logic?",                 "note": "A logic is identified with a consequence relation between sets of formulas and individual formulas. This relation can be defined semantically (via models) or syntactically (via proof rules)." },
+        { "id": "motiv",     "label": "Why\nNon-monotonic?",               "note": "Classical logic is monotonic: adding premises never retracts conclusions. The Tweety/penguin example shows how this leads to contradictions when defeasible information is added." },
+        { "id": "sequent",   "label": "Sequent\nCalculi",                  "note": "Sequent calculi (Gentzen 1935) operate on sequents (pairs of finite sets of formulas) rather than individual formulas, providing an alternative to natural deduction and Hilbert systems." },
+        { "id": "gm",        "label": "Gabbay-Makinson\nRules",            "note": "The Gabbay-Makinson proof system GM defines a non-monotonic consequence relation snake by seven rules that capture the intuitive notion of usually-follows." },
+        { "id": "derived",   "label": "Derived Rules\nof GM",              "note": "Several useful rules can be derived from the seven basic GM rules without adding expressive power, including superclassicality, conditionalisation, cautious cut, and disjunctive rationality." },
+        { "id": "examples",  "label": "Worked\nExamples",                  "note": "Example proofs in GM include the penguin/bird knowledge base, showing how rational consequences can be derived from defeasible premises." },
+        { "id": "syntax",    "label": "Syntax vs\nSemantics",              "note": "Semantics defines truth via models and valuations; syntax defines provability via mechanical proof rules. The completeness theorem shows they coincide for classical logic." },
+        { "id": "tweety",    "label": "Tweety\nExample",                   "note": "The Tweety/penguin example demonstrates that classical logic forces a contradiction (and explosion) when adding the fact that penguins cannot fly to a knowledge base where birds usually fly." },
+        { "id": "monotonic", "label": "Monotonicity\nDefinition",          "note": "A logic is monotonic if adding premises never invalidates conclusions: Gamma entails F implies Gamma union Delta entails F. Classical propositional and predicate logic are both monotonic." },
+        { "id": "rules",     "label": "Sequent\nRules",                    "note": "The sequent calculus S has reflexivity (REF) as its only axiom, left and right rules for each connective, and structural rules MON and CUT." },
+        { "id": "gmrules",   "label": "The Seven\nGM Rules",               "note": "The seven basic GM rules: REF, R-and, L-or, LLE (left logical equivalence), RWE (right weakening), CMON (cautious monotonicity), and RMON (rational monotonicity)." },
+        { "id": "rmon",      "label": "Rational\nMonotonicity",            "note": "RMON allows adding G to the left if not-G does not usually follow. Unlike other rules, it has a negative premise: proving that something does NOT usually follow." },
+        { "id": "penguin",   "label": "Penguin/Bird\nKB",                  "note": "The penguin knowledge base shows that birds that are penguins usually do not fly, and that birds are usually not penguins, can both be derived as rational consequences." }
+      ],
+      "edges": [
+        { "from": "root",    "to": "logics" },
+        { "from": "root",    "to": "motiv" },
+        { "from": "root",    "to": "sequent" },
+        { "from": "root",    "to": "gm" },
+        { "from": "root",    "to": "derived" },
+        { "from": "root",    "to": "examples" },
+        { "from": "logics",  "to": "syntax" },
+        { "from": "motiv",   "to": "tweety" },
+        { "from": "motiv",   "to": "monotonic" },
+        { "from": "sequent", "to": "rules" },
+        { "from": "gm",      "to": "gmrules" },
+        { "from": "gm",      "to": "rmon" },
+        { "from": "examples","to": "penguin" }
+      ]
+    },
+    {
+      "id": "chart-2",
+      "type": "flowchart",
+      "title": "Sequent Calculus Proof Procedure",
+      "description": "Backward proof search in the sequent calculus S, starting from the goal sequent and applying rules in reverse until all leaves are REF axioms.",
+      "nodes": [
+        { "id": "start",  "label": "Goal: prove\nGamma => Delta",        "shape": "terminal", "variant": "start",   "note": "Begin with the sequent we want to prove. We work backwards from this root, applying sequent rules in reverse to reduce it to simpler sequents until we reach axioms." },
+        { "id": "isref",  "label": "Is the sequent\nan instance of REF?","shape": "diamond",                          "note": "Check whether the current sequent already has the form F => F (some formula on both sides). If so, this branch is closed by the reflexivity axiom and no further work is needed." },
+        { "id": "leafok", "label": "Leaf closed\nby REF",                "shape": "rect",                             "note": "The branch terminates with an instance of the axiom schema REF, meaning F => F holds for the formula F that is shared by both sides." },
+        { "id": "pickf",  "label": "Pick a non-atomic\nformula in sequent","shape": "rect",                           "note": "Choose any compound formula in either the left or right of the sequent. Picking different formulas may give simpler or more complex proofs but the choice does not affect provability." },
+        { "id": "side",   "label": "On left or\non right?",              "shape": "diamond",                          "note": "Determine which side of the turnstile the chosen formula is on, since left rules and right rules are different and apply only on their respective sides." },
+        { "id": "lrule",  "label": "Apply matching\nleft rule",          "shape": "rect",                             "note": "Apply the left rule for the connective in the chosen formula (e.g. L-and for conjunction on the left). This produces one or two new sequent premises to prove instead." },
+        { "id": "rrule",  "label": "Apply matching\nright rule",         "shape": "rect",                             "note": "Apply the right rule for the connective in the chosen formula (e.g. R-and for conjunction on the right). This produces one or two new sequent premises to prove instead." },
+        { "id": "branches","label": "All branches\nclosed by REF?",      "shape": "diamond",                          "note": "Check whether every leaf of the proof tree built so far is an instance of REF. If yes the proof is finished; if no there are still open sequents to reduce." },
+        { "id": "done",   "label": "Proof complete",                     "shape": "terminal", "variant": "success", "note": "Every leaf of the proof tree is an instance of REF, so the original goal sequent is derivable in the sequent calculus S. By completeness, it is also a logical consequence." }
+      ],
+      "edges": [
+        { "from": "start",   "to": "isref" },
+        { "from": "isref",   "to": "leafok",   "label": "Yes" },
+        { "from": "isref",   "to": "pickf",    "label": "No" },
+        { "from": "pickf",   "to": "side" },
+        { "from": "side",    "to": "lrule",    "label": "Left" },
+        { "from": "side",    "to": "rrule",    "label": "Right" },
+        { "from": "lrule",   "to": "branches" },
+        { "from": "rrule",   "to": "branches" },
+        { "from": "leafok",  "to": "branches" },
+        { "from": "branches","to": "done",     "label": "Yes" },
+        { "from": "branches","to": "isref",    "label": "No" }
+      ]
+    },
+    {
+      "id": "chart-3",
+      "type": "flowchart",
+      "title": "Sequent Calculus S - Rules Taxonomy",
+      "description": "Classification of all the rules of the sequent calculus S for classical propositional logic.",
+      "nodes": [
+        { "id": "S",       "label": "Sequent\nCalculus S",            "shape": "rect",                          "note": "The sequent calculus S adapted from Gentzen 1935. It is sound and complete for classical propositional logic." },
+        { "id": "axiom",   "label": "Axiom Schema",                   "shape": "rect",                          "note": "Rules with zero premises that serve as the leaves of any proof tree." },
+        { "id": "ref",     "label": "REF: F => F",                    "shape": "rect",                          "note": "The reflexivity axiom: any formula F implies itself, providing the base case for all proofs." },
+        { "id": "logical", "label": "Logical Rules",                  "shape": "rect",                          "note": "Rules that introduce or decompose logical connectives, with one left and one right version per connective." },
+        { "id": "land",    "label": "L-and / R-and",                  "shape": "rect",                          "note": "Conjunction rules: L-and joins F and G on the left into F-and-G; R-and splits F-and-G on the right into two subgoals." },
+        { "id": "lor",     "label": "L-or / R-or",                    "shape": "rect",                          "note": "Disjunction rules: L-or splits a disjunction on the left into two cases; R-or joins F and G on the right into F-or-G." },
+        { "id": "lneg",    "label": "L-not / R-not",                  "shape": "rect",                          "note": "Negation rules: move a formula across the turnstile by adding a negation, switching sides between left and right." },
+        { "id": "limp",    "label": "L-impl / R-impl",                "shape": "rect",                          "note": "Implication rules: L-impl behaves like L-or (since F implies G is equivalent to not-F or G); R-impl moves the antecedent to the left." },
+        { "id": "struct",  "label": "Structural Rules",               "shape": "rect",                          "note": "Rules that manipulate the structure of sequents without dealing with specific connectives." },
+        { "id": "mon",     "label": "MON\n(Monotonicity)",            "shape": "rect",                          "note": "Add any extra formulas to the left of an already proven sequent. This directly captures the monotonicity of classical logic." },
+        { "id": "cut",     "label": "CUT",                            "shape": "rect",                          "note": "Merge two sequents by cutting out a shared formula or list of formulas, removing intermediate lemmas from a proof." }
+      ],
+      "edges": [
+        { "from": "S",       "to": "axiom" },
+        { "from": "S",       "to": "logical" },
+        { "from": "S",       "to": "struct" },
+        { "from": "axiom",   "to": "ref" },
+        { "from": "logical", "to": "land" },
+        { "from": "logical", "to": "lor" },
+        { "from": "logical", "to": "lneg" },
+        { "from": "logical", "to": "limp" },
+        { "from": "struct",  "to": "mon" },
+        { "from": "struct",  "to": "cut" }
+      ]
+    },
+    {
+      "id": "chart-4",
+      "type": "flowchart",
+      "title": "Gabbay-Makinson Rules Taxonomy",
+      "description": "The seven basic GM rules and four key derived rules for the non-monotonic consequence relation snake.",
+      "nodes": [
+        { "id": "GM",      "label": "Gabbay-Makinson\nSystem",             "shape": "rect",                          "note": "GM is the proof system that captures defeasible reasoning syntactically. Its rules describe how the snake (usually-follows) relation should behave." },
+        { "id": "basic",   "label": "Basic Rules",                         "shape": "rect",                          "note": "The seven primitive rules of GM that define the non-monotonic consequence relation. All other rules can be derived from these." },
+        { "id": "ref",     "label": "REF: F snake F",                      "shape": "rect",                          "note": "Reflexivity: any formula usually follows from itself. This is the only axiom schema with zero premises." },
+        { "id": "rand",    "label": "R-and: combine\nconsequents",         "shape": "rect",                          "note": "If G and H both usually follow from F, then their conjunction also usually follows from F." },
+        { "id": "lor",     "label": "L-or: combine\npremises",             "shape": "rect",                          "note": "If H usually follows from F and from G separately, then H usually follows from their disjunction." },
+        { "id": "lle",     "label": "LLE: rewrite\nleft side",             "shape": "rect",                          "note": "If F is classically equivalent to G, then F snake H gives G snake H. The equivalence is a side condition on the rule." },
+        { "id": "rwe",     "label": "RWE: weaken\nright side",             "shape": "rect",                          "note": "If H is a classical consequence of G, then F snake G gives F snake H. Allows replacing the consequent with a weaker formula." },
+        { "id": "cmon",    "label": "CMON: cautious\nmonotonicity",        "shape": "rect",                          "note": "If F snake G and F snake H, then F-and-G snake H. Adding a conjunct G that already usually holds preserves the conclusion." },
+        { "id": "rmon",    "label": "RMON: rational\nmonotonicity",        "shape": "rect",                          "note": "If F snake H and F does NOT snake not-G, then F-and-G snake H. Has a negative premise unlike the other rules." },
+        { "id": "der",     "label": "Derived Rules",                       "shape": "rect",                          "note": "Useful rules that can be proved from the seven basic rules. They simplify proofs but add no new expressive power." },
+        { "id": "sc",      "label": "SC: super-\nclassicality",            "shape": "rect",                          "note": "Classical consequences are also defeasible: if F entails G classically, then F snake G. Derivable from REF and RWE." },
+        { "id": "con",     "label": "CON: condi-\ntionalisation",          "shape": "rect",                          "note": "If F-and-G snake H then F snake (G to H). Moves a conjunct from the left into an implication on the right." },
+        { "id": "cc",      "label": "CC: cautious\ncut",                   "shape": "rect",                          "note": "If F snake G and F-and-G snake H then F snake H. Allows removing a redundant intermediate lemma G that was usually true." },
+        { "id": "nrat",    "label": "NRAT: negation\nrationality",         "shape": "rect",                          "note": "If F snake H and F-and-not-G does NOT snake H, then F-and-G snake H. Distinguishes which conjuncts matter for the conclusion." }
+      ],
+      "edges": [
+        { "from": "GM",    "to": "basic" },
+        { "from": "GM",    "to": "der" },
+        { "from": "basic", "to": "ref" },
+        { "from": "basic", "to": "rand" },
+        { "from": "basic", "to": "lor" },
+        { "from": "basic", "to": "lle" },
+        { "from": "basic", "to": "rwe" },
+        { "from": "basic", "to": "cmon" },
+        { "from": "basic", "to": "rmon" },
+        { "from": "der",   "to": "sc" },
+        { "from": "der",   "to": "con" },
+        { "from": "der",   "to": "cc" },
+        { "from": "der",   "to": "nrat" }
+      ]
+    },
+    {
+      "id": "chart-5",
+      "type": "flowchart",
+      "title": "Penguin Example: b and p snake not-f",
+      "description": "Backward proof in GM that birds that are penguins usually do not fly, given the penguin knowledge base.",
+      "nodes": [
+        { "id": "goal",    "label": "Goal:\nb and p snake not-f",          "shape": "terminal", "variant": "start",   "note": "We want to derive that birds-and-penguins usually do not fly, from the premises that penguins usually do not fly, that penguins not-being-birds is impossible, and that birds usually fly." },
+        { "id": "lle",     "label": "Apply LLE:\np and b ~ b and p",       "shape": "rect",                            "note": "Use left logical equivalence: p-and-b is classically equivalent to b-and-p, so it suffices to prove p and b snake not-f." },
+        { "id": "cmon",    "label": "Apply CMON\nto get p and b snake not-f","shape": "rect",                          "note": "Cautious monotonicity adds a conjunct that already usually holds. We need the two premises p snake not-f and p snake b." },
+        { "id": "premise", "label": "p snake not-f\n(premise 2)",          "shape": "terminal", "variant": "success", "note": "This is one of the original defeasible premises in the penguin knowledge base: penguins usually do not fly. It serves as a leaf of the proof tree." },
+        { "id": "needpb",  "label": "Need:\np snake b",                    "shape": "rect",                            "note": "We must show that penguins usually are birds. This is not a direct premise so we derive it from premise 3: penguins that are not birds are impossible." },
+        { "id": "con",     "label": "Apply CON\nto premise 3",             "shape": "rect",                            "note": "From premise 3 p-and-not-b snake bottom, conditionalisation gives p snake (not-b to bottom). This moves the conjunct not-b into an implication on the right." },
+        { "id": "rwe",     "label": "Apply RWE:\nnot-b to bottom |= b",    "shape": "rect",                            "note": "Classically, not-b implies bottom is logically equivalent to b. By right weakening we conclude p snake b, completing the proof of premise b for CMON." },
+        { "id": "done",    "label": "b and p snake not-f\nproved",         "shape": "terminal", "variant": "success", "note": "All branches of the proof tree are either premises or have been derived. The conclusion is therefore a rational consequence of the penguin knowledge base." }
+      ],
+      "edges": [
+        { "from": "goal",    "to": "lle" },
+        { "from": "lle",     "to": "cmon" },
+        { "from": "cmon",    "to": "premise" },
+        { "from": "cmon",    "to": "needpb" },
+        { "from": "needpb",  "to": "con" },
+        { "from": "con",     "to": "rwe" },
+        { "from": "rwe",     "to": "done" },
+        { "from": "premise", "to": "done" }
+      ]
+    }
+  ]
+}

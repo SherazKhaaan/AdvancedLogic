@@ -1,0 +1,156 @@
+{
+  "module": "AdvancedLogic",
+  "week": 8,
+  "title": "Lukasiewicz Logic and McNaughton's Theorem",
+  "charts": [
+    {
+      "id": "chart-1",
+      "type": "mindmap",
+      "title": "Topic Map",
+      "description": "Overview of why Lukasiewicz logic is preferred, the McNaughton characterisation, the tree algorithm, and key supporting lemmas.",
+      "nodes": [
+        { "id": "root",   "label": "Week 8\nMcNaughton",                  "note": "Week 8 zooms in on Lukasiewicz logic F3 and proves McNaughton's Theorem, which characterises exactly which functions on [0,1] can be represented by F3 propositional formulas." },
+        { "id": "why",    "label": "Why F3?",                             "note": "F3 is the only one of the three standard fuzzy logics that satisfies the law of excluded middle and lets us define min and max as compound operators." },
+        { "id": "lem",    "label": "Excluded\nMiddle (LEM)",              "note": "In F3 the formula p or not-p evaluates to 1 for every value of p. This fails in F1 and F2." },
+        { "id": "ext",    "label": "F3 extends\nF1",                      "note": "Inside F3 we can define new operators that compute min and max on truth values, so any reasoning in F1 can be replicated in F3." },
+        { "id": "mcn",    "label": "McNaughton\nTheorem",                 "note": "A function f : [0,1] -> [0,1] is the truth function of some F3 formula iff it is continuous, piecewise linear, and uses only integer coefficients." },
+        { "id": "lem82",  "label": "Lemma 8.2",                           "note": "Every truth function of an F3 formula is continuous, piecewise linear, and uses integer coefficients. Proved by induction on formula structure." },
+        { "id": "lem83",  "label": "Lemma 8.3",                           "note": "For every pair of integers n and m there is an F3 formula whose truth function equals the clamped linear function [nx+m]_0^1." },
+        { "id": "tree",   "label": "Tree\nAlgorithm",                     "note": "Constructive procedure that turns the recursive proof of Lemma 8.3 into a binary tree which yields the actual formula for any [nx+m]_0^1." },
+        { "id": "wedge",  "label": "Wedge\nCombination",                  "note": "Once we have formulas for individual clamped linear pieces we combine them using min and max into wedge-shaped functions to realise any continuous piecewise linear target." },
+        { "id": "lem84",  "label": "Lemma 8.4\n(non-exam)",                "note": "Sharp approximation lemma using Bezout's identity. Provides the converse direction of McNaughton for arbitrary rational breakpoints." },
+        { "id": "id",     "label": "Lukasiewicz\nIdentities",             "note": "De Morgan laws and the equivalence of implication with not-p or q hold in F3, mirroring classical propositional logic." },
+        { "id": "part",   "label": "Partition\nLemma",                    "note": "Intersecting two partitions of [0,1] gives another partition. Used to merge the partitions induced by sub-formulas in the proof of Lemma 8.2." },
+        { "id": "clamp",  "label": "Clamping\n[z]_0^1",                   "note": "The clamping operator [z]_0^1 = min(1, max(0, z)) is the basic building block for representable functions in McNaughton's theorem." }
+      ],
+      "edges": [
+        { "from": "root", "to": "why" },
+        { "from": "root", "to": "mcn" },
+        { "from": "root", "to": "lem82" },
+        { "from": "root", "to": "lem83" },
+        { "from": "root", "to": "tree" },
+        { "from": "root", "to": "wedge" },
+        { "from": "root", "to": "id" },
+        { "from": "root", "to": "part" },
+        { "from": "why",  "to": "lem" },
+        { "from": "why",  "to": "ext" },
+        { "from": "mcn",  "to": "clamp" },
+        { "from": "wedge","to": "lem84" }
+      ]
+    },
+    {
+      "id": "chart-2",
+      "type": "flowchart",
+      "title": "Tree Algorithm for [nx+m]_0^1",
+      "description": "Recursive procedure that constructs an F3 propositional formula whose truth function equals the clamped linear function [nx+m]_0^1.",
+      "nodes": [
+        { "id": "start", "label": "Want formula for\n[nx + m]_0^1",      "shape": "terminal", "variant": "start",   "note": "We start with integer parameters n and m and want to build an F3 propositional formula whose truth function equals the clamped linear function [nx+m]_0^1." },
+        { "id": "n0",    "label": "n = 0?",                              "shape": "diamond",                         "note": "Check whether the slope is zero. If n is zero we have reached a base case and the function is a constant 0 or 1." },
+        { "id": "const", "label": "m <= 0 ?",                            "shape": "diamond",                         "note": "Decide whether the constant is below the lower clamp or above the upper clamp. The result is either falsity or tautology." },
+        { "id": "bot",   "label": "Use bottom\n(p and not p)",           "shape": "rect",                            "note": "The clamped value is 0, so any contradiction such as p and not p suffices as the formula." },
+        { "id": "top",   "label": "Use top\n(p or not p)",               "shape": "rect",                            "note": "The clamped value is 1, so any tautology such as p or not p suffices as the formula." },
+        { "id": "pos",   "label": "n > 0?",                              "shape": "diamond",                         "note": "Decide which recursive case applies depending on the sign of n. Positive slopes use p; negative slopes use not p." },
+        { "id": "rpos",  "label": "Recurse on\n(n-1)x+m and (n-1)x+(m+1)","shape": "rect",                          "note": "Generate two child sub-problems: the slope decreases by 1, with m unchanged for the left child and incremented by 1 for the right child." },
+        { "id": "cpos",  "label": "Combine:\n(F_left or p) and F_right", "shape": "rect",                            "note": "The parent formula is built by disjoining the left child's formula with p and conjoining the result with the right child's formula." },
+        { "id": "rneg",  "label": "Recurse on\n(n+1)x+(m-1) and (n+1)x+m","shape": "rect",                           "note": "For negative n, generate two child sub-problems with n increased by 1, and decremented m for the left child." },
+        { "id": "cneg",  "label": "Combine:\n(F_left or not p) and F_right","shape": "rect",                         "note": "Combine using disjunction with not p instead of p, then conjoin with the right child's formula." },
+        { "id": "out",   "label": "Output formula\nF_n,m",               "shape": "terminal", "variant": "success", "note": "Walk back up the recursion tree, building the parent formula from its two children at each step. The root yields the desired formula." }
+      ],
+      "edges": [
+        { "from": "start", "to": "n0" },
+        { "from": "n0",    "to": "const", "label": "Yes" },
+        { "from": "n0",    "to": "pos",   "label": "No" },
+        { "from": "const", "to": "bot",   "label": "Yes" },
+        { "from": "const", "to": "top",   "label": "No" },
+        { "from": "pos",   "to": "rpos",  "label": "Yes" },
+        { "from": "pos",   "to": "rneg",  "label": "No" },
+        { "from": "rpos",  "to": "cpos" },
+        { "from": "rneg",  "to": "cneg" },
+        { "from": "cpos",  "to": "out" },
+        { "from": "cneg",  "to": "out" },
+        { "from": "bot",   "to": "out" },
+        { "from": "top",   "to": "out" }
+      ]
+    },
+    {
+      "id": "chart-3",
+      "type": "flowchart",
+      "title": "Lemma 8.2 Proof Structure",
+      "description": "Induction on formula structure showing every F3 truth function is continuous piecewise linear with integer coefficients.",
+      "nodes": [
+        { "id": "start", "label": "Formula F\nin F3",                    "shape": "terminal", "variant": "start",   "note": "We want to prove by induction on the size of F that its F3 truth function is continuous, piecewise linear, and has integer coefficients." },
+        { "id": "atom",  "label": "F is a\npropositional variable?",     "shape": "diamond",                         "note": "Base case of the induction. If F is just p then its truth function is the identity x, which is trivially piecewise linear with integer coefficients." },
+        { "id": "base",  "label": "Truth function = x\n(slope 1, b 0)", "shape": "terminal", "variant": "success", "note": "The function is a single linear piece with integer slope 1 and intercept 0, so the property holds in the base case." },
+        { "id": "kind",  "label": "Top connective\nin F?",               "shape": "diamond",                         "note": "Identify the outermost connective of F and apply the corresponding inductive case (negation, conjunction, disjunction, or implication)." },
+        { "id": "neg",   "label": "Negation:\nuse 1 - g(x)",             "shape": "rect",                            "note": "If F = not G, the truth function is 1 - g(x). Replacing each linear piece a*x + b by -a*x + (1-b) keeps integer coefficients." },
+        { "id": "and",   "label": "Conjunction:\nuse max(0,g+h-1)",      "shape": "rect",                            "note": "If F = G and H, refine the partitions to a common one and replace each pair of linear pieces by max(0, g(x) + h(x) - 1)." },
+        { "id": "or",    "label": "Disjunction:\nde Morgan reduction",   "shape": "rect",                            "note": "If F = G or H, rewrite as not (not G and not H) and reuse the negation and conjunction cases inductively." },
+        { "id": "imp",   "label": "Implication:\nrewrite to or",         "shape": "rect",                            "note": "If F = G to H, rewrite as not G or H and reduce to the disjunction case via De Morgan." },
+        { "id": "done",  "label": "Truth function is\ninteger piecewise linear","shape": "terminal", "variant": "success", "note": "All four cases preserve continuity, piecewise-linearity, and integer coefficients, so by induction the property holds for every F3 formula." }
+      ],
+      "edges": [
+        { "from": "start", "to": "atom" },
+        { "from": "atom",  "to": "base", "label": "Yes" },
+        { "from": "atom",  "to": "kind", "label": "No" },
+        { "from": "kind",  "to": "neg",  "label": "not" },
+        { "from": "kind",  "to": "and",  "label": "and" },
+        { "from": "kind",  "to": "or",   "label": "or" },
+        { "from": "kind",  "to": "imp",  "label": "to" },
+        { "from": "neg",   "to": "done" },
+        { "from": "and",   "to": "done" },
+        { "from": "or",    "to": "done" },
+        { "from": "imp",   "to": "done" }
+      ]
+    },
+    {
+      "id": "chart-4",
+      "type": "flowchart",
+      "title": "Building Formulas for Piecewise-Linear Functions",
+      "description": "High-level procedure for constructing an F3 formula whose truth function equals an arbitrary continuous piecewise-linear target.",
+      "nodes": [
+        { "id": "start",  "label": "Target function f\n(continuous PL, integer coeffs)","shape": "terminal", "variant": "start", "note": "We are given a target function on [0,1] that is continuous, piecewise linear, and uses only integer coefficients - precisely the McNaughton-representable functions." },
+        { "id": "decomp", "label": "Decompose f into\nwedges or pieces", "shape": "rect",                          "note": "Identify the basic linear pieces or wedge shapes that compose f. Each wedge is a function that rises and falls linearly between integer-coefficient lines." },
+        { "id": "loop",   "label": "Pieces remaining?",                  "shape": "diamond",                       "note": "Check whether all pieces have been processed. If yes, combine the formulas; if no, build a formula for the next piece." },
+        { "id": "tree",   "label": "Apply tree algorithm\nfor each [nx+m]","shape": "rect",                       "note": "For each linear piece, use the tree algorithm of Lemma 8.3 to construct an F3 formula whose truth function equals that clamped linear function." },
+        { "id": "wedge",  "label": "Combine pair using\nunderscore-and = min","shape": "rect",                    "note": "Pairs of clamped linear formulas can be combined into a wedge by taking their minimum, which is the defined operator underscore-and in F3." },
+        { "id": "max",    "label": "Combine wedges using\nunderscore-or = max","shape": "rect",                   "note": "Combine all wedges by taking the maximum (defined operator underscore-or). The resulting formula realises the target piecewise linear function." },
+        { "id": "done",   "label": "Final F3 formula\nrealises f",       "shape": "terminal", "variant": "success", "note": "All pieces have been combined into a single F3 propositional formula whose truth function is exactly the target f, completing the converse direction of McNaughton's theorem." }
+      ],
+      "edges": [
+        { "from": "start",  "to": "decomp" },
+        { "from": "decomp", "to": "loop" },
+        { "from": "loop",   "to": "tree", "label": "Yes" },
+        { "from": "loop",   "to": "max",  "label": "No" },
+        { "from": "tree",   "to": "wedge" },
+        { "from": "wedge",  "to": "loop" },
+        { "from": "max",    "to": "done" }
+      ]
+    },
+    {
+      "id": "chart-5",
+      "type": "flowchart",
+      "title": "Why F3 (Lukasiewicz) over F1 and F2",
+      "description": "Taxonomy of the desirable properties that distinguish Lukasiewicz logic from the other standard fuzzy logics.",
+      "nodes": [
+        { "id": "want",  "label": "Desirable\nproperties",            "shape": "rect",                          "note": "We list the properties we want a fuzzy logic to satisfy, then check which of F1, F2, F3 actually delivers them." },
+        { "id": "lem",   "label": "LEM:\np or not-p = 1",             "shape": "rect",                          "note": "We want the law of excluded middle to hold so that the disjunction of any proposition with its negation is fully true." },
+        { "id": "minmax","label": "Express min\nand max as defined",   "shape": "rect",                          "note": "We want to be able to define new operators for min and max inside the logic, so that anything F1 can do can also be done in our chosen logic." },
+        { "id": "f1",    "label": "F1 (Min-Max)",                     "shape": "rect",                          "note": "Has min and max as primitives but fails LEM: at p = 0.5 the value of p or not-p is just 0.5." },
+        { "id": "f2",    "label": "F2 (Product)",                     "shape": "rect",                          "note": "Has continuous-to-classical limits but fails LEM: at p = 0.5 the value of p or not-p is 0.75." },
+        { "id": "f3",    "label": "F3 (Lukasiewicz)",                 "shape": "rect",                          "note": "Satisfies LEM and lets us define min and max via the implication operator. This is why F3 is preferred." },
+        { "id": "underand","label": "x and y =\n(x to y) and x",      "shape": "rect",                          "note": "Defined conjunction operator that produces min in F3. Allows F3 to simulate F1 inside its own language." },
+        { "id": "underor","label": "x or y =\n(x to y) to y",         "shape": "rect",                          "note": "Defined disjunction operator that produces max in F3. Together with the defined min, F3 contains an internal copy of F1." }
+      ],
+      "edges": [
+        { "from": "want",  "to": "lem" },
+        { "from": "want",  "to": "minmax" },
+        { "from": "lem",   "to": "f1" },
+        { "from": "lem",   "to": "f2" },
+        { "from": "lem",   "to": "f3" },
+        { "from": "minmax","to": "f3" },
+        { "from": "f3",    "to": "underand" },
+        { "from": "f3",    "to": "underor" }
+      ]
+    }
+  ]
+}

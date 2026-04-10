@@ -1,0 +1,148 @@
+{
+  "module": "AdvancedLogic",
+  "week": 7,
+  "title": "The Mostert-Shields Theorems",
+  "charts": [
+    {
+      "id": "chart-1",
+      "type": "mindmap",
+      "title": "Topic Map",
+      "description": "Overview of t-norms, t-conorms, the idempotent set, and the Mostert-Shields classification of all continuous t-norms and t-conorms.",
+      "nodes": [
+        { "id": "root",   "label": "Week 7\nMostert-Shields",         "note": "Week 7 classifies all continuous t-norms and t-conorms. The Mostert-Shields theorems show that any continuous conjunction or disjunction is a chimera of the three standard fuzzy operators." },
+        { "id": "tnorm",  "label": "T-norms",                          "note": "A t-norm is a binary operation on [0,1] that generalises Boolean conjunction. It must satisfy the four properties C1-C4: boolean, increasing, continuous, and associative." },
+        { "id": "tconorm","label": "T-conorms",                        "note": "A t-conorm is the dual binary operation generalising disjunction. It must satisfy D1-D4 and is related to a t-norm by neg(neg(x) and neg(y))." },
+        { "id": "three",  "label": "Three Standard\nT-norms",          "note": "F1 = min, F2 = xy, and F3 = max(0,x+y-1) are the three canonical t-norms. They are not isomorphic to each other and serve as building blocks." },
+        { "id": "idem",   "label": "Idempotent\nSet A",                "note": "The set A = {z : z and z = z} of fixed points of the t-norm. Its structure determines how the t-norm decomposes into sub-intervals." },
+        { "id": "ms",     "label": "Mostert-Shields\nTheorem",         "note": "Every continuous t-norm acts as min outside its idempotent intervals and is isomorphic to either F2 or F3 on each maximal non-idempotent sub-interval." },
+        { "id": "chim",   "label": "Chimera",                          "note": "A chimera t-norm is one that locally looks like F1, F2 or F3 in different regions of [0,1]^2. Any continuous t-norm is a chimera of these three." },
+        { "id": "lemmas", "label": "Lemmas\n6.2-6.4",                  "note": "The proof of Mostert-Shields proceeds via Lemma 6.2 (min behaviour near idempotents), Lemma 6.3 (type 2 sub-intervals isomorphic to product), and Lemma 6.4 (type 3 isomorphic to Lukasiewicz)." },
+        { "id": "c1",     "label": "C1-C4 Axioms",                     "note": "C1 boolean boundary, C2 monotone increasing in each component, C3 continuous, C4 associative. Together they ensure the t-norm behaves like a reasonable conjunction." },
+        { "id": "type2",  "label": "Type 2\nSub-interval",             "note": "Type 2 intervals [a,b] are those where z and z is never equal to a for z in the open interval. They are isomorphic to the product t-norm F2." },
+        { "id": "type3",  "label": "Type 3\nSub-interval",             "note": "Type 3 intervals [a,b] are those where some z in the open interval has z and z = a. They are isomorphic to the Lukasiewicz t-norm F3." },
+        { "id": "limit",  "label": "Limit-\ncommutativity",            "note": "Continuity (C3) implies that the t-norm commutes with limits of convergent sequences: lim x_n and y = lim (x_n and y)." },
+        { "id": "duality","label": "Conjunction-\nDisjunction Duality","note": "Any t-conorm is obtained from a t-norm by the De Morgan-like formula x or y = 1 - ((1-x) and (1-y)). This makes Theorem 6.6 follow from Theorem 6.1." }
+      ],
+      "edges": [
+        { "from": "root",    "to": "tnorm" },
+        { "from": "root",    "to": "tconorm" },
+        { "from": "root",    "to": "three" },
+        { "from": "root",    "to": "idem" },
+        { "from": "root",    "to": "ms" },
+        { "from": "tnorm",   "to": "c1" },
+        { "from": "tnorm",   "to": "limit" },
+        { "from": "ms",      "to": "chim" },
+        { "from": "ms",      "to": "lemmas" },
+        { "from": "ms",      "to": "type2" },
+        { "from": "ms",      "to": "type3" },
+        { "from": "tconorm", "to": "duality" }
+      ]
+    },
+    {
+      "id": "chart-2",
+      "type": "flowchart",
+      "title": "Verifying a T-norm (C1-C4)",
+      "description": "Decision procedure to check whether a candidate binary function on [0,1] is a continuous t-norm.",
+      "nodes": [
+        { "id": "start", "label": "Candidate\noperation and",          "shape": "terminal", "variant": "start",   "note": "We are given a binary function and : [0,1]^2 -> [0,1] and want to verify whether it satisfies all four t-norm axioms." },
+        { "id": "c1",    "label": "C1: correct on\n0 and 1?",          "shape": "diamond",                         "note": "Plug in the four corners (0,0), (0,1), (1,0), (1,1) and check that the values match classical conjunction." },
+        { "id": "fail",  "label": "Not a t-norm",                      "shape": "terminal", "variant": "failure", "note": "At least one axiom has failed, so the candidate is not a continuous t-norm. Stop and report the failing axiom." },
+        { "id": "c2",    "label": "C2: increasing in\neach component?","shape": "diamond",                         "note": "Show that fixing one argument and increasing the other never decreases the result. This is monotonicity in both slots." },
+        { "id": "c3",    "label": "C3: continuous on\n[0,1]^2 ?",      "shape": "diamond",                         "note": "Verify continuity using epsilon-delta or by composing continuous building blocks. Pay attention to boundaries between piecewise regions." },
+        { "id": "c4",    "label": "C4: associative?",                  "shape": "diamond",                         "note": "Compute (x and y) and z and x and (y and z) symbolically and check they are equal. Often easiest by case analysis." },
+        { "id": "ok",    "label": "Continuous t-norm\nverified",       "shape": "terminal", "variant": "success", "note": "All four axioms hold, so the function is a continuous t-norm. By Mostert-Shields it is a chimera of F1, F2, and F3." }
+      ],
+      "edges": [
+        { "from": "start", "to": "c1" },
+        { "from": "c1",    "to": "c2",   "label": "Yes" },
+        { "from": "c1",    "to": "fail", "label": "No" },
+        { "from": "c2",    "to": "c3",   "label": "Yes" },
+        { "from": "c2",    "to": "fail", "label": "No" },
+        { "from": "c3",    "to": "c4",   "label": "Yes" },
+        { "from": "c3",    "to": "fail", "label": "No" },
+        { "from": "c4",    "to": "ok",   "label": "Yes" },
+        { "from": "c4",    "to": "fail", "label": "No" }
+      ]
+    },
+    {
+      "id": "chart-3",
+      "type": "flowchart",
+      "title": "Mostert-Shields Classification of a Sub-interval",
+      "description": "Procedure for deciding which canonical t-norm a maximal non-idempotent sub-interval is isomorphic to.",
+      "nodes": [
+        { "id": "start", "label": "T-norm and on [0,1]",                    "shape": "terminal", "variant": "start",   "note": "We have a continuous t-norm and want to apply Mostert-Shields to classify its behaviour on every sub-interval of [0,1]." },
+        { "id": "A",     "label": "Compute idempotent\nset A",              "shape": "rect",                            "note": "A = { z : z and z = z }. Always contains 0 and 1. Its structure determines where the t-norm acts as min." },
+        { "id": "out",   "label": "On the complement\nof sub-intervals\nand = min", "shape": "rect",                    "note": "Outside the maximal sub-intervals [a_i,b_i] with endpoints in A and no idempotents in between, the t-norm equals min by Lemma 6.2." },
+        { "id": "find",  "label": "Find a maximal\nsub-interval [a,b]",     "shape": "rect",                            "note": "Pick a maximal interval whose endpoints are in A but whose interior contains no idempotents. Each such interval needs separate classification." },
+        { "id": "test",  "label": "Exists z in (a,b)\nwith z and z = a?",   "shape": "diamond",                         "note": "Check whether the lower endpoint a is reached by squaring some interior element. This single test distinguishes type 2 from type 3 intervals." },
+        { "id": "type2", "label": "Type 2\nisomorphic to F2 (xy)",          "shape": "rect",                            "note": "Lemma 6.3: the sub-interval is isomorphic to the product t-norm. The isomorphism is built using and-exponentiation and logarithms." },
+        { "id": "type3", "label": "Type 3\nisomorphic to F3 (Lukasiewicz)", "shape": "rect",                            "note": "Lemma 6.4: the sub-interval is isomorphic to the Lukasiewicz t-norm. The construction uses an order-reversing isomorphism." },
+        { "id": "more",  "label": "More sub-intervals\nremain?",            "shape": "diamond",                         "note": "Continue until every maximal non-idempotent sub-interval has been classified. Each one independently chooses type 2 or type 3." },
+        { "id": "done",  "label": "Chimera fully\ndescribed",               "shape": "terminal", "variant": "success", "note": "Every region of [0,1] has been classified: outside the sub-intervals the t-norm acts as min, and within each sub-interval it acts like F2 or F3." }
+      ],
+      "edges": [
+        { "from": "start", "to": "A" },
+        { "from": "A",     "to": "out" },
+        { "from": "out",   "to": "find" },
+        { "from": "find",  "to": "test" },
+        { "from": "test",  "to": "type3", "label": "Yes" },
+        { "from": "test",  "to": "type2", "label": "No" },
+        { "from": "type2", "to": "more" },
+        { "from": "type3", "to": "more" },
+        { "from": "more",  "to": "find",  "label": "Yes" },
+        { "from": "more",  "to": "done",  "label": "No" }
+      ]
+    },
+    {
+      "id": "chart-4",
+      "type": "flowchart",
+      "title": "Three Canonical T-norms - Comparison",
+      "description": "Taxonomy of the three standard continuous t-norms, their idempotent sets, and the conjugate t-conorms.",
+      "nodes": [
+        { "id": "tnorm", "label": "Standard\nT-norms",            "shape": "rect",                          "note": "Three canonical t-norms generate every continuous t-norm via the chimera construction. They are mutually non-isomorphic." },
+        { "id": "f1",    "label": "F1 = min(x,y)",                "shape": "rect",                          "note": "Godel t-norm. Every element is idempotent: z and z = z for all z. This is the only t-norm with idempotent set equal to all of [0,1]." },
+        { "id": "f2",    "label": "F2 = x * y",                   "shape": "rect",                          "note": "Product t-norm. Only 0 and 1 are idempotent, and z and z is strictly less than z for any z in (0,1)." },
+        { "id": "f3",    "label": "F3 = max(0,x+y-1)",            "shape": "rect",                          "note": "Lukasiewicz t-norm. Has 0 and 1 as idempotents but additionally 0.5 and 0.5 = 0, so it produces type 3 sub-intervals." },
+        { "id": "f1c",   "label": "Conorm: max(x,y)",             "shape": "rect",                          "note": "The dual to F1: maximum is the simplest disjunction operator and arises by De Morgan from min." },
+        { "id": "f2c",   "label": "Conorm: x+y-x*y",              "shape": "rect",                          "note": "The dual to F2: probability sum, also called inclusion-exclusion. It is the De Morgan dual of the product t-norm." },
+        { "id": "f3c",   "label": "Conorm: min(1,x+y)",           "shape": "rect",                          "note": "The dual to F3: bounded sum. This is the Lukasiewicz disjunction, the only one validating excluded middle." },
+        { "id": "a1",    "label": "A = [0,1]",                    "shape": "rect",                          "note": "All elements are idempotent for F1, so the chimera classification immediately gives the trivial decomposition with no sub-intervals." },
+        { "id": "a23",   "label": "A = {0,1}",                    "shape": "rect",                          "note": "For F2 and F3 only the endpoints are idempotent, so the entire interval [0,1] is one maximal sub-interval." }
+      ],
+      "edges": [
+        { "from": "tnorm","to": "f1" },
+        { "from": "tnorm","to": "f2" },
+        { "from": "tnorm","to": "f3" },
+        { "from": "f1",   "to": "a1" },
+        { "from": "f1",   "to": "f1c" },
+        { "from": "f2",   "to": "a23" },
+        { "from": "f2",   "to": "f2c" },
+        { "from": "f3",   "to": "a23" },
+        { "from": "f3",   "to": "f3c" }
+      ]
+    },
+    {
+      "id": "chart-5",
+      "type": "flowchart",
+      "title": "Lemma 6.2 - Min Behaviour Near Idempotents",
+      "description": "Proof outline showing that the t-norm acts as min when one of its arguments lies between an idempotent.",
+      "nodes": [
+        { "id": "start", "label": "z in A and\nx <= z <= y",          "shape": "terminal", "variant": "start",   "note": "We are given a t-norm idempotent z, and want to show that x and y reduces to min(x,y) whenever x <= z <= y." },
+        { "id": "ivt",   "label": "Use IVT to find\nt with x = z and t","shape": "rect",                          "note": "Continuity (C3) and monotonicity together with the idempotency of z give the existence of some t in [0,1] with z and t = x." },
+        { "id": "rew",   "label": "Rewrite x =\n(z and z) and t",     "shape": "rect",                          "note": "Substitute z and z = z (since z is idempotent) into the equation x = z and t to obtain x = (z and z) and t." },
+        { "id": "ass",   "label": "Apply C4\nassociativity",          "shape": "rect",                          "note": "By associativity (C4), (z and z) and t = z and (z and t) = z and x. So x equals z and x." },
+        { "id": "mon1",  "label": "C2: z <= y so\nz and x <= y and x","shape": "rect",                          "note": "Apply monotonicity in the first argument: replacing z by the larger value y gives z and x <= y and x = x and y." },
+        { "id": "mon2",  "label": "C2 again:\ny and x <= 1 and x",    "shape": "rect",                          "note": "Apply monotonicity again: y and x <= 1 and x. By the boundary axioms 1 and x = x, so y and x <= x." },
+        { "id": "done",  "label": "x and y = x = min(x,y)",           "shape": "terminal", "variant": "success", "note": "Combining the two inequalities x <= y and x <= x gives equality. So the t-norm equals min on this region, which is exactly Lemma 6.2." }
+      ],
+      "edges": [
+        { "from": "start", "to": "ivt" },
+        { "from": "ivt",   "to": "rew" },
+        { "from": "rew",   "to": "ass" },
+        { "from": "ass",   "to": "mon1" },
+        { "from": "mon1",  "to": "mon2" },
+        { "from": "mon2",  "to": "done" }
+      ]
+    }
+  ]
+}

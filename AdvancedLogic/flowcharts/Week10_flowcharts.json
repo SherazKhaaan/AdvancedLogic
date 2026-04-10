@@ -1,0 +1,160 @@
+{
+  "module": "AdvancedLogic",
+  "week": 10,
+  "title": "The Tableau Algorithm for Modal Logic",
+  "charts": [
+    {
+      "id": "chart-1",
+      "type": "mindmap",
+      "title": "Topic Map",
+      "description": "Overview of propositional and modal tableau algorithms, their rules, and how to use them to decide satisfiability and validity in modal logic.",
+      "nodes": [
+        { "id": "root",   "label": "Week 10\nTableau Algorithm",         "note": "Week 10 introduces the tableau algorithm: a systematic decision procedure for satisfiability and validity in propositional and modal logic, overcoming the issue that Kripke models can be infinite." },
+        { "id": "prop",   "label": "Propositional\nTableau",              "note": "A two-column True/False table whose rules decompose Boolean formulas. Closed branches mean contradiction; an open fully-expanded branch yields a satisfying valuation." },
+        { "id": "modal",  "label": "Modal\nTableau",                      "note": "An extension of the propositional tableau with tagged formulas (w : F) and a third Relation column tracking the accessibility relation between worlds." },
+        { "id": "tagged", "label": "Tagged\nFormulas",                    "note": "A tagged formula (w : F) records that formula F is being asserted at world w. This is how the tableau accounts for world-relative truth in modal logic." },
+        { "id": "rules",  "label": "Tableau\nRules",                      "note": "Eight propositional rules handle the Boolean connectives in True and False, while four new modal rules handle box and diamond." },
+        { "id": "drules", "label": "Modal Rules\n(Diamond, Box)",         "note": "Diamond-true and Box-false introduce fresh world labels. Box-true and Diamond-false propagate formulas across existing relations and must NOT be marked as expanded." },
+        { "id": "sat",    "label": "Satisfiability",                      "note": "Initial tableau places (w0 : F) in True. Expand using the rules; if any branch is fully expanded and open, F is satisfiable and a model can be read off." },
+        { "id": "valid",  "label": "Validity",                            "note": "F is valid iff not F is unsatisfiable. Place (w0 : F) in False and expand; F is valid iff every branch closes." },
+        { "id": "model",  "label": "Read-off\nKripke Model",              "note": "From an open branch: worlds are the labels appearing in tagged formulas, the relation is the Relation column, and the valuation is given by True/False of atomic tagged formulas." },
+        { "id": "frame",  "label": "Frame Class\nRestrictions",           "note": "To check satisfiability in a frame class such as reflexive or transitive, close the Relation column under the required property after each rule that adds new pairs." },
+        { "id": "loop",   "label": "Looping &\nBlocking",                 "note": "Some satisfiable formulas on transitive frames cause the tableau to spawn infinitely many fresh worlds. Loop-checking reuses existing world labels to ensure termination." },
+        { "id": "tree",   "label": "Tree Model\nProperty",                "note": "The tableau procedure always produces models with tree-shaped frames. Hence every satisfiable modal formula is satisfiable in a tree model." }
+      ],
+      "edges": [
+        { "from": "root",  "to": "prop" },
+        { "from": "root",  "to": "modal" },
+        { "from": "root",  "to": "rules" },
+        { "from": "root",  "to": "sat" },
+        { "from": "root",  "to": "valid" },
+        { "from": "root",  "to": "model" },
+        { "from": "root",  "to": "frame" },
+        { "from": "modal", "to": "tagged" },
+        { "from": "rules", "to": "drules" },
+        { "from": "frame", "to": "loop" },
+        { "from": "model", "to": "tree" }
+      ]
+    },
+    {
+      "id": "chart-2",
+      "type": "flowchart",
+      "title": "Propositional Tableau Algorithm",
+      "description": "Step-by-step procedure for deciding satisfiability of a propositional formula using the tableau method.",
+      "nodes": [
+        { "id": "start", "label": "Formula F",                        "shape": "terminal", "variant": "start",   "note": "We begin with a propositional formula F and want to determine whether it is satisfiable using the tableau decision procedure." },
+        { "id": "init",  "label": "Place F in\nTrue column",          "shape": "rect",                            "note": "Create the initial tableau with F in the True column and an empty False column. This represents the assumption that F should be true." },
+        { "id": "loop",  "label": "Unexpanded formula\nremains?",     "shape": "diamond",                         "note": "Check whether any compound formula in either column has not yet been processed by the corresponding expansion rule." },
+        { "id": "pick",  "label": "Select unexpanded\nformula",       "shape": "rect",                            "note": "Choose any unexpanded formula. The order does not affect the final answer, only the size of the resulting tree." },
+        { "id": "apply", "label": "Apply expansion rule",             "shape": "rect",                            "note": "Apply the appropriate expansion rule. Branching rules (or-true, and-false, imp-true) split the tableau into two sub-tableaux." },
+        { "id": "check", "label": "Any branch open?",                 "shape": "diamond",                         "note": "After full expansion, check whether at least one branch is open: that is, the True and False columns share no common formula." },
+        { "id": "sat",   "label": "SATISFIABLE",                      "shape": "terminal", "variant": "success", "note": "An open branch exists. F is satisfiable; the satisfying assignment sets V(p) = 1 for each propositional variable in the True column of that branch." },
+        { "id": "unsat", "label": "UNSATISFIABLE",                    "shape": "terminal", "variant": "failure", "note": "Every branch closed (some formula appears in both True and False). F is unsatisfiable - no valuation can make it true." }
+      ],
+      "edges": [
+        { "from": "start", "to": "init" },
+        { "from": "init",  "to": "loop" },
+        { "from": "loop",  "to": "pick",  "label": "Yes" },
+        { "from": "loop",  "to": "check", "label": "No" },
+        { "from": "pick",  "to": "apply" },
+        { "from": "apply", "to": "loop" },
+        { "from": "check", "to": "sat",   "label": "Yes" },
+        { "from": "check", "to": "unsat", "label": "No" }
+      ]
+    },
+    {
+      "id": "chart-3",
+      "type": "flowchart",
+      "title": "Modal Tableau Algorithm",
+      "description": "Decision procedure for modal satisfiability using tagged formulas and the Relation column.",
+      "nodes": [
+        { "id": "start", "label": "Modal formula F",                  "shape": "terminal", "variant": "start",   "note": "We want to decide whether F is satisfiable in some Kripke model. We use the modal tableau extension of the propositional procedure." },
+        { "id": "init",  "label": "Place (w0 : F)\nin True column",   "shape": "rect",                            "note": "Initialise the tableau with the tagged formula (w0 : F) in the True column. The Relation column is empty." },
+        { "id": "loop",  "label": "Any rule\napplicable?",            "shape": "diamond",                         "note": "Check whether any rule (propositional or modal) can still add new tagged formulas or relations to the current tableau." },
+        { "id": "kind",  "label": "Propositional or\nmodal rule?",    "shape": "diamond",                         "note": "Choose between a propositional rule that decomposes Boolean structure and a modal rule that introduces or propagates information across worlds." },
+        { "id": "prop",  "label": "Apply propositional\nrule on tag", "shape": "rect",                            "note": "Apply the propositional True/False rule to the tagged formula. The world label stays the same; only the Boolean structure is decomposed." },
+        { "id": "fresh", "label": "Diamond-true /\nBox-false:\nadd fresh world", "shape": "rect",                  "note": "These rules introduce a brand-new world label u not appearing elsewhere in the branch, plus the corresponding (w, u) entry in Relation." },
+        { "id": "prop2", "label": "Box-true /\nDiamond-false:\npropagate to all u","shape": "rect",                "note": "These rules add tagged formulas (u : F) for every existing relation (w, u) in Relation. Do NOT mark them as expanded; reapply when new relations appear." },
+        { "id": "open",  "label": "Any branch fully\nexpanded and open?","shape": "diamond",                       "note": "After all rules have been applied as far as possible, check whether at least one branch contains no contradictory tagged formula." },
+        { "id": "sat",   "label": "SATISFIABLE\n(read off model)",    "shape": "terminal", "variant": "success", "note": "An open branch exists, so F is satisfiable. Build a Kripke model from its world labels, the Relation column, and the True/False values of atomic tagged formulas." },
+        { "id": "unsat", "label": "UNSATISFIABLE",                    "shape": "terminal", "variant": "failure", "note": "Every branch closed, so F is unsatisfiable in any Kripke model. There is no Kripke world at which F can be true." }
+      ],
+      "edges": [
+        { "from": "start", "to": "init" },
+        { "from": "init",  "to": "loop" },
+        { "from": "loop",  "to": "kind",  "label": "Yes" },
+        { "from": "loop",  "to": "open",  "label": "No" },
+        { "from": "kind",  "to": "prop",  "label": "prop" },
+        { "from": "kind",  "to": "fresh", "label": "intro" },
+        { "from": "kind",  "to": "prop2", "label": "propagate" },
+        { "from": "prop",  "to": "loop" },
+        { "from": "fresh", "to": "loop" },
+        { "from": "prop2", "to": "loop" },
+        { "from": "open",  "to": "sat",   "label": "Yes" },
+        { "from": "open",  "to": "unsat", "label": "No" }
+      ]
+    },
+    {
+      "id": "chart-4",
+      "type": "flowchart",
+      "title": "Tableau Rules Taxonomy",
+      "description": "Classification of all the propositional and modal tableau rules into True column, False column, and modal categories.",
+      "nodes": [
+        { "id": "rules", "label": "Tableau Rules",                   "shape": "rect",                          "note": "There are eight propositional rules (one True and one False per connective) plus four modal rules. Each rule has a precise application and may or may not branch." },
+        { "id": "tcol",  "label": "True Column\nRules",              "shape": "rect",                          "note": "Rules that fire when a compound formula appears in the True column. They decompose its top-level connective into smaller assertions." },
+        { "id": "fcol",  "label": "False Column\nRules",             "shape": "rect",                          "note": "Rules that fire when a compound formula appears in the False column. They decompose into smaller assertions on the appropriate side." },
+        { "id": "mod",   "label": "Modal Rules",                     "shape": "rect",                          "note": "Four extra rules for the modal operators box and diamond. Two introduce fresh worlds; two propagate across existing relations." },
+        { "id": "nott",  "label": "not-true",                        "shape": "rect",                          "note": "If not-F is in True then F goes to False. Non-branching." },
+        { "id": "andt",  "label": "and-true",                        "shape": "rect",                          "note": "If F-and-G is in True then both F and G go to True. Non-branching." },
+        { "id": "ort",   "label": "or-true",                         "shape": "rect",                          "note": "If F-or-G is in True, branch into two sub-tableaux: one with F in True and one with G in True." },
+        { "id": "impt",  "label": "imp-true",                        "shape": "rect",                          "note": "If F-imp-G is in True, branch into F in False or G in True (since F-imp-G is equivalent to not-F or G)." },
+        { "id": "notf",  "label": "not-false",                       "shape": "rect",                          "note": "If not-F is in False then F goes to True. Non-branching." },
+        { "id": "andf",  "label": "and-false",                       "shape": "rect",                          "note": "If F-and-G is in False, branch into F in False or G in False." },
+        { "id": "orf",   "label": "or-false",                        "shape": "rect",                          "note": "If F-or-G is in False then both F and G go to False. Non-branching." },
+        { "id": "impf",  "label": "imp-false",                       "shape": "rect",                          "note": "If F-imp-G is in False then F goes to True and G goes to False. Non-branching." },
+        { "id": "diat",  "label": "diamond-true\n(fresh u)",         "shape": "rect",                          "note": "If (w : diamond F) is in True, introduce a fresh world label u, add (u : F) to True and (w, u) to Relation." },
+        { "id": "boxf",  "label": "box-false\n(fresh u)",            "shape": "rect",                          "note": "If (w : box F) is in False, introduce a fresh world label u, add (u : F) to False and (w, u) to Relation." },
+        { "id": "boxt",  "label": "box-true\n(propagate)",           "shape": "rect",                          "note": "If (w : box F) is in True, add (u : F) to True for every (w, u) in Relation. Do NOT mark this rule as expanded." },
+        { "id": "diaf",  "label": "diamond-false\n(propagate)",      "shape": "rect",                          "note": "If (w : diamond F) is in False, add (u : F) to False for every (w, u) in Relation. Do NOT mark this rule as expanded." }
+      ],
+      "edges": [
+        { "from": "rules","to": "tcol" },
+        { "from": "rules","to": "fcol" },
+        { "from": "rules","to": "mod" },
+        { "from": "tcol", "to": "nott" },
+        { "from": "tcol", "to": "andt" },
+        { "from": "tcol", "to": "ort" },
+        { "from": "tcol", "to": "impt" },
+        { "from": "fcol", "to": "notf" },
+        { "from": "fcol", "to": "andf" },
+        { "from": "fcol", "to": "orf" },
+        { "from": "fcol", "to": "impf" },
+        { "from": "mod",  "to": "diat" },
+        { "from": "mod",  "to": "boxf" },
+        { "from": "mod",  "to": "boxt" },
+        { "from": "mod",  "to": "diaf" }
+      ]
+    },
+    {
+      "id": "chart-5",
+      "type": "flowchart",
+      "title": "Reading off a Kripke Model from an Open Tableau",
+      "description": "How to extract a satisfying Kripke model from a fully-expanded open branch of a modal tableau.",
+      "nodes": [
+        { "id": "start",  "label": "Fully expanded\nopen branch",          "shape": "terminal", "variant": "start",   "note": "Start from any branch of the modal tableau that has been fully expanded and contains no contradictory tagged formula." },
+        { "id": "worlds", "label": "Collect world labels\nappearing in tags","shape": "rect",                          "note": "List every distinct world label w that appears in any tagged formula on the branch. These become the worlds W of the Kripke model." },
+        { "id": "rel",    "label": "Set R = Relation\ncolumn",              "shape": "rect",                            "note": "Take the accessibility relation R of the model to be exactly the set of pairs (w, u) listed in the Relation column of the branch." },
+        { "id": "val",    "label": "Set V(w,p) = 1\niff (w : p) in True",   "shape": "rect",                            "note": "Define the valuation: a propositional variable p holds at world w iff the tagged atom (w : p) appears in the True column of the branch." },
+        { "id": "rest",   "label": "Other atoms\ndefault to false",         "shape": "rect",                            "note": "Atoms not mentioned anywhere on the branch can be assigned any value; conventionally we set them to false to keep the model minimal." },
+        { "id": "done",   "label": "Kripke model\n(W, R, V) satisfies F",   "shape": "terminal", "variant": "success", "note": "The constructed Kripke model is guaranteed to satisfy the original formula F at world w0, by soundness of the tableau procedure." }
+      ],
+      "edges": [
+        { "from": "start", "to": "worlds" },
+        { "from": "worlds","to": "rel" },
+        { "from": "rel",   "to": "val" },
+        { "from": "val",   "to": "rest" },
+        { "from": "rest",  "to": "done" }
+      ]
+    }
+  ]
+}

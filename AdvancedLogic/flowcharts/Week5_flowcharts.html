@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AdvancedLogic — Week 5: Introduction to Fuzzy Logics</title>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dagre@0.8.5/dist/dagre.min.js"></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  display: flex;
+  height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #0d1117;
+  color: #e6edf3;
+  overflow: hidden;
+}
+
+/* ── Sidebar ─────────────────────────────────────────────────────────────── */
+#sidebar {
+  width: 268px;
+  min-width: 268px;
+  background: #161b22;
+  border-right: 1px solid #30363d;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+#sidebar-header {
+  padding: 20px 16px 14px;
+  border-bottom: 1px solid #30363d;
+  flex-shrink: 0;
+}
+.sb-module {
+  font-size: 0.67rem;
+  color: #8b949e;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.sb-week  { font-size: 0.76rem; color: #8b949e; margin-bottom: 2px; }
+.sb-title { font-size: 0.96rem; font-weight: 700; color: #f0f6fc; line-height: 1.35; }
+.sb-count {
+  display: inline-block;
+  background: #21262d;
+  color: #8b949e;
+  font-size: 0.65rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 10px;
+  margin-top: 8px;
+  border: 1px solid #30363d;
+}
+
+#chart-list { padding: 8px 6px; flex: 1; overflow-y: auto; }
+#chart-list::-webkit-scrollbar { width: 3px; }
+#chart-list::-webkit-scrollbar-thumb { background: #30363d; border-radius: 3px; }
+
+.chart-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 9px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-bottom: 2px;
+  transition: background 0.1s;
+  color: #8b949e;
+  user-select: none;
+  border: 1px solid transparent;
+}
+.chart-item:hover { background: #21262d; color: #c9d1d9; }
+.chart-item.active {
+  background: #1f3a6e;
+  color: #f0f6fc;
+  border-color: #388bfd;
+}
+.chart-item.active .ci-type { color: #79c0ff; opacity: 1; }
+.ci-icon  { font-size: 0.95rem; flex-shrink: 0; margin-top: 2px; }
+.ci-title { font-size: 0.83rem; font-weight: 600; line-height: 1.3; }
+.ci-type  { font-size: 0.66rem; opacity: 0.6; margin-top: 3px; text-transform: uppercase; letter-spacing: 0.07em; }
+
+/* ── Main ────────────────────────────────────────────────────────────────── */
+#main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+
+#chart-header {
+  padding: 13px 22px 11px;
+  background: #161b22;
+  border-bottom: 1px solid #30363d;
+  flex-shrink: 0;
+}
+#chart-title-el { font-size: 1rem; font-weight: 700; color: #79c0ff; margin-bottom: 2px; }
+#chart-desc-el  { font-size: 0.81rem; color: #8b949e; font-style: italic; }
+
+#diagram-area {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background: #0d1117;
+  background-image:
+    radial-gradient(circle at 1px 1px, #21262d 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+#diagram-svg { width: 100%; height: 100%; display: block; cursor: grab; }
+#diagram-svg:active { cursor: grabbing; }
+
+/* ── Zoom controls ───────────────────────────────────────────────────────── */
+#zoom-controls {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  z-index: 10;
+}
+.zoom-btn {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #30363d;
+  background: #161b22;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+  transition: all 0.1s;
+  color: #8b949e;
+}
+.zoom-btn:hover { background: #21262d; color: #79c0ff; border-color: #388bfd; }
+
+/* ── Hint bar ────────────────────────────────────────────────────────────── */
+#hint {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.7rem;
+  color: #484f58;
+  pointer-events: none;
+  white-space: nowrap;
+  transition: opacity 0.2s;
+}
+#hint.hidden { opacity: 0; }
+
+.state-msg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #484f58;
+  font-size: 0.9rem;
+  text-align: center;
+  pointer-events: none;
+}
+.state-msg.err { color: #f85149; }
+
+/* ── Info panel (slides in from the left of the diagram area) ──────────── */
+#info-panel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 440px;
+  max-width: 50vw;
+  background: #161b22;
+  border-right: 1px solid #30363d;
+  z-index: 30;
+  transform: translateX(-100%);
+  transition: transform 0.26s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 12px 0 32px rgba(0, 0, 0, 0.45);
+}
+#info-panel.visible { transform: translateX(0); }
+
+#info-panel-header {
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid #21262d;
+  flex-shrink: 0;
+  position: relative;
+}
+#info-panel-header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+#info-node-badge {
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 3px 11px;
+  border-radius: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  flex-shrink: 0;
+  display: inline-block;
+}
+#info-node-label {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #f0f6fc;
+  line-height: 1.35;
+  word-break: break-word;
+}
+
+.badge-decision { background: #2d2209; color: #e3b341; border: 1px solid #d29922; }
+.badge-step     { background: #0d1f38; color: #79c0ff; border: 1px solid #388bfd; }
+.badge-start    { background: #0d1f38; color: #79c0ff; border: 1px solid #388bfd; }
+.badge-success  { background: #0d1f12; color: #56d364; border: 1px solid #3fb950; }
+.badge-failure  { background: #1c0f0e; color: #ff7b72; border: 1px solid #f85149; }
+.badge-topic    { background: #1a1036; color: #c084fc; border: 1px solid #a371f7; }
+.badge-subtopic { background: #0d2020; color: #2dd4bf; border: 1px solid #14b8a6; }
+
+#info-close {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #30363d;
+  background: #0d1117;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #8b949e;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.1s;
+}
+#info-close:hover { background: #21262d; color: #f0f6fc; border-color: #8b949e; }
+
+#info-panel-body {
+  padding: 20px 24px 24px;
+  overflow-y: auto;
+  flex: 1;
+  scrollbar-width: thin;
+  scrollbar-color: #30363d transparent;
+}
+#info-panel-body::-webkit-scrollbar { width: 6px; }
+#info-panel-body::-webkit-scrollbar-track { background: transparent; }
+#info-panel-body::-webkit-scrollbar-thumb { background: #30363d; border-radius: 3px; }
+#info-panel-body::-webkit-scrollbar-thumb:hover { background: #484f58; }
+
+#info-section-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #6e7681;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 10px;
+}
+#info-note-text {
+  font-size: 1rem;
+  color: #c9d1d9;
+  line-height: 1.75;
+}
+#info-note-text.empty {
+  color: #484f58;
+  font-style: italic;
+}
+</style>
+</head>
+<body>
+
+<div id="sidebar">
+  <div id="sidebar-header">
+    <div class="sb-module" id="sb-module"></div>
+    <div class="sb-week"   id="sb-week"></div>
+    <div class="sb-title"  id="sb-title"></div>
+    <div class="sb-count"  id="sb-count"></div>
+  </div>
+  <div id="chart-list"></div>
+</div>
+
+<div id="main">
+  <div id="chart-header">
+    <div id="chart-title-el">Select a chart</div>
+    <div id="chart-desc-el"></div>
+  </div>
+  <div id="diagram-area">
+    <svg id="diagram-svg"></svg>
+    <div id="zoom-controls">
+      <button class="zoom-btn" id="btn-zi" title="Zoom in">+</button>
+      <button class="zoom-btn" id="btn-zo" title="Zoom out">−</button>
+      <button class="zoom-btn" id="btn-zr" title="Fit to view">⊙</button>
+    </div>
+    <div id="hint">Scroll to zoom · Drag to pan · Click a node for details</div>
+    <div id="info-panel">
+      <div id="info-panel-header">
+        <div id="info-panel-header-top">
+          <span id="info-node-badge"></span>
+          <button id="info-close" title="Close (Esc)">✕</button>
+        </div>
+        <div id="info-node-label"></div>
+      </div>
+      <div id="info-panel-body">
+        <div id="info-section-label">Explanation</div>
+        <div id="info-note-text"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═════════════════════════════════════════════════════════════════════════════
+// DATA
+// ═════════════════════════════════════════════════════════════════════════════
+const DATA = {"module": "AdvancedLogic", "week": 5, "title": "Introduction to Fuzzy Logics", "charts": [{"id": "chart-1", "type": "mindmap", "title": "Topic Map", "description": "High-level overview of fuzzy logics: motivation, the three standard semantics, validity, the Intermediate Value Theorem, isomorphism, and Trillas' Theorem.", "nodes": [{"id": "root", "label": "Week 5\nFuzzy Logics", "note": "Week 5 generalises classical truth values from {0,1} to the unit interval [0,1] to support graded reasoning. Three standard fuzzy logics are studied along with the deep result Trillas' Theorem on negation."}, {"id": "motiv", "label": "Motivation\n(Sorites)", "note": "The sorites paradox shows that classical logic cannot model gradual properties like baldness or heaps. Fuzzy logic introduces real-valued truth degrees in [0,1]."}, {"id": "tf", "label": "Truth\nFunctions", "note": "Boolean truth functions on {0,1}^n are generalised to fuzzy truth functions on [0,1]^n. A fuzzy model V assigns a real number in [0,1] to each variable."}, {"id": "logics", "label": "Three Fuzzy\nLogics", "note": "F1 Min-Max (Zadeh), F2 Product (Goedel), and F3 Lukasiewicz logics differ in how they interpret and, or, and implication, but all agree on negation = 1 - x."}, {"id": "valid", "label": "Validity", "note": "F is valid in a fuzzy logic if its truth function returns 1 for every choice of valuations in [0,1]. Many classical tautologies fail in some fuzzy logics."}, {"id": "ivt", "label": "Intermediate\nValue Theorem", "note": "The IVT is a classical analysis result used throughout fuzzy logic, especially to prove that any reasonable negation has a fixed point c with not(c) = c."}, {"id": "iso", "label": "Ordered\nIsomorphism", "note": "Two ordered structures are isomorphic if there is a bijection that preserves both the order and all the functions. This is the formal notion behind Trillas' Theorem."}, {"id": "trillas", "label": "Trillas'\nTheorem", "note": "Any negation satisfying four reasonable properties N1-N4 is isomorphic to 1 - x. This explains why all standard fuzzy logics agree on negation."}, {"id": "f1", "label": "F1 (Min-Max)", "note": "Zadeh's logic uses and = min, or = max, and Lukasiewicz-style implication. Or is idempotent in F1."}, {"id": "f2", "label": "F2 (Product)", "note": "Goedel's product logic uses arithmetic product for and and probability sum for or. Idempotency of and and or both fail."}, {"id": "f3", "label": "F3 (Lukasiewicz)", "note": "Lukasiewicz logic uses bounded sum for or and bounded difference for and. It is the only one of the three where excluded middle and non-contradiction hold."}, {"id": "neg", "label": "Negation\nProperties N1-N4", "note": "A reasonable negation is Boolean (N1), involutive (N2), continuous (N3), and decreasing (N4). These four properties characterise the operator up to isomorphism."}, {"id": "fixed", "label": "Fixed\nPoint of neg", "note": "By N1 and N3, the function f(x) = not(x) - x changes sign on [0,1], so by IVT there is some c with not(c) = c. This c plays a central role in Trillas' construction."}], "edges": [{"from": "root", "to": "motiv"}, {"from": "root", "to": "tf"}, {"from": "root", "to": "logics"}, {"from": "root", "to": "valid"}, {"from": "root", "to": "ivt"}, {"from": "root", "to": "iso"}, {"from": "root", "to": "trillas"}, {"from": "logics", "to": "f1"}, {"from": "logics", "to": "f2"}, {"from": "logics", "to": "f3"}, {"from": "trillas", "to": "neg"}, {"from": "trillas", "to": "fixed"}]}, {"id": "chart-2", "type": "flowchart", "title": "Evaluating a Fuzzy Formula", "description": "Procedure for computing the truth value of a propositional formula in any of the three standard fuzzy logics.", "nodes": [{"id": "start", "label": "Formula F and\nvaluation V", "shape": "terminal", "variant": "start", "note": "We are given a propositional formula F together with a fuzzy valuation V mapping each variable to a real number in [0,1]."}, {"id": "pick", "label": "Choose fuzzy logic\nF1, F2, or F3", "shape": "rect", "note": "Pick which fuzzy semantics to evaluate in. Each logic has its own truth functions for and, or, and implication, but they all agree on negation = 1 - x."}, {"id": "parse", "label": "Parse F into\nsubformulas", "shape": "rect", "note": "Decompose F into its sub-formulas down to the propositional variables. The truth value will be computed bottom-up by composing truth functions."}, {"id": "atoms", "label": "Substitute V(p)\nfor each variable p", "shape": "rect", "note": "Replace every propositional variable in the parse tree with the real number assigned by the valuation V. The leaves of the tree now hold concrete values in [0,1]."}, {"id": "comp", "label": "Apply truth functions\nbottom-up", "shape": "rect", "note": "For every connective, evaluate it using the truth function from the chosen fuzzy logic. Continue until you reach the root of the parse tree."}, {"id": "val", "label": "Get value\nv in [0,1]", "shape": "rect", "note": "The result is a real number in [0,1] representing the degree of truth of F under V in the chosen fuzzy logic."}, {"id": "is1", "label": "v equal to 1?", "shape": "diamond", "note": "Check whether the resulting value is exactly 1. A value of 1 means the formula is fully true; any value below 1 means the formula is partially true under V."}, {"id": "model", "label": "V is a model\nof F", "shape": "terminal", "variant": "success", "note": "Since V(F) = 1 in the chosen logic, the valuation V is a model of F. This is the fuzzy analogue of classical satisfaction."}, {"id": "not", "label": "V is NOT\na model of F", "shape": "terminal", "variant": "failure", "note": "The truth degree v is less than 1, so V is not a model of F. The valuation may also serve as a counter-example to validity."}], "edges": [{"from": "start", "to": "pick"}, {"from": "pick", "to": "parse"}, {"from": "parse", "to": "atoms"}, {"from": "atoms", "to": "comp"}, {"from": "comp", "to": "val"}, {"from": "val", "to": "is1"}, {"from": "is1", "to": "model", "label": "Yes"}, {"from": "is1", "to": "not", "label": "No"}]}, {"id": "chart-3", "type": "flowchart", "title": "Three Fuzzy Logics - Connective Comparison", "description": "Taxonomy of the truth functions for the three standard fuzzy logics F1, F2, and F3.", "nodes": [{"id": "logics", "label": "Standard Fuzzy\nLogics", "shape": "rect", "note": "Three fuzzy logics share the same truth functions for negation but differ on the others. Each captures a different intuition about partial truth."}, {"id": "f1", "label": "F1 Min-Max\n(Zadeh)", "shape": "rect", "note": "Uses min for and, max for or, with Lukasiewicz-style implication. Or is idempotent here, but and and or do not satisfy excluded middle."}, {"id": "f2", "label": "F2 Product\n(Goedel)", "shape": "rect", "note": "Uses arithmetic product for and and probability sum for or. Implication is the ratio y over x when x > y."}, {"id": "f3", "label": "F3 Lukasiewicz", "shape": "rect", "note": "Uses bounded sum for or and bounded difference for and. The only one where excluded middle and non-contradiction always hold."}, {"id": "shared", "label": "Shared\nNegation", "shape": "rect", "note": "All three logics use neg(x) = 1 - x. Trillas' Theorem explains why this is essentially forced for any reasonable negation."}, {"id": "f1and", "label": "and = min(x,y)", "shape": "rect", "note": "F1 uses the minimum of the two truth values for conjunction. This is the strongest and operation: very pessimistic."}, {"id": "f1or", "label": "or = max(x,y)", "shape": "rect", "note": "F1 uses the maximum of the two truth values for disjunction. This makes or idempotent in F1."}, {"id": "f2and", "label": "and = x * y", "shape": "rect", "note": "F2 uses the arithmetic product. Repeated conjunction with values less than 1 quickly drives the truth degree towards zero."}, {"id": "f2or", "label": "or = x + y - x*y", "shape": "rect", "note": "F2 uses the probability sum, which is the inclusion-exclusion formula. Or is not idempotent in F2."}, {"id": "f3and", "label": "and = max(0,x+y-1)", "shape": "rect", "note": "F3 uses bounded difference. This is the only operator that drives a-and-not-a to exactly 0, validating the law of non-contradiction."}, {"id": "f3or", "label": "or = min(1,x+y)", "shape": "rect", "note": "F3 uses bounded sum. This is the only operator that drives a-or-not-a to exactly 1, validating the law of excluded middle."}], "edges": [{"from": "logics", "to": "shared"}, {"from": "logics", "to": "f1"}, {"from": "logics", "to": "f2"}, {"from": "logics", "to": "f3"}, {"from": "f1", "to": "f1and"}, {"from": "f1", "to": "f1or"}, {"from": "f2", "to": "f2and"}, {"from": "f2", "to": "f2or"}, {"from": "f3", "to": "f3and"}, {"from": "f3", "to": "f3or"}]}, {"id": "chart-4", "type": "flowchart", "title": "Trillas' Theorem - Proof Structure", "description": "Step-by-step structure of the proof of Trillas' Theorem that any reasonable negation is isomorphic to 1 - x.", "nodes": [{"id": "start", "label": "Negation neg\nsatisfies N1-N4", "shape": "terminal", "variant": "start", "note": "We begin from the assumption that the negation neg has the four desirable properties: Boolean, involutive, continuous, and decreasing."}, {"id": "f", "label": "Define f(x) = neg(x) - x", "shape": "rect", "note": "Construct the helper function f. By N1 we have f(0) = 1 > 0 and f(1) = -1 < 0, so f changes sign on [0,1]."}, {"id": "ivt", "label": "Apply IVT\non f", "shape": "rect", "note": "Because neg is continuous (N3), so is f. The Intermediate Value Theorem then guarantees a point c in [0,1] where f(c) = 0."}, {"id": "fix", "label": "Get fixed point\nneg(c) = c", "shape": "rect", "note": "From f(c) = 0 we get neg(c) - c = 0, so c is a fixed point of neg. This c will anchor the isomorphism construction."}, {"id": "rho", "label": "Define rho(x):\n piecewise around c", "shape": "rect", "note": "Define rho(x) = x/(2c) for x <= c and rho(x) = 1 - neg(x)/(2c) for x >= c. This piecewise function maps [0,1] bijectively to [0,1]."}, {"id": "bij", "label": "Verify rho is\norder-preserving bijection", "shape": "rect", "note": "Both pieces are continuous and strictly increasing, agree at x = c, and map endpoints 0 -> 0 and 1 -> 1. Hence rho is an order-preserving bijection."}, {"id": "claim", "label": "Show rho(neg(x))\n= 1 - rho(x)", "shape": "rect", "note": "Split into the cases x <= c and x > c. In each case, use N4 to show neg(x) lies on the opposite side of c, then evaluate rho on both sides."}, {"id": "done", "label": "rho is the desired\nisomorphism", "shape": "terminal", "variant": "success", "note": "The bijection rho preserves order and satisfies rho(neg(x)) = 1 - rho(x), so the structure ([0,1], <, neg) is isomorphic to ([0,1], <, 1-x)."}], "edges": [{"from": "start", "to": "f"}, {"from": "f", "to": "ivt"}, {"from": "ivt", "to": "fix"}, {"from": "fix", "to": "rho"}, {"from": "rho", "to": "bij"}, {"from": "bij", "to": "claim"}, {"from": "claim", "to": "done"}]}, {"id": "chart-5", "type": "flowchart", "title": "Verifying a Negation Function (N1-N4)", "description": "Decision procedure for checking that a candidate function satisfies the four reasonableness properties of a fuzzy negation.", "nodes": [{"id": "start", "label": "Candidate\nnegation neg", "shape": "terminal", "variant": "start", "note": "We are given a candidate function neg : [0,1] -> [0,1] and want to verify whether it qualifies as a reasonable fuzzy negation."}, {"id": "n1", "label": "N1: neg(0)=1\nand neg(1)=0?", "shape": "diamond", "note": "Substitute the endpoints into the candidate. Both must hold for the function to extend the classical Boolean negation."}, {"id": "fail", "label": "Not a valid\nnegation", "shape": "terminal", "variant": "failure", "note": "At least one of N1 to N4 has failed, so the candidate is not a reasonable fuzzy negation. It need not be isomorphic to 1 - x."}, {"id": "n2", "label": "N2: neg(neg(x))=x\nfor all x?", "shape": "diamond", "note": "Plug neg(x) into neg again and simplify symbolically. The result must equal x identically on [0,1] for involutivity to hold."}, {"id": "n3", "label": "N3: neg is\ncontinuous?", "shape": "diamond", "note": "Check continuity using either the epsilon-delta definition, the composition rule, or by observing that the function is built from elementary continuous parts."}, {"id": "n4", "label": "N4: neg is\ndecreasing?", "shape": "diamond", "note": "Show that x < y implies neg(x) >= neg(y), either by computing the derivative or by direct algebraic comparison of fractions."}, {"id": "ok", "label": "neg satisfies\nN1-N4", "shape": "terminal", "variant": "success", "note": "All four properties hold, so by Trillas' Theorem the structure ([0,1], <, neg) is isomorphic to ([0,1], <, 1-x)."}], "edges": [{"from": "start", "to": "n1"}, {"from": "n1", "to": "n2", "label": "Yes"}, {"from": "n1", "to": "fail", "label": "No"}, {"from": "n2", "to": "n3", "label": "Yes"}, {"from": "n2", "to": "fail", "label": "No"}, {"from": "n3", "to": "n4", "label": "Yes"}, {"from": "n3", "to": "fail", "label": "No"}, {"from": "n4", "to": "ok", "label": "Yes"}, {"from": "n4", "to": "fail", "label": "No"}]}]};
+
+// ═════════════════════════════════════════════════════════════════════════════
+// COLOUR PALETTE
+// ═════════════════════════════════════════════════════════════════════════════
+const C = {
+  // Flowchart node fill / stroke / text by role
+  node: {
+    default:  { fill: '#1c2333', stroke: '#388bfd', text: '#79c0ff' },
+    decision: { fill: '#1c1f2b', stroke: '#d29922', text: '#e3b341' },
+    success:  { fill: '#0d1f12', stroke: '#3fb950', text: '#56d364' },
+    failure:  { fill: '#1c0f0e', stroke: '#f85149', text: '#ff7b72' },
+    start:    { fill: '#0d1f38', stroke: '#388bfd', text: '#79c0ff' },
+  },
+  // Mindmap level colours
+  levels: ['#388bfd','#3fb950','#d29922','#a371f7','#f78166','#56d364','#79c0ff'],
+  edge:      '#30363d',
+  edgeHover: '#58a6ff',
+  edgeLabel: '#8b949e',
+  arrow:     '#484f58',
+  bg:        '#0d1117',
+  surface:   '#161b22',
+};
+
+// ═════════════════════════════════════════════════════════════════════════════
+// TEXT MEASUREMENT
+// ═════════════════════════════════════════════════════════════════════════════
+const _c = document.createElement('canvas').getContext('2d');
+function measure(text, fs = 13, fw = '500') {
+  _c.font = `${fw} ${fs}px -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif`;
+  const lines = String(text).split('\n');
+  return {
+    w: Math.max(...lines.map(l => _c.measureText(l).width)),
+    h: lines.length * (fs * 1.45),
+    lines,
+  };
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// SVG + ZOOM
+// ═════════════════════════════════════════════════════════════════════════════
+const svg   = d3.select('#diagram-svg');
+const root  = svg.append('g').attr('id', 'root-layer');
+
+const zoom = d3.zoom()
+  .scaleExtent([0.04, 12])
+  .on('zoom', ev => root.attr('transform', ev.transform));
+
+svg.call(zoom)
+   .on('dblclick.zoom', () => fitAll());
+
+function fitAll() {
+  const svgEl = svg.node();
+  const W = svgEl.clientWidth  || 900;
+  const H = svgEl.clientHeight || 600;
+  const bb = root.node().getBBox();
+  if (!bb.width || !bb.height) return;
+  const scale = Math.min(0.88 * W / bb.width, 0.88 * H / bb.height, 4);
+  const tx = W / 2 - (bb.x + bb.width  / 2) * scale;
+  const ty = H / 2 - (bb.y + bb.height / 2) * scale;
+  svg.transition().duration(380)
+     .call(zoom.transform, d3.zoomIdentity.translate(tx, ty).scale(scale));
+}
+
+document.getElementById('btn-zi').addEventListener('click', () =>
+  svg.transition().duration(220).call(zoom.scaleBy, 1.45));
+document.getElementById('btn-zo').addEventListener('click', () =>
+  svg.transition().duration(220).call(zoom.scaleBy, 0.69));
+document.getElementById('btn-zr').addEventListener('click', fitAll);
+
+// ═════════════════════════════════════════════════════════════════════════════
+// INFO PANEL
+// ═════════════════════════════════════════════════════════════════════════════
+const infoPanel = document.getElementById('info-panel');
+const infoLabel = document.getElementById('info-node-label');
+const infoBadge = document.getElementById('info-node-badge');
+const infoNote  = document.getElementById('info-note-text');
+const hintEl    = document.getElementById('hint');
+
+function badgeFor(node, depth) {
+  if (depth !== undefined) {
+    // Mindmap node
+    if (depth === 0) return { text: 'Root',      cls: 'badge-start' };
+    if (depth === 1) return { text: 'Main Topic', cls: 'badge-topic' };
+    return               { text: 'Sub-topic',   cls: 'badge-subtopic' };
+  }
+  if (node.shape === 'diamond')                    return { text: 'Decision',    cls: 'badge-decision' };
+  if (node.shape === 'terminal' && node.variant === 'success') return { text: 'Success',    cls: 'badge-success'  };
+  if (node.shape === 'terminal' && node.variant === 'failure') return { text: 'Failure',    cls: 'badge-failure'  };
+  if (node.shape === 'terminal')                   return { text: 'Start / End', cls: 'badge-start'    };
+  return                                                   { text: 'Step',       cls: 'badge-step'     };
+}
+
+function showInfo(node, depth) {
+  const label = (node.label || '').replace(/\n/g, ' ');
+  infoLabel.textContent = label;
+
+  const b = badgeFor(node, depth);
+  infoBadge.textContent  = b.text;
+  infoBadge.className    = 'badge-class ' + b.cls; // reset then set
+
+  if (node.note) {
+    infoNote.textContent = node.note;
+    infoNote.className   = '';
+  } else {
+    infoNote.textContent = 'No description available for this node.';
+    infoNote.className   = 'empty';
+  }
+
+  infoPanel.classList.add('visible');
+  hintEl.classList.add('hidden');
+}
+
+function hideInfo() {
+  infoPanel.classList.remove('visible');
+  hintEl.classList.remove('hidden');
+}
+
+document.getElementById('info-close').addEventListener('click', hideInfo);
+document.addEventListener('keydown', e => { if (e.key === 'Escape') hideInfo(); });
+
+// Click on SVG background closes panel
+svg.on('click', (event) => {
+  if (event.target === svg.node() || event.target.id === 'root-layer') hideInfo();
+});
+
+// ═════════════════════════════════════════════════════════════════════════════
+// SIDEBAR
+// ═════════════════════════════════════════════════════════════════════════════
+document.getElementById('sb-module').textContent = DATA.module;
+document.getElementById('sb-week'  ).textContent = 'Week ' + DATA.week;
+document.getElementById('sb-title' ).textContent = DATA.title;
+document.getElementById('sb-count' ).textContent =
+  DATA.charts.length + ' chart' + (DATA.charts.length !== 1 ? 's' : '');
+
+const ICONS = { mindmap: '🧠', flowchart: '📊', graph: '🔗' };
+const listEl = document.getElementById('chart-list');
+let firstSel = null;
+
+DATA.charts.forEach((chart, i) => {
+  const el = document.createElement('div');
+  el.className = 'chart-item';
+  el.innerHTML =
+    `<span class="ci-icon">${ICONS[chart.type] || '📋'}</span>
+     <div>
+       <div class="ci-title">${chart.title}</div>
+       <div class="ci-type">${chart.type}</div>
+     </div>`;
+  el.addEventListener('click', () => selectChart(chart, el));
+  listEl.appendChild(el);
+  if (i === 0) firstSel = { chart, el };
+});
+
+// ═════════════════════════════════════════════════════════════════════════════
+// SELECTION
+// ═════════════════════════════════════════════════════════════════════════════
+function selectChart(chart, itemEl) {
+  document.querySelectorAll('.chart-item').forEach(e => e.classList.remove('active'));
+  itemEl.classList.add('active');
+  document.getElementById('chart-title-el').textContent = chart.title;
+  document.getElementById('chart-desc-el' ).textContent = chart.description || '';
+
+  root.selectAll('*').remove();
+
+  if (chart.type === 'mindmap') renderMindmap(chart);
+  else                          renderFlowchart(chart);
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// MINDMAP  (D3 radial tree)
+// ═════════════════════════════════════════════════════════════════════════════
+function renderMindmap(chart) {
+  const svgW = svg.node().clientWidth  || 900;
+  const svgH = svg.node().clientHeight || 600;
+  const R    = Math.min(svgW, svgH) * 0.40;
+
+  // Build parent-child map
+  const byId  = Object.fromEntries(chart.nodes.map(n => [n.id, { ...n, _children: [] }]));
+  const hasParent = new Set(chart.edges.map(e => e.to));
+  chart.edges.forEach(e => { if (byId[e.from] && byId[e.to]) byId[e.from]._children.push(byId[e.to]); });
+  const rootNode = chart.nodes.find(n => !hasParent.has(n.id)) || chart.nodes[0];
+
+  // D3 hierarchy + radial tree
+  const hier = d3.hierarchy(byId[rootNode.id], d => d._children.length ? d._children : null);
+  d3.tree()
+    .size([2 * Math.PI, R])
+    .separation((a, b) => (a.parent === b.parent ? 1.2 : 2.4) / a.depth)
+    (hier);
+
+  // ── Defs: drop shadow ──────────────────────────────────────────────────────
+  const defs = root.append('defs');
+  const filt = defs.append('filter').attr('id', 'mm-shadow').attr('x', '-20%').attr('y', '-20%').attr('width', '140%').attr('height', '140%');
+  filt.append('feDropShadow').attr('dx', 0).attr('dy', 2).attr('stdDeviation', 4).attr('flood-color', '#000').attr('flood-opacity', 0.5);
+
+  // ── Group centered ─────────────────────────────────────────────────────────
+  const grp = root.append('g').attr('transform', `translate(${svgW / 2},${svgH / 2})`);
+
+  // ── Links ──────────────────────────────────────────────────────────────────
+  const linkRadial = d3.linkRadial().angle(d => d.x).radius(d => d.y);
+
+  grp.append('g').selectAll('path')
+    .data(hier.links())
+    .join('path')
+    .attr('d', linkRadial)
+    .attr('fill', 'none')
+    .attr('stroke', d => C.levels[Math.min(d.target.depth - 1, C.levels.length - 1)])
+    .attr('stroke-width', d => Math.max(1, 3 - d.target.depth * 0.8))
+    .attr('opacity', 0.4)
+    .attr('stroke-linecap', 'round');
+
+  // ── Nodes ──────────────────────────────────────────────────────────────────
+  const nodeG = grp.append('g').selectAll('g')
+    .data(hier.descendants())
+    .join('g')
+    .attr('transform', d => {
+      const a = d.x - Math.PI / 2;
+      return `translate(${d.y * Math.cos(a)},${d.y * Math.sin(a)})`;
+    })
+    .style('cursor', 'default');
+
+  nodeG.each(function(d) {
+    const g      = d3.select(this);
+    const depth  = d.depth;
+    const label  = d.data.label || '';
+    const color  = depth === 0 ? C.levels[0] : C.levels[Math.min(depth - 1, C.levels.length - 1)];
+    const fs     = depth === 0 ? 15 : depth === 1 ? 12.5 : 11;
+    const fw     = depth <= 1 ? '700' : '500';
+    const m      = measure(label, fs, fw);
+    const px     = depth === 0 ? 18 : 12;
+    const py     = depth === 0 ? 12 : 8;
+    const rw     = m.w + px * 2;
+    const rh     = m.h + py * 2;
+
+    if (depth === 0) {
+      // Root: filled pill with glow
+      g.append('rect')
+        .attr('x', -rw / 2).attr('y', -rh / 2)
+        .attr('width', rw).attr('height', rh)
+        .attr('rx', rh / 2)
+        .attr('fill', color)
+        .attr('filter', 'url(#mm-shadow)');
+    } else {
+      // Child: bordered pill
+      g.append('rect')
+        .attr('x', -rw / 2).attr('y', -rh / 2)
+        .attr('width', rw).attr('height', rh)
+        .attr('rx', Math.min(rh / 2, 10))
+        .attr('fill', color + '18')
+        .attr('stroke', color)
+        .attr('stroke-width', 1.5);
+    }
+
+    // Text
+    m.lines.forEach((line, i) => {
+      const yOff = (i - (m.lines.length - 1) / 2) * (fs * 1.45);
+      g.append('text')
+        .text(line)
+        .attr('y', yOff)
+        .attr('text-anchor', 'middle')
+        .attr('dominant-baseline', 'middle')
+        .attr('font-size', fs + 'px')
+        .attr('font-weight', fw)
+        .attr('fill', depth === 0 ? '#fff' : color)
+        .attr('font-family', "-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif");
+    });
+
+    // Hover + click
+    const shapeEl = g.select(depth === 0 ? 'rect' : 'rect');
+    g.style('cursor', 'pointer')
+     .on('mouseenter', function() {
+        shapeEl.transition().duration(120)
+          .attr('fill', depth === 0 ? d3.color(color).brighter(0.3) : color + '32');
+      })
+     .on('mouseleave', function() {
+        shapeEl.transition().duration(120)
+          .attr('fill', depth === 0 ? color : color + '18');
+      })
+     .on('click', function(event) {
+        event.stopPropagation();
+        showInfo(d.data, depth);
+      });
+  });
+
+  setTimeout(fitAll, 60);
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// FLOWCHART  (Dagre layout + custom D3 SVG)
+// ═════════════════════════════════════════════════════════════════════════════
+function renderFlowchart(chart) {
+  const FS    = 13;
+  const PX    = 22;
+  const PY    = 13;
+  const DPAD  = 1.5; // diamond size multiplier
+
+  // ── Compute node sizes ────────────────────────────────────────────────────
+  const info = {};
+  chart.nodes.forEach(n => {
+    const m  = measure(n.label || '', FS);
+    let w    = Math.max(m.w + PX * 2, 90);
+    let h    = Math.max(m.h + PY * 2, 38);
+    if (n.shape === 'diamond') { w = (w + 20) * DPAD; h = (h + 10) * DPAD; }
+    info[n.id] = { ...m, w, h };
+  });
+
+  // ── Dagre graph ───────────────────────────────────────────────────────────
+  const gd = new dagre.graphlib.Graph({ multigraph: true });
+  gd.setGraph({ rankdir: 'TB', nodesep: 55, ranksep: 75, marginx: 50, marginy: 50, edgesep: 20 });
+  gd.setDefaultEdgeLabel(() => ({}));
+
+  chart.nodes.forEach(n  => gd.setNode(n.id, { width: info[n.id].w, height: info[n.id].h }));
+  chart.edges.forEach((e, i) => gd.setEdge(e.from, e.to, { label: e.label || '' }, 'e' + i));
+
+  dagre.layout(gd);
+
+  // ── Defs ──────────────────────────────────────────────────────────────────
+  const defs  = root.append('defs');
+
+  // Arrowhead
+  defs.append('marker')
+    .attr('id', 'arr').attr('viewBox', '0 -5 10 10')
+    .attr('refX', 8).attr('refY', 0)
+    .attr('markerWidth', 6).attr('markerHeight', 6)
+    .attr('orient', 'auto')
+    .append('path').attr('d', 'M0,-5L10,0L0,5').attr('fill', C.arrow);
+
+  // Glow filter for highlighted nodes
+  const glow = defs.append('filter').attr('id', 'glow').attr('x', '-30%').attr('y', '-30%').attr('width', '160%').attr('height', '160%');
+  glow.append('feGaussianBlur').attr('in', 'SourceGraphic').attr('stdDeviation', '3').attr('result', 'blur');
+  glow.append('feComposite').attr('in', 'SourceGraphic').attr('in2', 'blur').attr('operator', 'over');
+
+  // ── Edges ─────────────────────────────────────────────────────────────────
+  const edgeG = root.append('g').attr('class', 'edges');
+  const lineGen = d3.line().curve(d3.curveCatmullRom.alpha(0.5))
+    .x(d => d.x).y(d => d.y);
+
+  gd.edges().forEach(e => {
+    const ed  = gd.edge(e);
+    if (!ed || !ed.points || ed.points.length < 2) return;
+    const pts = ed.points;
+
+    edgeG.append('path')
+      .attr('d', lineGen(pts))
+      .attr('fill', 'none')
+      .attr('stroke', C.edge)
+      .attr('stroke-width', 1.5)
+      .attr('stroke-linecap', 'round')
+      .attr('marker-end', 'url(#arr)');
+
+    if (ed.label) {
+      const mid = pts[Math.floor(pts.length / 2)];
+      edgeG.append('text')
+        .text(ed.label)
+        .attr('x', mid.x + 6).attr('y', mid.y - 5)
+        .attr('font-size', '11px')
+        .attr('font-weight', '600')
+        .attr('fill', C.edgeLabel)
+        .attr('font-family', "-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif");
+    }
+  });
+
+  // ── Nodes ─────────────────────────────────────────────────────────────────
+  const nodeG = root.append('g').attr('class', 'nodes');
+
+  chart.nodes.forEach(n => {
+    const pos    = gd.node(n.id);
+    if (!pos) return;
+    const ninfo  = info[n.id];
+    const w      = pos.width;
+    const h      = pos.height;
+    const cx     = pos.x;
+    const cy     = pos.y;
+
+    // Pick colours
+    let pal;
+    if (n.shape === 'diamond')       pal = C.node.decision;
+    else if (n.variant === 'success') pal = C.node.success;
+    else if (n.variant === 'failure') pal = C.node.failure;
+    else if (n.variant === 'start')   pal = C.node.start;
+    else                              pal = C.node.default;
+
+    const g = nodeG.append('g')
+      .attr('transform', `translate(${cx - w/2},${cy - h/2})`)
+      .style('cursor', 'default');
+
+    // ── Shape ──────────────────────────────────────────────────────────────
+    if (n.shape === 'diamond') {
+      const hx = w / 2, hy = h / 2;
+      g.append('polygon')
+        .attr('points', `${hx},1 ${w-1},${hy} ${hx},${h-1} 1,${hy}`)
+        .attr('fill', pal.fill)
+        .attr('stroke', pal.stroke)
+        .attr('stroke-width', 1.5);
+    } else if (n.shape === 'terminal') {
+      g.append('rect')
+        .attr('x', 0).attr('y', 0)
+        .attr('width', w).attr('height', h)
+        .attr('rx', h / 2)
+        .attr('fill', pal.fill)
+        .attr('stroke', pal.stroke)
+        .attr('stroke-width', 1.5);
+    } else {
+      g.append('rect')
+        .attr('x', 0).attr('y', 0)
+        .attr('width', w).attr('height', h)
+        .attr('rx', 8)
+        .attr('fill', pal.fill)
+        .attr('stroke', pal.stroke)
+        .attr('stroke-width', 1.5);
+    }
+
+    // ── Label ──────────────────────────────────────────────────────────────
+    const textG = g.append('g').attr('transform', `translate(${w/2},${h/2})`);
+    ninfo.lines.forEach((line, li) => {
+      textG.append('text')
+        .text(line)
+        .attr('y', (li - (ninfo.lines.length - 1) / 2) * (FS * 1.45))
+        .attr('text-anchor', 'middle')
+        .attr('dominant-baseline', 'middle')
+        .attr('font-size', FS + 'px')
+        .attr('font-weight', n.shape === 'terminal' ? '700' : '500')
+        .attr('fill', pal.text)
+        .attr('font-family', "-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif");
+    });
+
+    // ── Hover glow + click ─────────────────────────────────────────────────
+    const shape = g.select(n.shape === 'diamond' ? 'polygon' : 'rect');
+    g.style('cursor', 'pointer')
+     .on('mouseenter', () => shape.attr('filter', 'url(#glow)').attr('stroke-width', 2.2))
+     .on('mouseleave', () => shape.attr('filter', null).attr('stroke-width', 1.5))
+     .on('click', function(event) {
+        event.stopPropagation();
+        showInfo(n);
+      });
+  });
+
+  setTimeout(fitAll, 60);
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// INIT
+// ═════════════════════════════════════════════════════════════════════════════
+if (firstSel) setTimeout(() => selectChart(firstSel.chart, firstSel.el), 120);
+</script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+{
+  "module": "AdvancedLogic",
+  "week": 3,
+  "title": "Argument Game Proof Theories and Dialogues",
+  "charts": [
+    {
+      "id": "chart-1",
+      "type": "mindmap",
+      "title": "Topic Map",
+      "description": "High-level overview of argument game proof theories, winning strategies, and the generalisation to dialogues for distributed reasoning.",
+      "nodes": [
+        { "id": "root",   "label": "Week 3\nArgument Games",            "note": "Week 3 introduces argument games as an alternative to computing labellings directly. Two players exchange attacking arguments to test whether a given argument is in the grounded or preferred labelling." },
+        { "id": "recap",  "label": "Recap\nLabellings",                 "note": "An AF labelling assigns IN, OUT, or UN to each argument. The grounded labelling is the most sceptical (smallest IN set); preferred labellings maximise the IN set." },
+        { "id": "game",   "label": "Argument\nGame Idea",               "note": "Two players (PRO and OPP) take turns playing arguments that attack the previous one. PRO defends the initial argument; OPP tries to defeat it." },
+        { "id": "ground", "label": "Grounded\nGame",                    "note": "The grounded game tests membership in the grounded labelling. Its key restriction is that PRO cannot repeat any argument in a single dispute." },
+        { "id": "pref",   "label": "Preferred\nGame",                   "note": "The preferred game tests membership in some preferred labelling. OPP cannot repeat, and the winning strategy must contain no mutually attacking PRO arguments." },
+        { "id": "win",    "label": "Winning\nStrategies",               "note": "A winning strategy is a subtree of the game tree where every OPP node has all children, every PRO node has at least one child, and every leaf is a node where OPP is stuck." },
+        { "id": "dialog", "label": "Dialogues\n(LO3 non-exam)",         "note": "Argument games generalise to multi-agent dialogues with shared locutions like claim, why, and argue. Each dialogue defines an implicit AF over its locution graph." },
+        { "id": "ai",     "label": "AI Applications\n(LO4 non-exam)",   "note": "Dialogue-based argumentation supports value alignment in AI systems. SocrAPPs use Socratic dialogue to foster critical thinking in users." },
+        { "id": "g3",     "label": "Rule G3\nPRO no-repeat",            "note": "In the grounded game, PRO cannot reuse an argument in the same dispute. This avoids cyclic support, matching the conservative grounded semantics." },
+        { "id": "p3",     "label": "Rule P3\nOPP no-repeat",            "note": "In the preferred game, OPP cannot reuse an argument in the same dispute. This makes OPP's task harder, matching the more credulous preferred semantics." },
+        { "id": "ws",     "label": "WS Condition\n(no PRO conflict)",   "note": "In a preferred winning strategy, no two PRO arguments may attack each other. This guarantees the strategy corresponds to a conflict-free set of arguments." },
+        { "id": "loc",    "label": "Locutions\n& Protocols",            "note": "A locution is a formalised utterance: claim(q), why(q), or argue(X,q). A dialogue protocol specifies which locutions are legal in response to others." },
+        { "id": "sc",     "label": "Soundness &\nCompleteness",         "note": "Combined SC theorem: a dialogue establishes claim(q) iff q is a non-monotonic inference from all the knowledge exchanged in the dialogue." }
+      ],
+      "edges": [
+        { "from": "root",   "to": "recap" },
+        { "from": "root",   "to": "game" },
+        { "from": "root",   "to": "ground" },
+        { "from": "root",   "to": "pref" },
+        { "from": "root",   "to": "win" },
+        { "from": "root",   "to": "dialog" },
+        { "from": "root",   "to": "ai" },
+        { "from": "ground", "to": "g3" },
+        { "from": "pref",   "to": "p3" },
+        { "from": "pref",   "to": "ws" },
+        { "from": "dialog", "to": "loc" },
+        { "from": "dialog", "to": "sc" }
+      ]
+    },
+    {
+      "id": "chart-2",
+      "type": "flowchart",
+      "title": "Grounded Game Procedure",
+      "description": "Step-by-step procedure for testing whether an argument X0 is in the grounded labelling using the grounded argument game.",
+      "nodes": [
+        { "id": "start",  "label": "Test: is X0 in\ngrounded labelling?",   "shape": "terminal", "variant": "start",   "note": "We are given an AF and an argument X0 and want to use the grounded game to decide whether X0 is in the grounded labelling." },
+        { "id": "tree",   "label": "Build complete\ngrounded game tree",    "shape": "rect",                            "note": "Construct the full game tree rooted at X0, where PRO and OPP alternate moves and each move must attack the previous argument." },
+        { "id": "g3",     "label": "Apply G3:\nPRO no-repeat",               "shape": "rect",                            "note": "Prune branches where PRO would repeat an argument it already played in the same dispute. PRO is not allowed to reuse arguments." },
+        { "id": "list",   "label": "List all disputes\n(root-to-leaf paths)","shape": "rect",                            "note": "Enumerate every root-to-leaf path of the pruned game tree. Each path is a complete dispute that ends with one player being stuck." },
+        { "id": "subtree","label": "Find subtree T'\nwhere PRO wins all",   "shape": "rect",                            "note": "Look for a subtree T' that includes all children at OPP nodes and at least one child at PRO nodes, such that every leaf is a node where OPP cannot move." },
+        { "id": "exists", "label": "Such subtree\nexists?",                  "shape": "diamond",                         "note": "Check whether a winning strategy subtree was found. If yes, PRO has a winning strategy; otherwise no winning strategy exists." },
+        { "id": "in",     "label": "X0 IS in\ngrounded labelling",           "shape": "terminal", "variant": "success", "note": "PRO has a winning strategy, so by the soundness/completeness theorem X0 is in the grounded labelling of the AF." },
+        { "id": "out",    "label": "X0 NOT in\ngrounded labelling",          "shape": "terminal", "variant": "failure", "note": "PRO has no winning strategy, so X0 is not in the grounded labelling. It is either OUT or UN under the grounded semantics." }
+      ],
+      "edges": [
+        { "from": "start",  "to": "tree" },
+        { "from": "tree",   "to": "g3" },
+        { "from": "g3",     "to": "list" },
+        { "from": "list",   "to": "subtree" },
+        { "from": "subtree","to": "exists" },
+        { "from": "exists", "to": "in",  "label": "Yes" },
+        { "from": "exists", "to": "out", "label": "No" }
+      ]
+    },
+    {
+      "id": "chart-3",
+      "type": "flowchart",
+      "title": "Preferred Game Procedure",
+      "description": "Step-by-step procedure for testing whether an argument X0 is in some preferred labelling using the preferred argument game.",
+      "nodes": [
+        { "id": "start",  "label": "Test: is X0 in\nsome preferred labelling?", "shape": "terminal", "variant": "start",   "note": "We are given an AF and an argument X0 and want to use the preferred game to decide whether X0 belongs to at least one preferred labelling." },
+        { "id": "tree",   "label": "Build complete\npreferred game tree",       "shape": "rect",                            "note": "Construct the full game tree rooted at X0, where PRO and OPP alternate moves and each move attacks the previous one." },
+        { "id": "p3",     "label": "Apply P3:\nOPP no-repeat",                  "shape": "rect",                            "note": "Prune branches where OPP would repeat an argument it already played in the same dispute. PRO is allowed to repeat in the preferred game." },
+        { "id": "find",   "label": "Find candidate\nwinning subtree T'",        "shape": "rect",                            "note": "Look for a subtree where OPP nodes have all their children, PRO nodes have at least one child, and every leaf is a node where OPP cannot move." },
+        { "id": "ws",     "label": "Check WS condition:\nno PRO/PRO attacks",   "shape": "diamond",                         "note": "Verify that no two PRO arguments inside the candidate subtree attack each other. This ensures the strategy corresponds to a conflict-free set." },
+        { "id": "in",     "label": "X0 IS in some\npreferred labelling",       "shape": "terminal", "variant": "success", "note": "PRO has a valid winning strategy that satisfies the WS condition, so X0 belongs to at least one preferred labelling of the AF." },
+        { "id": "another","label": "Another candidate\nsubtree available?",     "shape": "diamond",                         "note": "If the WS condition fails, try a different candidate subtree before giving up. PRO can pick different responses at PRO nodes." },
+        { "id": "out",    "label": "X0 NOT in any\npreferred labelling",       "shape": "terminal", "variant": "failure", "note": "No valid winning strategy exists, so X0 is not in any preferred labelling. It is OUT or UN under every preferred labelling." }
+      ],
+      "edges": [
+        { "from": "start",   "to": "tree" },
+        { "from": "tree",    "to": "p3" },
+        { "from": "p3",      "to": "find" },
+        { "from": "find",    "to": "ws" },
+        { "from": "ws",      "to": "in",      "label": "Yes" },
+        { "from": "ws",      "to": "another", "label": "No" },
+        { "from": "another", "to": "find",    "label": "Yes" },
+        { "from": "another", "to": "out",     "label": "No" }
+      ]
+    },
+    {
+      "id": "chart-4",
+      "type": "flowchart",
+      "title": "Grounded vs Preferred Game - Comparison",
+      "description": "Side-by-side classification of the two argument games and their differences.",
+      "nodes": [
+        { "id": "games", "label": "Argument\nGames",               "shape": "rect",                          "note": "Two-player turn-taking games used to decide whether an argument is in a target labelling. PRO defends, OPP attacks." },
+        { "id": "shared","label": "Shared\nrules",                 "shape": "rect",                          "note": "Both games share the basic mechanics: PRO moves first, players alternate, and each move must attack the previous one." },
+        { "id": "g",     "label": "Grounded\nGame",                "shape": "rect",                          "note": "Designed to detect membership in the grounded (sceptical) labelling. PRO must not repeat itself in a dispute." },
+        { "id": "p",     "label": "Preferred\nGame",               "shape": "rect",                          "note": "Designed to detect membership in some preferred (credulous) labelling. OPP must not repeat itself, plus a no-mutual-PRO-attack condition." },
+        { "id": "g3",    "label": "G3: PRO no-\nrepeat",           "shape": "rect",                          "note": "PRO cannot reuse an argument in the same dispute. This blocks cyclic support and matches the most conservative semantics." },
+        { "id": "p3",    "label": "P3: OPP no-\nrepeat",           "shape": "rect",                          "note": "OPP cannot reuse an argument in the same dispute. PRO is allowed to repeat, which matches the more credulous preferred semantics." },
+        { "id": "ws",    "label": "WS: no two PRO\nargs attack",   "shape": "rect",                          "note": "Extra condition on the preferred winning strategy. Ensures the set of PRO arguments is conflict-free, as required by preferred labellings." },
+        { "id": "result","label": "Result:\nLabelling",            "shape": "rect",                          "note": "If PRO has a winning strategy, the initial argument is in the corresponding labelling (grounded or some preferred)." },
+        { "id": "alt",   "label": "PRO/OPP\nalternation",          "shape": "rect",                          "note": "PRO and OPP take turns, with PRO playing the initial argument as the first move and each subsequent move attacking the previous one." }
+      ],
+      "edges": [
+        { "from": "games",  "to": "shared" },
+        { "from": "games",  "to": "g" },
+        { "from": "games",  "to": "p" },
+        { "from": "shared", "to": "alt" },
+        { "from": "g",      "to": "g3" },
+        { "from": "p",      "to": "p3" },
+        { "from": "p",      "to": "ws" },
+        { "from": "g",      "to": "result" },
+        { "from": "p",      "to": "result" }
+      ]
+    },
+    {
+      "id": "chart-5",
+      "type": "flowchart",
+      "title": "Identifying a Winning Strategy",
+      "description": "Procedure for extracting a winning strategy subtree from a complete game tree.",
+      "nodes": [
+        { "id": "start",  "label": "Have complete\ngame tree",            "shape": "terminal", "variant": "start",   "note": "We start with the full pruned game tree rooted at the initial PRO argument and want to find a subtree that constitutes a winning strategy." },
+        { "id": "leaves", "label": "Identify all\nleaves",                "shape": "rect",                            "note": "Look at every leaf of the game tree. A leaf is a node where the player whose turn it is cannot make any further move." },
+        { "id": "stuck",  "label": "Each leaf:\nwhich player stuck?",     "shape": "diamond",                         "note": "For each leaf, decide whether OPP or PRO is the one who has no move. PRO wins disputes ending where OPP is stuck." },
+        { "id": "ok",     "label": "Mark dispute\nas PRO-win",            "shape": "rect",                            "note": "OPP cannot move at this leaf, so PRO wins the dispute. This dispute can be part of a winning strategy." },
+        { "id": "no",     "label": "Mark dispute\nas PRO-lose",           "shape": "rect",                            "note": "PRO cannot move at this leaf, so PRO loses the dispute. Any winning strategy must avoid this branch via different PRO choices." },
+        { "id": "build",  "label": "Build subtree T':\nat OPP nodes keep ALL children;\nat PRO nodes keep ONE child","shape": "rect", "note": "Construct the candidate subtree by always including every child at OPP nodes (OPP can play any move) but choosing only one child at PRO nodes (PRO picks a response)." },
+        { "id": "all",    "label": "All leaves of T'\nare PRO-wins?",     "shape": "diamond",                         "note": "Check every leaf of the candidate subtree. If any leaf is a PRO-loss, this is not a winning strategy and PRO must choose differently." },
+        { "id": "yes",    "label": "Winning strategy\nfound",             "shape": "terminal", "variant": "success", "note": "Every dispute in the subtree is won by PRO so the subtree is a valid winning strategy. The initial argument is in the target labelling." },
+        { "id": "retry",  "label": "Try different\nPRO choices",          "shape": "rect",                            "note": "Backtrack at PRO nodes and try other children. If no choice produces a winning subtree, no winning strategy exists." }
+      ],
+      "edges": [
+        { "from": "start",  "to": "leaves" },
+        { "from": "leaves", "to": "stuck" },
+        { "from": "stuck",  "to": "ok",    "label": "OPP stuck" },
+        { "from": "stuck",  "to": "no",    "label": "PRO stuck" },
+        { "from": "ok",     "to": "build" },
+        { "from": "no",     "to": "build" },
+        { "from": "build",  "to": "all" },
+        { "from": "all",    "to": "yes",   "label": "Yes" },
+        { "from": "all",    "to": "retry", "label": "No" },
+        { "from": "retry",  "to": "build" }
+      ]
+    }
+  ]
+}
