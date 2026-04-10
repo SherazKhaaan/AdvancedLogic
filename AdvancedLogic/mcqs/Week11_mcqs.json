@@ -1,0 +1,1489 @@
+{
+  "module": "AdvancedLogic",
+  "week": 11,
+  "title": "Correspondence Theory — Sahlqvist Formulas and the van Benthem Algorithm",
+  "sections": [
+    {
+      "id": "section-1",
+      "title": "11.1 Applications of Modal Logic and the Need for Frame Classes",
+      "questions": [
+        {
+          "id": "q1",
+          "source_ref": "Section 11.1: Applications of Modal Logic",
+          "text": "Which of the following are correct interpretations of $\\Box p$ in different modal logics? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "In epistemic logic: $\\Box p$ means 'I know $p$ to be true'"},
+            {"letter": "B", "text": "In deontic logic: $\\Box p$ means '$p$ is obligatory'"},
+            {"letter": "C", "text": "In temporal logic: $\\Box p$ means '$p$ will be true'"},
+            {"letter": "D", "text": "In doxastic logic: $\\Box p$ means '$p$ is possible'"},
+            {"letter": "E", "text": "In dynamic logic: $\\Box p$ means 'after action $\\alpha$, $p$ holds'"}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "Epistemic logic interprets $\\Box$ as knowledge.",
+              "section_ref": "Section 11.1: Applications of Modal Logic",
+              "notes_quote": "'I know $p$ to be true' | Epistemic logic | Knowledge"
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "Deontic logic interprets $\\Box$ as obligation.",
+              "section_ref": "Section 11.1: Applications of Modal Logic",
+              "notes_quote": "'$p$ is obligatory' | Deontic logic | Obligation/permission"
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "Temporal logic interprets $\\Box$ as future truth.",
+              "section_ref": "Section 11.1: Applications of Modal Logic",
+              "notes_quote": "'$p$ will be true' | Temporal logic | Time"
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "In doxastic logic, $\\Box p$ means 'the agent believes $p$', not '$p$ is possible'. Possibility is expressed by $\\Diamond p$.",
+              "section_ref": "Section 11.1: Applications of Modal Logic",
+              "notes_quote": ""
+            },
+            {
+              "letter": "E",
+              "is_correct": true,
+              "text": "Dynamic logic uses $\\Box$ for post-condition of actions.",
+              "section_ref": "Section 11.1: Applications of Modal Logic",
+              "notes_quote": "'After action $\\alpha$, $p$ holds' | Dynamic logic | Programs/transitions"
+            }
+          ]
+        },
+        {
+          "id": "q2",
+          "source_ref": "Section 11.1: Epistemic Axioms",
+          "text": "Which of the following are correct statements about the epistemic axioms for knowledge? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "True Knowledge: $\\Box p \\to p$ — if I know $p$, then $p$ must be true"},
+            {"letter": "B", "text": "Positive Introspection: $\\Box p \\to \\Box\\Box p$ — if I know $p$, I know that I know $p$"},
+            {"letter": "C", "text": "Negative Introspection: $\\neg\\Box p \\to \\Box\\neg\\Box p$ — if I don't know $p$, I know that I don't know $p$"},
+            {"letter": "D", "text": "All three epistemic axioms are valid over the class of all Kripke frames"},
+            {"letter": "E", "text": "True Knowledge $\\Box p \\to p$ is valid precisely over reflexive frames"}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "True Knowledge requires the agent cannot know false things.",
+              "section_ref": "Section 11.1: Epistemic Axioms",
+              "notes_quote": "True Knowledge: $\\Box p \\to p$ — 'If I know $p$, then $p$ must be true (I can't know false things)'"
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "Positive Introspection is the axiom that knowledge of $p$ implies awareness of that knowledge.",
+              "section_ref": "Section 11.1: Epistemic Axioms",
+              "notes_quote": "Positive Introspection: $\\Box p \\to \\Box\\Box p$ — 'If I know $p$, I know that I know $p$'"
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "Negative Introspection states that ignorance is known.",
+              "section_ref": "Section 11.1: Epistemic Axioms",
+              "notes_quote": "Negative Introspection: $\\neg\\Box p \\to \\Box\\neg\\Box p$ — 'If I don't know $p$, I know that I don't know $p$'"
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "None of these three axioms is valid over the class of ALL Kripke frames — they require specific frame properties (reflexivity, transitivity, Euclideanness).",
+              "section_ref": "Section 11.1: Epistemic Axioms",
+              "notes_quote": "None of these is valid over the class of all Kripke frames."
+            },
+            {
+              "letter": "E",
+              "is_correct": true,
+              "text": "True Knowledge corresponds exactly to reflexive frames.",
+              "section_ref": "Section 11.1: Epistemic Axioms",
+              "notes_quote": "True Knowledge $\\Box p \\to p$ is valid over reflexive frames."
+            }
+          ]
+        },
+        {
+          "id": "q3",
+          "source_ref": "Section 11.1: Rumsfeld's Epistemology",
+          "text": "Which of the following correctly capture Rumsfeld's epistemological categories in modal logic? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Known knowns: $\\Box p$"},
+            {"letter": "B", "text": "Known unknowns: $\\Box\\neg\\Box p$"},
+            {"letter": "C", "text": "Unknown unknowns: $\\neg\\Box p \\wedge \\neg\\Box\\neg\\Box p$"},
+            {"letter": "D", "text": "Unknown unknowns are consistent with Negative Introspection"},
+            {"letter": "E", "text": "Unknown unknowns directly refute Negative Introspection"}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "Known knowns are things the agent knows, expressed as $\\Box p$.",
+              "section_ref": "Section 11.1: Rumsfeld's Epistemology",
+              "notes_quote": "Known knowns: $\\Box p$ (I know $p$)"
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "Known unknowns are things the agent knows they don't know.",
+              "section_ref": "Section 11.1: Rumsfeld's Epistemology",
+              "notes_quote": "Known unknowns: $\\Box\\neg\\Box p$ (I know that I don't know $p$)"
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "Unknown unknowns are things the agent neither knows nor knows that they don't know.",
+              "section_ref": "Section 11.1: Rumsfeld's Epistemology",
+              "notes_quote": "Unknown unknowns: $\\neg\\Box p \\wedge \\neg\\Box\\neg\\Box p$ (I neither know $p$ nor know that I don't know $p$)"
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "Unknown unknowns REFUTE Negative Introspection — they show a scenario where an agent does not know $p$ yet also does not know that they don't know $p$.",
+              "section_ref": "Section 11.1: Rumsfeld's Epistemology",
+              "notes_quote": ""
+            },
+            {
+              "letter": "E",
+              "is_correct": true,
+              "text": "Negative Introspection requires that not knowing $p$ implies knowing you don't know $p$ — unknown unknowns violate this.",
+              "section_ref": "Section 11.1: Rumsfeld's Epistemology",
+              "notes_quote": "Unknown unknowns ($\\neg\\Box p \\wedge \\neg\\Box\\neg\\Box p$) directly refute Negative Introspection."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-2",
+      "title": "11.2 First-Order Correspondence",
+      "questions": [
+        {
+          "id": "q4",
+          "source_ref": "Section 11.2.1: Translating Kripke Models to Predicate Logic",
+          "text": "When translating a Kripke model $\\mathfrak{M} = \\langle W, R, V \\rangle$ to a first-order predicate model $\\mathfrak{M}^*$, which of the following are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Each propositional variable $p_i$ corresponds to a unary predicate symbol $P_i$"},
+            {"letter": "B", "text": "The accessibility relation $R$ corresponds to a binary predicate symbol $R$"},
+            {"letter": "C", "text": "$P_i^\\mathcal{I} = V(p_i)$ for all propositional variables"},
+            {"letter": "D", "text": "Each propositional variable $p_i$ corresponds to a binary predicate symbol"},
+            {"letter": "E", "text": "The semantics of $\\Diamond$ resembles an existential quantifier over accessible worlds"}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "Propositional variables become unary predicates in the first-order translation.",
+              "section_ref": "Section 11.2.1: Translating Kripke Models to Predicate Logic",
+              "notes_quote": "A unary predicate symbol $P_i \\in \\text{Pred}$ for each propositional variable $p_i \\in \\text{Prop}$"
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "The accessibility relation becomes a binary predicate in the first-order model.",
+              "section_ref": "Section 11.2.1: Translating Kripke Models to Predicate Logic",
+              "notes_quote": "A binary predicate symbol $R \\in \\text{Pred}$ for the accessibility relation"
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "The interpretation of $P_i$ in the first-order model is exactly the valuation of $p_i$.",
+              "section_ref": "Section 11.2.1: Translating Kripke Models to Predicate Logic",
+              "notes_quote": "$P_i^\\mathcal{I} = V(p_i)$ for all $p_i \\in \\text{Prop}$"
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "Propositional variables become UNARY predicates (applied to the current world variable), not binary predicates.",
+              "section_ref": "Section 11.2.1: Translating Kripke Models to Predicate Logic",
+              "notes_quote": ""
+            },
+            {
+              "letter": "E",
+              "is_correct": true,
+              "text": "The $\\Diamond$ operator is semantically analogous to existential quantification over accessible worlds.",
+              "section_ref": "Section 11.2.1: Translating Kripke Models to Predicate Logic",
+              "notes_quote": "The semantics of $\\Diamond$ and $\\Box$ is reminiscent of first-order quantifiers: $\\mathfrak{M}, w \\models \\Diamond F \\iff \\exists u \\in W;\\ (w,u)\\in R \\text{ and } \\mathfrak{M}, u \\models F$"
+            }
+          ]
+        },
+        {
+          "id": "q5",
+          "source_ref": "Section 11.2.2: Standard Translation",
+          "text": "Which of the following correctly state the standard translation $\\text{ST}_x$? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$\\text{ST}_x(p_i) = P_i(x)$"},
+            {"letter": "B", "text": "$\\text{ST}_x(\\Diamond G) = \\exists y\\bigl(R(x,y) \\wedge \\text{ST}_y(G)\\bigr)$ where $y$ is a fresh variable"},
+            {"letter": "C", "text": "$\\text{ST}_x(\\Box G) = \\forall y\\bigl(R(x,y) \\to \\text{ST}_y(G)\\bigr)$ where $y$ is a fresh variable"},
+            {"letter": "D", "text": "$\\text{ST}_x(\\Diamond G) = \\forall y\\bigl(R(x,y) \\to \\text{ST}_y(G)\\bigr)$"},
+            {"letter": "E", "text": "$\\text{ST}_x(G \\wedge H) = \\text{ST}_x(G) \\wedge \\text{ST}_x(H)$"}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "Propositional variables translate to the corresponding unary predicate applied at the current world $x$.",
+              "section_ref": "Section 11.2.2: Standard Translation",
+              "notes_quote": "$\\text{ST}_x(p_i) = P_i(x)$"
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "$\\Diamond$ translates to existential quantification over an accessible world $y$.",
+              "section_ref": "Section 11.2.2: Standard Translation",
+              "notes_quote": "$\\text{ST}_x(\\Diamond G) = \\exists y\\bigl(R(x,y) \\wedge \\text{ST}_y(G)\\bigr)$"
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "$\\Box$ translates to universal quantification over accessible worlds.",
+              "section_ref": "Section 11.2.2: Standard Translation",
+              "notes_quote": "$\\text{ST}_x(\\Box G) = \\forall y\\bigl(R(x,y) \\to \\text{ST}_y(G)\\bigr)$"
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "This is the translation for $\\Box$, not $\\Diamond$. $\\Diamond G$ uses an existential quantifier with $\\wedge$, not a universal with $\\to$.",
+              "section_ref": "Section 11.2.2: Standard Translation",
+              "notes_quote": ""
+            },
+            {
+              "letter": "E",
+              "is_correct": true,
+              "text": "Boolean connectives translate homomorphically — the world variable $x$ is passed to both sides unchanged.",
+              "section_ref": "Section 11.2.2: Standard Translation",
+              "notes_quote": "$\\text{ST}_x(G \\odot H) = \\text{ST}_x(G) \\odot \\text{ST}_x(H)$ for $\\odot \\in \\{\\wedge, \\vee, \\to\\}$"
+            }
+          ]
+        },
+        {
+          "id": "q6",
+          "source_ref": "Section 11.2.2: Standard Translation",
+          "text": "Compute $\\text{ST}_x(\\Box p \\to p)$. Which of the following is correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$\\text{ST}_x(\\Box p \\to p) = \\forall y(R(x,y) \\to P(y)) \\to P(x)$"},
+            {"letter": "B", "text": "$\\text{ST}_x(\\Box p \\to p) = \\exists y(R(x,y) \\wedge P(y)) \\to P(x)$"},
+            {"letter": "C", "text": "This is the standard translation of the True Knowledge axiom (Axiom T)"},
+            {"letter": "D", "text": "This formula is in purely first-order logic (no predicate quantifiers)"},
+            {"letter": "E", "text": "$\\text{ST}_x(\\Box p \\to p) = \\forall y(R(x,y) \\to P(y)) \\wedge P(x)$"}
+          ],
+          "correct": ["A", "C", "D"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "$\\text{ST}_x(\\Box p) = \\forall y(R(x,y) \\to P(y))$ and $\\text{ST}_x(p) = P(x)$, so $\\text{ST}_x(\\Box p \\to p) = \\forall y(R(x,y)\\to P(y)) \\to P(x)$.",
+              "section_ref": "Section 11.2.2: Standard Translation",
+              "notes_quote": "SGT 11.1(i): $\\text{ST}_x(F) = \\forall y(R(x,y) \\to P(y)) \\to P(x)$"
+            },
+            {
+              "letter": "B",
+              "is_correct": false,
+              "text": "Using $\\exists$ with $\\wedge$ would be the translation of $\\Diamond p \\to p$, not $\\Box p \\to p$. $\\Box$ translates to $\\forall$ with $\\to$.",
+              "section_ref": "Section 11.2.2: Standard Translation",
+              "notes_quote": ""
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "$\\Box p \\to p$ is the True Knowledge (Reflexivity) axiom, Axiom T in the table of standard axioms.",
+              "section_ref": "Section 11.6: Standard Common Modal Axioms",
+              "notes_quote": "T (Reflexivity): $\\Box p \\to p$ | Reflexive | $\\forall x\\,R(x,x)$"
+            },
+            {
+              "letter": "D",
+              "is_correct": true,
+              "text": "The standard translation itself is a first-order formula with free predicate symbols $P$ — it is a first-order formula (not second-order), with $P$ as a free predicate.",
+              "section_ref": "Section 11.2.2: Standard Translation",
+              "notes_quote": "$\\text{ST}_x(F)$ is defined inductively... all resulting formulas are first-order"
+            },
+            {
+              "letter": "E",
+              "is_correct": false,
+              "text": "Using $\\wedge$ instead of $\\to$ between the antecedent and consequent is incorrect — the implication $\\to$ must be preserved.",
+              "section_ref": "Section 11.2.2: Standard Translation",
+              "notes_quote": ""
+            }
+          ]
+        },
+        {
+          "id": "q7",
+          "source_ref": "Section 11.2.3: Correspondence Theorem",
+          "text": "Which of the following correctly state Theorem 11.2 and its implications? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$\\mathfrak{M}, x \\models F \\iff \\mathfrak{M}^* \\models^h \\text{ST}_x(F)$ where $h(x) = x$"},
+            {"letter": "B", "text": "Frame validity of $F$ requires quantifying over predicates $P_1, \\ldots, P_n$, which takes us into second-order logic"},
+            {"letter": "C", "text": "Quantifying over predicates is required because propositional variables represent arbitrary sets of worlds"},
+            {"letter": "D", "text": "Frame validity can always be expressed as a first-order condition without any further work"},
+            {"letter": "E", "text": "Global satisfiability of $F$ in $\\mathfrak{M}$ corresponds to $\\forall x\\,\\text{ST}_x(F)$ being satisfiable in $\\mathfrak{M}^*$"}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "This is the exact statement of Theorem 11.2.",
+              "section_ref": "Section 11.2.3: Correspondence Theorem",
+              "notes_quote": "$\\mathfrak{M}, x \\models F \\iff \\mathfrak{M}^* \\models^h \\text{ST}_x(F)$"
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "Frame validity requires the formula to hold for ALL valuations, which means quantifying over all predicates $P_i$ — second-order logic.",
+              "section_ref": "Section 11.2.3: Correspondence Theorem",
+              "notes_quote": "$\\forall P_1 \\ldots \\forall P_n\\,\\forall x\\,\\text{ST}_x(F)$ is not a well-formed formula of first-order predicate logic — we are quantifying over predicates, not individual variables. This takes us into second-order predicate logic."
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "Propositional variables can be satisfied by any subset of worlds, so all possible valuations must be considered for frame validity.",
+              "section_ref": "Section 11.2.3: Correspondence Theorem",
+              "notes_quote": "To obtain a first-order condition on the frame, we must eliminate the predicate quantifiers $P_1, \\ldots, P_n$"
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "Frame validity cannot ALWAYS be expressed as a first-order condition — Chagrova's Theorem shows this is undecidable in general.",
+              "section_ref": "Section 11.3.1: The Undecidability Barrier",
+              "notes_quote": ""
+            },
+            {
+              "letter": "E",
+              "is_correct": true,
+              "text": "Global satisfiability (truth at all worlds) corresponds to universal quantification over the world variable in the first-order model.",
+              "section_ref": "Section 11.2.3: Correspondence Theorem",
+              "notes_quote": "Global satisfiability: $F$ is globally satisfied in $\\mathfrak{M}$ iff $\\forall x\\,\\text{ST}_x(F)$ is satisfiable in $\\mathfrak{M}^*$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-3",
+      "title": "11.3 Sahlqvist Formulas",
+      "questions": [
+        {
+          "id": "q8",
+          "source_ref": "Section 11.3.1: The Undecidability Barrier",
+          "text": "Which of the following correctly describe Chagrova's Theorem? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "It is undecidable whether a given modal axiom has a first-order correspondent"},
+            {"letter": "B", "text": "It implies there is no general algorithm that, given any modal formula, produces its first-order frame correspondent"},
+            {"letter": "C", "text": "It proves that NO modal formula has a first-order correspondent"},
+            {"letter": "D", "text": "Despite Chagrova's Theorem, large useful subclasses of formulas do have computable correspondents"},
+            {"letter": "E", "text": "Chagrova's Theorem is about the undecidability of modal satisfiability"}
+          ],
+          "correct": ["A", "B", "D"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "This is the exact statement of Chagrova's Theorem.",
+              "section_ref": "Section 11.3.1: The Undecidability Barrier",
+              "notes_quote": "Theorem 11.3 (Chagrova's Theorem): It is undecidable whether a given modal axiom has a first-order correspondent."
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "Undecidability means no algorithm can determine this in general.",
+              "section_ref": "Section 11.3.1: The Undecidability Barrier",
+              "notes_quote": "This means there is no general algorithm that, given any modal formula, produces its first-order frame correspondent."
+            },
+            {
+              "letter": "C",
+              "is_correct": false,
+              "text": "Chagrova's Theorem says we cannot DECIDE whether a correspondent exists in general — many formulas (like all Sahlqvist formulas) DO have first-order correspondents.",
+              "section_ref": "Section 11.3.1: The Undecidability Barrier",
+              "notes_quote": ""
+            },
+            {
+              "letter": "D",
+              "is_correct": true,
+              "text": "Sahlqvist formulas are a large useful subclass with computable correspondents, despite the general undecidability.",
+              "section_ref": "Section 11.3.1: The Undecidability Barrier",
+              "notes_quote": "However, large useful subclasses of formulas do have computable correspondents."
+            },
+            {
+              "letter": "E",
+              "is_correct": false,
+              "text": "Chagrova's Theorem is about the undecidability of FRAME CORRESPONDENCE, not modal satisfiability. Modal satisfiability (for basic modal logic K) is decidable.",
+              "section_ref": "Section 11.3.1: The Undecidability Barrier",
+              "notes_quote": ""
+            }
+          ]
+        },
+        {
+          "id": "q9",
+          "source_ref": "Section 11.3.2: Positive and Negative Formulas",
+          "text": "Which of the following correctly describe positive and negative formulas? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$F$ is positive w.r.t. $p$ if every occurrence of $p$ appears under an even number of negations (in CNF)"},
+            {"letter": "B", "text": "$F$ is negative w.r.t. $p$ if every occurrence of $p$ appears under an odd number of negations (in CNF)"},
+            {"letter": "C", "text": "Positive formulas are monotonically increasing in the valuation: if $V(p) \\subseteq V'(p)$ and $\\mathfrak{M}, w \\models F$, then $\\mathfrak{M}', w \\models F$"},
+            {"letter": "D", "text": "Negative formulas are monotonically increasing in the valuation"},
+            {"letter": "E", "text": "A formula $F$ is positive if it is positive w.r.t. ALL propositional variables in $F$"}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "Even number of negations means the variable appears positively.",
+              "section_ref": "Section 11.3.2: Positive and Negative Formulas",
+              "notes_quote": "$F$ is positive (resp. negative) with respect to a variable $p \\in \\text{Prop}$ if every occurrence of $p$ in the conjunctive normal form of $F$ appears under the scope of an even (resp. odd) number of negation symbols."
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "Odd number of negations means the variable appears negatively.",
+              "section_ref": "Section 11.3.2: Positive and Negative Formulas",
+              "notes_quote": "every occurrence of $p$ in the conjunctive normal form of $F$ appears under the scope of an even (resp. odd) number of negation symbols"
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "This is Lemma 11.5(i) — the monotonicity property of positive formulas.",
+              "section_ref": "Section 11.3.2: Positive and Negative Formulas",
+              "notes_quote": "Lemma 11.5 (Monotonicity). If $F$ is positive: $\\mathfrak{M}, w \\models F \\Rightarrow \\mathfrak{M}', w \\models F$ for all $w \\in W$ [when $V(p) \\subseteq V'(p)$]"
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "Negative formulas are monotonically DECREASING, not increasing. Making more things true can falsify a negative formula.",
+              "section_ref": "Section 11.3.2: Positive and Negative Formulas",
+              "notes_quote": "Positive formulas are monotonically increasing in the valuation; negative formulas are monotonically decreasing."
+            },
+            {
+              "letter": "E",
+              "is_correct": true,
+              "text": "A formula is globally positive if it is positive with respect to all of its propositional variables.",
+              "section_ref": "Section 11.3.2: Positive and Negative Formulas",
+              "notes_quote": "$F$ is positive (resp. negative) if it is positive (resp. negative) with respect to all propositional variables appearing in $F$."
+            }
+          ]
+        },
+        {
+          "id": "q10",
+          "source_ref": "Section 11.3.3: Atoms and Boxed Atoms",
+          "text": "Which of the following correctly define atoms and boxed atoms? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "An atom is any propositional variable $p \\in \\text{Prop}$"},
+            {"letter": "B", "text": "A boxed atom is any formula of the form $\\Box^n p$ for some $p \\in \\text{Prop}$ and $n \\geq 1$"},
+            {"letter": "C", "text": "$\\Box p$, $\\Box\\Box q$, and $\\Box\\Box\\Box r$ are all examples of boxed atoms"},
+            {"letter": "D", "text": "A boxed atom requires $n \\geq 0$, so plain propositional variables also count as boxed atoms"},
+            {"letter": "E", "text": "$\\Diamond p$ is a boxed atom"}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "Atoms are simply propositional variables.",
+              "section_ref": "Section 11.3.3: Atoms and Boxed Atoms",
+              "notes_quote": "An atom is any propositional variable $p \\in \\text{Prop}$"
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "Boxed atoms require one or more $\\Box$ operators applied to a propositional variable.",
+              "section_ref": "Section 11.3.3: Atoms and Boxed Atoms",
+              "notes_quote": "A boxed atom is any formula of the form $\\Box^n p$ for some $p \\in \\text{Prop}$ and $n \\geq 1$ — i.e., a propositional variable under one or more $\\Box$ operators"
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "These are explicitly given as examples of boxed atoms in the notes.",
+              "section_ref": "Section 11.3.3: Atoms and Boxed Atoms",
+              "notes_quote": "Examples of boxed atoms: $\\Box p$, $\\Box\\Box q$, $\\Box\\Box\\Box r$"
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "Boxed atoms require $n \\geq 1$ — plain propositional variables (with $n=0$) are atoms, not boxed atoms.",
+              "section_ref": "Section 11.3.3: Atoms and Boxed Atoms",
+              "notes_quote": ""
+            },
+            {
+              "letter": "E",
+              "is_correct": false,
+              "text": "$\\Diamond p$ is a diamond formula applied to an atom, not a boxed atom. Boxed atoms require only $\\Box$ operators.",
+              "section_ref": "Section 11.3.3: Atoms and Boxed Atoms",
+              "notes_quote": ""
+            }
+          ]
+        },
+        {
+          "id": "q11",
+          "source_ref": "Section 11.3.4: Sahlqvist Formulas",
+          "text": "Which of the following correctly define Sahlqvist antecedents and Sahlqvist implications? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "A Sahlqvist antecedent is built from $\\top$, $\\bot$, atoms, boxed atoms, and negative formulas using $\\wedge$ and $\\vee$ only"},
+            {"letter": "B", "text": "A Sahlqvist implication is $F \\to G$ where $F$ is a Sahlqvist antecedent and $G$ is a positive formula"},
+            {"letter": "C", "text": "A Sahlqvist formula can be built from Sahlqvist implications using $\\Box$, and $\\wedge$/$\\vee$ between variable-disjoint parts"},
+            {"letter": "D", "text": "A Sahlqvist antecedent can freely use $\\Diamond$ applied to $\\Box$ formulas (e.g., $\\Diamond\\Box p$ is allowed)"},
+            {"letter": "E", "text": "A Sahlqvist antecedent can freely use $\\Box$ applied to $\\Diamond$ formulas (e.g., $\\Box\\Diamond p$ is allowed)"}
+          ],
+          "correct": ["A", "B", "C", "D"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "This is the definition of a Sahlqvist antecedent.",
+              "section_ref": "Section 11.3.4: Sahlqvist Formulas",
+              "notes_quote": "A Sahlqvist antecedent is a modal formula built from $\\top$, $\\bot$, atoms, boxed atoms, and negative formulas using only $\\wedge$ (conjunction) and $\\vee$ (disjunction)."
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "A Sahlqvist implication requires a Sahlqvist antecedent and a positive consequent.",
+              "section_ref": "Section 11.3.4: Sahlqvist Formulas",
+              "notes_quote": "A Sahlqvist implication is a modal formula of the form $F \\to G$ where: $F$ is a Sahlqvist antecedent, and $G$ is a positive formula"
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "This is the definition of a Sahlqvist formula built from implications.",
+              "section_ref": "Section 11.3.4: Sahlqvist Formulas",
+              "notes_quote": "A Sahlqvist formula is a formula built from Sahlqvist implications by: freely applying $\\Box$, and applying $\\wedge$ and $\\vee$ only between formulas that share no propositional variables"
+            },
+            {
+              "letter": "D",
+              "is_correct": true,
+              "text": "Sahlqvist antecedents allow nesting $\\Box$ inside $\\Diamond$ — e.g., $\\Diamond\\Box p$ is a valid Sahlqvist antecedent component.",
+              "section_ref": "Section 11.3.4: Sahlqvist Formulas",
+              "notes_quote": "Sahlqvist antecedents allow nesting of $\\Box$ inside $\\Diamond$ (e.g., $\\Diamond\\Box p$)"
+            },
+            {
+              "letter": "E",
+              "is_correct": false,
+              "text": "Sahlqvist antecedents do NOT allow $\\Diamond$ inside $\\Box$ — e.g., $\\Box\\Diamond p$ is NOT a Sahlqvist antecedent because $\\Diamond p$ is not negative.",
+              "section_ref": "Section 11.3.4: Sahlqvist Formulas",
+              "notes_quote": "but NOT $\\Diamond$ inside $\\Box$ (e.g., $\\Box\\Diamond p$ is not a Sahlqvist antecedent because $\\Diamond p$ is not negative)"
+            }
+          ]
+        },
+        {
+          "id": "q12",
+          "source_ref": "Section 11.3.4: Sahlqvist Formulas",
+          "text": "Which of the following formulas are Sahlqvist formulas (or Sahlqvist implications)? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$p \\to \\Diamond p$ (antecedent: atom $p$; consequent: $\\Diamond p$ is positive)"},
+            {"letter": "B", "text": "$(p \\wedge \\Diamond\\Box p) \\to \\Box p$ (antecedent: atom and boxed atom under $\\Diamond$; consequent: positive)"},
+            {"letter": "C", "text": "$\\Diamond\\Box p \\to \\Box\\Diamond p$ (consequent $\\Box\\Diamond p$ is positive)"},
+            {"letter": "D", "text": "$\\Box p \\to p$"},
+            {"letter": "E", "text": "$\\Box p \\to \\Box\\Box p$"}
+          ],
+          "correct": ["A", "B", "D", "E"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "The antecedent $p$ is an atom (Sahlqvist antecedent), and $\\Diamond p$ is a positive formula — this is a Sahlqvist implication.",
+              "section_ref": "Section 11.3.4: Sahlqvist Formulas",
+              "notes_quote": "$p \\to \\Diamond p$: Sahlqvist (antecedent $p$ is an atom; $\\Diamond p$ is positive)"
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "$(p \\wedge \\Diamond\\Box p) \\to \\Box p$ is the second worked example given in the lectures as a Sahlqvist formula.",
+              "section_ref": "Section 11.3.4: Sahlqvist Formulas",
+              "notes_quote": "$(p \\wedge \\Diamond\\Box p) \\to \\Box p$: Sahlqvist (Example 2 from lectures)"
+            },
+            {
+              "letter": "C",
+              "is_correct": false,
+              "text": "$\\Diamond\\Box p \\to \\Box\\Diamond p$ is NOT Sahlqvist — the notes explicitly state this, noting it also lacks a first-order correspondent.",
+              "section_ref": "Section 11.3.4: Sahlqvist Formulas",
+              "notes_quote": "$\\Diamond\\Box p \\to \\Box\\Diamond p$: NOT Sahlqvist"
+            },
+            {
+              "letter": "D",
+              "is_correct": true,
+              "text": "$\\Box p \\to p$ has antecedent $\\Box p$ (a boxed atom, which is a Sahlqvist antecedent) and consequent $p$ (a positive atom).",
+              "section_ref": "Section 11.3.4: Sahlqvist Formulas",
+              "notes_quote": "T (Reflexivity): $\\Box p \\to p$ | Reflexive | $\\forall x\\,R(x,x)$"
+            },
+            {
+              "letter": "E",
+              "is_correct": true,
+              "text": "$\\Box p \\to \\Box\\Box p$ has antecedent $\\Box p$ (boxed atom) and consequent $\\Box\\Box p$ (which is positive). It is the Axiom 4 Sahlqvist formula.",
+              "section_ref": "Section 11.6: Standard Common Modal Axioms",
+              "notes_quote": "4 (Transitivity): $\\Box p \\to \\Box\\Box p$ | Transitive"
+            }
+          ]
+        },
+        {
+          "id": "q13",
+          "source_ref": "Section 11.3.4: Sahlqvist Formulas",
+          "text": "Which of the following correctly state Sahlqvist's Theorem (Theorem 11.8)? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Every Sahlqvist formula has a first-order correspondent"},
+            {"letter": "B", "text": "There is an algorithm to compute the first-order correspondent of any Sahlqvist formula"},
+            {"letter": "C", "text": "Every modal formula has a first-order correspondent"},
+            {"letter": "D", "text": "Sahlqvist's Theorem provides a partial converse to Chagrova's Theorem by identifying a large computable class"},
+            {"letter": "E", "text": "Only Sahlqvist implications — not the full class of Sahlqvist formulas — have first-order correspondents"}
+          ],
+          "correct": ["A", "B", "D"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "This is part (i) of Sahlqvist's Theorem.",
+              "section_ref": "Section 11.3.4: Sahlqvist Formulas",
+              "notes_quote": "Theorem 11.8 (Sahlqvist's Theorem): (i) Every Sahlqvist formula has a first-order correspondent"
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "This is part (ii) of Sahlqvist's Theorem.",
+              "section_ref": "Section 11.3.4: Sahlqvist Formulas",
+              "notes_quote": "(ii) There is an algorithm to compute the first-order correspondent of any Sahlqvist formula"
+            },
+            {
+              "letter": "C",
+              "is_correct": false,
+              "text": "Only SAHLQVIST formulas are guaranteed first-order correspondents. Chagrova's Theorem shows the general question is undecidable.",
+              "section_ref": "Section 11.3.1: The Undecidability Barrier",
+              "notes_quote": ""
+            },
+            {
+              "letter": "D",
+              "is_correct": true,
+              "text": "Sahlqvist's Theorem identifies a large, practically useful subclass where the correspondence problem IS decidable (and computable).",
+              "section_ref": "Section 11.3.4: Sahlqvist Formulas",
+              "notes_quote": "However, large useful subclasses of formulas do have computable correspondents."
+            },
+            {
+              "letter": "E",
+              "is_correct": false,
+              "text": "The theorem applies to the full class of Sahlqvist formulas (which includes more than just Sahlqvist implications, as they can also be closed under $\\Box$ and variable-disjoint $\\wedge$/$\\vee$).",
+              "section_ref": "Section 11.3.4: Sahlqvist Formulas",
+              "notes_quote": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-4",
+      "title": "11.4 Lambda Expressions (Interlude)",
+      "questions": [
+        {
+          "id": "q14",
+          "source_ref": "Section 11.4: Lambda Expressions",
+          "text": "Which of the following correctly describe lambda expressions as used in the Sahlqvist–van Benthem algorithm? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$(\\lambda x.F(x))$ denotes the unary predicate 'the set of all $x$ satisfying $F(x)$'"},
+            {"letter": "B", "text": "The evaluation rule is $(\\lambda x.F(x))(t) = F(x/t)$, i.e., substitute $t$ for $x$ in $F(x)$"},
+            {"letter": "C", "text": "$(\\lambda u.\\, u = x)(y) = (y = x)$"},
+            {"letter": "D", "text": "$(\\lambda u.\\, u = x \\vee R(y, u))(z) = (z = x \\vee R(y, z))$"},
+            {"letter": "E", "text": "Lambda expressions can only denote binary predicates, not unary ones"}
+          ],
+          "correct": ["A", "B", "C", "D"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "Lambda expressions denote predicates/sets defined by a formula.",
+              "section_ref": "Section 11.4: Lambda Expressions",
+              "notes_quote": "Given a formula $F(x)$ with free variable $x$, we write $(\\lambda x.F(x))$ to denote the unary predicate 'the set of all those $x$ who satisfy $F(x)$'"
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "Application of a lambda expression performs substitution.",
+              "section_ref": "Section 11.4: Lambda Expressions",
+              "notes_quote": "Evaluation rule: Applying $(\\lambda x.F(x))$ at term $t$ gives: $(\\lambda x.F(x))(t) = F(x/t)$"
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "Substituting $y$ for $u$ in $u = x$ gives $y = x$.",
+              "section_ref": "Section 11.4: Lambda Expressions",
+              "notes_quote": "$(\\lambda u.\\ u = x)(y) = (y = x)$"
+            },
+            {
+              "letter": "D",
+              "is_correct": true,
+              "text": "Substituting $z$ for $u$ in $u = x \\vee R(y, u)$ gives $z = x \\vee R(y, z)$.",
+              "section_ref": "Section 11.4: Lambda Expressions",
+              "notes_quote": "$(\\lambda u.\\ u = x \\vee R(y, u))(z) = (z = x \\vee R(y, z))$"
+            },
+            {
+              "letter": "E",
+              "is_correct": false,
+              "text": "Lambda expressions in this context denote UNARY predicates (sets of individuals satisfying a property), not binary predicates.",
+              "section_ref": "Section 11.4: Lambda Expressions",
+              "notes_quote": ""
+            }
+          ]
+        },
+        {
+          "id": "q15",
+          "source_ref": "Section 11.4: Lambda Expressions",
+          "text": "Which of the following are correct statements about the relationship between lambda calculus and computation? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Lambda calculus is computationally equivalent to Turing Machines"},
+            {"letter": "B", "text": "Python's `lambda` functions implement the same concept"},
+            {"letter": "C", "text": "Lambda calculus is strictly weaker than Turing Machines"},
+            {"letter": "D", "text": "The $\\lambda$-notation is used in the algorithm as a shorthand for describing predicates/subsets"}
+          ],
+          "correct": ["A", "B", "D"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "Lambda calculus and Turing Machines are computationally equivalent.",
+              "section_ref": "Section 11.4: Lambda Expressions",
+              "notes_quote": "Lambda expressions come from the Lambda calculus, which is computationally equivalent to Turing Machines."
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "Python's lambda keyword is a direct implementation of lambda calculus.",
+              "section_ref": "Section 11.4: Lambda Expressions",
+              "notes_quote": "In Python, `lambda` functions are the same concept."
+            },
+            {
+              "letter": "C",
+              "is_correct": false,
+              "text": "Lambda calculus is EQUIVALENT to Turing Machines in computational power, not strictly weaker.",
+              "section_ref": "Section 11.4: Lambda Expressions",
+              "notes_quote": ""
+            },
+            {
+              "letter": "D",
+              "is_correct": true,
+              "text": "In the algorithm, lambda expressions compactly describe the minimal valuation (predicate) for each propositional variable.",
+              "section_ref": "Section 11.4: Lambda Expressions",
+              "notes_quote": "The algorithm uses $\\lambda$-notation as a shorthand for describing predicates/subsets."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-5",
+      "title": "11.5 The Sahlqvist–van Benthem Algorithm",
+      "questions": [
+        {
+          "id": "q16",
+          "source_ref": "Section 11.5.1: The Algorithm",
+          "text": "What are the correct steps of the Sahlqvist–van Benthem algorithm? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Step 1: Compute the standard translation $\\text{ST}_x(F)$"},
+            {"letter": "B", "text": "Step 2: Pull existential quantifiers from the antecedent to the front"},
+            {"letter": "C", "text": "Step 3: Group the antecedent into REL, AT, BOX, NEG $\\to$ POS form"},
+            {"letter": "D", "text": "Step 4: Find the minimal valuation $\\sigma(P_i)$ making AT $\\wedge$ BOX trivially true"},
+            {"letter": "E", "text": "Step 5: Apply $\\sigma$, substitute all occurrences of $P_i$, simplify, and universally quantify"}
+          ],
+          "correct": ["A", "B", "C", "D", "E"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "Step 1 computes the standard translation.",
+              "section_ref": "Section 11.5.1: The Algorithm",
+              "notes_quote": "Step 1: Compute the Standard Translation: Compute $\\text{ST}_x(F)$."
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "Existentials in the antecedent must be pulled to the front using standard logical equivalences.",
+              "section_ref": "Section 11.5.1: The Algorithm",
+              "notes_quote": "Step 2: Pull out 'Diamonds': Wherever an existential quantifier appears in the antecedent of $\\text{ST}_x(F)$, pull it to the front"
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "Step 3 organises the formula into its component parts.",
+              "section_ref": "Section 11.5.1: The Algorithm",
+              "notes_quote": "Step 3: Group Terms: Identify a predicate symbol $P_i$ and reorganise the antecedent into the standard form: REL $\\wedge$ AT $\\wedge$ BOX $\\wedge$ NEG $\\to$ POS"
+            },
+            {
+              "letter": "D",
+              "is_correct": true,
+              "text": "The minimal valuation is the smallest set making AT and BOX simultaneously true.",
+              "section_ref": "Section 11.5.1: The Algorithm",
+              "notes_quote": "Step 4: Read off Minimal Instances: Identify the minimum valuation $\\sigma(P_i)$ that makes the conjunction (AT $\\wedge$ BOX) true."
+            },
+            {
+              "letter": "E",
+              "is_correct": true,
+              "text": "Step 5 applies the substitution and produces the first-order correspondent.",
+              "section_ref": "Section 11.5.1: The Algorithm",
+              "notes_quote": "Step 5: Apply the Minimal Substitution: Apply $\\sigma$ to $\\text{ST}_x(F)$, substituting all occurrences of $P_i$ with $\\sigma(P_i)$, and simplify."
+            }
+          ]
+        },
+        {
+          "id": "q17",
+          "source_ref": "Section 11.5.1: The Algorithm",
+          "text": "In Step 2 (Pull out Diamonds), which logical equivalences are used? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$(\\exists x\\,A(x)) \\wedge B \\equiv \\exists x(A(x) \\wedge B)$ when $x$ not free in $B$"},
+            {"letter": "B", "text": "$(\\exists x\\,A(x)) \\to B \\equiv \\forall x(A(x) \\to B)$ when $x$ not free in $B$"},
+            {"letter": "C", "text": "$(\\forall x\\,A(x)) \\wedge B \\equiv \\forall x(A(x) \\wedge B)$ when $x$ not free in $B$"},
+            {"letter": "D", "text": "These equivalences convert existentials in the antecedent into universal quantifiers at the front"}
+          ],
+          "correct": ["A", "B", "D"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "This equivalence allows pulling an existential out of a conjunction.",
+              "section_ref": "Section 11.5.1: The Algorithm",
+              "notes_quote": "$(\\exists x\\,A(x)) \\wedge B \\equiv \\exists x(A(x) \\wedge B)$ (when $x$ not free in $B$)"
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "This equivalence converts an existential in the antecedent of an implication into a universal quantifier.",
+              "section_ref": "Section 11.5.1: The Algorithm",
+              "notes_quote": "$(\\exists x\\,A(x)) \\to B \\equiv \\forall x(A(x) \\to B)$ (when $x$ not free in $B$)"
+            },
+            {
+              "letter": "C",
+              "is_correct": false,
+              "text": "This equivalence for universal quantifiers is not the one used in Step 2 — Step 2 specifically handles existential quantifiers (from $\\Diamond$ translations).",
+              "section_ref": "Section 11.5.1: The Algorithm",
+              "notes_quote": ""
+            },
+            {
+              "letter": "D",
+              "is_correct": true,
+              "text": "The result of applying these equivalences is that existentials in the antecedent become universal quantifiers at the front of the formula.",
+              "section_ref": "Section 11.5.1: The Algorithm",
+              "notes_quote": "This converts the formula to the form $\\forall x_1 \\ldots \\forall x_n[\\cdots]$ with all existentials promoted out."
+            }
+          ]
+        },
+        {
+          "id": "q18",
+          "source_ref": "Section 11.5.2: Worked Example 1",
+          "text": "For $F = p \\to \\Diamond p$, which of the following are correct steps in the Sahlqvist–van Benthem algorithm? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$\\text{ST}_x(F) = P(x) \\to \\exists y(R(x,y) \\wedge P(y))$"},
+            {"letter": "B", "text": "The minimal valuation is $\\sigma(P) = \\lambda u.\\,(u = x)$"},
+            {"letter": "C", "text": "After applying $\\sigma$, the result simplifies to $\\exists y(R(x,y) \\wedge y = x)$, i.e., $R(x,x)$"},
+            {"letter": "D", "text": "The first-order correspondent is $\\forall x\\,R(x,x)$ — reflexivity"},
+            {"letter": "E", "text": "The first-order correspondent is $\\forall x\\forall y(R(x,y) \\to R(y,x))$ — symmetry"}
+          ],
+          "correct": ["A", "B", "C", "D"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "The standard translation applies $\\text{ST}_x(p) = P(x)$ and $\\text{ST}_x(\\Diamond p) = \\exists y(R(x,y) \\wedge P(y))$.",
+              "section_ref": "Section 11.5.2: Worked Example 1",
+              "notes_quote": "$\\text{ST}_x(F) = P(x) \\to \\exists y\\bigl(R(x,y) \\wedge P(y)\\bigr)$"
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "The only information about $P$ from AT is $P(x)$, so the minimal valuation assigns $P$ to be true exactly at $x$.",
+              "section_ref": "Section 11.5.2: Worked Example 1",
+              "notes_quote": "the minimal valuation assigns $P$ to be true at exactly $x$: $\\sigma(P) = \\lambda u.\\ (u = x)$"
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "Substituting $\\sigma(P)$ for $P$ and simplifying yields $R(x,x)$.",
+              "section_ref": "Section 11.5.2: Worked Example 1",
+              "notes_quote": "$= \\exists y\\bigl(R(x,y) \\wedge y = x\\bigr) \\equiv R(x,x)$"
+            },
+            {
+              "letter": "D",
+              "is_correct": true,
+              "text": "After universally quantifying over $x$, the first-order correspondent is $\\forall x\\,R(x,x)$ — reflexivity.",
+              "section_ref": "Section 11.5.2: Worked Example 1",
+              "notes_quote": "$\\forall x\\,\\sigma(\\text{ST}_x(F)) \\equiv \\forall x\\,R(x,x)$. Conclusion: $p \\to \\Diamond p$ is valid precisely over the class of reflexive frames."
+            },
+            {
+              "letter": "E",
+              "is_correct": false,
+              "text": "Symmetry $\\forall x\\forall y(R(x,y)\\to R(y,x))$ is the correspondent of $p \\to \\Box\\Diamond p$ (Axiom B), not $p \\to \\Diamond p$.",
+              "section_ref": "Section 11.6: Standard Common Modal Axioms",
+              "notes_quote": ""
+            }
+          ]
+        },
+        {
+          "id": "q19",
+          "source_ref": "Section 11.5.3: Worked Example 2",
+          "text": "For $F = (p \\wedge \\Diamond\\Box p) \\to \\Box p$, which of the following are correct in the Sahlqvist–van Benthem analysis? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$\\text{ST}_x(F) = P(x) \\wedge \\exists y(R(x,y) \\wedge \\forall z(R(y,z) \\to P(z))) \\to \\forall u(R(x,u) \\to P(u))$"},
+            {"letter": "B", "text": "After pulling out the existential, the formula becomes universally quantified over $y$"},
+            {"letter": "C", "text": "The minimal valuation is $\\sigma(P) = \\lambda u.\\,(u = x \\vee R(y,u))$"},
+            {"letter": "D", "text": "AT = $P(x)$, REL = $R(x,y)$, BOX = $\\forall z(R(y,z) \\to P(z))$"},
+            {"letter": "E", "text": "The minimal valuation is $\\sigma(P) = \\lambda u.\\,(u = x)$ only"}
+          ],
+          "correct": ["A", "B", "C", "D"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "This is the standard translation computed in Step 1 of Worked Example 2.",
+              "section_ref": "Section 11.5.3: Worked Example 2",
+              "notes_quote": "$\\text{ST}_x(F) = P(x) \\wedge \\exists y\\bigl(R(x,y) \\wedge \\forall z(R(y,z) \\to P(z))\\bigr) \\to \\forall u\\bigl(R(x,u) \\to P(u)\\bigr)$"
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "Pulling $\\exists y$ from the antecedent of an implication converts it to $\\forall y$.",
+              "section_ref": "Section 11.5.3: Worked Example 2",
+              "notes_quote": "Using $(\\exists y A(y)) \\to B \\equiv \\forall y(A(y) \\to B)$"
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "$P$ must be true at $x$ (from AT) and at all $R$-successors of $y$ (from BOX), giving this minimal valuation.",
+              "section_ref": "Section 11.5.3: Worked Example 2",
+              "notes_quote": "$\\sigma(P) = \\lambda u.\\ (u = x \\vee R(y,u))$"
+            },
+            {
+              "letter": "D",
+              "is_correct": true,
+              "text": "These are the components as identified in Step 3 of the worked example.",
+              "section_ref": "Section 11.5.3: Worked Example 2",
+              "notes_quote": "$\\underbrace{P(x)}_{\\text{AT}} \\wedge \\underbrace{R(x,y)}_{\\text{REL}} \\wedge \\underbrace{\\forall z(R(y,z) \\to P(z))}_{\\text{BOX}} \\to \\underbrace{\\forall u(R(x,u) \\to P(u))}_{\\text{POS}}$"
+            },
+            {
+              "letter": "E",
+              "is_correct": false,
+              "text": "$\\sigma(P) = \\lambda u.(u = x)$ would only account for AT. BOX forces $P$ also at all $R$-successors of $y$, so the full minimal valuation is $\\lambda u.(u = x \\vee R(y,u))$.",
+              "section_ref": "Section 11.5.3: Worked Example 2",
+              "notes_quote": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-6",
+      "title": "11.6 Standard Common Modal Axioms and Their Frame Correspondents",
+      "questions": [
+        {
+          "id": "q20",
+          "source_ref": "Section 11.6: Standard Common Modal Axioms",
+          "text": "Which of the following correctly match modal axioms to their frame correspondents? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Axiom T: $\\Box p \\to p$ — Reflexive frames: $\\forall x\\,R(x,x)$"},
+            {"letter": "B", "text": "Axiom 4: $\\Box p \\to \\Box\\Box p$ — Transitive frames: $\\forall x\\forall y\\forall z(R(x,y)\\wedge R(y,z)\\to R(x,z))$"},
+            {"letter": "C", "text": "Axiom B: $p \\to \\Box\\Diamond p$ — Symmetric frames: $\\forall x\\forall y(R(x,y)\\to R(y,x))$"},
+            {"letter": "D", "text": "Axiom D: $\\Box p \\to \\Diamond p$ — Serial frames: $\\forall x\\,\\exists y\\,R(x,y)$"},
+            {"letter": "E", "text": "Axiom K: $\\Box(p\\to q)\\to(\\Box p\\to\\Box q)$ — Valid in all frames (no frame restriction)"}
+          ],
+          "correct": ["A", "B", "C", "D", "E"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "Axiom T corresponds to reflexivity.",
+              "section_ref": "Section 11.6: Standard Common Modal Axioms",
+              "notes_quote": "T (Reflexivity): $\\Box p \\to p$ | Reflexive | $\\forall x\\,R(x,x)$"
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "Axiom 4 corresponds to transitivity.",
+              "section_ref": "Section 11.6: Standard Common Modal Axioms",
+              "notes_quote": "4 (Transitivity): $\\Box p \\to \\Box\\Box p$ | Transitive | $\\forall x\\forall y\\forall z(R(x,y)\\wedge R(y,z)\\to R(x,z))$"
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "Axiom B corresponds to symmetry.",
+              "section_ref": "Section 11.6: Standard Common Modal Axioms",
+              "notes_quote": "B (Symmetry): $p \\to \\Box\\Diamond p$ | Symmetric | $\\forall x\\forall y(R(x,y)\\to R(y,x))$"
+            },
+            {
+              "letter": "D",
+              "is_correct": true,
+              "text": "Axiom D corresponds to seriality (every world has a successor).",
+              "section_ref": "Section 11.6: Standard Common Modal Axioms",
+              "notes_quote": "D: $\\Box p \\to \\Diamond p$ | Serial | $\\forall x\\,\\exists y\\,R(x,y)$"
+            },
+            {
+              "letter": "E",
+              "is_correct": true,
+              "text": "Axiom K is valid in all frames — it imposes no frame restriction.",
+              "section_ref": "Section 11.6: Standard Common Modal Axioms",
+              "notes_quote": "K: $\\Box(p\\to q)\\to(\\Box p\\to\\Box q)$ | All frames | $\\top$ (always valid)"
+            }
+          ]
+        },
+        {
+          "id": "q21",
+          "source_ref": "Section 11.6: Standard Common Modal Axioms",
+          "text": "Which of the following correctly describe the Axiom 5 and its frame correspondent? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Axiom 5: $\\Diamond p \\to \\Box\\Diamond p$"},
+            {"letter": "B", "text": "Axiom 5 corresponds to the Euclidean property: $\\forall x\\forall y\\forall z(R(x,y)\\wedge R(x,z)\\to R(y,z))$"},
+            {"letter": "C", "text": "Axiom 5 corresponds to transitivity"},
+            {"letter": "D", "text": "The Euclidean property states: if $x$ can see $y$ and $z$, then $y$ can see $z$"},
+            {"letter": "E", "text": "Negative Introspection ($\\neg\\Box p \\to \\Box\\neg\\Box p$) is related to Axiom 5"}
+          ],
+          "correct": ["A", "B", "D", "E"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "Axiom 5 is $\\Diamond p \\to \\Box\\Diamond p$.",
+              "section_ref": "Section 11.6: Standard Common Modal Axioms",
+              "notes_quote": "5: $\\Diamond p \\to \\Box\\Diamond p$ | Euclidean"
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "Axiom 5 corresponds to the Euclidean frame property.",
+              "section_ref": "Section 11.6: Standard Common Modal Axioms",
+              "notes_quote": "5: $\\Diamond p \\to \\Box\\Diamond p$ | Euclidean | $\\forall x\\forall y\\forall z(R(x,y)\\wedge R(x,z)\\to R(y,z))$"
+            },
+            {
+              "letter": "C",
+              "is_correct": false,
+              "text": "Transitivity corresponds to Axiom 4 ($\\Box p \\to \\Box\\Box p$), not Axiom 5.",
+              "section_ref": "Section 11.6: Standard Common Modal Axioms",
+              "notes_quote": ""
+            },
+            {
+              "letter": "D",
+              "is_correct": true,
+              "text": "This is the informal description of the Euclidean property.",
+              "section_ref": "Section 11.7: SGT Questions",
+              "notes_quote": "Euclidean property (if $x$ can see $y$ and $z$, then $y$ can see $z$)"
+            },
+            {
+              "letter": "E",
+              "is_correct": true,
+              "text": "Negative Introspection is equivalent to Axiom 5 ($\\Diamond p \\to \\Box\\Diamond p$) by duality of $\\Box$ and $\\Diamond$.",
+              "section_ref": "Section 11.7: SGT Questions",
+              "notes_quote": "R2 ($\\neg\\Box p \\to \\Box\\neg\\Box p$): This is the 5 axiom. Equivalent to $\\Diamond p \\to \\Box\\Diamond p$ (by duality)."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-7",
+      "title": "11.7 SGT Questions",
+      "questions": [
+        {
+          "id": "q22",
+          "source_ref": "Section 11.7: SGT 11.1 — Computing Standard Translations",
+          "text": "Which of the following correctly give the standard translation of $F = p \\to \\Box\\Diamond p$? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$\\text{ST}_x(F) = P(x) \\to \\forall y\\bigl(R(x,y) \\to \\exists z(R(y,z) \\wedge P(z))\\bigr)$"},
+            {"letter": "B", "text": "$\\text{ST}_x(F) = P(x) \\to \\exists y(R(x,y) \\wedge \\forall z(R(y,z) \\to P(z)))$"},
+            {"letter": "C", "text": "This is the standard translation of Axiom B ($p \\to \\Box\\Diamond p$)"},
+            {"letter": "D", "text": "This formula corresponds to the symmetric frame property"},
+            {"letter": "E", "text": "$\\text{ST}_x(F) = \\forall y(R(x,y)\\to P(y)) \\to P(x)$"}
+          ],
+          "correct": ["A", "C", "D"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "This is the correct standard translation: $\\Box$ becomes $\\forall y(R(x,y) \\to \\cdots)$ and $\\Diamond$ becomes $\\exists z(R(y,z) \\wedge \\cdots)$.",
+              "section_ref": "Section 11.7: SGT 11.1",
+              "notes_quote": "$\\text{ST}_x(F) = P(x) \\to \\forall y\\bigl(R(x,y) \\to \\exists z(R(y,z) \\wedge P(z))\\bigr)$"
+            },
+            {
+              "letter": "B",
+              "is_correct": false,
+              "text": "Swapping $\\forall/\\exists$ gives the translation of $p \\to \\Diamond\\Box p$, not $p \\to \\Box\\Diamond p$.",
+              "section_ref": "Section 11.7: SGT 11.1",
+              "notes_quote": ""
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "Axiom B is $p \\to \\Box\\Diamond p$.",
+              "section_ref": "Section 11.6: Standard Common Modal Axioms",
+              "notes_quote": "B (Symmetry): $p \\to \\Box\\Diamond p$ | Symmetric | $\\forall x\\forall y(R(x,y)\\to R(y,x))$"
+            },
+            {
+              "letter": "D",
+              "is_correct": true,
+              "text": "Axiom B corresponds to the symmetric frame property.",
+              "section_ref": "Section 11.6: Standard Common Modal Axioms",
+              "notes_quote": "B (Symmetry): $p \\to \\Box\\Diamond p$ | Symmetric | $\\forall x\\forall y(R(x,y)\\to R(y,x))$"
+            },
+            {
+              "letter": "E",
+              "is_correct": false,
+              "text": "This is the standard translation of $\\Box p \\to p$ (Axiom T), not $p \\to \\Box\\Diamond p$.",
+              "section_ref": "Section 11.7: SGT 11.1",
+              "notes_quote": ""
+            }
+          ]
+        },
+        {
+          "id": "q23",
+          "source_ref": "Section 11.7: SGT 11.2 — Full Sahlqvist–van Benthem Worked Example",
+          "text": "For $F = \\Diamond(p \\wedge \\Diamond\\Box p) \\to \\Box p$, which of the following are correct in the Sahlqvist–van Benthem analysis? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Pulling out both existentials converts the formula to a $\\forall y_1 \\forall y_2$ universal prefix"},
+            {"letter": "B", "text": "REL = $R(x,y_1) \\wedge R(y_1,y_2)$, AT = $P(y_1)$, BOX = $\\forall z(R(y_2,z)\\to P(z))$"},
+            {"letter": "C", "text": "The minimal valuation is $\\sigma(P) = \\lambda u.\\,(u = y_1 \\vee R(y_2, u))$"},
+            {"letter": "D", "text": "The first-order correspondent is $\\forall x\\forall y_1\\forall y_2[R(x,y_1)\\wedge R(y_1,y_2) \\to \\forall u(R(x,u)\\to(u=y_1\\vee R(y_2,u)))]$"},
+            {"letter": "E", "text": "The formula is not a Sahlqvist formula and so the algorithm cannot be applied"}
+          ],
+          "correct": ["A", "B", "C", "D"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "Two rounds of pulling existentials (for $\\exists y_1$ and $\\exists y_2$) create a $\\forall y_1\\forall y_2$ prefix.",
+              "section_ref": "Section 11.7: SGT 11.2",
+              "notes_quote": "$\\equiv \\forall y_1\\forall y_2\\Bigl[R(x,y_1) \\wedge P(y_1) \\wedge R(y_1,y_2) \\wedge \\forall z(R(y_2,z)\\to P(z)) \\to \\forall u(R(x,u)\\to P(u))\\Bigr]$"
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "These are the components as identified in Step 3.",
+              "section_ref": "Section 11.7: SGT 11.2",
+              "notes_quote": "$\\underbrace{R(x,y_1) \\wedge R(y_1,y_2)}_{\\text{REL}} \\wedge \\underbrace{P(y_1)}_{\\text{AT}} \\wedge \\underbrace{\\forall z(R(y_2,z)\\to P(z))}_{\\text{BOX}}$"
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "$P$ must be true at $y_1$ (AT) and at all $R$-successors of $y_2$ (BOX).",
+              "section_ref": "Section 11.7: SGT 11.2",
+              "notes_quote": "$\\sigma(P) = \\lambda u.\\ (u = y_1 \\vee R(y_2, u))$"
+            },
+            {
+              "letter": "D",
+              "is_correct": true,
+              "text": "This is the final first-order correspondent after applying $\\sigma$ and universally quantifying.",
+              "section_ref": "Section 11.7: SGT 11.2",
+              "notes_quote": "$\\forall x\\forall y_1\\forall y_2\\Bigl[R(x,y_1)\\wedge R(y_1,y_2) \\to \\forall u\\bigl(R(x,u)\\to(u=y_1\\vee R(y_2,u))\\bigr)\\Bigr]$"
+            },
+            {
+              "letter": "E",
+              "is_correct": false,
+              "text": "$\\Diamond(p \\wedge \\Diamond\\Box p) \\to \\Box p$ IS a Sahlqvist formula — the antecedent is built from atoms and boxed atoms under $\\Diamond$, and the consequent $\\Box p$ is positive.",
+              "section_ref": "Section 11.3.4: Sahlqvist Formulas",
+              "notes_quote": ""
+            }
+          ]
+        },
+        {
+          "id": "q24",
+          "source_ref": "Section 11.7: SGT 11.3 — Modelling Agent Beliefs",
+          "text": "In SGT 11.3, Raymond models agent beliefs with $\\Box F =$ 'the agent believes $F$'. Which of the following correctly match criteria to modal formulas and frame properties? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "R1 ($\\Box p \\to \\Box\\Box p$) — Axiom 4 — Transitive frames"},
+            {"letter": "B", "text": "R2 ($\\neg\\Box p \\to \\Box\\neg\\Box p$) — Axiom 5 — Euclidean frames"},
+            {"letter": "C", "text": "R3 (consistency of beliefs) — related to serial frames: $\\forall x\\exists y\\,R(x,y)$"},
+            {"letter": "D", "text": "R4 ($\\Box p \\wedge \\Box(p\\to q) \\to \\Box q$) — Axiom K — Valid in all frames"},
+            {"letter": "E", "text": "R4 corresponds to reflexive frames"}
+          ],
+          "correct": ["A", "B", "C", "D"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "R1 is Positive Introspection / Axiom 4, corresponding to transitivity.",
+              "section_ref": "Section 11.7: SGT 11.3",
+              "notes_quote": "R1 ($\\Box p \\to \\Box\\Box p$): This is the 4 axiom... First-order correspondent: $\\forall x\\forall y\\forall z(R(x,y)\\wedge R(y,z)\\to R(x,z))$ — transitivity."
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "R2 is Negative Introspection / Axiom 5, corresponding to the Euclidean property.",
+              "section_ref": "Section 11.7: SGT 11.3",
+              "notes_quote": "R2 ($\\neg\\Box p \\to \\Box\\neg\\Box p$): This is the 5 axiom... First-order correspondent: $\\forall x\\forall y\\forall z(R(x,y)\\wedge R(x,z)\\to R(y,z))$ — Euclidean property."
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "R3 (consistency) corresponds to serial frames — every world has a successor.",
+              "section_ref": "Section 11.7: SGT 11.3",
+              "notes_quote": "R3: The formula $\\Box\\bot \\to \\bot$ corresponds to serial frames: $\\forall x\\exists y\\,R(x,y)$"
+            },
+            {
+              "letter": "D",
+              "is_correct": true,
+              "text": "R4 is equivalent to Axiom K, which is valid in all frames with no restriction.",
+              "section_ref": "Section 11.7: SGT 11.3",
+              "notes_quote": "R4: Equivalent to $\\Box(p\\to q)\\to(\\Box p\\to\\Box q)$ — this is the K axiom, valid in all frames."
+            },
+            {
+              "letter": "E",
+              "is_correct": false,
+              "text": "R4 corresponds to ALL frames (Axiom K), not reflexive frames. Reflexivity corresponds to Axiom T ($\\Box p \\to p$).",
+              "section_ref": "Section 11.7: SGT 11.3",
+              "notes_quote": ""
+            }
+          ]
+        },
+        {
+          "id": "q25",
+          "source_ref": "Section 11.7: SGT 11.3 — Tricky Criterion R*",
+          "text": "Regarding the tricky criterion R* in SGT 11.3 ($\\Box(\\Box p \\to p) \\to \\Box p$), which of the following are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "R* is not a Sahlqvist formula because $\\Box p$ appears with mixed polarity (both positive and negative)"},
+            {"letter": "B", "text": "The Sahlqvist–van Benthem algorithm cannot be applied to R*"},
+            {"letter": "C", "text": "By Chagrova's Theorem, it is undecidable in general whether R* has a first-order correspondent"},
+            {"letter": "D", "text": "R* is a Sahlqvist formula and the algorithm produces $\\forall x\\,R(x,x)$"},
+            {"letter": "E", "text": "The antecedent $\\Box(\\Box p \\to p)$ contains $\\Box p$ in a negative position, violating Sahlqvist antecedent conditions"}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "$\\Box p$ appears negatively in the antecedent and positively in the consequent — mixed polarity prevents minimal valuation identification.",
+              "section_ref": "Section 11.7: SGT 11.3",
+              "notes_quote": "This formula has $\\Box p$ appearing both positively and negatively — it is not a Sahlqvist formula."
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "Without a minimal substitution (blocked by mixed polarity), the algorithm cannot proceed.",
+              "section_ref": "Section 11.7: SGT 11.3",
+              "notes_quote": "Therefore the Sahlqvist–van Benthem algorithm cannot be applied"
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "For non-Sahlqvist formulas, the general undecidability of frame correspondence (Chagrova's Theorem) applies.",
+              "section_ref": "Section 11.7: SGT 11.3",
+              "notes_quote": "it is unclear (undecidable in general by Chagrova's Theorem) whether this formula even has a first-order frame correspondent"
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "R* is NOT a Sahlqvist formula and the algorithm cannot be applied to it.",
+              "section_ref": "Section 11.7: SGT 11.3",
+              "notes_quote": ""
+            },
+            {
+              "letter": "E",
+              "is_correct": true,
+              "text": "In $\\Box(\\Box p \\to p) = \\Box(\\neg\\Box p \\vee p)$, the $\\Box p$ inside has negative polarity — this violates Sahlqvist antecedent conditions.",
+              "section_ref": "Section 11.7: SGT 11.3",
+              "notes_quote": "the antecedent $\\Box(\\Box p \\to p)$ contains $\\Box p$ in a negative position (inside $\\Box p \\to p$, which is $\\neg\\Box p \\vee p$, so $\\Box p$ has negative polarity)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-8",
+      "title": "Key Definitions",
+      "questions": [
+        {
+          "id": "q26",
+          "source_ref": "Key Definitions",
+          "text": "Which of the following correctly match terms to their definitions from the Key Definitions table? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Epistemic logic: $\\Box p$ means 'the agent knows $p$'"},
+            {"letter": "B", "text": "Deontic logic: $\\Box p$ means 'the agent believes $p$'"},
+            {"letter": "C", "text": "Standard translation $\\text{ST}_x(F)$: inductive translation of modal formula $F$ into first-order logic"},
+            {"letter": "D", "text": "Chagrova's Theorem: it is undecidable whether a modal axiom has a first-order correspondent"},
+            {"letter": "E", "text": "Minimal valuation $\\sigma(P_i)$: the smallest valuation making AT $\\wedge$ BOX trivially true"}
+          ],
+          "correct": ["A", "C", "D", "E"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "Epistemic logic uses $\\Box$ for knowledge.",
+              "section_ref": "Key Definitions",
+              "notes_quote": "Epistemic logic: Modal logic where $\\Box p$ means 'the agent knows $p$'"
+            },
+            {
+              "letter": "B",
+              "is_correct": false,
+              "text": "Deontic logic interprets $\\Box p$ as '$p$ is obligatory', not 'the agent believes $p$'. Belief is doxastic logic.",
+              "section_ref": "Key Definitions",
+              "notes_quote": ""
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "The standard translation maps modal formulas to first-order predicate logic.",
+              "section_ref": "Key Definitions",
+              "notes_quote": "Standard translation $\\text{ST}_x(F)$: Inductive translation of modal formula $F$ into first-order predicate logic relative to variable $x$"
+            },
+            {
+              "letter": "D",
+              "is_correct": true,
+              "text": "This is the exact statement of Chagrova's Theorem as listed in the Key Definitions.",
+              "section_ref": "Key Definitions",
+              "notes_quote": "Chagrova's Theorem: It is undecidable whether a given modal axiom has a first-order correspondent"
+            },
+            {
+              "letter": "E",
+              "is_correct": true,
+              "text": "The minimal valuation finds the fewest worlds making AT and BOX trivially satisfied.",
+              "section_ref": "Key Definitions",
+              "notes_quote": "Minimal valuation $\\sigma(P_i)$: The smallest (fewest worlds) valuation making AT $\\wedge$ BOX trivially true"
+            }
+          ]
+        },
+        {
+          "id": "q27",
+          "source_ref": "Key Definitions",
+          "text": "Which of the following correctly describe the True Knowledge, Positive Introspection, and Negative Introspection axioms and their frame correspondents? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "True Knowledge $\\Box p \\to p$ is valid on reflexive frames"},
+            {"letter": "B", "text": "Positive Introspection $\\Box p \\to \\Box\\Box p$ is valid on transitive frames"},
+            {"letter": "C", "text": "Negative Introspection $\\neg\\Box p \\to \\Box\\neg\\Box p$ is valid on Euclidean frames"},
+            {"letter": "D", "text": "True Knowledge $\\Box p \\to p$ is valid on transitive frames"},
+            {"letter": "E", "text": "Negative Introspection is equivalent to Axiom 5 ($\\Diamond p \\to \\Box\\Diamond p$) by duality"}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "True Knowledge / Axiom T corresponds to reflexivity.",
+              "section_ref": "Key Definitions",
+              "notes_quote": "True Knowledge axiom: $\\Box p \\to p$ — valid on reflexive frames"
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "Positive Introspection / Axiom 4 corresponds to transitivity.",
+              "section_ref": "Key Definitions",
+              "notes_quote": "Positive Introspection axiom: $\\Box p \\to \\Box\\Box p$ — valid on transitive frames"
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "Negative Introspection / Axiom 5 corresponds to the Euclidean property.",
+              "section_ref": "Key Definitions",
+              "notes_quote": "Negative Introspection axiom: $\\neg\\Box p \\to \\Box\\neg\\Box p$ — valid on Euclidean frames"
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "True Knowledge corresponds to REFLEXIVE frames, not transitive frames. Transitivity corresponds to Positive Introspection.",
+              "section_ref": "Key Definitions",
+              "notes_quote": ""
+            },
+            {
+              "letter": "E",
+              "is_correct": true,
+              "text": "By duality of $\\Box$ and $\\Diamond$, $\\neg\\Box p \\to \\Box\\neg\\Box p$ is equivalent to $\\Diamond p \\to \\Box\\Diamond p$ (Axiom 5).",
+              "section_ref": "Section 11.7: SGT 11.3",
+              "notes_quote": "R2 ($\\neg\\Box p \\to \\Box\\neg\\Box p$): This is the 5 axiom. Equivalent to $\\Diamond p \\to \\Box\\Diamond p$ (by duality)."
+            }
+          ]
+        },
+        {
+          "id": "q28",
+          "source_ref": "Key Definitions",
+          "text": "Which of the following correctly describe the Sahlqvist–van Benthem algorithm components? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "REL is a conjunction of relational formulas of the form $R(x,y)$"},
+            {"letter": "B", "text": "AT is a conjunction of translations of atoms: formulas of the form $P_i(x)$"},
+            {"letter": "C", "text": "BOX is a conjunction of translations of boxed atoms"},
+            {"letter": "D", "text": "POS is a positive formula (the consequent of the Sahlqvist implication)"},
+            {"letter": "E", "text": "REL in the grouped form refers to modal formulas, not relational first-order atoms"}
+          ],
+          "correct": ["A", "B", "C", "D"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "REL contains first-order atoms describing accessibility relations.",
+              "section_ref": "Section 11.5.1: The Algorithm",
+              "notes_quote": "REL is a conjunction of relational formulas of the form $R(x,y)$ for variables $x,y$"
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "AT contains the first-order translations of propositional variable atoms.",
+              "section_ref": "Section 11.5.1: The Algorithm",
+              "notes_quote": "AT is a conjunction of (translations of) atoms of the form $P_i(x)$ for variable $x$"
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "BOX contains the first-order translations of boxed atoms (universal quantifications).",
+              "section_ref": "Section 11.5.1: The Algorithm",
+              "notes_quote": "BOX is a conjunction of (translations of) boxed atoms of the form $\\text{ST}_x(\\Box^n p_i)$"
+            },
+            {
+              "letter": "D",
+              "is_correct": true,
+              "text": "POS is the positive consequent of the Sahlqvist implication.",
+              "section_ref": "Section 11.5.1: The Algorithm",
+              "notes_quote": "POS is a positive formula with respect to $P_i$"
+            },
+            {
+              "letter": "E",
+              "is_correct": false,
+              "text": "REL contains first-order RELATIONAL formulas $R(x,y)$ — they are first-order atomic formulas, not modal formulas.",
+              "section_ref": "Section 11.5.1: The Algorithm",
+              "notes_quote": ""
+            }
+          ]
+        },
+        {
+          "id": "q29",
+          "source_ref": "Summary",
+          "text": "Which of the following correctly summarise the key learning objectives of Week 11? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Different interpretations of $\\Box$ (knowledge, belief, obligation, time) require restricting to appropriate frame classes"},
+            {"letter": "B", "text": "$\\text{ST}_x(F)$ translates a modal formula into first-order logic, mapping $\\Diamond$ to $\\exists$ and $\\Box$ to $\\forall$"},
+            {"letter": "C", "text": "Frame validity requires quantifying over predicates, taking us into second-order logic"},
+            {"letter": "D", "text": "Every modal formula has a computable first-order frame correspondent"},
+            {"letter": "E", "text": "The Sahlqvist–van Benthem algorithm has five steps: ST computation, pull diamonds, group terms, minimal valuation, substitution and simplification"}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "The first learning objective emphasises the need for frame classes.",
+              "section_ref": "Summary",
+              "notes_quote": "LO 1 (Frame classes and applications): Different interpretations of $\\Box$ require different frame properties. Restricting to appropriate classes of frames validates the desired tautologies."
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "The standard translation maps modal operators to first-order quantifiers.",
+              "section_ref": "Summary",
+              "notes_quote": "LO 2 (Standard translation): $\\text{ST}_x(F)$ translates a modal formula into first-order predicate logic, mapping $\\Diamond$ to $\\exists$ and $\\Box$ to $\\forall$."
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "Predicate quantification is needed for frame validity, which is second-order.",
+              "section_ref": "Summary",
+              "notes_quote": "LO 3 (Second-order problem): Frame validity requires quantifying over predicates $P_1,\\ldots,P_n$, taking us into second-order logic."
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "Chagrova's Theorem shows that it is UNDECIDABLE whether a modal formula has a first-order correspondent — not every formula does.",
+              "section_ref": "Summary",
+              "notes_quote": ""
+            },
+            {
+              "letter": "E",
+              "is_correct": true,
+              "text": "The five steps are correctly summarised in LO 8.",
+              "section_ref": "Summary",
+              "notes_quote": "LO 8 (The algorithm): Five steps: (1) compute $\\text{ST}_x(F)$; (2) pull existentials to front; (3) group into REL/AT/BOX/NEG $\\to$ POS; (4) find minimal valuation $\\sigma(P_i)$; (5) apply $\\sigma$, simplify, and universally quantify."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,553 @@
+{
+  "module": "AdvancedLogic",
+  "week": 4,
+  "title": "Semantics for Rational Consequence — Ranked Preferential Models",
+  "sections": [
+    {
+      "id": "section-1",
+      "title": "2.1 Ranked Preferential Models",
+      "questions": [
+        {
+          "id": "q1",
+          "source_ref": "Section 2.1: Motivation",
+          "text": "Why were ranked preferential models introduced in this module? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "To provide a semantic definition of rational consequence that is sound and complete with respect to the GM proof theory"},
+            {"letter": "B", "text": "The Gabbay–Makinson rules define rational consequence only syntactically, and a semantic counterpart was needed"},
+            {"letter": "C", "text": "To replace the GM rules entirely with a model-theoretic approach that abandons the six axioms"},
+            {"letter": "D", "text": "To mirror the relationship between classical propositional logic and its model-theoretic semantics"}
+          ],
+          "correct": ["A", "B", "D"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "The motivation is soundness and completeness of the semantics with respect to the proof theory.", "section_ref": "Section 2.1: Motivation", "notes_quote": "we want a semantic definition that is sound and complete with respect to the proof theory. Ranked preferential models provide exactly such a semantics."},
+            {"letter": "B", "is_correct": true, "text": "The GM rules are a purely syntactic characterisation; ranked models supply the semantic side.", "section_ref": "Section 2.1: Motivation", "notes_quote": "rational consequence relations have been defined purely syntactically — via the Gabbay–Makinson (GM) rules"},
+            {"letter": "C", "is_correct": false, "text": "Ranked models complement the GM rules; they do not replace or abandon them. The Representation Theorem shows equivalence.", "section_ref": "Section 2.1: Motivation", "notes_quote": ""},
+            {"letter": "D", "is_correct": true, "text": "The analogy with classical logic is explicit in the motivation.", "section_ref": "Section 2.1: Motivation", "notes_quote": "as in classical propositional logic, we want a semantic definition that is sound and complete with respect to the proof theory."}
+          ]
+        },
+        {
+          "id": "q2",
+          "source_ref": "Section 2.1: Definition 2.1",
+          "text": "Which statements correctly describe a ranked preferential model $\\vec{S}$? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$\\vec{S} = \\langle S_1, S_2, \\ldots, S_k \\rangle$ is an ordered sequence of length $k \\geq 1$"},
+            {"letter": "B", "text": "Each $S_i$ is a set of propositional valuations"},
+            {"letter": "C", "text": "$S_1$ contains the most usual worlds; $S_k$ contains the most exceptional"},
+            {"letter": "D", "text": "Every possible propositional valuation must appear in at least one $S_i$"},
+            {"letter": "E", "text": "Valuations deemed impossible need not appear in any $S_i$"}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "This is the formal statement of Definition 2.1.", "section_ref": "Section 2.1: Definition 2.1", "notes_quote": "A ranked preferential model is an ordered sequence $\\vec{S} = \\langle S_1, S_2, \\ldots, S_k \\rangle$ of length $k$, for some $k \\geq 1$"},
+            {"letter": "B", "is_correct": true, "text": "Each layer consists of propositional valuations.", "section_ref": "Section 2.1: Definition 2.1", "notes_quote": "where each $S_i$ is a set of propositional valuations."},
+            {"letter": "C", "is_correct": true, "text": "The ordering represents typicality from most usual to most exceptional.", "section_ref": "Section 2.1: Definition 2.1", "notes_quote": "$S_1$ contains the most usual worlds; $S_k$ contains the most exceptional cases."},
+            {"letter": "D", "is_correct": false, "text": "The definition does not require all valuations to appear. Impossible worlds may be omitted entirely.", "section_ref": "Section 2.1: Definition 2.1", "notes_quote": "the definition does not require that every possible valuation appears in some $S_i$ — models deemed impossible need not appear anywhere."},
+            {"letter": "E", "is_correct": true, "text": "Impossible models are allowed to be absent from all layers.", "section_ref": "Section 2.1: Definition 2.1", "notes_quote": "models deemed impossible need not appear anywhere."}
+          ]
+        },
+        {
+          "id": "q3",
+          "source_ref": "Section 2.1: Definition 2.2",
+          "text": "How is the consequence relation $\\approxeq_{\\vec{S}}$ defined for a ranked preferential model $\\vec{S}$? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$F \\approxeq_{\\vec{S}} G$ holds if the minimal layer $S_j$ with $\\text{mod}(F) \\cap S_j \\neq \\varnothing$ satisfies $\\text{mod}(F) \\cap S_j \\subseteq \\text{mod}(G)$"},
+            {"letter": "B", "text": "If no layer contains any model of $F$, then $F \\approxeq_{\\vec{S}} G$ holds vacuously"},
+            {"letter": "C", "text": "All layers, not just the first, are checked and $G$ must hold in all of them"},
+            {"letter": "D", "text": "The check mirrors the classical $\\text{mod}(F) \\subseteq \\text{mod}(G)$ but restricted to the single most-usual layer $S_j$"},
+            {"letter": "E", "text": "$F \\approxeq_{\\vec{S}} G$ fails if even one layer beyond $S_j$ contains an $F$-world that is not a $G$-world"}
+          ],
+          "correct": ["A", "B", "D"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "This is the core definition: check the minimal (most usual) layer containing F-worlds.", "section_ref": "Section 2.1: Definition 2.2", "notes_quote": "find the first layer $S_j$ that contains at least one valuation satisfying $F$. Then check whether every valuation in $S_j$ that satisfies $F$ also satisfies $G$."},
+            {"letter": "B", "is_correct": true, "text": "When F is deemed impossible (no F-worlds in any layer), the consequence holds vacuously.", "section_ref": "Section 2.1: Definition 2.2", "notes_quote": "If no layer contains any model of $F$, then $F \\approxeq_{\\vec{S}} G$ holds automatically (the 'vacuous' case — $F$ is deemed impossible)."},
+            {"letter": "C", "is_correct": false, "text": "Only the single minimal layer $S_j$ is checked — layers below $j$ are empty of F-worlds and later layers are irrelevant.", "section_ref": "Section 2.1: Definition 2.2", "notes_quote": "find the first layer $S_j$ that contains at least one valuation satisfying $F$."},
+            {"letter": "D", "is_correct": true, "text": "The definition restricts the classical inclusion check to the most typical layer.", "section_ref": "Section 2.1: Definition 2.2", "notes_quote": "This mirrors the classical check $\\text{mod}(F) \\subseteq \\text{mod}(G)$, but restricted to the single most-usual layer $S_j$."},
+            {"letter": "E", "is_correct": false, "text": "Only the minimal layer $S_j$ matters. F-worlds in later layers do not affect the truth of $F \\approxeq_{\\vec{S}} G$.", "section_ref": "Section 2.1: Definition 2.2", "notes_quote": ""}
+          ]
+        },
+        {
+          "id": "q4",
+          "source_ref": "Section 2.1: Useful Set-Theoretic Identities",
+          "text": "Which set-theoretic identities for $\\text{mod}(\\cdot)$ are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$\\text{mod}(F \\wedge G) = \\text{mod}(F) \\cap \\text{mod}(G)$"},
+            {"letter": "B", "text": "$\\text{mod}(F \\vee G) = \\text{mod}(F) \\cup \\text{mod}(G)$"},
+            {"letter": "C", "text": "$\\text{mod}(\\neg F) = \\overline{\\text{mod}(F)}$ (complement of $\\text{mod}(F)$)"},
+            {"letter": "D", "text": "$\\text{mod}(F \\wedge G) = \\text{mod}(F) \\cup \\text{mod}(G)$"},
+            {"letter": "E", "text": "$\\text{mod}(F \\to G) = \\text{mod}(\\neg F) \\cup \\text{mod}(G)$"}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "Conjunction corresponds to intersection of model sets.", "section_ref": "Section 2.1: Useful Set-Theoretic Identities", "notes_quote": "$\\text{mod}(F \\wedge G) = \\text{mod}(F) \\cap \\text{mod}(G)$"},
+            {"letter": "B", "is_correct": true, "text": "Disjunction corresponds to union of model sets.", "section_ref": "Section 2.1: Useful Set-Theoretic Identities", "notes_quote": "$\\text{mod}(F \\vee G) = \\text{mod}(F) \\cup \\text{mod}(G)$"},
+            {"letter": "C", "is_correct": true, "text": "Negation corresponds to complementation.", "section_ref": "Section 2.1: Useful Set-Theoretic Identities", "notes_quote": "$\\text{mod}(\\neg F) = \\overline{\\text{mod}(F)}$"},
+            {"letter": "D", "is_correct": false, "text": "Conjunction corresponds to intersection, not union. Union corresponds to disjunction.", "section_ref": "Section 2.1: Useful Set-Theoretic Identities", "notes_quote": "$\\text{mod}(F \\wedge G) = \\text{mod}(F) \\cap \\text{mod}(G)$"},
+            {"letter": "E", "is_correct": true, "text": "$F \\to G \\equiv \\neg F \\vee G$, so $\\text{mod}(F \\to G) = \\text{mod}(\\neg F) \\cup \\text{mod}(G)$. This follows from the identities for $\\vee$ and $\\neg$.", "section_ref": "Section 2.1: Useful Set-Theoretic Identities", "notes_quote": ""}
+          ]
+        },
+        {
+          "id": "q5",
+          "source_ref": "Section 2.1: Worked Exercise from Lecture",
+          "text": "Consider $\\vec{S} = \\langle S_1, S_2, S_3 \\rangle$ with $S_1 = \\{(p \\wedge \\neg q \\wedge \\neg r)\\}$, $S_2 = \\{(\\neg p \\wedge q \\wedge r), (p \\wedge q \\wedge \\neg r)\\}$, $S_3 = \\{(p \\wedge \\neg q \\wedge r)\\}$. Which of the following hold? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$p \\approxeq_{\\vec{S}} \\neg q$ is TRUE, because the only $p$-world in $S_1$ satisfies $\\neg q$"},
+            {"letter": "B", "text": "$(p \\wedge r) \\approxeq_{\\vec{S}} q$ is FALSE, because the $S_3$ world $(p \\wedge \\neg q \\wedge r)$ does not satisfy $q$"},
+            {"letter": "C", "text": "$q \\approxeq_{\\vec{S}} (p \\to r)$ is FALSE, because $(p \\wedge q \\wedge \\neg r) \\in S_2$ does not satisfy $p \\to r$"},
+            {"letter": "D", "text": "$(p \\wedge r) \\approxeq_{\\vec{S}} q$ is TRUE because $p \\wedge r$ holds in $S_1$"},
+            {"letter": "E", "text": "$p \\approxeq_{\\vec{S}} \\neg q$ requires checking $S_2$ and $S_3$ as well as $S_1$"}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "S1 is the minimal layer for p, and (p∧¬q∧¬r) satisfies ¬q.", "section_ref": "Section 2.1: Worked Exercise from Lecture", "notes_quote": "$S_1$ is minimal with $\\text{mod}(p) \\cap S_1 \\neq \\varnothing$. $\\text{mod}(p) \\cap S_1 = \\{(p \\wedge \\neg q \\wedge \\neg r)\\} \\subseteq \\text{mod}(\\neg q)$. True."},
+            {"letter": "B", "is_correct": true, "text": "No p∧r-world exists in S1 or S2; S3 contains (p∧¬q∧r) which does not satisfy q.", "section_ref": "Section 2.1: Worked Exercise from Lecture", "notes_quote": "$S_3$ is minimal: $\\text{mod}(p \\wedge r) \\cap S_3 = \\{(p \\wedge \\neg q \\wedge r)\\} \\not\\subseteq \\text{mod}(q)$. False."},
+            {"letter": "C", "is_correct": true, "text": "S2 is minimal for q, and (p∧q∧¬r) does not satisfy p→r (since p is true but r is false).", "section_ref": "Section 2.1: Worked Exercise from Lecture", "notes_quote": "$S_2$ is minimal: $\\text{mod}(q) \\cap S_2 = \\{(\\neg p \\wedge q \\wedge r), (p \\wedge q \\wedge \\neg r)\\}$. Is $(p \\wedge q \\wedge \\neg r) \\in \\text{mod}(p \\to r)$? No. False."},
+            {"letter": "D", "is_correct": false, "text": "p∧r has no worlds in S1 (S1 only contains (p∧¬q∧¬r) which has ¬r). The minimal layer for p∧r is S3, not S1.", "section_ref": "Section 2.1: Worked Exercise from Lecture", "notes_quote": "$\\text{mod}(p \\wedge r) \\cap S_1 = \\varnothing$"},
+            {"letter": "E", "is_correct": false, "text": "Only the minimal layer S1 is checked for p≈¬q. Once S1 contains a p-world, later layers are irrelevant.", "section_ref": "Section 2.1: Definition 2.2", "notes_quote": "find the first layer $S_j$ that contains at least one valuation satisfying $F$."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-2",
+      "title": "2.2 The Representation Theorem: Part I (Theorem 2.3)",
+      "questions": [
+        {
+          "id": "q6",
+          "source_ref": "Section 2.2: Theorem 2.3",
+          "text": "What does Theorem 2.3 state? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "For any ranked preferential model $\\vec{S}$, the relation $\\approxeq_{\\vec{S}}$ is a rational consequence relation"},
+            {"letter": "B", "text": "$\\approxeq_{\\vec{S}}$ satisfies all six Gabbay–Makinson rules for every ranked model $\\vec{S}$"},
+            {"letter": "C", "text": "Every rational consequence relation is generated by some ranked preferential model"},
+            {"letter": "D", "text": "Ranked models are a sound semantics for rational consequence"}
+          ],
+          "correct": ["A", "B", "D"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "This is the statement of Theorem 2.3.", "section_ref": "Section 2.2: Theorem 2.3", "notes_quote": "Let $\\vec{S} = \\langle S_1, \\ldots, S_k \\rangle$ be any ranked preferential model. Then $\\approxeq_{\\vec{S}}$ is a rational consequence relation."},
+            {"letter": "B", "is_correct": true, "text": "The proof verifies all GM rules for $\\approxeq_{\\vec{S}}$.", "section_ref": "Section 2.2: Theorem 2.3", "notes_quote": "Proof strategy: Show $\\approxeq_{\\vec{S}}$ satisfies each GM rule."},
+            {"letter": "C", "is_correct": false, "text": "This is the statement of Theorem 2.4 (Part II), not Theorem 2.3. Theorem 2.3 is the soundness direction only.", "section_ref": "Section 2.3: Theorem 2.4", "notes_quote": "Let $\\mid\\!\\!\\sim$ be any rational consequence relation. Then there is some ranked preferential model $\\vec{S}$ such that $\\approxeq_{\\vec{S}} = \\mid\\!\\!\\sim$."},
+            {"letter": "D", "is_correct": true, "text": "Theorem 2.3 establishes soundness: every ranked model generates a rational relation.", "section_ref": "Section 2.2: Theorem 2.3", "notes_quote": "Let $\\vec{S} = \\langle S_1, \\ldots, S_k \\rangle$ be any ranked preferential model. Then $\\approxeq_{\\vec{S}}$ is a rational consequence relation."}
+          ]
+        },
+        {
+          "id": "q7",
+          "source_ref": "Section 2.2: Theorem 2.3 — Proof of REF and R∧",
+          "text": "Which correctly describe how Reflexivity (REF) and Right-And (R$\\wedge$) are verified for $\\approxeq_{\\vec{S}}$? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "REF: $\\text{mod}(F) \\cap S_j \\subseteq \\text{mod}(F)$ holds trivially for any set"},
+            {"letter": "B", "text": "R$\\wedge$: If $\\text{mod}(F) \\cap S_j \\subseteq \\text{mod}(G)$ and $\\text{mod}(F) \\cap S_j \\subseteq \\text{mod}(H)$, then $\\text{mod}(F) \\cap S_j \\subseteq \\text{mod}(G) \\cap \\text{mod}(H) = \\text{mod}(G \\wedge H)$"},
+            {"letter": "C", "text": "REF requires checking all layers, not just the minimal one"},
+            {"letter": "D", "text": "R$\\wedge$ uses the identity $\\text{mod}(G \\wedge H) = \\text{mod}(G) \\cap \\text{mod}(H)$"}
+          ],
+          "correct": ["A", "B", "D"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "Any set is a subset of itself — reflexivity holds trivially.", "section_ref": "Section 2.2: Theorem 2.3", "notes_quote": "Let $j$ be minimal with $\\text{mod}(F) \\cap S_j \\neq \\varnothing$. Then $\\text{mod}(F) \\cap S_j \\subseteq \\text{mod}(F)$ trivially."},
+            {"letter": "B", "is_correct": true, "text": "This is the set-theoretic argument for R∧.", "section_ref": "Section 2.2: Theorem 2.3", "notes_quote": "$\\text{mod}(F) \\cap S_j \\subseteq \\text{mod}(G)$ and $\\text{mod}(F) \\cap S_j \\subseteq \\text{mod}(H)$, so $\\text{mod}(F) \\cap S_j \\subseteq \\text{mod}(G) \\cap \\text{mod}(H) = \\text{mod}(G \\wedge H)$."},
+            {"letter": "C", "is_correct": false, "text": "Only the minimal layer $S_j$ is used in the proof of REF, not all layers.", "section_ref": "Section 2.2: Theorem 2.3", "notes_quote": "Let $j$ be minimal with $\\text{mod}(F) \\cap S_j \\neq \\varnothing$."},
+            {"letter": "D", "is_correct": true, "text": "The set identity $\\text{mod}(G \\wedge H) = \\text{mod}(G) \\cap \\text{mod}(H)$ is used to complete the R∧ proof.", "section_ref": "Section 2.2: Theorem 2.3", "notes_quote": "$\\text{mod}(G) \\cap \\text{mod}(H) = \\text{mod}(G \\wedge H)$."}
+          ]
+        },
+        {
+          "id": "q8",
+          "source_ref": "Section 2.2: Theorem 2.3 — Proof of RMON",
+          "text": "How is Rational Monotonicity (RMON) proved for $\\approxeq_{\\vec{S}}$? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "From $F \\not\\approxeq_{\\vec{S}} \\neg G$, there exists some $\\text{mod}(F) \\cap S_j \\not\\subseteq \\text{mod}(\\neg G)$, meaning $\\text{mod}(F) \\cap \\text{mod}(G) \\cap S_j \\neq \\varnothing$"},
+            {"letter": "B", "text": "Since $F \\not\\approxeq_{\\vec{S}} \\neg G$, all layers before the minimal $F \\wedge G$-layer contain only $\\neg G$-worlds of $F$, so the minimal $F$-layer equals the minimal $F \\wedge G$-layer"},
+            {"letter": "C", "text": "At the shared minimal layer: $\\text{mod}(F \\wedge G) \\cap S_j \\subseteq \\text{mod}(F) \\cap S_j \\subseteq \\text{mod}(H)$"},
+            {"letter": "D", "text": "RMON is proved by showing that the minimal $F \\wedge G$-layer is always strictly later than the minimal $F$-layer"}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "The negation of $F \\approxeq_{\\vec{S}} \\neg G$ gives a layer where F-worlds include some G-worlds.", "section_ref": "Section 2.2: Theorem 2.3", "notes_quote": "Since $F \\not\\approxeq_{\\vec{S}} \\neg G$, there exists some $\\text{mod}(F) \\cap S_j \\not\\subseteq \\text{mod}(\\neg G)$, which means $\\text{mod}(F) \\cap \\text{mod}(G) \\cap S_j \\neq \\varnothing$."},
+            {"letter": "B", "is_correct": true, "text": "The RMON proof uses the constraint from $F \\not\\approxeq_{\\vec{S}} \\neg G$ to show the minimal layers coincide.", "section_ref": "Section 2.2: Theorem 2.3", "notes_quote": "for all $i < j$: $\\text{mod}(F) \\cap S_i \\subseteq \\overline{\\text{mod}(G)} = \\text{mod}(\\neg G)$, which means $\\text{mod}(F \\wedge G) \\cap S_i = \\varnothing$. So $j$ is also the minimal layer for $F$."},
+            {"letter": "C", "is_correct": true, "text": "Once the layers are equal, the subset chain gives the result.", "section_ref": "Section 2.2: Theorem 2.3", "notes_quote": "$\\text{mod}(F \\wedge G) \\cap S_j \\subseteq \\text{mod}(F) \\cap S_j \\subseteq \\text{mod}(H)$."},
+            {"letter": "D", "is_correct": false, "text": "The proof shows the minimal F-layer and minimal F∧G-layer are the same (equal), not that F∧G's layer is strictly later.", "section_ref": "Section 2.2: Theorem 2.3", "notes_quote": "So $j$ is also the minimal layer for $F$"}
+          ]
+        },
+        {
+          "id": "q9",
+          "source_ref": "Section 2.2: Application — Showing Consequences Cannot Be Derived",
+          "text": "How can ranked preferential models be used to show that a conclusion cannot be derived from premises? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Construct a ranked model that satisfies all premises but falsifies the conclusion — this is a counter-model"},
+            {"letter": "B", "text": "By Theorem 2.3, every ranked model generates a rational relation; if the conclusion were provable via GM rules, it would hold in every rational relation, hence in this model — contradiction"},
+            {"letter": "C", "text": "Find a ranked model where the conclusion holds but the premises fail"},
+            {"letter": "D", "text": "Enumerate all possible GM proofs and check none of them prove the conclusion"}
+          ],
+          "correct": ["A", "B"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "This is the counter-model method — a ranked model satisfying premises but falsifying the conclusion.", "section_ref": "Section 2.2: Application", "notes_quote": "to show a conclusion $F \\approxeq G$ cannot be derived from the GM rules, it suffices to construct a ranked preferential model that satisfies all premises but fails the conclusion."},
+            {"letter": "B", "is_correct": true, "text": "The contrapositive of Theorem 2.3 + completeness (Theorem 2.4) gives the counter-model method its logical force.", "section_ref": "Section 2.2: Application", "notes_quote": "Since every $\\approxeq_{\\vec{S}}$ is rational, if the conclusion were provable from the premises via GM rules, it would hold in every rational consequence relation — in particular in our constructed model."},
+            {"letter": "C", "is_correct": false, "text": "The counter-model must satisfy the premises and falsify the conclusion — not the other way around.", "section_ref": "Section 2.2: Application", "notes_quote": ""},
+            {"letter": "D", "is_correct": false, "text": "Enumerating all GM proofs is not the stated method. The semantic counter-model approach is used instead.", "section_ref": "Section 2.2: Application", "notes_quote": ""}
+          ]
+        },
+        {
+          "id": "q10",
+          "source_ref": "Section 2.2: Historical Note — Non-Ranked Preferential Models",
+          "text": "Which statements correctly compare ranked preferential models with (non-ranked) preferential models? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Ranked models use a total linear ordering on layers; preferential models use a partial order"},
+            {"letter": "B", "text": "Preferential models satisfy all GM rules except Rational Monotonicity (RMON)"},
+            {"letter": "C", "text": "Ranked models can be expressed as a pair $( \\{S_1,\\ldots,S_k\\}, \\prec)$ where $\\prec$ is a total linear order"},
+            {"letter": "D", "text": "Preferential models satisfy RMON but fail Cautious Monotonicity (CMON)"},
+            {"letter": "E", "text": "If RMON is judged unreasonable, preferential models are a viable alternative semantics"}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "The key structural difference: total vs partial order.", "section_ref": "Section 2.2: Historical Note", "notes_quote": "Relaxing to a partial order (reflexive, transitive, anti-symmetric) gives a preferential model"},
+            {"letter": "B", "is_correct": true, "text": "Preferential models satisfy all GM rules except RMON.", "section_ref": "Section 2.2: Historical Note", "notes_quote": "This satisfies all GM rules except Rational Monotonicity (RMON)."},
+            {"letter": "C", "is_correct": true, "text": "Ranked models can be re-expressed using a total linear ordering $\\prec$.", "section_ref": "Section 2.2: Historical Note", "notes_quote": "Ranked preferential models $\\vec{S} = \\langle S_1, \\ldots, S_k \\rangle$ can be re-expressed as a pair $( \\{S_1,\\ldots,S_k\\}, \\prec)$ where $\\prec$ is a total linear ordering"},
+            {"letter": "D", "is_correct": false, "text": "Preferential models fail RMON, not CMON. They satisfy CMON.", "section_ref": "Section 2.2: Historical Note", "notes_quote": "This satisfies all GM rules except Rational Monotonicity (RMON)."},
+            {"letter": "E", "is_correct": true, "text": "The notes explicitly present preferential models as an alternative when RMON is disputed.", "section_ref": "Section 2.2: Historical Note", "notes_quote": "If RMON is judged unreasonable, preferential models are a viable alternative."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-3",
+      "title": "2.3 The Representation Theorem: Part II (Theorem 2.4)",
+      "questions": [
+        {
+          "id": "q11",
+          "source_ref": "Section 2.3: Theorem 2.4",
+          "text": "What does Theorem 2.4 (The Representation Theorem) state? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Every rational consequence relation $\\mid\\!\\!\\sim$ is generated by some ranked preferential model $\\vec{S}$ such that $\\approxeq_{\\vec{S}} = \\mid\\!\\!\\sim$"},
+            {"letter": "B", "text": "Theorem 2.4 is the converse of Theorem 2.3"},
+            {"letter": "C", "text": "Together, Theorems 2.3 and 2.4 give: a relation is rational if and only if it is generated by some ranked preferential model"},
+            {"letter": "D", "text": "Every ranked preferential model generates a rational consequence relation"},
+            {"letter": "E", "text": "Theorem 2.4 is a completeness result for ranked preferential models"}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "This is the statement of Theorem 2.4.", "section_ref": "Section 2.3: Theorem 2.4", "notes_quote": "Let $\\mid\\!\\!\\sim$ be any rational consequence relation. Then there is some ranked preferential model $\\vec{S}$ such that $\\approxeq_{\\vec{S}} = \\mid\\!\\!\\sim$."},
+            {"letter": "B", "is_correct": true, "text": "Theorem 2.3 goes from model to rational relation; Theorem 2.4 goes the other way.", "section_ref": "Section 2.3: Theorem 2.4", "notes_quote": "This is the converse of Theorem 2.3."},
+            {"letter": "C", "is_correct": true, "text": "Together the two theorems give the biconditional characterisation.", "section_ref": "Section 2.3: Theorem 2.4", "notes_quote": "Together, Theorems 2.3 and 2.4 give a complete characterisation: a relation is rational if and only if it is generated by some ranked preferential model."},
+            {"letter": "D", "is_correct": false, "text": "That is Theorem 2.3, not Theorem 2.4. Theorem 2.4 goes from rational relation to ranked model.", "section_ref": "Section 2.2: Theorem 2.3", "notes_quote": ""},
+            {"letter": "E", "is_correct": true, "text": "Theorem 2.4 establishes completeness: every rational relation has a ranked model representation.", "section_ref": "Section 2.3: Theorem 2.4", "notes_quote": "This is the converse of Theorem 2.3. Together, Theorems 2.3 and 2.4 give a complete characterisation"}
+          ]
+        },
+        {
+          "id": "q12",
+          "source_ref": "Section 2.3: Proof Sketch",
+          "text": "In the constructive proof sketch of Theorem 2.4, how is $S_1$ (the first layer) determined? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$S_1 = \\bigcap \\{\\text{mod}(F) : \\top \\mid\\!\\!\\sim F\\}$ — the intersection of models of all formulas that usually follow from a tautology"},
+            {"letter": "B", "text": "$S_1$ contains the most usual worlds: all valuations satisfying every formula $F$ such that $\\top \\mid\\!\\!\\sim F$"},
+            {"letter": "C", "text": "$S_1$ is constructed by taking the union of all formula models whose negation is usually true"},
+            {"letter": "D", "text": "The construction terminates in finitely many steps because there are only finitely many propositional valuations (pigeonhole principle)"}
+          ],
+          "correct": ["A", "B", "D"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "This is the explicit formula for S1 in the proof sketch.", "section_ref": "Section 2.3: Proof Sketch", "notes_quote": "$S_1 = \\bigcap\\{\\text{mod}(F) : \\top \\mid\\!\\!\\sim F\\}$"},
+            {"letter": "B", "is_correct": true, "text": "S1 captures the most typical worlds by intersecting all usualness constraints from the tautology.", "section_ref": "Section 2.3: Proof Sketch", "notes_quote": "The most usual worlds are those in which every 'usually true' formula (i.e. every $F$ such that $\\top \\mid\\!\\!\\sim F$) holds"},
+            {"letter": "C", "is_correct": false, "text": "S1 is defined via intersection of models of formulas that usually follow from $\\top$, not via negation or union.", "section_ref": "Section 2.3: Proof Sketch", "notes_quote": "$S_1 = \\bigcap\\{\\text{mod}(F) : \\top \\mid\\!\\!\\sim F\\}$"},
+            {"letter": "D", "is_correct": true, "text": "Finiteness of propositional valuations guarantees the pigeonhole-based termination.", "section_ref": "Section 2.3: Proof Sketch", "notes_quote": "Since there are only finitely many propositional valuations, by the pigeonhole principle, there must be some finite $k$ after which the construction generates no further non-empty sets"}
+          ]
+        },
+        {
+          "id": "q13",
+          "source_ref": "Section 2.3: Proof Sketch — Structural Properties",
+          "text": "Which structural properties of the layers $S_i$ are used in the proof of Theorem 2.4? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$S_j \\subseteq \\text{mod}(\\Theta_j)$ follows from the construction"},
+            {"letter": "B", "text": "The layers are disjoint: $S_i \\cap S_j = \\varnothing$ for $i < j$ (i.e., $i \\neq j$)"},
+            {"letter": "C", "text": "The family $\\{\\text{mod}(F) : \\Theta_i \\mid\\!\\!\\sim F\\}$ is closed under intersections (by R$\\wedge$)"},
+            {"letter": "D", "text": "Each layer $S_i$ is a superset of $S_{i+1}$"}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "The construction ensures each layer is inside the corresponding $\\Theta_j$-region.", "section_ref": "Section 2.3: Proof Sketch", "notes_quote": "$S_j \\subseteq \\text{mod}(\\Theta_j)$ (follows from the construction)"},
+            {"letter": "B", "is_correct": true, "text": "The layers partition the valuations they contain — no valuation is in two layers.", "section_ref": "Section 2.3: Proof Sketch", "notes_quote": "$S_i \\cap S_j = \\varnothing$ for $i < j$ (the layers are disjoint)"},
+            {"letter": "C", "is_correct": true, "text": "Closure under intersections (from R∧) ensures the intersection $S_i$ is itself representable.", "section_ref": "Section 2.3: Proof Sketch", "notes_quote": "The set $\\{\\text{mod}(F) : \\Theta_i \\mid\\!\\!\\sim F\\}$ is finite and closed under intersections (by (R$\\wedge$))"},
+            {"letter": "D", "is_correct": false, "text": "There is no nesting requirement between layers. The layers are disjoint sets, not nested.", "section_ref": "Section 2.3: Proof Sketch", "notes_quote": ""}
+          ]
+        },
+        {
+          "id": "q14",
+          "source_ref": "Section 2.3: Derived Rule NRAT",
+          "text": "Which statements correctly describe the derived rule Negation Rationality (NRAT)? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "NRAT states: if $(F \\wedge G) \\not\\mid\\!\\!\\sim H$ and $(F \\wedge \\neg G) \\not\\mid\\!\\!\\sim H$, then $F \\not\\mid\\!\\!\\sim H$"},
+            {"letter": "B", "text": "NRAT is a derived rule that follows from the Representation Theorem (Theorem 2.4)"},
+            {"letter": "C", "text": "NRAT allows deriving that $F \\mid\\!\\!\\sim H$ whenever its two conjunctive splits both fail the consequence"},
+            {"letter": "D", "text": "NRAT is one of the six original Gabbay–Makinson axioms"}
+          ],
+          "correct": ["A", "B"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "This is the statement of NRAT as given in the notes.", "section_ref": "Section 2.3: Derived Rule NRAT", "notes_quote": "$(F \\wedge G) \\not\\mid\\!\\!\\sim H \\quad (F \\wedge \\neg G) \\not\\mid\\!\\!\\sim H$ over $F \\not\\mid\\!\\!\\sim H$ (NRAT)"},
+            {"letter": "B", "is_correct": true, "text": "NRAT is derived using the Representation Theorem, not from the GM axioms directly.", "section_ref": "Section 2.3: Derived Rule NRAT", "notes_quote": "By the Representation Theorem, the following rule holds for all rational consequence relations"},
+            {"letter": "C", "is_correct": false, "text": "NRAT concludes $F \\not\\mid\\!\\!\\sim H$ (negated consequence), not $F \\mid\\!\\!\\sim H$. The rule is about when a consequence fails.", "section_ref": "Section 2.3: Derived Rule NRAT", "notes_quote": "$(F \\wedge G) \\not\\mid\\!\\!\\sim H \\quad (F \\wedge \\neg G) \\not\\mid\\!\\!\\sim H$ over $F \\not\\mid\\!\\!\\sim H$"},
+            {"letter": "D", "is_correct": false, "text": "NRAT is a derived rule, not one of the six original GM axioms (REF, R∧, L∨, LLE, RWE, CMON, RMON).", "section_ref": "Section 2.3: Derived Rule NRAT", "notes_quote": ""}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-4",
+      "title": "SGT Week 4 Worked Examples",
+      "questions": [
+        {
+          "id": "q15",
+          "source_ref": "Section SGT: Question 4.1",
+          "text": "Given $\\vec{S} = (S_1, S_2, S_3)$ with $S_1 = \\{(p \\wedge \\neg q \\wedge r), (p \\wedge q \\wedge \\neg r)\\}$, $S_2 = \\{(p \\wedge q \\wedge r)\\}$, $S_3 = \\{(\\neg p \\wedge q \\wedge r), (\\neg p \\wedge \\neg q \\wedge r)\\}$. Which of the following hold? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$p \\wedge \\neg r \\approxeq_{\\vec{S}} q$ is TRUE: $S_1$ is minimal for $p \\wedge \\neg r$, and $(p \\wedge q \\wedge \\neg r) \\in S_1$ satisfies $q$"},
+            {"letter": "B", "text": "$\\neg p \\approxeq_{\\vec{S}} (r \\to p)$ is FALSE: $S_3$ is minimal for $\\neg p$, and both $\\neg p$-worlds in $S_3$ have $r$ true and $p$ false, so $r \\to p$ fails"},
+            {"letter": "C", "text": "$(\\neg p \\wedge \\neg r) \\approxeq_{\\vec{S}} \\neg q$ is TRUE because no layer contains a $(\\neg p \\wedge \\neg r)$-world — vacuous case"},
+            {"letter": "D", "text": "$(q \\wedge r) \\approxeq_{\\vec{S}} \\neg p$ is FALSE: $S_2$ is minimal for $q \\wedge r$, and $(p \\wedge q \\wedge r) \\in S_2$ satisfies $p$, not $\\neg p$"},
+            {"letter": "E", "text": "$\\neg p \\approxeq_{\\vec{S}} (r \\to p)$ is TRUE because $r$ is false in all $\\neg p$-worlds"}
+          ],
+          "correct": ["A", "B", "C", "D"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "Only (p∧q∧¬r) in S1 satisfies p∧¬r, and it satisfies q.", "section_ref": "Section SGT: Question 4.1(i)", "notes_quote": "$S_1$ is minimal with $\\text{mod}(p \\wedge \\neg r) \\cap S_1 \\neq \\varnothing$. $\\text{mod}(p \\wedge \\neg r) \\cap S_1 = \\{(p \\wedge q \\wedge \\neg r)\\} \\subseteq \\text{mod}(q)$."},
+            {"letter": "B", "is_correct": true, "text": "Both ¬p-worlds in S3 have r=true and p=false, so r→p = ¬r∨p fails for both.", "section_ref": "Section SGT: Question 4.1(ii)", "notes_quote": "$\\text{mod}(\\neg p) \\cap S_3 = \\{(\\neg p \\wedge q \\wedge r), (\\neg p \\wedge \\neg q \\wedge r)\\}$. But $\\text{mod}(r \\to p) = \\text{mod}(\\neg r) \\cup \\text{mod}(p)$, and neither valuation in the set satisfies $p$ or $\\neg r$."},
+            {"letter": "C", "is_correct": true, "text": "No valuation with ¬p∧¬r appears in any layer, so the vacuous case applies.", "section_ref": "Section SGT: Question 4.1(iii)", "notes_quote": "$\\text{mod}(\\neg p \\wedge \\neg r) \\cap S_i = \\varnothing$ for all $i = 1, 2, 3$. The vacuous case applies."},
+            {"letter": "D", "is_correct": true, "text": "S2 contains (p∧q∧r) which satisfies q∧r but not ¬p.", "section_ref": "Section SGT: Question 4.1(iv)", "notes_quote": "$S_2$ is minimal with $\\text{mod}(q \\wedge r) \\cap S_2 \\neq \\varnothing$. $\\text{mod}(q \\wedge r) \\cap S_2 = \\{(p \\wedge q \\wedge r)\\} \\not\\subseteq \\text{mod}(\\neg p)$."},
+            {"letter": "E", "is_correct": false, "text": "Both ¬p-worlds in S3 have r=true, so r→p fails (p is false). The claim is FALSE, not TRUE.", "section_ref": "Section SGT: Question 4.1(ii)", "notes_quote": "neither valuation in the set satisfies $p$ or $\\neg r$. So $\\text{mod}(\\neg p) \\cap S_3 \\not\\subseteq \\text{mod}(r \\to p)$. False."}
+          ]
+        },
+        {
+          "id": "q16",
+          "source_ref": "Section SGT: Question 4.1 — Vacuous Case",
+          "text": "Which statements correctly describe the vacuous case for $\\approxeq_{\\vec{S}}$? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "If $\\text{mod}(F) \\cap S_i = \\varnothing$ for all $i$, then $F \\approxeq_{\\vec{S}} G$ holds for any $G$"},
+            {"letter": "B", "text": "The vacuous case arises when $F$ is deemed impossible — no world in any layer satisfies $F$"},
+            {"letter": "C", "text": "In the vacuous case, the truth of $G$ must still be checked in all layers"},
+            {"letter": "D", "text": "The vacuous case mirrors classical logic: from $\\bot \\models G$ for any $G$"}
+          ],
+          "correct": ["A", "B", "D"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "The vacuous case makes any consequence vacuously true.", "section_ref": "Section 2.1: Definition 2.2", "notes_quote": "If no layer contains any model of $F$, then $F \\approxeq_{\\vec{S}} G$ holds automatically (the 'vacuous' case — $F$ is deemed impossible)."},
+            {"letter": "B", "is_correct": true, "text": "Vacuous truth corresponds to F being impossible in the model.", "section_ref": "Section 2.1: Definition 2.2", "notes_quote": "the 'vacuous' case — $F$ is deemed impossible"},
+            {"letter": "C", "is_correct": false, "text": "In the vacuous case, no checking of G is needed at all — the consequence holds automatically.", "section_ref": "Section 2.1: Definition 2.2", "notes_quote": "$F \\approxeq_{\\vec{S}} G$ holds automatically"},
+            {"letter": "D", "is_correct": true, "text": "The vacuous case is the non-monotonic analogue of ex falso (anything follows from the impossible).", "section_ref": "Section 2.1: Definition 2.2", "notes_quote": ""}
+          ]
+        },
+        {
+          "id": "q17",
+          "source_ref": "Section SGT: Question 4.2",
+          "text": "In Question 4.2 (the module premises problem), which statements about the counter-model $\\vec{S} = \\langle S_1, S_2 \\rangle$ are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "P1 ($c \\mid\\!\\!\\sim ls$) is verified because the only $c$-world in $S_1$ satisfies $ls$"},
+            {"letter": "B", "text": "P3 ($l \\mid\\!\\!\\sim mr$) is verified because both $l$-worlds in $S_2$ satisfy $mr$"},
+            {"letter": "C", "text": "Conclusion 1 ($mr \\mid\\!\\!\\sim \\neg c$) fails because $S_2$ contains a $mr$-world with $c$ true"},
+            {"letter": "D", "text": "Conclusion 2 ($mr \\mid\\!\\!\\sim c$) fails because $S_2$ contains a $mr$-world with $\\neg c$"},
+            {"letter": "E", "text": "The existence of this counter-model proves that neither conclusion can ever be derived from these premises"}
+          ],
+          "correct": ["A", "B", "C", "D", "E"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "S1's only world (c∧ls∧¬mr∧¬l) satisfies both c and ls.", "section_ref": "Section SGT: Question 4.2", "notes_quote": "P1: $c \\mid\\!\\!\\sim ls$ — $S_1$ is minimal with $\\text{mod}(c) \\cap S_1 \\neq \\varnothing$. $\\text{mod}(c) \\cap S_1 = \\{(c \\wedge ls \\wedge \\neg mr \\wedge \\neg l)\\} \\subseteq \\text{mod}(ls)$."},
+            {"letter": "B", "is_correct": true, "text": "Both l-worlds in S2 have mr=true.", "section_ref": "Section SGT: Question 4.2", "notes_quote": "P3: $l \\mid\\!\\!\\sim mr$ — $S_2$ is minimal. $\\text{mod}(l) \\cap S_2 = \\{(c \\wedge \\neg ls \\wedge mr \\wedge l), (\\neg c \\wedge \\neg ls \\wedge mr \\wedge l)\\} \\subseteq \\text{mod}(mr)$."},
+            {"letter": "C", "is_correct": true, "text": "(c∧¬ls∧mr∧l) ∈ S2 satisfies mr but not ¬c, so the conclusion fails.", "section_ref": "Section SGT: Question 4.2", "notes_quote": "Conclusion 1 fails: $mr \\not\\mid\\!\\!\\sim \\neg c$ — $S_2$ is minimal for $mr$. $\\text{mod}(mr) \\cap S_2 \\not\\subseteq \\text{mod}(\\neg c)$."},
+            {"letter": "D", "is_correct": true, "text": "(¬c∧¬ls∧mr∧l) ∈ S2 satisfies mr but not c, so conclusion 2 fails.", "section_ref": "Section SGT: Question 4.2", "notes_quote": "Conclusion 2 fails: $mr \\not\\mid\\!\\!\\sim c$ — same layer; $\\text{mod}(mr) \\cap S_2 \\not\\subseteq \\text{mod}(c)$ since $(\\neg c \\wedge \\neg ls \\wedge mr \\wedge l) \\in \\text{mod}(\\neg c)$."},
+            {"letter": "E", "is_correct": true, "text": "By Theorems 2.3 and 2.4, if a conclusion were derivable from premises via GM rules, it would hold in all rational relations including this one — but it doesn't.", "section_ref": "Section SGT: Question 4.2", "notes_quote": "By the Representation Theorem, every consequence relation generated by a ranked preferential model is rational. Hence if either conclusion were derivable from the premises via the GM rules, it would hold in this model — but it doesn't."}
+          ]
+        },
+        {
+          "id": "q18",
+          "source_ref": "Section SGT: Question 4.3",
+          "text": "Question 4.3 shows that classical consequence $\\models$ is rational. Which statements are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Take $\\vec{S} = (S_1)$ where $S_1$ is the set of all possible propositional valuations"},
+            {"letter": "B", "text": "For this model: $\\text{mod}(F) \\cap S_1 = \\text{mod}(F)$ for any formula $F$"},
+            {"letter": "C", "text": "$F \\models G$ iff $F \\approxeq_{\\vec{S}} G$ in this single-layer model with all valuations"},
+            {"letter": "D", "text": "Classical consequence is a special case of rational consequence — the most credulous possible"},
+            {"letter": "E", "text": "This model has multiple layers, one for each atomic proposition"}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "The construction uses a single layer containing all valuations.", "section_ref": "Section SGT: Question 4.3", "notes_quote": "Take $\\vec{S} = (S_1)$ where $S_1$ is the set of all possible propositional valuations."},
+            {"letter": "B", "is_correct": true, "text": "Since S1 contains all valuations, intersecting with S1 gives back the full model set.", "section_ref": "Section SGT: Question 4.3", "notes_quote": "$\\text{mod}(F) \\cap S_1 = \\text{mod}(F)$ for any $F$."},
+            {"letter": "C", "is_correct": true, "text": "The proof shows the two coincide for this model.", "section_ref": "Section SGT: Question 4.3", "notes_quote": "Proof ($F \\models G \\Leftrightarrow F \\approxeq_{\\vec{S}} G$)"},
+            {"letter": "D", "is_correct": false, "text": "The notes do not characterise classical consequence as 'most credulous' — this is not stated. Classical consequence is shown to be a special case of rational consequence, but the specific framing is not given.", "section_ref": "Section SGT: Question 4.3", "notes_quote": ""},
+            {"letter": "E", "is_correct": false, "text": "The model has exactly one layer S1 (not multiple layers, one per proposition).", "section_ref": "Section SGT: Question 4.3", "notes_quote": "Take $\\vec{S} = (S_1)$"}
+          ]
+        },
+        {
+          "id": "q19",
+          "source_ref": "Section SGT: Question 4.4(i) — Supra-classicality",
+          "text": "Question 4.4(i) proves Supra-classicality (SC) via the Representation Theorem. Which steps are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Assume $F \\models G$, i.e. $\\text{mod}(F) \\subseteq \\text{mod}(G)$"},
+            {"letter": "B", "text": "For any ranked model $\\vec{S}$: either no layer contains an $F$-world (done), or the minimal layer satisfies $\\text{mod}(F) \\cap S_j \\subseteq \\text{mod}(F) \\subseteq \\text{mod}(G)$"},
+            {"letter": "C", "text": "Since $\\vec{S}$ is arbitrary and every rational relation arises from some $\\vec{S}$, we conclude $F \\mid\\!\\!\\sim G$"},
+            {"letter": "D", "text": "SC is proved by induction on the number of layers in $\\vec{S}$"}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "The proof begins with the classical consequence assumption.", "section_ref": "Section SGT: Question 4.4(i)", "notes_quote": "Suppose $F \\models G$, i.e. $\\text{mod}(F) \\subseteq \\text{mod}(G)$."},
+            {"letter": "B", "is_correct": true, "text": "The two cases (vacuous and non-vacuous) are handled, using the classical inclusion.", "section_ref": "Section SGT: Question 4.4(i)", "notes_quote": "If $\\text{mod}(F) \\cap S_i = \\varnothing$ for all $i$, done. Otherwise let $j$ be minimal with $\\text{mod}(F) \\cap S_j \\neq \\varnothing$: $\\text{mod}(F) \\cap S_j \\subseteq \\text{mod}(F) \\subseteq \\text{mod}(G)$"},
+            {"letter": "C", "is_correct": true, "text": "The Representation Theorem allows lifting from all ranked models to all rational relations.", "section_ref": "Section SGT: Question 4.4(i)", "notes_quote": "Since $\\vec{S}$ is arbitrary and every rational consequence relation arises from some $\\vec{S}$, we have $F \\mid\\!\\!\\sim G$."},
+            {"letter": "D", "is_correct": false, "text": "The proof is not by induction on layers — it directly handles two cases (vacuous and non-vacuous) using set inclusion.", "section_ref": "Section SGT: Question 4.4(i)", "notes_quote": ""}
+          ]
+        },
+        {
+          "id": "q20",
+          "source_ref": "Section SGT: Question 4.4(ii) — Conditionalisation",
+          "text": "In the proof of Conditionalisation (CON) for ranked models, which steps are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Assume $(F \\wedge G) \\approxeq_{\\vec{S}} H$; let $j$ be minimal with $\\text{mod}(F) \\cap S_j \\neq \\varnothing$"},
+            {"letter": "B", "text": "If $\\text{mod}(F \\wedge G) \\cap S_j \\neq \\varnothing$: the hypothesis gives $\\text{mod}(F \\wedge G) \\cap S_j \\subseteq \\text{mod}(H) \\subseteq \\text{mod}(G \\to H)$"},
+            {"letter": "C", "text": "If $\\text{mod}(F \\wedge G) \\cap S_j = \\varnothing$: then $\\text{mod}(F) \\cap S_j \\subseteq \\text{mod}(\\neg G) = \\text{mod}(G \\to H)$"},
+            {"letter": "D", "text": "In both subcases, $\\text{mod}(F) \\cap S_j \\subseteq \\text{mod}(G \\to H)$, giving $F \\approxeq_{\\vec{S}} (G \\to H)$"},
+            {"letter": "E", "text": "Conditionalisation requires that $G$ is classically valid for the proof to work"}
+          ],
+          "correct": ["A", "B", "C", "D"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "This is the setup for the CON proof.", "section_ref": "Section SGT: Question 4.4(ii)", "notes_quote": "Suppose $(F \\wedge G) \\mid\\!\\!\\sim H$, i.e. $(F \\wedge G) \\approxeq_{\\vec{S}} H$ for an arbitrary ranked model $\\vec{S}$. Let $j$ be minimal with $\\text{mod}(F) \\cap S_j \\neq \\varnothing$."},
+            {"letter": "B", "is_correct": true, "text": "First subcase: F∧G-worlds exist in the minimal F-layer.", "section_ref": "Section SGT: Question 4.4(ii)", "notes_quote": "If $\\text{mod}(F \\wedge G) \\cap S_j \\neq \\varnothing$: by hypothesis, $\\text{mod}(F \\wedge G) \\cap S_j \\subseteq \\text{mod}(H) \\subseteq \\text{mod}(G \\to H)$."},
+            {"letter": "C", "is_correct": true, "text": "Second subcase: no F∧G-worlds in the minimal F-layer, so all F-worlds in that layer satisfy ¬G, hence G→H.", "section_ref": "Section SGT: Question 4.4(ii)", "notes_quote": "If $\\text{mod}(F \\wedge G) \\cap S_j = \\varnothing$: then $\\text{mod}(F) \\cap \\text{mod}(G) \\cap S_j = \\varnothing$, so $\\text{mod}(F) \\cap S_j \\subseteq \\overline{\\text{mod}(G)} = \\text{mod}(\\neg G) \\subseteq \\text{mod}(G \\to H)$."},
+            {"letter": "D", "is_correct": true, "text": "Both subcases conclude mod(F)∩S_j ⊆ mod(G→H), so F≈(G→H) holds.", "section_ref": "Section SGT: Question 4.4(ii)", "notes_quote": "In both cases, $\\text{mod}(F) \\cap S_j \\subseteq \\text{mod}(G \\to H)$, giving $F \\approxeq_{\\vec{S}} (G \\to H)$."},
+            {"letter": "E", "is_correct": false, "text": "There is no requirement for G to be classically valid. The proof works for any G.", "section_ref": "Section SGT: Question 4.4(ii)", "notes_quote": ""}
+          ]
+        },
+        {
+          "id": "q21",
+          "source_ref": "Section SGT: Question 4.4(iii) — Cautious Cut",
+          "text": "In the proof of Cautious Cut (CC) for ranked models, which steps are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Assume $F \\approxeq_{\\vec{S}} G$ and $(F \\wedge G) \\approxeq_{\\vec{S}} H$; let $j$ be minimal with $\\text{mod}(F) \\cap S_j \\neq \\varnothing$"},
+            {"letter": "B", "text": "Since $\\text{mod}(F \\wedge G) \\cap S_i \\subseteq \\text{mod}(F) \\cap S_i = \\varnothing$ for all $i < j$, $j$ is also minimal for $F \\wedge G$"},
+            {"letter": "C", "text": "From $F \\approxeq_{\\vec{S}} G$: $\\text{mod}(F) \\cap S_j \\subseteq \\text{mod}(G)$, so $\\text{mod}(F) \\cap S_j \\subseteq \\text{mod}(F \\wedge G) \\cap S_j \\subseteq \\text{mod}(H)$"},
+            {"letter": "D", "text": "Hence $\\text{mod}(F) \\cap S_j \\subseteq \\text{mod}(H)$, giving $F \\approxeq_{\\vec{S}} H$"},
+            {"letter": "E", "text": "Cautious Cut cannot be proved via the Representation Theorem and requires a direct GM proof"}
+          ],
+          "correct": ["A", "B", "C", "D"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "This is the setup for the CC proof.", "section_ref": "Section SGT: Question 4.4(iii)", "notes_quote": "Suppose $F \\approxeq_{\\vec{S}} G$ and $(F \\wedge G) \\approxeq_{\\vec{S}} H$. Let $j$ be minimal with $\\text{mod}(F) \\cap S_j \\neq \\varnothing$."},
+            {"letter": "B", "is_correct": true, "text": "F∧G-worlds are a subset of F-worlds, so if F has no worlds before layer j, neither does F∧G.", "section_ref": "Section SGT: Question 4.4(iii)", "notes_quote": "Since $\\text{mod}(F \\wedge G) \\cap S_i \\subseteq \\text{mod}(F) \\cap S_i = \\varnothing$ for all $i < j$, it follows that $j$ is also minimal with $\\text{mod}(F \\wedge G) \\cap S_j \\neq \\varnothing$."},
+            {"letter": "C", "is_correct": true, "text": "The inclusion chain connects F-worlds at layer j through G to F∧G and then to H.", "section_ref": "Section SGT: Question 4.4(iii)", "notes_quote": "From $F \\approxeq_{\\vec{S}} G$: $\\text{mod}(F) \\cap S_j \\subseteq \\text{mod}(G)$. Therefore: $\\text{mod}(F) \\cap S_j \\subseteq \\text{mod}(F) \\cap \\text{mod}(G) \\cap S_j = \\text{mod}(F \\wedge G) \\cap S_j \\subseteq \\text{mod}(H)$"},
+            {"letter": "D", "is_correct": true, "text": "The final step concludes F≈H from the inclusion chain.", "section_ref": "Section SGT: Question 4.4(iii)", "notes_quote": "Hence $F \\approxeq_{\\vec{S}} H$."},
+            {"letter": "E", "is_correct": false, "text": "The proof of CC given in Question 4.4(iii) is precisely via the Representation Theorem approach (working with an arbitrary ranked model).", "section_ref": "Section SGT: Question 4.4(iii)", "notes_quote": ""}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-5",
+      "title": "Key Definitions",
+      "questions": [
+        {
+          "id": "q22",
+          "source_ref": "Section: Key Definitions",
+          "text": "Which statements correctly define or describe Supra-classicality (SC), Conditionalisation (CON), and Cautious Cut (CC)? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "SC: If $F \\models G$ classically, then $F \\mid\\!\\!\\sim G$"},
+            {"letter": "B", "text": "CON: If $(F \\wedge G) \\mid\\!\\!\\sim H$, then $F \\mid\\!\\!\\sim (G \\to H)$"},
+            {"letter": "C", "text": "CC: If $F \\mid\\!\\!\\sim G$ and $(F \\wedge G) \\mid\\!\\!\\sim H$, then $F \\mid\\!\\!\\sim H$"},
+            {"letter": "D", "text": "SC states that rational consequence is strictly weaker than classical consequence"},
+            {"letter": "E", "text": "CON is also called Conditionalisation and is a derived rule provable via the Representation Theorem"}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "SC states rational consequence extends classical consequence.", "section_ref": "Section: Key Definitions", "notes_quote": "Supra-classicality (SC): If $F \\models G$ classically, then $F \\mid\\!\\!\\sim G$; rational consequence extends classical consequence"},
+            {"letter": "B", "is_correct": true, "text": "This is the statement of CON.", "section_ref": "Section: Key Definitions", "notes_quote": "Conditionalisation (CON): If $(F \\wedge G) \\mid\\!\\!\\sim H$ then $F \\mid\\!\\!\\sim (G \\to H)$"},
+            {"letter": "C", "is_correct": true, "text": "This is the statement of CC.", "section_ref": "Section: Key Definitions", "notes_quote": "Cautious Cut (CC): If $F \\mid\\!\\!\\sim G$ and $(F \\wedge G) \\mid\\!\\!\\sim H$ then $F \\mid\\!\\!\\sim H$"},
+            {"letter": "D", "is_correct": false, "text": "SC says rational consequence extends classical consequence — rational is at least as strong, not strictly weaker. Every classical consequence is also a rational consequence.", "section_ref": "Section: Key Definitions", "notes_quote": "rational consequence extends classical consequence"},
+            {"letter": "E", "is_correct": true, "text": "CON is proved as a derived rule in Question 4.4(ii) using the Representation Theorem.", "section_ref": "Section SGT: Question 4.4(ii)", "notes_quote": ""}
+          ]
+        },
+        {
+          "id": "q23",
+          "source_ref": "Section: Key Definitions",
+          "text": "Which statements correctly define key terms from Week 4? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$\\text{mod}(F)$ is the set of all propositional valuations satisfying formula $F$"},
+            {"letter": "B", "text": "A rational consequence relation satisfies all six Gabbay–Makinson rules: REF, R$\\wedge$, L$\\vee$, LLE, RWE, CMON, RMON"},
+            {"letter": "C", "text": "The counter-model method: to show $F \\mid\\!\\!\\sim G$ is not derivable from premises, construct a ranked model satisfying the premises but falsifying $F \\approxeq_{\\vec{S}} G$"},
+            {"letter": "D", "text": "A preferential model uses a total linear ordering over layers, like a ranked model"},
+            {"letter": "E", "text": "The Representation Theorem: a relation is rational iff it is generated by some ranked preferential model"}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "This is the standard definition of mod(F).", "section_ref": "Section: Key Definitions", "notes_quote": "$\\text{mod}(F)$: The set of all propositional valuations satisfying formula $F$"},
+            {"letter": "B", "is_correct": true, "text": "The GM rules are the defining axioms of rational consequence.", "section_ref": "Section: Key Definitions", "notes_quote": "Rational consequence relation: A consequence relation satisfying all six Gabbay–Makinson rules: REF, R$\\wedge$, L$\\vee$, LLE, RWE, CMON, RMON"},
+            {"letter": "C", "is_correct": true, "text": "This is the definition of the counter-model method.", "section_ref": "Section: Key Definitions", "notes_quote": "Counter-model method: To show a conclusion $F \\mid\\!\\!\\sim G$ cannot be derived from premises using GM rules: construct a ranked model satisfying the premises but falsifying $F \\approxeq_{\\vec{S}} G$"},
+            {"letter": "D", "is_correct": false, "text": "A preferential model uses a partial order, not a total linear order. The total linear order distinguishes ranked models.", "section_ref": "Section: Key Definitions", "notes_quote": "Preferential model: Like a ranked model but with a partial order instead of total linear order"},
+            {"letter": "E", "is_correct": true, "text": "This is the combined statement of Theorems 2.3 and 2.4.", "section_ref": "Section: Key Definitions", "notes_quote": "Representation Theorem: Every rational consequence relation $\\mid\\!\\!\\sim$ is generated by some ranked preferential model $\\vec{S}$, i.e. $\\mid\\!\\!\\sim = \\approxeq_{\\vec{S}}$. Combined with Theorem 2.3: rational $\\Leftrightarrow$ rankedly representable"}
+          ]
+        },
+        {
+          "id": "q24",
+          "source_ref": "Section: Key Definitions",
+          "text": "Which of the following correctly characterise the relationship between ranked preferential models and rational consequence relations? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Every ranked preferential model generates a rational consequence relation (Theorem 2.3 — soundness)"},
+            {"letter": "B", "text": "Every rational consequence relation is generated by some ranked preferential model (Theorem 2.4 — completeness)"},
+            {"letter": "C", "text": "Rational consequence and ranked preferential models are in a one-to-one correspondence: each rational relation comes from exactly one ranked model"},
+            {"letter": "D", "text": "To prove a rule holds for all rational relations, it suffices to prove it holds for all ranked preferential models"},
+            {"letter": "E", "text": "To show a rule does not hold for all rational relations, it suffices to find one ranked model where it fails"}
+          ],
+          "correct": ["A", "B", "D", "E"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "Theorem 2.3 is the soundness direction.", "section_ref": "Section 2.2: Theorem 2.3", "notes_quote": "Let $\\vec{S} = \\langle S_1, \\ldots, S_k \\rangle$ be any ranked preferential model. Then $\\approxeq_{\\vec{S}}$ is a rational consequence relation."},
+            {"letter": "B", "is_correct": true, "text": "Theorem 2.4 is the completeness direction.", "section_ref": "Section 2.3: Theorem 2.4", "notes_quote": "Let $\\mid\\!\\!\\sim$ be any rational consequence relation. Then there is some ranked preferential model $\\vec{S}$ such that $\\approxeq_{\\vec{S}} = \\mid\\!\\!\\sim$."},
+            {"letter": "C", "is_correct": false, "text": "The correspondence is not necessarily one-to-one. Different ranked models may generate the same rational relation. Theorem 2.4 guarantees existence, not uniqueness.", "section_ref": "Section 2.3: Theorem 2.4", "notes_quote": ""},
+            {"letter": "D", "is_correct": true, "text": "By Theorem 2.4, all rational relations come from ranked models, so proving something for all ranked models proves it for all rational relations.", "section_ref": "Section 2.3: Theorem 2.4", "notes_quote": ""},
+            {"letter": "E", "is_correct": true, "text": "By Theorem 2.3, ranked models give rational relations; a counterexample in a ranked model is a counterexample in a rational relation.", "section_ref": "Section 2.2: Application", "notes_quote": "to show a conclusion $F \\approxeq G$ cannot be derived from the GM rules, it suffices to construct a ranked preferential model that satisfies all premises but fails the conclusion."}
+          ]
+        },
+        {
+          "id": "q25",
+          "source_ref": "Section: Key Definitions — CMON proof",
+          "text": "In the proof of Cautious Monotonicity (CMON) for $\\approxeq_{\\vec{S}}$, which steps are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Assume $F \\approxeq_{\\vec{S}} G$ and $F \\approxeq_{\\vec{S}} H$; let $j$ be minimal with $\\text{mod}(F \\wedge G) \\cap S_j \\neq \\varnothing$"},
+            {"letter": "B", "text": "$\\text{mod}(F \\wedge G) \\cap S_j = (\\text{mod}(F) \\cap \\text{mod}(G)) \\cap S_j \\subseteq \\text{mod}(F) \\cap S_j \\subseteq \\text{mod}(H)$"},
+            {"letter": "C", "text": "Hence $F \\wedge G \\approxeq_{\\vec{S}} H$, establishing CMON"},
+            {"letter": "D", "text": "CMON requires checking all layers, not just the minimal $F \\wedge G$-layer"}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "This is the setup for the CMON proof.", "section_ref": "Section 2.2: Theorem 2.3", "notes_quote": "Let $j$ be minimal with $\\text{mod}(F \\wedge G) \\cap S_j \\neq \\varnothing$."},
+            {"letter": "B", "is_correct": true, "text": "The subset chain is the core of the CMON argument.", "section_ref": "Section 2.2: Theorem 2.3", "notes_quote": "$\\text{mod}(F \\wedge G) \\cap S_j = (\\text{mod}(F) \\cap \\text{mod}(G)) \\cap S_j \\subseteq \\text{mod}(F) \\cap S_j \\subseteq \\text{mod}(H)$."},
+            {"letter": "C", "is_correct": true, "text": "The conclusion $F \\wedge G \\approxeq_{\\vec{S}} H$ follows from the inclusion.", "section_ref": "Section 2.2: Theorem 2.3", "notes_quote": "$\\text{mod}(F \\wedge G) \\cap S_j \\subseteq \\text{mod}(H)$."},
+            {"letter": "D", "is_correct": false, "text": "Only the minimal F∧G-layer is checked. The definition of $\\approxeq_{\\vec{S}}$ always uses only the minimal relevant layer.", "section_ref": "Section 2.2: Theorem 2.3", "notes_quote": ""}
+          ]
+        },
+        {
+          "id": "q26",
+          "source_ref": "Section 2.2: Theorem 2.3 — Proof of L∨",
+          "text": "In the proof of Left-Or (L$\\vee$) for $\\approxeq_{\\vec{S}}$, which steps are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Assume $F \\approxeq_{\\vec{S}} H$ and $G \\approxeq_{\\vec{S}} H$; let $j$ be minimal with $\\text{mod}(F \\vee G) \\cap S_j \\neq \\varnothing$"},
+            {"letter": "B", "text": "$\\text{mod}(F \\vee G) \\cap S_j = (\\text{mod}(F) \\cap S_j) \\cup (\\text{mod}(G) \\cap S_j)$"},
+            {"letter": "C", "text": "If $\\text{mod}(F) \\cap S_j \\neq \\varnothing$, then $j$ is also the minimal layer for $F$, so $\\text{mod}(F) \\cap S_j \\subseteq \\text{mod}(H)$"},
+            {"letter": "D", "text": "L$\\vee$ requires both $F$ and $G$ to have models in the same minimal layer $S_j$"}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "This is the setup for the L∨ proof.", "section_ref": "Section 2.2: Theorem 2.3", "notes_quote": "Let $j$ be minimal with $\\text{mod}(F \\vee G) \\cap S_j \\neq \\varnothing$."},
+            {"letter": "B", "is_correct": true, "text": "Since mod(F∨G) = mod(F)∪mod(G), intersecting with S_j distributes.", "section_ref": "Section 2.2: Theorem 2.3", "notes_quote": "$\\text{mod}(F \\vee G) \\cap S_j = (\\text{mod}(F) \\cap S_j) \\cup (\\text{mod}(G) \\cap S_j) \\neq \\varnothing$"},
+            {"letter": "C", "is_correct": true, "text": "If F has a model at layer j, since all earlier layers have no F∨G worlds (and hence no F worlds), j is minimal for F too.", "section_ref": "Section 2.2: Theorem 2.3", "notes_quote": "If $\\text{mod}(F) \\cap S_j \\neq \\varnothing$, then $j$ is also minimal for $F$, so $\\text{mod}(F) \\cap S_j \\subseteq \\text{mod}(H)$."},
+            {"letter": "D", "is_correct": false, "text": "L∨ does not require both F and G to have models in S_j. The proof handles the case where only one of them contributes models at layer j.", "section_ref": "Section 2.2: Theorem 2.3", "notes_quote": ""}
+          ]
+        },
+        {
+          "id": "q27",
+          "source_ref": "Section: Key Definitions — Summary",
+          "text": "Which statements correctly summarise Week 4's main results? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Ranked preferential models provide a sound and complete semantics for rational consequence"},
+            {"letter": "B", "text": "The Representation Theorem enables the proof method: to prove a rule for all rational relations, prove it for all ranked models; to refute, construct a ranked counter-model"},
+            {"letter": "C", "text": "Classical consequence $\\models$ is a special case of rational consequence, generated by the single-layer model with all valuations"},
+            {"letter": "D", "text": "NRAT is one of the six original GM axioms that defines rational consequence"},
+            {"letter": "E", "text": "The layers in a ranked model must be non-empty — every layer $S_i$ must contain at least one valuation"}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "Theorems 2.3 and 2.4 together establish soundness and completeness.", "section_ref": "Section: Summary", "notes_quote": "This week established the semantic foundation of rational consequence"},
+            {"letter": "B", "is_correct": true, "text": "The Representation Theorem is the key proof tool enabling both directions of argumentation.", "section_ref": "Section: Summary", "notes_quote": "LO4 (Apply Representation Theorem): Theorem 2.4 is the converse: every rational relation comes from some ranked model. This gives a powerful proof tool — to prove a rule holds for all rational relations, prove it holds for all ranked models. To show a conclusion is not provable, construct a ranked counter-model."},
+            {"letter": "C", "is_correct": true, "text": "Question 4.3 established this result explicitly.", "section_ref": "Section: Summary", "notes_quote": "Classical consequence $\\models$ was shown to be rational (4.3) via the single-layer model with all valuations."},
+            {"letter": "D", "is_correct": false, "text": "NRAT is a derived rule following from the Representation Theorem, not one of the six original GM axioms.", "section_ref": "Section 2.3: Derived Rule NRAT", "notes_quote": "By the Representation Theorem, the following rule holds for all rational consequence relations"},
+            {"letter": "E", "is_correct": false, "text": "The definition does not require all layers to be non-empty. In the proof of Theorem 2.4, the construction terminates when empty layers are reached.", "section_ref": "Section 2.3: Proof Sketch", "notes_quote": "there must be some finite $k$ after which the construction generates no further non-empty sets: $S_{k+1} = S_{k+2} = \\cdots = \\varnothing$"}
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,577 @@
+{
+  "module": "AdvancedLogic",
+  "week": 5,
+  "title": "Introduction to Fuzzy Logics",
+  "sections": [
+    {
+      "id": "section-1",
+      "title": "5.1 Motivation and Definitions",
+      "questions": [
+        {
+          "id": "q1",
+          "source_ref": "Section 5.1: The Sorites Paradox",
+          "text": "Which of the following correctly describe the Sorites Paradox and why it motivates fuzzy logic? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "The paradox arises because predicates like 'bald' or 'a heap' are not binary — they admit of degrees."},
+            {"letter": "B", "text": "Classical propositional logic, which assigns truth values in $\\{0,1\\}$, cannot model graded properties."},
+            {"letter": "C", "text": "The paradox is resolved by assigning truth values in $[0,1]$ rather than $\\{0,1\\}$."},
+            {"letter": "D", "text": "The paradox shows that classical logic is inconsistent and should be abandoned entirely."},
+            {"letter": "E", "text": "Repeating the Sorites argument indefinitely leads to the absurd conclusion that Mr Whiskers is not bald even after all his hair is plucked."}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "The Sorites Paradox arises precisely because 'baldness' is a sliding scale, not a binary switch.", "section_ref": "Section 5.1: The Sorites Paradox", "notes_quote": "'baldness' (and similarly 'a pile of sand', etc.) is not a binary switch — it is a sliding scale"},
+            {"letter": "B", "is_correct": true, "text": "Classical propositional logic assigns only values in {0,1} and cannot capture graded properties.", "section_ref": "Section 5.1: The Sorites Paradox", "notes_quote": "Classical propositional logic, which assigns only truth values in $\\{0, 1\\}$, cannot model such graded properties"},
+            {"letter": "C", "is_correct": true, "text": "Extending truth values to [0,1] — the fuzzy approach — resolves the paradox by allowing intermediate degrees of truth.", "section_ref": "Section 5.1: The Sorites Paradox", "notes_quote": "allow truth values from the unit interval $[0,1]$ rather than just $\\{0,1\\}$"},
+            {"letter": "D", "is_correct": false, "text": "The Sorites Paradox does not show classical logic is inconsistent; it shows classical logic is inadequate for modelling graded predicates. Fuzzy logic supplements, rather than replaces, classical logic.", "section_ref": "Section 5.1: The Sorites Paradox", "notes_quote": ""},
+            {"letter": "E", "is_correct": true, "text": "Repeated application of the Sorites argument leads to the absurd conclusion that removing all hairs still leaves Mr Whiskers 'not bald'.", "section_ref": "Section 5.1: The Sorites Paradox", "notes_quote": "Repeating this argument indefinitely leads to the absurd conclusion that Mr Whiskers is not bald even after all his hair has been plucked"}
+          ]
+        },
+        {
+          "id": "q2",
+          "source_ref": "Section 5.1: Definition 5.1 — Boolean Truth Functions",
+          "text": "Which of the following correctly state the Boolean truth functions for the standard propositional connectives? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$F_{\\neg}(x) = 1 - x$"},
+            {"letter": "B", "text": "$F_{\\wedge}(x,y) = \\min(x,y)$"},
+            {"letter": "C", "text": "$F_{\\vee}(x,y) = \\max(x,y)$"},
+            {"letter": "D", "text": "$F_{\\to}(x,y) = \\min(1-x, y)$"},
+            {"letter": "E", "text": "$F_{\\to}(x,y) = \\max(1-x, y)$"}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "The Boolean negation truth function is $F_\\neg(x) = 1-x$.", "section_ref": "Section 5.1: Definition 5.1 — Boolean Truth Functions", "notes_quote": "$F_\\neg(x) = 1 - x$"},
+            {"letter": "B", "is_correct": true, "text": "Boolean conjunction is $\\min(x,y)$.", "section_ref": "Section 5.1: Definition 5.1 — Boolean Truth Functions", "notes_quote": "$F_\\wedge(x,y) = \\min(x,y)$"},
+            {"letter": "C", "is_correct": true, "text": "Boolean disjunction is $\\max(x,y)$.", "section_ref": "Section 5.1: Definition 5.1 — Boolean Truth Functions", "notes_quote": "$F_\\vee(x,y) = \\max(x,y)$"},
+            {"letter": "D", "is_correct": false, "text": "This is incorrect. The Boolean implication is $F_\\to(x,y) = \\max(1-x, y)$, not $\\min(1-x, y)$. The $\\min$ version appears only in $\\mathbb{F}^1$ and $\\mathbb{F}^3$ for implication, but the Boolean function uses $\\max$.", "section_ref": "Section 5.1: Definition 5.1 — Boolean Truth Functions", "notes_quote": ""},
+            {"letter": "E", "is_correct": true, "text": "Boolean implication is $F_\\to(x,y) = \\max(1-x, y)$.", "section_ref": "Section 5.1: Definition 5.1 — Boolean Truth Functions", "notes_quote": "$F_\\to(x,y) = \\max(1-x, y)$"}
+          ]
+        },
+        {
+          "id": "q3",
+          "source_ref": "Section 5.1: Definition 5.2 — Fuzzy Truth Functions",
+          "text": "Which of the following correctly define fuzzy truth functions and models of fuzzy logic? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "A fuzzy truth function on $n$ variables is a function $F : [0,1]^n \\to [0,1]$."},
+            {"letter": "B", "text": "A model of fuzzy logic is a function $V : \\text{Prop} \\to \\{0,1\\}$."},
+            {"letter": "C", "text": "A model of fuzzy logic assigns a real value $V(p) \\in [0,1]$ to each propositional variable $p$."},
+            {"letter": "D", "text": "A Boolean truth function on $n$ variables is a function $F : \\{0,1\\}^n \\to \\{0,1\\}$."},
+            {"letter": "E", "text": "A fuzzy truth function may return values outside the interval $[0,1]$."}
+          ],
+          "correct": ["A", "C", "D"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "Definition 5.2 states a fuzzy truth function maps $[0,1]^n$ to $[0,1]$.", "section_ref": "Section 5.1: Definition 5.2 — Fuzzy Truth Functions", "notes_quote": "A fuzzy (or real-valued) truth function on $n$ variables is a function $F : [0,1]^n \\to [0,1]$"},
+            {"letter": "B", "is_correct": false, "text": "A model of fuzzy logic maps to $[0,1]$, not just $\\{0,1\\}$. A map to $\\{0,1\\}$ would be a classical Boolean valuation.", "section_ref": "Section 5.1: Definition 5.2 — Fuzzy Truth Functions", "notes_quote": ""},
+            {"letter": "C", "is_correct": true, "text": "A model of fuzzy logic assigns a degree of truth in $[0,1]$ to each propositional variable.", "section_ref": "Section 5.1: Definition 5.2 — Fuzzy Truth Functions", "notes_quote": "A model of fuzzy logic is a function $V : \\text{Prop} \\to [0,1]$ assigning a real value $V(p) \\in [0,1]$ to each propositional variable $p$"},
+            {"letter": "D", "is_correct": true, "text": "This is the exact definition of a Boolean truth function from Definition 5.1.", "section_ref": "Section 5.1: Definition 5.1 — Boolean Truth Functions", "notes_quote": "A Boolean truth function on $n$ variables is a function $F : \\{0,1\\}^n \\to \\{0,1\\}$"},
+            {"letter": "E", "is_correct": false, "text": "By definition, a fuzzy truth function maps into $[0,1]$; the codomain is exactly $[0,1]$.", "section_ref": "Section 5.1: Definition 5.2 — Fuzzy Truth Functions", "notes_quote": ""}
+          ]
+        },
+        {
+          "id": "q4",
+          "source_ref": "Section 5.1: The Three Standard Fuzzy Logics",
+          "text": "Which of the following correctly state the conjunction ($\\wedge$) and disjunction ($\\vee$) operations for each of the three standard fuzzy logics? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "In $\\mathbb{F}^1$ (Min-Max): $F_{\\wedge}(x,y) = \\min(x,y)$ and $F_{\\vee}(x,y) = \\max(x,y)$."},
+            {"letter": "B", "text": "In $\\mathbb{F}^2$ (Product): $F_{\\wedge}(x,y) = x \\cdot y$ and $F_{\\vee}(x,y) = x + y - xy$."},
+            {"letter": "C", "text": "In $\\mathbb{F}^3$ (Łukasiewicz): $F_{\\wedge}(x,y) = \\max(0, x+y-1)$ and $F_{\\vee}(x,y) = \\min(1, x+y)$."},
+            {"letter": "D", "text": "In $\\mathbb{F}^2$ (Product): $F_{\\wedge}(x,y) = \\min(x,y)$ and $F_{\\vee}(x,y) = \\max(x,y)$."},
+            {"letter": "E", "text": "In $\\mathbb{F}^3$ (Łukasiewicz): $F_{\\wedge}(x,y) = \\min(x,y)$ and $F_{\\vee}(x,y) = \\min(1, x+y)$."}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "$\\mathbb{F}^1$ uses min for conjunction and max for disjunction.", "section_ref": "Section 5.1: Min-Max / Zadeh Logic $\\mathbb{F}^1$", "notes_quote": "$F_\\wedge(x,y) = \\min(x,y)$, $F_\\vee(x,y) = \\max(x,y)$"},
+            {"letter": "B", "is_correct": true, "text": "$\\mathbb{F}^2$ uses product for conjunction and $x+y-xy$ for disjunction.", "section_ref": "Section 5.1: Product / Gödel Logic $\\mathbb{F}^2$", "notes_quote": "$F_\\wedge(x,y) = x \\cdot y$, $F_\\vee(x,y) = x + y - xy$"},
+            {"letter": "C", "is_correct": true, "text": "$\\mathbb{F}^3$ uses $\\max(0,x+y-1)$ for conjunction and $\\min(1,x+y)$ for disjunction.", "section_ref": "Section 5.1: Łukasiewicz Logic $\\mathbb{F}^3$", "notes_quote": "$F_\\wedge(x,y) = \\max(0,\\, x + y - 1)$, $F_\\vee(x,y) = \\min(1,\\, x + y)$"},
+            {"letter": "D", "is_correct": false, "text": "Min/max conjunction and disjunction belong to $\\mathbb{F}^1$, not $\\mathbb{F}^2$. In $\\mathbb{F}^2$ conjunction is $x \\cdot y$ and disjunction is $x+y-xy$.", "section_ref": "Section 5.1: Product / Gödel Logic $\\mathbb{F}^2$", "notes_quote": ""},
+            {"letter": "E", "is_correct": false, "text": "In $\\mathbb{F}^3$, conjunction is $\\max(0,x+y-1)$, not $\\min(x,y)$. The disjunction $\\min(1,x+y)$ is correct.", "section_ref": "Section 5.1: Łukasiewicz Logic $\\mathbb{F}^3$", "notes_quote": ""}
+          ]
+        },
+        {
+          "id": "q5",
+          "source_ref": "Section 5.1: The Three Standard Fuzzy Logics",
+          "text": "Which of the following correctly state the implication ($\\to$) operation in the three standard fuzzy logics? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "In $\\mathbb{F}^1$: $F_{\\to}(x,y) = \\min(1, 1-x+y)$."},
+            {"letter": "B", "text": "In $\\mathbb{F}^2$: $F_{\\to}(x,y) = 1$ if $x \\leq y$, else $y/x$."},
+            {"letter": "C", "text": "In $\\mathbb{F}^3$: $F_{\\to}(x,y) = \\min(1, 1-x+y)$."},
+            {"letter": "D", "text": "In $\\mathbb{F}^2$: $F_{\\to}(x,y) = \\min(1, 1-x+y)$ for all $x,y$."},
+            {"letter": "E", "text": "In $\\mathbb{F}^1$: $F_{\\to}(x,y) = \\max(1-x, y)$."}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "$\\mathbb{F}^1$ implication is $\\min(1, 1-x+y)$.", "section_ref": "Section 5.1: Min-Max / Zadeh Logic $\\mathbb{F}^1$", "notes_quote": "$F_\\to(x,y) = \\min(1, 1-x+y)$"},
+            {"letter": "B", "is_correct": true, "text": "$\\mathbb{F}^2$ implication is 1 when $x \\leq y$, otherwise $y/x$.", "section_ref": "Section 5.1: Product / Gödel Logic $\\mathbb{F}^2$", "notes_quote": "$F_\\to(x,y) = \\begin{cases} 1 & \\text{if } x \\leq y \\\\ y/x & \\text{otherwise} \\end{cases}$"},
+            {"letter": "C", "is_correct": true, "text": "$\\mathbb{F}^3$ implication is also $\\min(1, 1-x+y)$, same formula as $\\mathbb{F}^1$.", "section_ref": "Section 5.1: Łukasiewicz Logic $\\mathbb{F}^3$", "notes_quote": "$F_\\to(x,y) = \\min(1,\\, 1-x+y)$"},
+            {"letter": "D", "is_correct": false, "text": "$\\min(1,1-x+y)$ is the $\\mathbb{F}^1$/$\\mathbb{F}^3$ implication. In $\\mathbb{F}^2$ the implication is $y/x$ (when $x > y$), not $\\min(1,1-x+y)$.", "section_ref": "Section 5.1: Product / Gödel Logic $\\mathbb{F}^2$", "notes_quote": ""},
+            {"letter": "E", "is_correct": false, "text": "$\\max(1-x, y)$ is the Boolean/classical implication, not the $\\mathbb{F}^1$ fuzzy implication. The $\\mathbb{F}^1$ implication is $\\min(1,1-x+y)$.", "section_ref": "Section 5.1: Min-Max / Zadeh Logic $\\mathbb{F}^1$", "notes_quote": ""}
+          ]
+        },
+        {
+          "id": "q6",
+          "source_ref": "Section 5.1: Definition 5.3 — Validity and Models in Fuzzy Logic",
+          "text": "Which of the following correctly characterise validity in fuzzy logic $\\mathbb{F}$? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$F$ is valid w.r.t. $\\mathbb{F}$ if $\\overline{F}(x_1,\\ldots,x_n) = 1$ for ALL $x_1,\\ldots,x_n \\in [0,1]$."},
+            {"letter": "B", "text": "To show $\\not\\models^{\\mathbb{F}} F$, it suffices to find a single valuation making $\\overline{F} < 1$."},
+            {"letter": "C", "text": "$V$ is a model of $F$ w.r.t. $\\mathbb{F}$ if $\\overline{F}(V(p_1),\\ldots,V(p_n)) = 1$."},
+            {"letter": "D", "text": "$F$ is valid w.r.t. $\\mathbb{F}$ if there EXISTS some $x_1,\\ldots,x_n \\in [0,1]$ with $\\overline{F}(x_1,\\ldots,x_n) = 1$."},
+            {"letter": "E", "text": "A formula valid in classical logic is automatically valid in every fuzzy logic."}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "Validity in $\\mathbb{F}$ requires $\\overline{F} = 1$ for ALL valuations in $[0,1]$.", "section_ref": "Section 5.1: Definition 5.3 — Validity and Models", "notes_quote": "$F$ is valid with respect to $\\mathbb{F}$... if $\\overline{F}(x_1,\\ldots,x_n) = 1$ for all $x_1,\\ldots,x_n \\in [0,1]$"},
+            {"letter": "B", "is_correct": true, "text": "A single counter-model (valuation giving $\\overline{F} < 1$) is sufficient to refute validity.", "section_ref": "Section 5.1: Definition 5.3 — Validity and Models", "notes_quote": "To show $\\not\\models^\\mathbb{F} F$, it suffices to find a single valuation making $\\overline{F} < 1$"},
+            {"letter": "C", "is_correct": true, "text": "A model of $F$ w.r.t. $\\mathbb{F}$ is a valuation $V$ such that the truth function evaluates to 1.", "section_ref": "Section 5.1: Definition 5.3 — Validity and Models", "notes_quote": "a model $V : \\text{Prop} \\to [0,1]$ is a model of $F$ with respect to fuzzy logic $\\mathbb{F}$ if $\\overline{F}(V(p_1),\\ldots,V(p_n)) = 1$"},
+            {"letter": "D", "is_correct": false, "text": "Existence of one valuation giving $\\overline{F} = 1$ is satisfiability, not validity. Validity requires ALL valuations to give 1.", "section_ref": "Section 5.1: Definition 5.3 — Validity and Models", "notes_quote": ""},
+            {"letter": "E", "is_correct": false, "text": "This is false. For example, $p \\vee \\neg p$ is a classical tautology but fails to be valid in $\\mathbb{F}^1$ and $\\mathbb{F}^2$ (it does not always equal 1 in those logics).", "section_ref": "Section 5.1: Definition 5.3 — Validity and Models", "notes_quote": ""}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-2",
+      "title": "5.2 Evaluating Formulas in the Three Logics",
+      "questions": [
+        {
+          "id": "q7",
+          "source_ref": "Section 5.2: SGT 5.1 Exercise — V(p)=0.6, V(q)=0.2",
+          "text": "With $V(p) = 0.6$ and $V(q) = 0.2$, which of the following evaluations are correct in $\\mathbb{F}^1$ (Min-Max)? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$V^{\\mathbb{F}^1}(p \\wedge q) = 0.2$"},
+            {"letter": "B", "text": "$V^{\\mathbb{F}^1}(p \\vee q) = 0.6$"},
+            {"letter": "C", "text": "$V^{\\mathbb{F}^1}(p \\to q) = 0.6$"},
+            {"letter": "D", "text": "$V^{\\mathbb{F}^1}(p \\wedge \\neg p) = 0$"},
+            {"letter": "E", "text": "$V^{\\mathbb{F}^1}(p \\vee \\neg p) = 1$"}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "$\\min(0.6, 0.2) = 0.2$.", "section_ref": "Section 5.2: SGT 5.1 Exercise", "notes_quote": "$p \\wedge q$: $\\min(0.6, 0.2) = 0.2$"},
+            {"letter": "B", "is_correct": true, "text": "$\\max(0.6, 0.2) = 0.6$.", "section_ref": "Section 5.2: SGT 5.1 Exercise", "notes_quote": "$p \\vee q$: $\\max(0.6, 0.2) = 0.6$"},
+            {"letter": "C", "is_correct": true, "text": "$F^1_\\to(0.6,0.2) = \\min(1,1-0.6+0.2) = \\min(1,0.6) = 0.6$.", "section_ref": "Section 5.2: SGT 5.1 Exercise", "notes_quote": "$p \\to q$: $\\min(1,1-0.6+0.2) = 0.6$"},
+            {"letter": "D", "is_correct": false, "text": "In $\\mathbb{F}^1$: $V(p \\wedge \\neg p) = \\min(0.6, 0.4) = 0.4$, not 0. It equals 0 only in $\\mathbb{F}^3$.", "section_ref": "Section 5.2: SGT 5.1 Exercise", "notes_quote": "$p \\wedge \\neg p$: $\\min(0.6,0.4) = 0.4$"},
+            {"letter": "E", "is_correct": false, "text": "In $\\mathbb{F}^1$: $V(p \\vee \\neg p) = \\max(0.6, 0.4) = 0.6$, not 1. The law of excluded middle holds (equals 1) only in $\\mathbb{F}^3$.", "section_ref": "Section 5.2: SGT 5.1 Exercise", "notes_quote": "$p \\vee \\neg p$: $\\max(0.6,0.4) = 0.6$"}
+          ]
+        },
+        {
+          "id": "q8",
+          "source_ref": "Section 5.2: SGT 5.1 Exercise — V(p)=0.6, V(q)=0.2",
+          "text": "With $V(p) = 0.6$ and $V(q) = 0.2$, which of the following evaluations are correct in $\\mathbb{F}^2$ (Product)? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$V^{\\mathbb{F}^2}(p \\wedge q) = 0.12$"},
+            {"letter": "B", "text": "$V^{\\mathbb{F}^2}(p \\vee q) = 0.68$"},
+            {"letter": "C", "text": "$V^{\\mathbb{F}^2}(p \\to q) = 1$ (since $0.2 < 0.6$)"},
+            {"letter": "D", "text": "$V^{\\mathbb{F}^2}(q \\to p) = 1$ (since $0.2 \\leq 0.6$)"},
+            {"letter": "E", "text": "$V^{\\mathbb{F}^2}(p \\wedge p) = 0.36$"}
+          ],
+          "correct": ["A", "B", "D", "E"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "$0.6 \\times 0.2 = 0.12$.", "section_ref": "Section 5.2: SGT 5.1 Exercise", "notes_quote": "$p \\wedge q$: $0.6 \\times 0.2 = 0.12$"},
+            {"letter": "B", "is_correct": true, "text": "$0.6 + 0.2 - 0.12 = 0.68$.", "section_ref": "Section 5.2: SGT 5.1 Exercise", "notes_quote": "$p \\vee q$: $0.6+0.2-0.12 = 0.68$"},
+            {"letter": "C", "is_correct": false, "text": "In $\\mathbb{F}^2$, $F_\\to(0.6,0.2)$: since $0.6 > 0.2$, the result is $y/x = 0.2/0.6 \\approx 0.33$, not 1.", "section_ref": "Section 5.2: SGT 5.1 Exercise", "notes_quote": "$p \\to q$: $0.2/0.6 \\approx 0.3\\overline{3}$"},
+            {"letter": "D", "is_correct": true, "text": "Since $V(q) = 0.2 \\leq 0.6 = V(p)$, $F^2_\\to(0.2, 0.6) = 1$.", "section_ref": "Section 5.2: SGT 5.1 Exercise", "notes_quote": "$q \\to p$: $1$ (since $0.2 \\leq 0.6$)"},
+            {"letter": "E", "is_correct": true, "text": "$F^2_\\wedge(0.6,0.6) = 0.6^2 = 0.36$.", "section_ref": "Section 5.2: SGT 5.1 Exercise", "notes_quote": "$p \\wedge p$: $0.6^2 = 0.36$"}
+          ]
+        },
+        {
+          "id": "q9",
+          "source_ref": "Section 5.2: SGT 5.1 Exercise — V(p)=0.6, V(q)=0.2",
+          "text": "With $V(p) = 0.6$ and $V(q) = 0.2$, which of the following evaluations are correct in $\\mathbb{F}^3$ (Łukasiewicz)? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$V^{\\mathbb{F}^3}(p \\wedge q) = 0$"},
+            {"letter": "B", "text": "$V^{\\mathbb{F}^3}(p \\vee q) = 0.8$"},
+            {"letter": "C", "text": "$V^{\\mathbb{F}^3}(p \\vee \\neg p) = 1$"},
+            {"letter": "D", "text": "$V^{\\mathbb{F}^3}(p \\wedge \\neg p) = 0$"},
+            {"letter": "E", "text": "$V^{\\mathbb{F}^3}(p \\wedge p) = 0.6$"}
+          ],
+          "correct": ["A", "B", "C", "D"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "$\\max(0, 0.6+0.2-1) = \\max(0, -0.2) = 0$.", "section_ref": "Section 5.2: SGT 5.1 Exercise", "notes_quote": "$p \\wedge q$: $\\max(0, 0.6+0.2-1) = 0$"},
+            {"letter": "B", "is_correct": true, "text": "$\\min(1, 0.6+0.2) = \\min(1, 0.8) = 0.8$.", "section_ref": "Section 5.2: SGT 5.1 Exercise", "notes_quote": "$p \\vee q$: $\\min(1, 0.6+0.2) = 0.8$"},
+            {"letter": "C", "is_correct": true, "text": "$V(\\neg p) = 0.4$; $\\min(1, 0.6+0.4) = 1$. The law of excluded middle holds in $\\mathbb{F}^3$.", "section_ref": "Section 5.2: SGT 5.1 Exercise", "notes_quote": "$p \\vee \\neg p$: $\\min(1,0.6+0.4) = 1$"},
+            {"letter": "D", "is_correct": true, "text": "$\\max(0, 0.6+0.4-1) = \\max(0, 0) = 0$. The law of non-contradiction holds in $\\mathbb{F}^3$.", "section_ref": "Section 5.2: SGT 5.1 Exercise", "notes_quote": "$p \\wedge \\neg p$: $\\max(0,0.6+0.4-1) = 0$"},
+            {"letter": "E", "is_correct": false, "text": "In $\\mathbb{F}^3$: $F^3_\\wedge(0.6,0.6) = \\max(0, 0.6+0.6-1) = \\max(0, 0.2) = 0.2$, not 0.6. Idempotency of $\\wedge$ fails in $\\mathbb{F}^3$.", "section_ref": "Section 5.2: SGT 5.1 Exercise", "notes_quote": "$p \\wedge p$: $\\max(0,0.6+0.6-1) = 0.2$"}
+          ]
+        },
+        {
+          "id": "q10",
+          "source_ref": "Section 5.2: SGT 5.1 — Key Observations",
+          "text": "Which of the following observations about the three fuzzy logics are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$\\mathbb{F}^3$ (Łukasiewicz) is the only logic where $p \\vee \\neg p = 1$ always holds (excluded middle)."},
+            {"letter": "B", "text": "$\\mathbb{F}^3$ (Łukasiewicz) is the only logic where $p \\wedge \\neg p = 0$ always holds (non-contradiction)."},
+            {"letter": "C", "text": "$\\mathbb{F}^2$ (Product) violates idempotency of both $\\wedge$ and $\\vee$ when $V(p) \\in (0,1)$."},
+            {"letter": "D", "text": "$\\mathbb{F}^1$ (Min-Max) satisfies idempotency of $\\vee$ but $\\mathbb{F}^2$ does not."},
+            {"letter": "E", "text": "All three logics agree that $p \\vee \\neg p = 1$ when $V(p) = 0.5$."}
+          ],
+          "correct": ["A", "B", "C", "D"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "Only in $\\mathbb{F}^3$ does $\\min(1, x + (1-x)) = \\min(1,1) = 1$ always.", "section_ref": "Section 5.2: SGT 5.1 — Key Observations", "notes_quote": "$\\mathbb{F}^3$ (Łukasiewicz) is the only logic where $p \\vee \\neg p = 1$ always (law of excluded middle holds)"},
+            {"letter": "B", "is_correct": true, "text": "Only in $\\mathbb{F}^3$ does $\\max(0, x+(1-x)-1) = \\max(0,0) = 0$ always hold.", "section_ref": "Section 5.2: SGT 5.1 — Key Observations", "notes_quote": "$p \\wedge \\neg p = 0$ always (law of non-contradiction holds)"},
+            {"letter": "C", "is_correct": true, "text": "In $\\mathbb{F}^2$: $x \\cdot x = x^2 \\neq x$ for $x \\in (0,1)$, and $x+x-x^2 = 2x-x^2 \\neq x$ for $x \\in (0,1)$.", "section_ref": "Section 5.2: SGT 5.1 — Key Observations", "notes_quote": "$\\mathbb{F}^2$ violates idempotency of both $\\wedge$ and $\\vee$ when $V(p) \\in (0,1)$"},
+            {"letter": "D", "is_correct": true, "text": "In $\\mathbb{F}^1$: $\\max(x,x) = x$, so $\\vee$ is idempotent. In $\\mathbb{F}^2$: $x + x - x^2 \\neq x$ for $x \\in (0,1)$.", "section_ref": "Section 5.2: SGT 5.1 — Key Observations", "notes_quote": ""},
+            {"letter": "E", "is_correct": false, "text": "With $V(p) = 0.5$: in $\\mathbb{F}^1$, $\\max(0.5, 0.5) = 0.5 \\neq 1$; in $\\mathbb{F}^2$, $0.5 + 0.5 - 0.25 = 0.75 \\neq 1$. Only $\\mathbb{F}^3$ gives 1.", "section_ref": "Section 5.2: SGT 5.1 — Key Observations", "notes_quote": ""}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-3",
+      "title": "5.3 Validity: What Holds in Each Fuzzy Logic",
+      "questions": [
+        {
+          "id": "q11",
+          "source_ref": "Section 5.3: SGT 5.2 — (i) Idempotency of disjunction in F1",
+          "text": "Which of the following are true regarding $\\models^{\\mathbb{F}^1} (F \\vee F) \\to F$? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "This formula is valid in $\\mathbb{F}^1$ because $\\vee$ is idempotent in $\\mathbb{F}^1$: $\\max(v,v) = v$."},
+            {"letter": "B", "text": "The proof uses $V(F \\vee F) = \\max(V(F),V(F)) = V(F)$, then $F^1_\\to(V(F),V(F)) = \\min(1,1) = 1$."},
+            {"letter": "C", "text": "This formula is also valid in $\\mathbb{F}^2$."},
+            {"letter": "D", "text": "This formula fails in $\\mathbb{F}^2$ because $\\vee$ is not idempotent there."},
+            {"letter": "E", "text": "The formula $(F \\vee F) \\to F$ is a classical tautology and hence valid in all fuzzy logics."}
+          ],
+          "correct": ["A", "B", "D"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "In $\\mathbb{F}^1$, $\\max(v,v) = v$, so $(F \\vee F) \\to F$ evaluates to 1 always.", "section_ref": "Section 5.3: SGT 5.2 (i)", "notes_quote": "$V(F \\vee F) = \\max(V(F), V(F)) = V(F)$. Hence $V((F \\vee F) \\to F) = \\min(1,\\, 1 - V(F) + V(F)) = \\min(1,1) = 1$"},
+            {"letter": "B", "is_correct": true, "text": "This is precisely the proof given in the notes.", "section_ref": "Section 5.3: SGT 5.2 (i)", "notes_quote": "$V((F \\vee F) \\to F) = \\min(1,\\, 1 - V(F) + V(F)) = \\min(1,1) = 1$"},
+            {"letter": "C", "is_correct": false, "text": "The formula fails in $\\mathbb{F}^2$: since $x + x - x^2 > x$ for $x \\in (0,1)$, the disjunction exceeds $V(F)$, making the implication $< 1$.", "section_ref": "Section 5.3: SGT 5.2 (iii)", "notes_quote": ""},
+            {"letter": "D", "is_correct": true, "text": "The notes explicitly state $\\not\\models^{\\mathbb{F}^2} (p \\vee p) \\to p$ using $V(p) = 0.25$ as counter-model.", "section_ref": "Section 5.3: SGT 5.2 (iii)", "notes_quote": "$\\not\\models^{\\mathbb{F}^2} (p \\vee p) \\to p$"},
+            {"letter": "E", "is_correct": false, "text": "$(F \\vee F) \\to F$ is indeed a classical tautology but classical tautologies are not automatically valid in all fuzzy logics — this fails in $\\mathbb{F}^2$.", "section_ref": "Section 5.3: SGT 5.2 (iii)", "notes_quote": ""}
+          ]
+        },
+        {
+          "id": "q12",
+          "source_ref": "Section 5.3: SGT 5.2 — (iii) Counter-model in F2",
+          "text": "Regarding $\\not\\models^{\\mathbb{F}^2} (p \\vee p) \\to p$ with counter-model $V(p) = 0.25$, which of the following are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "In $\\mathbb{F}^2$: $V(p \\vee p) = 2(0.25) - (0.25)^2 = 0.4375$."},
+            {"letter": "B", "text": "$V^{\\mathbb{F}^2}((p \\vee p) \\to p) = 0.25 / 0.4375 \\approx 0.571 < 1$."},
+            {"letter": "C", "text": "Any $V(p) \\in (0,1)$ serves as a counter-model for this formula in $\\mathbb{F}^2$."},
+            {"letter": "D", "text": "The formula holds in $\\mathbb{F}^2$ when $V(p) = 0$ or $V(p) = 1$."},
+            {"letter": "E", "text": "The formula fails in $\\mathbb{F}^2$ because $V(p \\vee p) = V(p)$ in $\\mathbb{F}^2$."}
+          ],
+          "correct": ["A", "B", "C", "D"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "$2(0.25) - (0.25)^2 = 0.5 - 0.0625 = 0.4375$.", "section_ref": "Section 5.3: SGT 5.2 (iii)", "notes_quote": "For $V(p) = 0.25$: $V(p \\vee p) = 0.5 - 0.0625 = 0.4375$"},
+            {"letter": "B", "is_correct": true, "text": "Since $V(p \\vee p) = 0.4375 > V(p) = 0.25$, the $\\mathbb{F}^2$ implication gives $0.25/0.4375 \\approx 0.571$.", "section_ref": "Section 5.3: SGT 5.2 (iii)", "notes_quote": "$V \\to = 0.25/0.4375 \\approx 0.571 < 1$"},
+            {"letter": "C", "is_correct": true, "text": "The notes state 'any $0 < V(p) < 1$ is a counter-model' since $2 - V(p) > 1$ whenever $V(p) < 1$.", "section_ref": "Section 5.3: SGT 5.2 (iii)", "notes_quote": "any $0 < V(p) < 1$ is a counter-model"},
+            {"letter": "D", "is_correct": true, "text": "At $V(p) = 0$: $V(p \\vee p) = 0 = V(p)$, so implication is 1. At $V(p) = 1$: similarly, implication is 1.", "section_ref": "Section 5.3: SGT 5.2 (iii)", "notes_quote": ""},
+            {"letter": "E", "is_correct": false, "text": "The formula fails precisely BECAUSE $V(p \\vee p) \\neq V(p)$ in $\\mathbb{F}^2$ for $V(p) \\in (0,1)$. If $\\vee$ were idempotent, the formula would hold.", "section_ref": "Section 5.3: SGT 5.2 (iii)", "notes_quote": "In $\\mathbb{F}^2$, $\\vee$ is not idempotent"}
+          ]
+        },
+        {
+          "id": "q13",
+          "source_ref": "Section 5.3: SGT 5.2 — (iv) F2 conjunction and (v) F3 implication",
+          "text": "Which of the following validity results are TRUE? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$\\models^{\\mathbb{F}^2} (F \\wedge G) \\to F$ for all formulas $F, G$."},
+            {"letter": "B", "text": "$\\not\\models^{\\mathbb{F}^3} (p \\to \\neg p)$."},
+            {"letter": "C", "text": "A counter-model for $p \\to \\neg p$ in $\\mathbb{F}^3$ is $V(p) = 0.6$, giving value $0.8$."},
+            {"letter": "D", "text": "$\\models^{\\mathbb{F}^3} (p \\to \\neg p)$ for all $V(p) \\leq 0.5$."},
+            {"letter": "E", "text": "In $\\mathbb{F}^2$: since $V(F \\wedge G) = V(F) \\cdot V(G) \\leq V(F)$, the implication $(F \\wedge G) \\to F$ is always 1."}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "In $\\mathbb{F}^2$, $V(F \\wedge G) = V(F) \\cdot V(G) \\leq V(F)$ since $V(G) \\leq 1$, so the implication is 1 by definition.", "section_ref": "Section 5.3: SGT 5.2 (iv)", "notes_quote": "$V(F \\wedge G) = V(F) \\cdot V(G)$. Since $V(G) \\leq 1$, we have $V(F \\wedge G) \\leq V(F)$, so $V(F \\wedge G) \\to F = 1$"},
+            {"letter": "B", "is_correct": true, "text": "The formula $p \\to \\neg p$ is not valid in $\\mathbb{F}^3$; it fails when $V(p) > 1/2$.", "section_ref": "Section 5.3: SGT 5.2 (v)", "notes_quote": "$\\not\\models^{\\mathbb{F}^3} (p \\to \\neg p)$"},
+            {"letter": "C", "is_correct": true, "text": "With $V(p) = 0.6$: $V(\\neg p) = 0.4$; $F^3_\\to(0.6, 0.4) = \\min(1, 1-0.6+0.4) = \\min(1,0.8) = 0.8 < 1$.", "section_ref": "Section 5.3: SGT 5.2 (v)", "notes_quote": "For $V(p) = 0.6$: $2 - 2V(p) = 0.8 < 1$. $\\square$"},
+            {"letter": "D", "is_correct": false, "text": "For $V(p) \\leq 0.5$: $\\min(1, 2-2V(p)) = \\min(1, \\geq 1) = 1$, so the formula does hold for $V(p) \\leq 0.5$. But the claim said this makes $(p \\to \\neg p)$ valid in $\\mathbb{F}^3$ for all such $V(p)$ — actually this is TRUE for $V(p) \\leq 0.5$, but the statement says it holds for ALL valuations which is false. The question asks which are true — D says it holds only for $V(p) \\leq 0.5$, which is correct as a restricted claim, but the overall formula is not a theorem of $\\mathbb{F}^3$.", "section_ref": "Section 5.3: SGT 5.2 (v)", "notes_quote": ""},
+            {"letter": "E", "is_correct": true, "text": "This is the key step in proving $\\models^{\\mathbb{F}^2} (F \\wedge G) \\to F$.", "section_ref": "Section 5.3: SGT 5.2 (iv)", "notes_quote": "Since $V(G) \\leq 1$, we have $V(F \\wedge G) \\leq V(F)$, so $V(F \\wedge G) \\to F = 1$ by definition of $F^2_\\to$"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-4",
+      "title": "5.4 Interlude 1: The Intermediate Value Theorem",
+      "questions": [
+        {
+          "id": "q14",
+          "source_ref": "Section 5.4: Definition 5.4 — Continuity",
+          "text": "Which of the following correctly state the epsilon-delta definition of continuity? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$f$ is continuous at $c$ if $\\forall \\varepsilon > 0\\ \\exists \\delta > 0$ such that $|x - c| < \\delta \\Rightarrow |f(x) - f(c)| < \\varepsilon$."},
+            {"letter": "B", "text": "$f$ is continuous on $[a,b]$ if it is continuous at every $c \\in [a,b]$."},
+            {"letter": "C", "text": "$f$ is continuous at $c$ if $\\lim_{x \\to c} f(x) = f(c)$."},
+            {"letter": "D", "text": "$f$ is continuous at $c$ if $\\forall \\delta > 0\\ \\exists \\varepsilon > 0$ such that $|x - c| < \\delta \\Rightarrow |f(x) - f(c)| < \\varepsilon$."},
+            {"letter": "E", "text": "Continuity at $c$ requires the limit $\\lim_{x \\to c} f(x)$ to exist and equal $f(c)$."}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "This is the standard epsilon-delta definition of continuity at a point.", "section_ref": "Section 5.4: Definition 5.4 — Continuity", "notes_quote": "$\\forall \\varepsilon > 0;\\ \\exists \\delta > 0;\\ |x - c| < \\delta \\implies |f(x) - f(c)| < \\varepsilon$"},
+            {"letter": "B", "is_correct": true, "text": "A function is continuous on the entire interval if and only if it is continuous at each point.", "section_ref": "Section 5.4: Definition 5.4 — Continuity", "notes_quote": "$f$ is continuous (on $[a,b]$) if it is continuous at every $c \\in [a,b]$"},
+            {"letter": "C", "is_correct": true, "text": "Continuity at $c$ is equivalent to the limit equalling the function value.", "section_ref": "Section 5.4: Definition 5.4 — Continuity", "notes_quote": "A function $f : [a,b] \\to \\mathbb{R}$ is continuous at $c \\in [a,b]$ if $\\lim_{x \\to c} f(x) = f(c)$"},
+            {"letter": "D", "is_correct": false, "text": "The quantifier order is reversed here. The correct definition requires for-all-epsilon there-exists-delta, not the other way around. The reversed order gives a different (weaker) condition.", "section_ref": "Section 5.4: Definition 5.4 — Continuity", "notes_quote": ""},
+            {"letter": "E", "is_correct": true, "text": "This is an equivalent formulation of continuity at $c$.", "section_ref": "Section 5.4: Definition 5.4 — Continuity", "notes_quote": "continuous at $c \\in [a,b]$ if $\\lim_{x \\to c} f(x) = f(c)$"}
+          ]
+        },
+        {
+          "id": "q15",
+          "source_ref": "Section 5.4: Theorem 5.5 — The Intermediate Value Theorem",
+          "text": "Which of the following correctly state or apply the Intermediate Value Theorem? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "If $f : [a,b] \\to \\mathbb{R}$ is continuous and $N$ is between $f(a)$ and $f(b)$, then there exists $c \\in [a,b]$ with $f(c) = N$."},
+            {"letter": "B", "text": "The IVT proof defines $c = \\sup(H)$ where $H = \\{x \\in [a,b] : f(x) \\leq N\\}$."},
+            {"letter": "C", "text": "The IVT requires $f$ to be differentiable on $[a,b]$."},
+            {"letter": "D", "text": "The IVT can be applied to show that any negation satisfying (N1)–(N3) has a fixed point $\\neg c = c$."},
+            {"letter": "E", "text": "The IVT guarantees the fixed point $c$ is unique."}
+          ],
+          "correct": ["A", "B", "D"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "This is the exact statement of Theorem 5.5.", "section_ref": "Section 5.4: Theorem 5.5 — IVT", "notes_quote": "Let $f : [a,b] \\to \\mathbb{R}$ be any continuous real-valued function defined on $[a,b]$, and let $N \\in \\mathbb{R}$ be some value between $f(a)$ and $f(b)$. Then there is some $c \\in [a,b]$ such that $f(c) = N$"},
+            {"letter": "B", "is_correct": true, "text": "The proof constructs $c$ as the supremum of the set $H = \\{x \\in [a,b] : f(x) \\leq N\\}$.", "section_ref": "Section 5.4: Theorem 5.5 — IVT", "notes_quote": "Let $c = \\sup(H)$ where $H = \\{x \\in [a,b] : f(x) \\leq N\\}$"},
+            {"letter": "C", "is_correct": false, "text": "The IVT only requires continuity, not differentiability. Many continuous functions are not differentiable (e.g. $|x|$) yet satisfy the IVT.", "section_ref": "Section 5.4: Theorem 5.5 — IVT", "notes_quote": ""},
+            {"letter": "D", "is_correct": true, "text": "Define $f(x) = \\neg x - x$. By (N1): $f(0)=1>0$, $f(1)=-1<0$. By (N3): $f$ is continuous. IVT gives $c$ with $\\neg c = c$.", "section_ref": "Section 5.4: Theorem 5.5 — IVT", "notes_quote": "define $f(x) = \\neg x - x$. Then $f(0) = \\neg 0 - 0 = 1 > 0$ and $f(1) = \\neg 1 - 1 = -1 < 0$. Since $f$ is continuous by (N3), IVT gives some $c \\in [0,1]$ with $f(c) = 0$"},
+            {"letter": "E", "is_correct": false, "text": "The IVT guarantees existence of at least one fixed point, but not uniqueness. There can be multiple fixed points, though in practice negations satisfying (N1)–(N4) have exactly one.", "section_ref": "Section 5.4: Theorem 5.5 — IVT", "notes_quote": ""}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-5",
+      "title": "5.5 Interlude 2: Isomorphism of Ordered Structures",
+      "questions": [
+        {
+          "id": "q16",
+          "source_ref": "Section 5.5: Graph Isomorphism — Motivation",
+          "text": "Which of the following correctly describe graph isomorphism (Definition 5.6)? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$G_1 \\cong G_2$ if there exists a bijection $\\rho : V_1 \\to V_2$ such that $(x,y) \\in E_1 \\iff (\\rho(x), \\rho(y)) \\in E_2$."},
+            {"letter": "B", "text": "Two graphs are isomorphic if they are 'the same up to relabelling'."},
+            {"letter": "C", "text": "An isomorphism of graphs must preserve the ordering of vertices."},
+            {"letter": "D", "text": "Graph isomorphism requires the bijection to be order-preserving on the vertex sets."},
+            {"letter": "E", "text": "Isomorphic structures are 'fundamentally the same up to relabelling'."}
+          ],
+          "correct": ["A", "B", "E"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "This is Definition 5.6 of graph isomorphism.", "section_ref": "Section 5.5: Graph Isomorphism — Motivation", "notes_quote": "$G_1 \\cong G_2$ if there exists a bijection $\\rho : V_1 \\to V_2$ such that $(x,y) \\in E_1 \\iff (\\rho(x), \\rho(y)) \\in E_2$"},
+            {"letter": "B", "is_correct": true, "text": "Isomorphism captures the idea that two structures are 'the same up to relabelling'.", "section_ref": "Section 5.5: Graph Isomorphism — Motivation", "notes_quote": "Two structures are isomorphic if they are fundamentally the same up to relabelling"},
+            {"letter": "C", "is_correct": false, "text": "Graph isomorphism preserves edges, not a linear ordering on vertices. Ordering is relevant for ordered structures (Definition 5.7), not graphs in general.", "section_ref": "Section 5.5: Graph Isomorphism — Motivation", "notes_quote": ""},
+            {"letter": "D", "is_correct": false, "text": "Graph isomorphism requires the bijection to preserve edge membership, not an ordering on vertices. Order-preservation is required for isomorphisms of ordered structures (Definition 5.7).", "section_ref": "Section 5.5: Definition 5.7 — Isomorphism of Ordered Structures", "notes_quote": ""},
+            {"letter": "E", "is_correct": true, "text": "The notes introduce isomorphism with this informal description.", "section_ref": "Section 5.5: Graph Isomorphism — Motivation", "notes_quote": "Two structures are isomorphic if they are fundamentally the same up to relabelling"}
+          ]
+        },
+        {
+          "id": "q17",
+          "source_ref": "Section 5.5: Definition 5.7 — Isomorphism of Ordered Structures",
+          "text": "Which of the following correctly state the conditions for an isomorphism $\\rho$ between ordered structures $M_1 = \\langle I, <, f \\rangle$ and $M_2 = \\langle I', <, g \\rangle$? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$\\rho : I \\to I'$ must be a bijection."},
+            {"letter": "B", "text": "Order preservation: $x < y \\iff \\rho(x) < \\rho(y)$ for all $x, y \\in I$."},
+            {"letter": "C", "text": "Function preservation: $f(x_1,\\ldots,x_n) = y \\iff g(\\rho(x_1),\\ldots,\\rho(x_n)) = \\rho(y)$."},
+            {"letter": "D", "text": "It suffices for $\\rho$ to be injective (not necessarily surjective)."},
+            {"letter": "E", "text": "The isomorphism $\\rho(x) = \\log(x)$ witnesses $\\langle \\mathbb{R}^{>0}, <, \\times \\rangle \\cong \\langle \\mathbb{R}, <, + \\rangle$."}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "An isomorphism must be a bijection between the underlying sets.", "section_ref": "Section 5.5: Definition 5.7 — Isomorphism of Ordered Structures", "notes_quote": "there exists a bijection $\\rho : I \\to I'$"},
+            {"letter": "B", "is_correct": true, "text": "Order preservation is one of the two key conditions.", "section_ref": "Section 5.5: Definition 5.7 — Isomorphism of Ordered Structures", "notes_quote": "Order is preserved: For all $x, y \\in I$: $x < y \\iff \\rho(x) < \\rho(y)$"},
+            {"letter": "C", "is_correct": true, "text": "Function preservation is the second key condition.", "section_ref": "Section 5.5: Definition 5.7 — Isomorphism of Ordered Structures", "notes_quote": "Functions are preserved: $f(x_1,\\ldots,x_n) = y \\iff g(\\rho(x_1),\\ldots,\\rho(x_n)) = \\rho(y)$"},
+            {"letter": "D", "is_correct": false, "text": "An isomorphism must be both injective and surjective (a bijection). Injectivity alone is insufficient.", "section_ref": "Section 5.5: Definition 5.7 — Isomorphism of Ordered Structures", "notes_quote": ""},
+            {"letter": "E", "is_correct": true, "text": "The logarithm maps multiplication to addition and is order-preserving: $\\log(xy) = \\log x + \\log y$.", "section_ref": "Section 5.5: Lecture Exercise — Examples of Isomorphic Structures", "notes_quote": "$\\langle \\mathbb{R}^{>0}, <, \\times \\rangle$ and $\\langle \\mathbb{R}, <, + \\rangle$ — isomorphism: $\\rho(x) = \\log(x)$"}
+          ]
+        },
+        {
+          "id": "q18",
+          "source_ref": "Section 5.5: Lecture Exercise — Examples of Isomorphic Structures",
+          "text": "Consider the ordered structures in the lecture exercise. Which of the following are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$\\langle [0,1], <, \\min \\rangle$ and $\\langle [-1,1], >, \\max \\rangle$ are isomorphic via $\\rho(x) = 1 - 2x$."},
+            {"letter": "B", "text": "The isomorphism $\\rho(x) = 1-2x$ maps $[0,1]$ to $[-1,1]$ and reverses the order."},
+            {"letter": "C", "text": "$\\langle \\mathbb{R}^{>0}, <, \\times \\rangle \\cong \\langle \\mathbb{R}, <, + \\rangle$ via $\\rho(x) = \\log(x)$."},
+            {"letter": "D", "text": "The isomorphism $\\rho(x) = 1-2x$ is order-preserving in the sense that $x < y \\Rightarrow \\rho(x) < \\rho(y)$."},
+            {"letter": "E", "text": "$\\langle [0,1], <, \\min \\rangle \\cong \\langle [-1,1], >, \\max \\rangle$ uses a reversal of order on the second structure."}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "The notes give $\\rho(x) = 1-2x$ as the isomorphism between these two structures.", "section_ref": "Section 5.5: Lecture Exercise", "notes_quote": "$\\langle [0,1], <, \\min \\rangle$ and $\\langle [-1,1], >, \\max \\rangle$ — note the reversal of order; $\\rho(x) = 1 - 2x$"},
+            {"letter": "B", "is_correct": true, "text": "$\\rho(x) = 1-2x$ maps $0 \\mapsto 1$ and $1 \\mapsto -1$, reversing the order (the second structure uses $>$).", "section_ref": "Section 5.5: Lecture Exercise", "notes_quote": "note the reversal of order"},
+            {"letter": "C", "is_correct": true, "text": "The logarithm is the isomorphism between $\\langle \\mathbb{R}^{>0}, <, \\times \\rangle$ and $\\langle \\mathbb{R}, <, + \\rangle$.", "section_ref": "Section 5.5: Lecture Exercise", "notes_quote": "$\\langle \\mathbb{R}^{>0}, <, \\times \\rangle$ and $\\langle \\mathbb{R}, <, + \\rangle$ — isomorphism: $\\rho(x) = \\log(x)$"},
+            {"letter": "D", "is_correct": false, "text": "$\\rho(x) = 1-2x$ is order-REVERSING: $x < y \\Rightarrow \\rho(x) > \\rho(y)$. This is consistent with the isomorphism since the second structure uses $>$ (reversed order).", "section_ref": "Section 5.5: Lecture Exercise", "notes_quote": ""},
+            {"letter": "E", "is_correct": true, "text": "The second structure $\\langle [-1,1], >, \\max \\rangle$ uses the reversed ordering $>$, which is why an order-reversing $\\rho$ is used.", "section_ref": "Section 5.5: Lecture Exercise", "notes_quote": "$\\langle [0,1], <, \\min \\rangle$ and $\\langle [-1,1], >, \\max \\rangle$ — note the reversal of order"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-6",
+      "title": "5.6 Trillas' Theorem",
+      "questions": [
+        {
+          "id": "q19",
+          "source_ref": "Section 5.6: Properties (N1)–(N4) of Negation",
+          "text": "Which of the following correctly state the four properties (N1)–(N4) required of a 'reasonable' negation function $\\neg : [0,1] \\to [0,1]$? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "(N1) Boolean: $\\neg 0 = 1$ and $\\neg 1 = 0$."},
+            {"letter": "B", "text": "(N2) Involutive: $\\neg\\neg x = x$ for all $x \\in [0,1]$."},
+            {"letter": "C", "text": "(N3) Continuous: $\\neg$ is a continuous function."},
+            {"letter": "D", "text": "(N4) Decreasing: if $x < y$ then $\\neg x \\geq \\neg y$."},
+            {"letter": "E", "text": "(N4) Strictly Decreasing: if $x < y$ then $\\neg x > \\neg y$."},
+            {"letter": "F", "text": "(N2) Involutive implies $\\neg$ is a bijection."}
+          ],
+          "correct": ["A", "B", "C", "D", "F"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "(N1) requires negation to agree with classical Boolean negation at the endpoints.", "section_ref": "Section 5.6: Why All Three Logics Agree on Negation", "notes_quote": "(N1) Boolean: $\\neg 0 = 1$ and $\\neg 1 = 0$"},
+            {"letter": "B", "is_correct": true, "text": "(N2) requires double negation to be the identity.", "section_ref": "Section 5.6: Why All Three Logics Agree on Negation", "notes_quote": "(N2) Involutive: $\\neg\\neg x = x$ (double negation cancels)"},
+            {"letter": "C", "is_correct": true, "text": "(N3) requires $\\neg$ to be a continuous function.", "section_ref": "Section 5.6: Why All Three Logics Agree on Negation", "notes_quote": "(N3) Continuous: $\\neg$ is continuous"},
+            {"letter": "D", "is_correct": true, "text": "(N4) as stated in the notes uses $\\geq$: 'if $x < y$ then $\\neg x \\geq \\neg y$'.", "section_ref": "Section 5.6: Why All Three Logics Agree on Negation", "notes_quote": "(N4) Decreasing: If $x < y$ then $\\neg x \\geq \\neg y$"},
+            {"letter": "E", "is_correct": false, "text": "(N4) only says $\\neg x \\geq \\neg y$ (not strict), but the notes note that any function satisfying (N1)–(N4) must actually be strictly decreasing — this is a consequence, not the axiom itself.", "section_ref": "Section 5.6: Why All Three Logics Agree on Negation", "notes_quote": "(N4) only says $\\neg$ is not increasing; but any function satisfying (N1)–(N4) must actually be strictly decreasing"},
+            {"letter": "F", "is_correct": true, "text": "(N2) implies injectivity (if $\\neg x = \\neg y$ then $x = \\neg\\neg x = \\neg\\neg y = y$) and surjectivity (for any $y$, $\\neg(\\neg y) = y$).", "section_ref": "Section 5.6: Why All Three Logics Agree on Negation", "notes_quote": "Implies $\\neg$ is a bijection (both injective and surjective)"}
+          ]
+        },
+        {
+          "id": "q20",
+          "source_ref": "Section 5.6: Theorem 5.8 — Trillas' Theorem",
+          "text": "Which of the following correctly describe Trillas' Theorem and its proof? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "If $\\neg$ satisfies (N1)–(N4), then $\\langle [0,1], <, \\neg \\rangle \\cong \\langle [0,1], <, 1-x \\rangle$."},
+            {"letter": "B", "text": "The proof begins by using IVT to find a fixed point $c$ with $\\neg c = c$."},
+            {"letter": "C", "text": "The isomorphism $\\rho$ in the proof is defined piecewise: $\\rho(x) = x/(2c)$ for $x \\leq c$ and $\\rho(x) = 1 - \\neg x/(2c)$ for $x \\geq c$."},
+            {"letter": "D", "text": "Trillas' Theorem implies that all standard fuzzy logics must use different negation functions."},
+            {"letter": "E", "text": "The key property verified is $\\rho(\\neg x) = 1 - \\rho(x)$ for all $x$."}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "This is the exact statement of Theorem 5.8.", "section_ref": "Section 5.6: Theorem 5.8 — Trillas' Theorem", "notes_quote": "If $\\neg$ satisfies (N1)–(N4), then $\\langle [0,1], <, \\neg \\rangle$ is isomorphic to $\\langle [0,1], <, 1-x \\rangle$"},
+            {"letter": "B", "is_correct": true, "text": "Step 1 of the proof defines $f(x) = \\neg x - x$ and applies IVT to obtain $c$ with $\\neg c = c$.", "section_ref": "Section 5.6: Theorem 5.8 — Trillas' Theorem", "notes_quote": "Define $f(x) = \\neg x - x$. By (N1): $f(0) = 1 > 0$ and $f(1) = -1 < 0$. By (N3): $f$ is continuous. By IVT: $\\exists c \\in [0,1]$ with $\\neg c = c$"},
+            {"letter": "C", "is_correct": true, "text": "The isomorphism is defined piecewise with $x/(2c)$ for $x \\leq c$ and $1 - \\neg x/(2c)$ for $x \\geq c$.", "section_ref": "Section 5.6: Theorem 5.8 — Trillas' Theorem", "notes_quote": "$\\rho(x) = \\begin{cases} \\dfrac{x}{2c} & \\text{if } x \\leq c \\\\ 1 - \\dfrac{\\neg x}{2c} & \\text{if } x \\geq c \\end{cases}$"},
+            {"letter": "D", "is_correct": false, "text": "Trillas' Theorem justifies the OPPOSITE conclusion: since all reasonable negations are isomorphic to $1-x$, all standard fuzzy logics use $F_\\neg(x) = 1-x$ as the canonical representative.", "section_ref": "Section 5.6: Theorem 5.8 — Trillas' Theorem", "notes_quote": "This justifies why all standard fuzzy logics use $F_\\neg(x) = 1 - x$"},
+            {"letter": "E", "is_correct": true, "text": "The proof verifies $\\rho(\\neg x) = 1 - \\rho(x)$ for both cases $x \\leq c$ and $x > c$.", "section_ref": "Section 5.6: Theorem 5.8 — Trillas' Theorem", "notes_quote": "Claim: $\\rho(\\neg x) = 1 - \\rho(x)$"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-7",
+      "title": "SGT Week 5 — Worked Examples",
+      "questions": [
+        {
+          "id": "q21",
+          "source_ref": "Section SGT 5.3: Isomorphism via log2",
+          "text": "In Question 5.3, with $x \\oplus y = \\dfrac{xy}{xy + (1-x)(1-y)}$ on $(0,1)$, which of the following are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$\\dfrac{x \\oplus y}{1 - (x \\oplus y)} = \\dfrac{xy}{(1-x)(1-y)}$."},
+            {"letter": "B", "text": "$\\rho(x) = \\log_2\\!\\left(\\dfrac{x}{1-x}\\right)$ is order-preserving because $\\log_2$ is an increasing function."},
+            {"letter": "C", "text": "$\\rho(x \\oplus y) = \\rho(x) + \\rho(y)$, so $\\rho$ is function-preserving."},
+            {"letter": "D", "text": "$\\rho$ is an isomorphism from $\\langle (0,1), <, \\oplus \\rangle$ to $\\langle \\mathbb{R}, <, \\times \\rangle$."},
+            {"letter": "E", "text": "The order-preserving step uses: $x < y \\iff x/(1-x) < y/(1-y) \\iff x(1-y) < y(1-x)$."}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "After simplification, $x \\oplus y / (1 - x \\oplus y) = xy/((1-x)(1-y))$.", "section_ref": "Section SGT 5.3: Part (i)", "notes_quote": "$\\frac{x \\oplus y}{1-(x \\oplus y)} = \\frac{xy}{(1-x)(1-y)}$"},
+            {"letter": "B", "is_correct": true, "text": "Since $\\log_2$ is increasing and $x \\mapsto x/(1-x)$ is increasing on $(0,1)$, $\\rho$ is order-preserving.", "section_ref": "Section SGT 5.3: Part (ii)", "notes_quote": "$\\log_2\\!\\left(\\frac{x}{1-x}\\right) < \\log_2\\!\\left(\\frac{y}{1-y}\\right) \\iff \\frac{x}{1-x} < \\frac{y}{1-y}$ (since $\\log_2$ is increasing)"},
+            {"letter": "C", "is_correct": true, "text": "The function-preserving step: $\\rho(x) + \\rho(y) = \\log_2(xy/((1-x)(1-y))) = \\log_2(x \\oplus y / (1 - x \\oplus y)) = \\rho(x \\oplus y)$.", "section_ref": "Section SGT 5.3: Part (ii)", "notes_quote": "$\\rho(x) + \\rho(y) = \\log_2\\!\\left(\\frac{xy}{(1-x)(1-y)}\\right) = \\log_2\\!\\left(\\frac{x \\oplus y}{1-(x \\oplus y)}\\right) = \\rho(x \\oplus y)$"},
+            {"letter": "D", "is_correct": false, "text": "$\\rho$ maps $\\langle (0,1), <, \\oplus \\rangle$ to $\\langle \\mathbb{R}, <, + \\rangle$ (addition, not multiplication). $\\oplus$ on $(0,1)$ corresponds to $+$ on $\\mathbb{R}$ under $\\rho$.", "section_ref": "Section SGT 5.3", "notes_quote": "$M_2 = \\langle \\mathbb{R}, <, + \\rangle$"},
+            {"letter": "E", "is_correct": true, "text": "This is the key chain of equivalences used to prove order-preservation.", "section_ref": "Section SGT 5.3: Part (ii)", "notes_quote": "$\\iff x(1-y) < y(1-x)$... $\\iff x < y$"}
+          ]
+        },
+        {
+          "id": "q22",
+          "source_ref": "Section SGT 5.4: Negation neg x = (1-x)/(1+x)",
+          "text": "For the negation $\\neg x = \\dfrac{1-x}{1+x}$ on $[0,1]$, which of the following are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$\\neg 0 = 1$ and $\\neg 1 = 0$, so (N1) holds."},
+            {"letter": "B", "text": "$\\neg\\neg x = x$ for all $x \\in [0,1]$, so (N2) holds."},
+            {"letter": "C", "text": "The fixed point satisfies $c^2 + 2c - 1 = 0$, giving $c = -1 + \\sqrt{2} \\approx 0.414$."},
+            {"letter": "D", "text": "The fixed point satisfies $c = 1/2$."},
+            {"letter": "E", "text": "Continuity (N3) is proven by showing $|\\neg x - \\neg y| \\leq 2|x - y|$."}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "$\\neg 0 = (1-0)/(1+0) = 1$ and $\\neg 1 = (1-1)/(1+1) = 0$.", "section_ref": "Section SGT 5.4: Part (i) — N1", "notes_quote": "$\\neg 0 = \\frac{1-0}{1+0} = 1, \\qquad \\neg 1 = \\frac{1-1}{1+1} = 0$"},
+            {"letter": "B", "is_correct": true, "text": "$\\neg\\neg x = (1 - (1-x)/(1+x))/(1 + (1-x)/(1+x)) = 2x/2 = x$.", "section_ref": "Section SGT 5.4: Part (i) — N2", "notes_quote": "$\\neg\\neg x = \\frac{2x}{2} = x$"},
+            {"letter": "C", "is_correct": true, "text": "Setting $\\neg c = c$: $(1-c)/(1+c) = c \\Rightarrow 1-c = c+c^2 \\Rightarrow c^2+2c-1=0 \\Rightarrow c = -1+\\sqrt{2}$.", "section_ref": "Section SGT 5.4: Part (ii)", "notes_quote": "$c^2 + 2c - 1 = 0$... $c = -1 + \\sqrt{2} \\approx 0.414$"},
+            {"letter": "D", "is_correct": false, "text": "The fixed point is $c = -1+\\sqrt{2} \\approx 0.414$, not $1/2$. $c = 1/2$ is the fixed point of $1-x$ (i.e. $1 - 1/2 = 1/2$), not of this negation.", "section_ref": "Section SGT 5.4: Part (ii)", "notes_quote": ""},
+            {"letter": "E", "is_correct": true, "text": "The proof computes $|\\neg x - \\neg y| = |2(x-y)/((1+x)(1+y))| \\leq 2|x-y|$ and sets $\\delta = \\varepsilon/2$.", "section_ref": "Section SGT 5.4: Part (i) — N3", "notes_quote": "$|\\neg x - \\neg y| \\leq 2|x-y|$. Choose $\\delta = \\varepsilon/2$"}
+          ]
+        },
+        {
+          "id": "q23",
+          "source_ref": "Section SGT 5.5: Negation neg x = sqrt(1-x^2)",
+          "text": "For the negation $\\neg x = \\sqrt{1 - x^2}$ on $[0,1]$, which of the following are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$\\neg\\neg x = x$ because $\\sqrt{1 - (\\sqrt{1-x^2})^2} = \\sqrt{x^2} = x$."},
+            {"letter": "B", "text": "The fixed point is $c = \\sqrt{2}/2 = 1/\\sqrt{2} \\approx 0.707$."},
+            {"letter": "C", "text": "Continuity (N3) is proven by expressing $\\neg x = f_3(f_2(f_1(x)))$ where each $f_i$ is continuous."},
+            {"letter": "D", "text": "For $x < y$ in $[0,1]$: $x^2 < y^2$, so $1 - x^2 > 1 - y^2$, hence $\\neg x > \\neg y$ — so (N4) holds."},
+            {"letter": "E", "text": "The fixed point equation is $2c^2 = 1$, which gives $c = \\sqrt{2}/2$."}
+          ],
+          "correct": ["A", "B", "C", "D", "E"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "The double negation calculation: $\\sqrt{1-(\\sqrt{1-x^2})^2} = \\sqrt{1-(1-x^2)} = \\sqrt{x^2} = x$ (since $x \\geq 0$).", "section_ref": "Section SGT 5.5: Part (i) — N2", "notes_quote": "$\\neg\\neg x = \\sqrt{1-(\\sqrt{1-x^2})^2} = \\sqrt{1-(1-x^2)} = \\sqrt{x^2} = x$"},
+            {"letter": "B", "is_correct": true, "text": "Setting $\\neg c = c$: $\\sqrt{1-c^2} = c \\Rightarrow 1-c^2 = c^2 \\Rightarrow c = \\sqrt{2}/2$.", "section_ref": "Section SGT 5.5: Part (ii)", "notes_quote": "$c = \\frac{\\sqrt{2}}{2} = \\frac{1}{\\sqrt{2}} \\approx 0.707$"},
+            {"letter": "C", "is_correct": true, "text": "The notes express $\\neg x = f_3(f_2(f_1(x)))$ with $f_1(x) = x^2$, $f_2(x) = 1-x$, $f_3(x) = \\sqrt{x}$, each continuous, so their composition is continuous.", "section_ref": "Section SGT 5.5: Part (i) — N3", "notes_quote": "Express $\\neg x = f_3(f_2(f_1(x)))$ where $f_1(x) = x^2$, $f_2(x) = 1-x$, $f_3(x) = \\sqrt{x}$. Each is continuous; composition of continuous functions is continuous"},
+            {"letter": "D", "is_correct": true, "text": "For $0 \\leq x < y \\leq 1$: $x^2 < y^2$, so $1-x^2 > 1-y^2 \\geq 0$, hence $\\sqrt{1-x^2} > \\sqrt{1-y^2}$, i.e. $\\neg x > \\neg y$.", "section_ref": "Section SGT 5.5: Part (i) — N4", "notes_quote": "$x < y \\Rightarrow x^2 < y^2 \\Rightarrow 1-x^2 > 1-y^2$. So $\\neg x = \\sqrt{1-x^2} > \\sqrt{1-y^2} = \\neg y$"},
+            {"letter": "E", "is_correct": true, "text": "$\\sqrt{1-c^2} = c \\Rightarrow 1-c^2 = c^2 \\Rightarrow 2c^2 = 1 \\Rightarrow c = \\sqrt{2}/2$.", "section_ref": "Section SGT 5.5: Part (ii)", "notes_quote": "$1-c^2 = c^2 \\implies 2c^2 = 1 \\implies c = \\frac{\\sqrt{2}}{2}$"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-8",
+      "title": "Key Definitions",
+      "questions": [
+        {
+          "id": "q24",
+          "source_ref": "Key Definitions Table",
+          "text": "Which of the following correctly match terms to their definitions from the Key Definitions table? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "A **Boolean truth function** on $n$ variables is $F : \\{0,1\\}^n \\to \\{0,1\\}$."},
+            {"letter": "B", "text": "A **fuzzy truth function** on $n$ variables is $F : [0,1]^n \\to [0,1]$."},
+            {"letter": "C", "text": "$F$ is **valid w.r.t. $\\mathbb{F}$** if $\\overline{F}(x_1,\\ldots,x_n) = 1$ for all $x_i \\in [0,1]$."},
+            {"letter": "D", "text": "A **fixed point of $\\neg$** is a value $c$ with $\\neg c = c$; guaranteed to exist by the IVT under (N1)–(N3)."},
+            {"letter": "E", "text": "An **isomorphism of ordered structures** is any bijection between the underlying intervals."}
+          ],
+          "correct": ["A", "B", "C", "D"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "Exact definition from the key definitions table.", "section_ref": "Key Definitions", "notes_quote": "A function $F : \\{0,1\\}^n \\to \\{0,1\\}$ interpreting connectives on classical truth values"},
+            {"letter": "B", "is_correct": true, "text": "Exact definition from the key definitions table.", "section_ref": "Key Definitions", "notes_quote": "A function $F : [0,1]^n \\to [0,1]$ generalising Boolean functions to real-valued truth"},
+            {"letter": "C", "is_correct": true, "text": "Exact definition of validity from the key definitions table.", "section_ref": "Key Definitions", "notes_quote": "$F$ is valid w.r.t. $\\mathbb{F}$ ($\\models^\\mathbb{F} F$) if $\\overline{F}(x_1,\\ldots,x_n)=1$ for all $x_i \\in [0,1]$"},
+            {"letter": "D", "is_correct": true, "text": "Exact definition from the key definitions table.", "section_ref": "Key Definitions", "notes_quote": "A value $c \\in [0,1]$ with $\\neg c = c$; guaranteed to exist by IVT under (N1)–(N3)"},
+            {"letter": "E", "is_correct": false, "text": "An isomorphism of ordered structures must be a bijection that ALSO preserves the ordering AND all functions. A mere bijection is insufficient.", "section_ref": "Key Definitions", "notes_quote": "A bijection $\\rho : I \\to I'$ that preserves both the ordering and all functions"}
+          ]
+        },
+        {
+          "id": "q25",
+          "source_ref": "Key Definitions Table — Three Logics",
+          "text": "Which of the following correctly distinguish $\\mathbb{F}^1$, $\\mathbb{F}^2$, and $\\mathbb{F}^3$ as listed in the Key Definitions? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$\\mathbb{F}^1$ (Min-Max/Zadeh) uses $\\wedge = \\min$, $\\vee = \\max$, $\\neg = 1-x$, $\\to = \\min(1,1-x+y)$."},
+            {"letter": "B", "text": "$\\mathbb{F}^2$ (Product/Gödel) uses $\\wedge = xy$, $\\vee = x+y-xy$, $\\neg = 1-x$, $\\to = y/x$ (or $1$ if $x \\leq y$)."},
+            {"letter": "C", "text": "$\\mathbb{F}^3$ (Łukasiewicz) uses $\\wedge = \\max(0,x+y-1)$, $\\vee = \\min(1,x+y)$, $\\neg = 1-x$, $\\to = \\min(1,1-x+y)$."},
+            {"letter": "D", "text": "All three logics agree on the negation $F_{\\neg}(x) = 1 - x$."},
+            {"letter": "E", "text": "$\\mathbb{F}^1$ and $\\mathbb{F}^3$ share the same implication formula $\\min(1,1-x+y)$."}
+          ],
+          "correct": ["A", "B", "C", "D", "E"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "Correct characterisation of $\\mathbb{F}^1$ from the Key Definitions table.", "section_ref": "Key Definitions", "notes_quote": "$\\mathbb{F}^1$ (Min-Max/Zadeh): Fuzzy logic with $\\wedge = \\min$, $\\vee = \\max$, $\\neg = 1-x$, $\\to = \\min(1,1-x+y)$"},
+            {"letter": "B", "is_correct": true, "text": "Correct characterisation of $\\mathbb{F}^2$ from the Key Definitions table.", "section_ref": "Key Definitions", "notes_quote": "$\\mathbb{F}^2$ (Product/Gödel): Fuzzy logic with $\\wedge = xy$, $\\vee = x+y-xy$, $\\neg = 1-x$, $\\to = y/x$ (or $1$ if $x \\leq y$)"},
+            {"letter": "C", "is_correct": true, "text": "Correct characterisation of $\\mathbb{F}^3$ from the Key Definitions table.", "section_ref": "Key Definitions", "notes_quote": "$\\mathbb{F}^3$ (Łukasiewicz): Fuzzy logic with $\\wedge = \\max(0,x+y-1)$, $\\vee = \\min(1,x+y)$, $\\neg = 1-x$, $\\to = \\min(1,1-x+y)$"},
+            {"letter": "D", "is_correct": true, "text": "All three logics use $F_\\neg(x) = 1-x$; this is explained by Trillas' Theorem.", "section_ref": "Section 5.1: The Three Standard Fuzzy Logics", "notes_quote": "All three logics agree on $F_\\neg(x) = 1 - x$. Trillas' Theorem (Section 5.4) explains why this is inevitable"},
+            {"letter": "E", "is_correct": true, "text": "$\\mathbb{F}^1$ and $\\mathbb{F}^3$ both use $F_\\to(x,y) = \\min(1,1-x+y)$; the implication formulas are identical.", "section_ref": "Key Definitions", "notes_quote": ""}
+          ]
+        },
+        {
+          "id": "q26",
+          "source_ref": "Section 5.6: Trillas' Theorem — Interpretation",
+          "text": "Which of the following correctly explain why all standard fuzzy logics use $F_{\\neg}(x) = 1 - x$? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Trillas' Theorem shows any negation satisfying (N1)–(N4) is isomorphic to $1 - x$, so differences in negation are merely differences in how we scale $[0,1]$."},
+            {"letter": "B", "text": "$F_{\\neg}(x) = 1 - x$ is the simplest representative of the isomorphism class of all reasonable negations."},
+            {"letter": "C", "text": "The theorem shows that $1 - x$ is the ONLY function satisfying (N1)–(N4)."},
+            {"letter": "D", "text": "The three logics agree on negation because their conjunction operators are all identical."},
+            {"letter": "E", "text": "Any two negations satisfying (N1)–(N4) give rise to isomorphic ordered structures $\\langle [0,1], <, \\neg \\rangle$."}
+          ],
+          "correct": ["A", "B", "E"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "This is the interpretation given in the notes for Trillas' Theorem.", "section_ref": "Section 5.6: Theorem 5.8 — Trillas' Theorem", "notes_quote": "Differences in choice of negation can be explained as differences in how we subjectively scale the interval $[0,1]$"},
+            {"letter": "B", "is_correct": true, "text": "The notes state $1-x$ is 'the simplest representative' of the isomorphism class.", "section_ref": "Section 5.6: Theorem 5.8 — Trillas' Theorem", "notes_quote": "it is the simplest representative"},
+            {"letter": "C", "is_correct": false, "text": "Trillas' Theorem does NOT say $1-x$ is the only reasonable negation. For example, $\\neg x = (1-x)/(1+x)$ and $\\neg x = \\sqrt{1-x^2}$ also satisfy (N1)–(N4). The theorem says all such negations are ISOMORPHIC to $1-x$, not identical.", "section_ref": "Section 5.6: Theorem 5.8 — Trillas' Theorem", "notes_quote": ""},
+            {"letter": "D", "is_correct": false, "text": "The three logics agree on negation despite having DIFFERENT conjunction operators ($\\min$, product, Łukasiewicz). The agreement on negation is explained by Trillas' Theorem, not by identical conjunctions.", "section_ref": "Section 5.6: Why All Three Logics Agree on Negation", "notes_quote": ""},
+            {"letter": "E", "is_correct": true, "text": "Any two reasonable negations are both isomorphic to $1-x$ and hence isomorphic to each other.", "section_ref": "Section 5.6: Theorem 5.8 — Trillas' Theorem", "notes_quote": "Any 'reasonable' negation (satisfying (N1)–(N4)) is merely a rescaling of $1 - x$"}
+          ]
+        }
+      ]
+    }
+  ]
+}

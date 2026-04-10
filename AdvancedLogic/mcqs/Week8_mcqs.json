@@ -1,0 +1,621 @@
+{
+  "module": "AdvancedLogic",
+  "week": 8,
+  "title": "Week 8: Łukasiewicz Logic and McNaughton's Theorem",
+  "sections": [
+    {
+      "id": "section-1",
+      "title": "Argument for Łukasiewicz Logic",
+      "questions": [
+        {
+          "id": "q1",
+          "source_ref": "Section 1.1: The Three Fuzzy Semantics",
+          "text": "Which of the following correctly states the truth function of conjunction ($\\wedge$) in Łukasiewicz logic $\\mathbb{F}^3$? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$F_{\\wedge}(x,y) = \\max(0, x+y-1)$"},
+            {"letter": "B", "text": "$F_{\\wedge}(x,y) = \\min(x,y)$"},
+            {"letter": "C", "text": "$F_{\\wedge}(x,y) = xy$"},
+            {"letter": "D", "text": "$F_{\\wedge}(x,y) = \\min(1, x+y)$"}
+          ],
+          "correct": ["A"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "In $\\mathbb{F}^3$, conjunction is defined as $\\max(0, x+y-1)$.", "section_ref": "Section 1.1", "notes_quote": "$\\mathbb{F}^3$: $F_\\wedge(x,y) = \\max(0, x+y-1)$"},
+            {"letter": "B", "is_correct": false, "text": "$\\min(x,y)$ is the conjunction of Gödel logic $\\mathbb{F}^1$, not $\\mathbb{F}^3$.", "section_ref": "Section 1.1", "notes_quote": ""},
+            {"letter": "C", "is_correct": false, "text": "$xy$ (the product) is the conjunction of Product logic $\\mathbb{F}^2$, not $\\mathbb{F}^3$.", "section_ref": "Section 1.1", "notes_quote": ""},
+            {"letter": "D", "is_correct": false, "text": "$\\min(1, x+y)$ is the disjunction of $\\mathbb{F}^3$, not the conjunction.", "section_ref": "Section 1.1", "notes_quote": ""}
+          ]
+        },
+        {
+          "id": "q2",
+          "source_ref": "Section 1.1: The Three Fuzzy Semantics",
+          "text": "Which of the following correctly states the truth function of implication ($\\to$) in Łukasiewicz logic $\\mathbb{F}^3$? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$F_{\\to}(x,y) = \\max(1-x, y)$"},
+            {"letter": "B", "text": "$F_{\\to}(x,y) = 1-x+xy$"},
+            {"letter": "C", "text": "$F_{\\to}(x,y) = \\min(1, 1-x+y)$"},
+            {"letter": "D", "text": "$F_{\\to}(x,y) = \\max(0, y-x)$"}
+          ],
+          "correct": ["C"],
+          "explanations": [
+            {"letter": "A", "is_correct": false, "text": "$\\max(1-x, y)$ is the implication of Gödel logic $\\mathbb{F}^1$.", "section_ref": "Section 1.1", "notes_quote": ""},
+            {"letter": "B", "is_correct": false, "text": "$1-x+xy$ is the implication of Product logic $\\mathbb{F}^2$.", "section_ref": "Section 1.1", "notes_quote": ""},
+            {"letter": "C", "is_correct": true, "text": "In $\\mathbb{F}^3$, implication is $\\min(1, 1-x+y)$.", "section_ref": "Section 1.1", "notes_quote": "$\\mathbb{F}^3$: $F_\\to(x,y) = \\min(1, 1-x+y)$"},
+            {"letter": "D", "is_correct": false, "text": "$\\max(0, y-x)$ is not a standard fuzzy implication in any of $\\mathbb{F}^1$, $\\mathbb{F}^2$, $\\mathbb{F}^3$.", "section_ref": "Section 1.1", "notes_quote": ""}
+          ]
+        },
+        {
+          "id": "q3",
+          "source_ref": "Section 1.2: The Law of Excluded Middle (LEM)",
+          "text": "The Law of Excluded Middle (LEM) states that $x \\vee \\neg x = 1$ for all $x \\in [0,1]$. Which of the following fuzzy logics satisfy LEM? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Łukasiewicz logic $\\mathbb{F}^3$"},
+            {"letter": "B", "text": "Gödel logic $\\mathbb{F}^1$"},
+            {"letter": "C", "text": "Product logic $\\mathbb{F}^2$"},
+            {"letter": "D", "text": "Classical propositional logic"}
+          ],
+          "correct": ["A", "D"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "Under $\\mathbb{F}^3$: $x \\vee \\neg x = \\min(1, x+(1-x)) = \\min(1,1) = 1$.", "section_ref": "Section 1.2", "notes_quote": "$F^3_\\vee(x, 1-x) = \\min(1, x + (1-x)) = \\min(1,1) = 1$"},
+            {"letter": "B", "is_correct": false, "text": "Under $\\mathbb{F}^1$: $x \\vee \\neg x = \\max(x, 1-x)$, which equals $\\frac{1}{2}$ at $x = \\frac{1}{2}$, not 1.", "section_ref": "Section 1.2", "notes_quote": "For $x = \\frac{1}{2}$: $\\max(\\frac{1}{2}, \\frac{1}{2}) = \\frac{1}{2} \\neq 1$. So $\\mathbb{F}^1$ fails LEM."},
+            {"letter": "C", "is_correct": false, "text": "Under $\\mathbb{F}^2$: $x \\vee \\neg x = 1 - x(1-x)$, which equals $\\frac{3}{4}$ at $x = \\frac{1}{2}$, not 1.", "section_ref": "Section 1.2", "notes_quote": "For $x = \\frac{1}{2}$: $1 - \\frac{1}{4} = \\frac{3}{4} \\neq 1$. So $\\mathbb{F}^2$ fails LEM."},
+            {"letter": "D", "is_correct": true, "text": "Classical logic is two-valued, and $p \\vee \\neg p$ is a tautology: both $p=0$ and $p=1$ give $\\max(p,1-p)=1$ in the two-value setting.", "section_ref": "Section 1.2", "notes_quote": ""}
+          ]
+        },
+        {
+          "id": "q4",
+          "source_ref": "Section 1.3: Łukasiewicz Logic Extends Gödel Logic",
+          "text": "In $\\mathbb{F}^3$, defined operators $\\underline{\\wedge}$ and $\\underline{\\vee}$ are introduced. Which of the following statements are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$x \\underline{\\wedge} y = (x \\to y) \\wedge x$ and its truth function is $\\min(x,y)$"},
+            {"letter": "B", "text": "$x \\underline{\\vee} y = (x \\to y) \\to y$ and its truth function is $\\max(x,y)$"},
+            {"letter": "C", "text": "$\\underline{\\wedge}$ and $\\underline{\\vee}$ allow $\\mathbb{F}^3$ to replicate all reasoning done in $\\mathbb{F}^1$"},
+            {"letter": "D", "text": "$\\underline{\\wedge}$ and $\\underline{\\vee}$ also allow $\\mathbb{F}^3$ to replicate all reasoning done in $\\mathbb{F}^2$"}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "By definition and verified computation, $x \\underline{\\wedge} y = (x \\to y) \\wedge x = \\min(x,y)$.", "section_ref": "Section 1.3", "notes_quote": "$x \\underline{\\wedge} y = (x \\to y) \\wedge x$ and $\\underline{\\wedge}(x,y) = \\min(x,y)$"},
+            {"letter": "B", "is_correct": true, "text": "By definition, $x \\underline{\\vee} y = (x \\to y) \\to y = \\max(x,y)$.", "section_ref": "Section 1.3", "notes_quote": "$x \\underline{\\vee} y = (x \\to y) \\to y$ and $\\underline{\\vee}(x,y) = \\max(x,y)$"},
+            {"letter": "C", "is_correct": true, "text": "Formally, there is a translation $t: \\mathrm{Fml} \\to \\mathrm{Fml}$ such that $\\models^{\\mathbb{F}^1} F$ iff $\\models^{\\mathbb{F}^3} t(F)$, replacing $\\wedge$ with $\\underline{\\wedge}$ and $\\vee$ with $\\underline{\\vee}$.", "section_ref": "Section 1.3", "notes_quote": "$\\mathbb{F}^3$ is an extension of $\\mathbb{F}^1$: any reasoning done in $\\mathbb{F}^1$ can be replicated in $\\mathbb{F}^3$"},
+            {"letter": "D", "is_correct": false, "text": "No such translation exists for $\\mathbb{F}^2$ inside $\\mathbb{F}^3$: the $\\mathbb{F}^2$ t-norm cannot be expressed by any finite combination of $\\mathbb{F}^3$ connectives.", "section_ref": "Section 1.3", "notes_quote": "no such translation exists for $\\mathbb{F}^2$ inside $\\mathbb{F}^3$"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-2",
+      "title": "McNaughton's Theorem Part 1 — The Characterisation",
+      "questions": [
+        {
+          "id": "q5",
+          "source_ref": "Section 2.1: Classical Analogy",
+          "text": "In classical propositional logic, every Boolean function $f: \\{0,1\\}^n \\to \\{0,1\\}$ is representable as a formula. Which of the following statements about the analogous question in Łukasiewicz logic $\\mathbb{F}^3$ are true? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Not every function $f: [0,1]^n \\to [0,1]$ is representable in $\\mathbb{F}^3$"},
+            {"letter": "B", "text": "There are $2^{2^{\\aleph_0}}$ functions $f: [0,1] \\to [0,1]$ but only $\\aleph_0$ formulas, so most functions are not representable"},
+            {"letter": "C", "text": "Every function $f: [0,1]^n \\to [0,1]$ is representable by some formula under $\\mathbb{F}^3$"},
+            {"letter": "D", "text": "In classical logic, any Boolean function can be constructed via DNF (Disjunctive Normal Form)"}
+          ],
+          "correct": ["A", "B", "D"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "McNaughton's theorem restricts representable functions to those that are piecewise-linear with integer coefficients — a tiny fraction of all real-valued functions.", "section_ref": "Section 2.1", "notes_quote": "For arbitrary real-valued functions $f : [0,1]^n \\to [0,1]$, the same is not true under Łukasiewicz semantics"},
+            {"letter": "B", "is_correct": true, "text": "A cardinality argument: there are $2^{2^{\\aleph_0}}$ such functions but only countably many formulas, so only countably many functions are representable.", "section_ref": "Section 2.1", "notes_quote": "there are $2^{2^{\\aleph_0}}$ such functions but only $\\aleph_0$ formulas"},
+            {"letter": "C", "is_correct": false, "text": "This is false: only continuous piecewise-linear functions with integer coefficients are representable.", "section_ref": "Section 2.1", "notes_quote": ""},
+            {"letter": "D", "is_correct": true, "text": "Every Boolean function can be written as a DNF formula, using $p_i$ for $x_i=1$ and $\\neg p_i$ for $x_i=0$.", "section_ref": "Section 2.1", "notes_quote": "every Boolean function $f : \\{0,1\\}^n \\to \\{0,1\\}$ is the truth function of some formula (constructible via DNF)"}
+          ]
+        },
+        {
+          "id": "q6",
+          "source_ref": "Section 2.2: The Clamping Notation",
+          "text": "The clamping notation $[z]^1_0$ is defined as $\\min(1, \\max(0, z))$. Which of the following correctly describe its behaviour? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$[z]^1_0 = 0$ if $z \\leq 0$"},
+            {"letter": "B", "text": "$[z]^1_0 = z$ if $0 \\leq z \\leq 1$"},
+            {"letter": "C", "text": "$[z]^1_0 = 1$ if $z \\geq 1$"},
+            {"letter": "D", "text": "$[z]^1_0 = z$ for all $z \\in \\mathbb{R}$"}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "When $z \\leq 0$, $\\max(0,z)=0$, so $\\min(1,0)=0$.", "section_ref": "Section 2.2", "notes_quote": "$[z]^1_0 = 0$ if $z \\leq 0$"},
+            {"letter": "B", "is_correct": true, "text": "When $0 \\leq z \\leq 1$, $\\max(0,z)=z$ and $\\min(1,z)=z$.", "section_ref": "Section 2.2", "notes_quote": "$[z]^1_0 = z$ if $0 \\leq z \\leq 1$"},
+            {"letter": "C", "is_correct": true, "text": "When $z \\geq 1$, $\\max(0,z)=z$ and $\\min(1,z)=1$.", "section_ref": "Section 2.2", "notes_quote": "$[z]^1_0 = 1$ if $z \\geq 1$"},
+            {"letter": "D", "is_correct": false, "text": "For $z$ outside $[0,1]$ (e.g. $z=2$), $[z]^1_0 = 1 \\neq z$. The function clamps rather than being identity everywhere.", "section_ref": "Section 2.2", "notes_quote": ""}
+          ]
+        },
+        {
+          "id": "q7",
+          "source_ref": "Section 2.3: McNaughton's Theorem (1 Variable)",
+          "text": "McNaughton's Theorem (1 Variable) characterises exactly which functions $f: [0,1] \\to [0,1]$ are truth functions of propositional formulas under $\\mathbb{F}^3$. Which of the following conditions must hold for a function $f$ to be representable? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$f$ must be continuous on $[0,1]$"},
+            {"letter": "B", "text": "$f$ must be piecewise linear (finitely many linear pieces)"},
+            {"letter": "C", "text": "Each linear piece must have integer slope and intercept"},
+            {"letter": "D", "text": "$f$ must be monotone (non-decreasing or non-increasing)"},
+            {"letter": "E", "text": "Adjacent linear pieces must join continuously (no jumps at breakpoints)"}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "Continuity is required by McNaughton's theorem.", "section_ref": "Section 2.3", "notes_quote": "a function is representable in $\\mathbb{F}^3$ if and only if it is a continuous piecewise-linear function with integer coefficients"},
+            {"letter": "B", "is_correct": true, "text": "There must be a finite partition $0=\\gamma_0 < \\gamma_1 < \\cdots < \\gamma_n = 1$ with $f$ linear on each piece.", "section_ref": "Section 2.3", "notes_quote": "there exists an increasing sequence $0 = \\gamma_0 < \\gamma_1 < \\gamma_2 < \\cdots < \\gamma_n = 1$ and a family of linear functions"},
+            {"letter": "C", "is_correct": true, "text": "Each piece has $f_i(x) = a_i x + b_i$ with $a_i, b_i \\in \\mathbb{Z}$.", "section_ref": "Section 2.3", "notes_quote": "with $a_i, b_i \\in \\mathbb{Z}$ (integer coefficients)"},
+            {"letter": "D", "is_correct": false, "text": "Monotonicity is not required. For example, the V-shaped function $(p \\wedge p) \\vee \\neg p$ is representable but not monotone.", "section_ref": "Section 2.3", "notes_quote": ""},
+            {"letter": "E", "is_correct": true, "text": "Continuity at breakpoints is explicitly required: $f_i(\\gamma_{i+1}) = f_{i+1}(\\gamma_{i+1})$ for all $i$.", "section_ref": "Section 2.3", "notes_quote": "the pieces join continuously: $f_i(\\gamma_{i+1}) = f_{i+1}(\\gamma_{i+1})$ for all $i < n$"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-3",
+      "title": "McNaughton's Theorem Part 2 — Proof of Lemma 8.2",
+      "questions": [
+        {
+          "id": "q8",
+          "source_ref": "Section 3.1: Statement of Lemma 8.2",
+          "text": "Lemma 8.2 establishes one direction of McNaughton's Theorem. Which direction does it prove, and what does it state? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "It proves the 'only if' direction: every representable function has integer-coefficient piecewise-linear truth function"},
+            {"letter": "B", "text": "It proves the 'if' direction: every CPLIC function is representable"},
+            {"letter": "C", "text": "The proof proceeds by structural induction on formula size"},
+            {"letter": "D", "text": "The proof proceeds by induction on the number of breakpoints"}
+          ],
+          "correct": ["A", "C"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "Lemma 8.2 proves that every truth function of a formula is a CPLIC function — the 'only if' direction.", "section_ref": "Section 3.1", "notes_quote": "This establishes the 'only if' direction of McNaughton's Theorem"},
+            {"letter": "B", "is_correct": false, "text": "The 'if' direction (every CPLIC function is representable) is established by Lemma 8.3 and the Tree Algorithm.", "section_ref": "Section 3.1", "notes_quote": ""},
+            {"letter": "C", "is_correct": true, "text": "The proof proceeds by induction on the size (number of connectives) of the formula.", "section_ref": "Section 3.2", "notes_quote": "Proof by Induction on Formula Size"},
+            {"letter": "D", "is_correct": false, "text": "Induction on breakpoints is not the method used; structural induction on formula construction is.", "section_ref": "Section 3.2", "notes_quote": ""}
+          ]
+        },
+        {
+          "id": "q9",
+          "source_ref": "Section 3.2: Proof by Induction on Formula Size",
+          "text": "In the proof of Lemma 8.2 by structural induction, consider the case $F = G \\wedge H$ where both $G$ and $H$ have CPLIC truth functions with a common partition. What is the resulting linear piece for $F$ on each sub-interval? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$f_i(x) = (a_i + c_i)x + (b_i + d_i - 1)$, which has integer coefficients"},
+            {"letter": "B", "text": "$f_i(x) = \\min(g_i(x), h_i(x))$, taking the pointwise minimum"},
+            {"letter": "C", "text": "The coefficients of $f_i$ are integers because sums and differences of integers are integers"},
+            {"letter": "D", "text": "$f_i(x) = (a_i \\cdot c_i)x + (b_i \\cdot d_i)$, taking the product"}
+          ],
+          "correct": ["A", "C"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "Under $\\mathbb{F}^3$, $G \\wedge H = \\max(0, g(x)+h(x)-1)$. On each sub-interval this gives $f_i(x) = (a_i+c_i)x + (b_i+d_i-1)$.", "section_ref": "Section 3.2", "notes_quote": "$f_i(x) = (a_i + c_i)x + (b_i + d_i - 1)$ has integer coefficients $a_i + c_i \\in \\mathbb{Z}$ and $b_i + d_i - 1 \\in \\mathbb{Z}$"},
+            {"letter": "B", "is_correct": false, "text": "$\\min(g,h)$ is the Gödel conjunction ($\\mathbb{F}^1$), not the Łukasiewicz conjunction ($\\mathbb{F}^3$).", "section_ref": "Section 3.2", "notes_quote": ""},
+            {"letter": "C", "is_correct": true, "text": "Since $a_i, c_i, b_i, d_i \\in \\mathbb{Z}$, we have $a_i+c_i \\in \\mathbb{Z}$ and $b_i+d_i-1 \\in \\mathbb{Z}$.", "section_ref": "Section 3.2", "notes_quote": "has integer coefficients $a_i + c_i \\in \\mathbb{Z}$ and $b_i + d_i - 1 \\in \\mathbb{Z}$"},
+            {"letter": "D", "is_correct": false, "text": "Product of coefficients is not used; the Łukasiewicz conjunction adds the argument functions and subtracts 1.", "section_ref": "Section 3.2", "notes_quote": ""}
+          ]
+        },
+        {
+          "id": "q10",
+          "source_ref": "Section 3.2: Proof by Induction — Negation Case",
+          "text": "In the inductive proof of Lemma 8.2, consider the case $F = \\neg G$ where $G$ has linear piece $g_i(x) = a_i x + b_i$. Which of the following correctly describe the linear piece for $F$? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$f_i(x) = (-a_i)x + (1 - b_i)$"},
+            {"letter": "B", "text": "The new coefficients $-a_i$ and $1-b_i$ are integers because $a_i, b_i \\in \\mathbb{Z}$"},
+            {"letter": "C", "text": "The partition $\\{\\gamma_i\\}$ for $F$ may be different from that for $G$"},
+            {"letter": "D", "text": "$f_i(x) = 1 - g_i(x)$ everywhere on $[\\gamma_i, \\gamma_{i+1}]$"}
+          ],
+          "correct": ["A", "B", "D"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "Negation in $\\mathbb{F}^3$ is $1 - g_i(x) = 1 - (a_i x + b_i) = (-a_i)x + (1-b_i)$.", "section_ref": "Section 3.2", "notes_quote": "Define $f_i(x) = a'_i x + b'_i$ where $a'_i = -a_i \\in \\mathbb{Z}$ and $b'_i = (1 - b_i) \\in \\mathbb{Z}$"},
+            {"letter": "B", "is_correct": true, "text": "The negatives and shifted values of integers remain integers.", "section_ref": "Section 3.2", "notes_quote": "$a'_i = -a_i \\in \\mathbb{Z}$ and $b'_i = (1 - b_i) \\in \\mathbb{Z}$"},
+            {"letter": "C", "is_correct": false, "text": "The same partition $\\{\\gamma_i\\}$ is used for $F = \\neg G$ as for $G$; only the linear functions change.", "section_ref": "Section 3.2", "notes_quote": ""},
+            {"letter": "D", "is_correct": true, "text": "By definition of $\\mathbb{F}^3$ negation, $\\overline{F}(x) = 1 - \\overline{G}(x) = 1 - g_i(x)$ on each piece.", "section_ref": "Section 3.2", "notes_quote": "$\\overline{F}(x) = 1 - \\overline{G}(x) = 1 - g_i(x) = 1 - (a_i x + b_i) = (-a_i)x + (1-b_i) = f_i(x)$"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-4",
+      "title": "McNaughton's Theorem Part 3 — Lemma 8.3 and Tree Algorithm",
+      "questions": [
+        {
+          "id": "q11",
+          "source_ref": "Section 4.1: Lemma 8.3",
+          "text": "Lemma 8.3 states that for any integers $n, m \\in \\mathbb{Z}$, the function $f_{n,m}(x) = [nx+m]^1_0$ is the truth function of some formula $F_{n,m}$. What does this lemma establish about McNaughton's Theorem? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "It shows that any single clamped linear function with integer coefficients is representable in $\\mathbb{F}^3$"},
+            {"letter": "B", "text": "It establishes the converse direction for individual building blocks of piecewise-linear functions"},
+            {"letter": "C", "text": "Together with a combination argument, it proves the full 'if' direction of McNaughton's Theorem"},
+            {"letter": "D", "text": "It proves that every CPLIC function is the truth function of a formula with exactly $|n|$ connectives"}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "Lemma 8.3 shows each single piece $[nx+m]^1_0$ is individually representable.", "section_ref": "Section 4.1", "notes_quote": "any single clamped linear function with integer coefficients is representable"},
+            {"letter": "B", "is_correct": true, "text": "The converse direction of McNaughton's theorem requires showing each building block is representable, which Lemma 8.3 does.", "section_ref": "Section 4.1", "notes_quote": "This establishes the converse direction for the building blocks"},
+            {"letter": "C", "is_correct": true, "text": "Lemma 8.3 plus the combination using $\\underline{\\wedge}$ and $\\underline{\\vee}$ yields the full converse.", "section_ref": "Section 4.1 & 5", "notes_quote": ""},
+            {"letter": "D", "is_correct": false, "text": "There is no claim that $|n|$ connectives suffice; the tree algorithm may produce more complex formulas.", "section_ref": "Section 4.1", "notes_quote": ""}
+          ]
+        },
+        {
+          "id": "q12",
+          "source_ref": "Section 4.2: Proof of Lemma 8.3 by Induction",
+          "text": "In the base case ($n = 0$) of the inductive proof of Lemma 8.3, what formulas are used? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$F_{0,m} = \\bot$ (contradiction, e.g. $p \\wedge \\neg p$) when $m \\leq 0$"},
+            {"letter": "B", "text": "$F_{0,m} = \\top$ (tautology, e.g. $p \\vee \\neg p$) when $m \\geq 1$"},
+            {"letter": "C", "text": "$F_{0,m} = p$ (the propositional variable) for all values of $m$"},
+            {"letter": "D", "text": "The truth function $f_{0,m}(x) = [m]^1_0$ is a constant function (either 0 or 1)"}
+          ],
+          "correct": ["A", "B", "D"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "When $n=0$ and $m \\leq 0$: $[m]^1_0 = 0$, so we use the contradiction formula $\\bot = p \\wedge \\neg p$.", "section_ref": "Section 4.2", "notes_quote": "Take $F_{0,m} = \\bot$ (contradiction, e.g. $p \\wedge \\neg p$) if $m \\leq 0$"},
+            {"letter": "B", "is_correct": true, "text": "When $n=0$ and $m \\geq 1$: $[m]^1_0 = 1$, so we use the tautology formula $\\top = p \\vee \\neg p$.", "section_ref": "Section 4.2", "notes_quote": "$F_{0,m} = \\top$ (tautology, e.g. $p \\vee \\neg p$) if $m \\geq 1$"},
+            {"letter": "C", "is_correct": false, "text": "$p$ has truth function $x$, not $[m]^1_0$ which is constant. The base case uses $\\bot$ or $\\top$ depending on $m$.", "section_ref": "Section 4.2", "notes_quote": ""},
+            {"letter": "D", "is_correct": true, "text": "When $n=0$, $f_{0,m}(x) = [m]^1_0$ is independent of $x$ and equals 0 (if $m \\leq 0$) or 1 (if $m \\geq 1$).", "section_ref": "Section 4.2", "notes_quote": "$f_{0,m}(x) = [m]^1_0 = 0$ if $m \\leq 0$; $= 1$ if $m \\geq 1$"}
+          ]
+        },
+        {
+          "id": "q13",
+          "source_ref": "Section 4.2: Proof of Lemma 8.3 — Inductive Step",
+          "text": "In the inductive step for $n = k+1 > 0$ in the proof of Lemma 8.3, the formula $F_{(k+1),m}$ is defined using $F_{k,m}$ and $F_{k,(m+1)}$. Which of the following correctly describe this construction? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$F_{(k+1),m} = (F_{k,m} \\vee p) \\wedge F_{k,(m+1)}$"},
+            {"letter": "B", "text": "$F_{(k+1),m} = (F_{k,m} \\wedge p) \\vee F_{k,(m+1)}$"},
+            {"letter": "C", "text": "For negative $n = -(k+1)$, the formula uses $\\neg p$ instead of $p$"},
+            {"letter": "D", "text": "$F_{-(k+1),m} = (F_{-k,(m-1)} \\vee \\neg p) \\wedge F_{-k,m}$"}
+          ],
+          "correct": ["A", "C", "D"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "The inductive construction for positive slope uses $(F_{k,m} \\vee p) \\wedge F_{k,(m+1)}$.", "section_ref": "Section 4.2", "notes_quote": "$F_{(k+1),m} = (F_{k,m} \\vee p) \\wedge F_{k,(m+1)}$"},
+            {"letter": "B", "is_correct": false, "text": "The order of $\\vee$ and $\\wedge$ is reversed from what is correct; $(F_{k,m} \\wedge p) \\vee F_{k,(m+1)}$ does not give $[{(k+1)x+m}]^1_0$.", "section_ref": "Section 4.2", "notes_quote": ""},
+            {"letter": "C", "is_correct": true, "text": "For decreasing functions (negative $n$), $\\neg p$ replaces $p$ in the recursive construction.", "section_ref": "Section 4.2", "notes_quote": "Induction step for $n = -(k+1) < 0$: Use $f_{-k,m}$ and $f_{-k,(m-1)}$, and define $F_{-(k+1),m} = (F_{-k,(m-1)} \\vee \\neg p) \\wedge F_{-k,m}$"},
+            {"letter": "D", "is_correct": true, "text": "The negative-slope inductive formula is $F_{-(k+1),m} = (F_{-k,(m-1)} \\vee \\neg p) \\wedge F_{-k,m}$.", "section_ref": "Section 4.2", "notes_quote": "$F_{-(k+1),m} = (F_{-k,(m-1)} \\vee \\neg p) \\wedge F_{-k,m}$"}
+          ]
+        },
+        {
+          "id": "q14",
+          "source_ref": "Section 4.3: The Tree Algorithm",
+          "text": "Regarding the Tree Algorithm for constructing formula $F_{n,m}$ for $[nx+m]^1_0$, which of the following statements are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "When $n > 0$, each node branches into children with functions $(n-1)x+m$ (left) and $(n-1)x+(m+1)$ (right)"},
+            {"letter": "B", "text": "The parent formula when $n > 0$ is $(F_\\text{left} \\vee p) \\wedge F_\\text{right}$"},
+            {"letter": "C", "text": "When $n = 0$ and $m \\leq 0$, the leaf formula is $\\top$"},
+            {"letter": "D", "text": "When $n = 0$ and $m \\geq 1$, the leaf formula is $\\top$"},
+            {"letter": "E", "text": "$(F \\wedge \\top) \\equiv F$ and $(F \\vee \\bot) \\equiv F$ are simplification rules used in the algorithm"}
+          ],
+          "correct": ["A", "B", "D", "E"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "For positive $n$, the left child has function $(n-1)x+m$ and right child $(n-1)x+(m+1)$.", "section_ref": "Section 4.3", "notes_quote": "If $n > 0$: Left child: $(n-1)x + m$, Right child: $(n-1)x + (m+1)$"},
+            {"letter": "B", "is_correct": true, "text": "The parent formula combines the children as $(F_\\text{left} \\vee p) \\wedge F_\\text{right}$ when $n > 0$.", "section_ref": "Section 4.3", "notes_quote": "And the parent formula is: $(F_\\text{left} \\vee p) \\wedge F_\\text{right}$"},
+            {"letter": "C", "is_correct": false, "text": "When $n=0$ and $m \\leq 0$, the formula is $\\bot$ (falsum, truth function constantly 0), not $\\top$.", "section_ref": "Section 4.3", "notes_quote": "$m \\leq 0 \\Rightarrow \\bot$ (falsum / contradiction)"},
+            {"letter": "D", "is_correct": true, "text": "When $n=0$ and $m \\geq 1$, the leaf formula is $\\top$ (truth function constantly 1).", "section_ref": "Section 4.3", "notes_quote": "$m \\geq 1 \\Rightarrow \\top$ (verum / tautology)"},
+            {"letter": "E", "is_correct": true, "text": "These simplification rules reduce formula complexity when propagating base cases upward.", "section_ref": "Section 4.3", "notes_quote": "$(F \\wedge \\top) \\equiv (\\top \\wedge F) \\equiv F$ and $(F \\vee \\bot) \\equiv (\\bot \\vee F) \\equiv F$"}
+          ]
+        },
+        {
+          "id": "q15",
+          "source_ref": "Section 4.4: Example [3x-2]^1_0",
+          "text": "Applying the tree algorithm to $[3x-2]^1_0$, which of the following are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "The resulting formula is $F = p \\wedge p \\wedge p$"},
+            {"letter": "B", "text": "Verification: $p \\wedge p$ has truth function $\\max(0, 2x-1) = [2x-1]^1_0$"},
+            {"letter": "C", "text": "$(p \\wedge p) \\wedge p = \\max(0, [2x-1]^1_0 + x - 1) = [3x-2]^1_0$"},
+            {"letter": "D", "text": "The resulting formula is $F = p \\vee p \\vee p$"}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "After applying the tree algorithm and simplification rules, $[3x-2]^1_0$ corresponds to $p \\wedge p \\wedge p$.", "section_ref": "Section 4.4", "notes_quote": "Result: $[3x-2]^1_0$ corresponds to the formula $F = (p \\wedge p \\wedge p)$"},
+            {"letter": "B", "is_correct": true, "text": "Under $\\mathbb{F}^3$: $p \\wedge p = \\max(0, x+x-1) = \\max(0, 2x-1) = [2x-1]^1_0$.", "section_ref": "Section 4.4", "notes_quote": "Under $\\mathbb{F}^3$, $p \\wedge p = \\max(0, x + x - 1) = \\max(0, 2x-1) = [2x-1]^1_0$"},
+            {"letter": "C", "is_correct": true, "text": "Combining: $(p \\wedge p) \\wedge p = \\max(0, [2x-1]^1_0 + x - 1)$. For $x \\geq 1/2$: $= \\max(0, 3x-2) = [3x-2]^1_0$.", "section_ref": "Section 4.4", "notes_quote": "$(p \\wedge p) \\wedge p = \\max(0, [2x-1]^1_0 + x - 1) = \\max(0, 3x - 2) = [3x-2]^1_0$"},
+            {"letter": "D", "is_correct": false, "text": "$p \\vee p \\vee p = [3x]^1_0$, which is an increasing function, not $[3x-2]^1_0$.", "section_ref": "Section 4.4", "notes_quote": ""}
+          ]
+        },
+        {
+          "id": "q16",
+          "source_ref": "Section 4.5: Example [2-3x]^1_0",
+          "text": "Applying the tree algorithm to $[2-3x]^1_0 = [-3x+2]^1_0$ (where $n=-3 < 0$), which statements are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Since $n < 0$, the algorithm uses $\\neg p$ branches instead of $p$"},
+            {"letter": "B", "text": "The root formula is $((\\neg p \\wedge \\neg p) \\vee \\neg p) \\wedge (\\neg p \\vee \\neg p)$"},
+            {"letter": "C", "text": "$\\neg p \\wedge \\neg p$ has truth function $[-2x+1]^1_0 = [1-2x]^1_0$"},
+            {"letter": "D", "text": "The formula for $[-3x+2]^1_0$ is the same as for $[3x-2]^1_0$ with $p$ replaced by $\\neg p$"}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "For negative slopes, the tree algorithm uses $\\neg p$ to generate the decreasing behaviour.", "section_ref": "Section 4.5", "notes_quote": "Since $n = -3 < 0$, we use $\\neg p$ branches"},
+            {"letter": "B", "is_correct": true, "text": "Working through the tree gives root formula $((\\neg p \\wedge \\neg p) \\vee \\neg p) \\wedge (\\neg p \\vee \\neg p)$.", "section_ref": "Section 4.5", "notes_quote": "Root formula: $(((\\neg p \\wedge \\neg p) \\vee \\neg p) \\wedge (\\neg p \\vee \\neg p))$"},
+            {"letter": "C", "is_correct": true, "text": "$\\neg p$ has truth function $1-x$, so $\\neg p \\wedge \\neg p = \\max(0, (1-x)+(1-x)-1) = \\max(0, 1-2x) = [1-2x]^1_0$.", "section_ref": "Section 4.5", "notes_quote": "$\\neg p \\wedge \\neg p = \\max(0, (1-x)+(1-x)-1) = \\max(0, 1-2x) = [1-2x]^1_0 = [-2x+1]^1_0$"},
+            {"letter": "D", "is_correct": false, "text": "The formulas have different structures; they share the pattern of iterated $\\wedge$ but the tree for $[-3x+2]^1_0$ involves $\\vee$ of pieces as well.", "section_ref": "Section 4.5", "notes_quote": ""}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-5",
+      "title": "Combining Sub-Formulas",
+      "questions": [
+        {
+          "id": "q17",
+          "source_ref": "Section 5.1: Simple Functions — Min of Two Linear Pieces",
+          "text": "To represent a piecewise-linear function that is the minimum of two clamped linear pieces $f_{3,-1}(x) = [3x-1]^1_0$ and $f_{-5,4}(x) = [-5x+4]^1_0$, which approach is used? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Use the defined operator $\\underline{\\wedge}$ (which realises $\\min$): $F = F_{3,-1} \\underline{\\wedge} F_{-5,4}$"},
+            {"letter": "B", "text": "Use the Łukasiewicz $\\wedge$ (which realises $\\max(0, x+y-1)$) directly"},
+            {"letter": "C", "text": "Each piece $F_{n,m}$ is first constructed using the tree algorithm"},
+            {"letter": "D", "text": "Use the defined operator $\\underline{\\vee}$ (which realises $\\max$) to combine the two pieces"}
+          ],
+          "correct": ["A", "C"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "The minimum of two functions is realised by $\\underline{\\wedge}$, defined as $(x \\to y) \\wedge x = \\min(x,y)$.", "section_ref": "Section 5.1", "notes_quote": "we can take: $F = F_{3,-1} \\underline{\\wedge} F_{-5,4}$ where $F_{3,-1}$ and $F_{-5,4}$ are constructed by the tree algorithm"},
+            {"letter": "B", "is_correct": false, "text": "The basic $\\wedge$ in $\\mathbb{F}^3$ computes $\\max(0, x+y-1)$, not $\\min(x,y)$. The defined $\\underline{\\wedge}$ is needed.", "section_ref": "Section 5.1", "notes_quote": ""},
+            {"letter": "C", "is_correct": true, "text": "Each individual piece is constructed via Lemma 8.3 and the tree algorithm, then combined.", "section_ref": "Section 5.1", "notes_quote": "$F_{3,-1}$ and $F_{-5,4}$ are constructed by the tree algorithm"},
+            {"letter": "D", "is_correct": false, "text": "$\\underline{\\vee}$ realises $\\max$, not $\\min$. For the minimum of two pieces, $\\underline{\\wedge}$ is needed.", "section_ref": "Section 5.1", "notes_quote": ""}
+          ]
+        },
+        {
+          "id": "q18",
+          "source_ref": "Section 5.2: Complex Functions — Wedge-Shaped Decomposition",
+          "text": "For complex piecewise-linear functions, a wedge-shaped decomposition is used. Which of the following are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Each wedge is the $\\min$ (using $\\underline{\\wedge}$) of two clamped linear functions"},
+            {"letter": "B", "text": "The overall function $f$ is the maximum (using $\\underline{\\vee}$) of all the wedges"},
+            {"letter": "C", "text": "A wedge-shaped function rises linearly to a peak then descends linearly back to zero"},
+            {"letter": "D", "text": "Every piecewise-linear function is automatically a single wedge"}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "Each wedge is expressible as a minimum of two $f_{n,m}$ functions via $\\underline{\\wedge}$.", "section_ref": "Section 5.2", "notes_quote": "Each wedge can be expressed as a $\\min$ (i.e., $\\underline{\\wedge}$) of two clamped linear functions"},
+            {"letter": "B", "is_correct": true, "text": "The full function is the maximum of all wedge pieces, realised by $\\underline{\\vee}$.", "section_ref": "Section 5.2", "notes_quote": "$f$ is the maximum (i.e., $\\underline{\\vee}$) of all the wedges"},
+            {"letter": "C", "is_correct": true, "text": "A wedge-shaped function rises to a peak then descends — hence the wedge terminology.", "section_ref": "Section 5.2", "notes_quote": "Each wedge is a function that: Rises linearly to a peak; Descends linearly back to zero"},
+            {"letter": "D", "is_correct": false, "text": "Complex piecewise-linear functions require multiple wedges; they are not all single wedges.", "section_ref": "Section 5.2", "notes_quote": ""}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-6",
+      "title": "Łukasiewicz Semantics — Identities and Verification",
+      "questions": [
+        {
+          "id": "q19",
+          "source_ref": "Section 6.2: De Morgan's Laws in F3",
+          "text": "Which of the following De Morgan's laws hold in $\\mathbb{F}^3$? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$\\neg(x \\vee y) = \\neg x \\wedge \\neg y$"},
+            {"letter": "B", "text": "$\\neg(x \\wedge y) = \\neg x \\vee \\neg y$"},
+            {"letter": "C", "text": "$\\neg(x \\vee y) = \\neg x \\vee \\neg y$"},
+            {"letter": "D", "text": "$\\neg(x \\wedge y) = \\neg x \\wedge \\neg y$"}
+          ],
+          "correct": ["A", "B"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "Verified: $\\neg(x \\vee y) = 1 - \\min(1,x+y) = \\max(0, 1-(x+y)) = \\max(0,\\neg x + \\neg y - 1) = \\neg x \\wedge \\neg y$.", "section_ref": "Section 6.2", "notes_quote": "$\\neg(x \\vee y) = 1 - \\min(1, x+y) = \\max(0, 1-(x+y)) = \\max(0, \\neg x + \\neg y - 1) = (\\neg x \\wedge \\neg y)$"},
+            {"letter": "B", "is_correct": true, "text": "Verified: $\\neg(x \\wedge y) = 1 - \\max(0, x+y-1) = \\min(1, 1-(x+y-1)) = \\min(1, \\neg x + \\neg y) = \\neg x \\vee \\neg y$.", "section_ref": "Section 6.2", "notes_quote": "$\\neg(x \\wedge y) = 1 - \\max(0, x+y-1) = \\min(1, (1-x)+(1-y)) = \\min(1, \\neg x + \\neg y) = (\\neg x \\vee \\neg y)$"},
+            {"letter": "C", "is_correct": false, "text": "This is incorrect; $\\neg(x \\vee y) = \\neg x \\wedge \\neg y$ (not $\\vee$). De Morgan swaps the connective.", "section_ref": "Section 6.2", "notes_quote": ""},
+            {"letter": "D", "is_correct": false, "text": "This is incorrect; $\\neg(x \\wedge y) = \\neg x \\vee \\neg y$ (not $\\wedge$). De Morgan swaps the connective.", "section_ref": "Section 6.2", "notes_quote": ""}
+          ]
+        },
+        {
+          "id": "q20",
+          "source_ref": "Section 6.3: Implication as Disjunction in F3",
+          "text": "In $\\mathbb{F}^3$, which of the following identities correctly relate implication to other connectives? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$(x \\to y) = \\neg x \\vee y$"},
+            {"letter": "B", "text": "$(x \\to y) = \\min(1, 1-x+y)$"},
+            {"letter": "C", "text": "$(x \\to y) = \\min(1, \\neg x + y)$"},
+            {"letter": "D", "text": "$(x \\to y) = \\max(0, y-x)$"}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "In $\\mathbb{F}^3$: $(x \\to y) = \\neg x \\vee y = \\min(1, (1-x)+y)$.", "section_ref": "Section 6.3", "notes_quote": "$(x \\to y) = \\min(1, 1-x+y) = \\min(1, (1-x)+y) = \\min(1, \\neg x + y) = (\\neg x \\vee y)$"},
+            {"letter": "B", "is_correct": true, "text": "By the definition of $\\mathbb{F}^3$ implication: $F_\\to(x,y) = \\min(1, 1-x+y)$.", "section_ref": "Section 6.3", "notes_quote": "$\\mathbb{F}^3$: $F_\\to(x,y) = \\min(1, 1-x+y)$"},
+            {"letter": "C", "is_correct": true, "text": "Since $1-x = \\neg x$ in $\\mathbb{F}^3$: $\\min(1, 1-x+y) = \\min(1, \\neg x + y)$.", "section_ref": "Section 6.3", "notes_quote": "$\\min(1, 1-x+y) = \\min(1, (1-x)+y) = \\min(1, \\neg x + y)$"},
+            {"letter": "D", "is_correct": false, "text": "$\\max(0, y-x)$ does not equal $\\min(1, 1-x+y)$ in general (e.g., at $x=0, y=0$: $\\max(0,0)=0$ but $\\min(1,1)=1$).", "section_ref": "Section 6.3", "notes_quote": ""}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-7",
+      "title": "Partitions — The Intersection Lemma",
+      "questions": [
+        {
+          "id": "q21",
+          "source_ref": "Section 7.1: Definition of Partition",
+          "text": "A collection of intervals $P = \\{I_1, \\ldots, I_n\\}$ is a partition of $[0,1]$ if which conditions hold? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "The intervals are pairwise disjoint: $I_i \\cap I_j = \\varnothing$ for $i \\neq j$"},
+            {"letter": "B", "text": "The intervals cover $[0,1]$: $\\bigcup_{i=1}^n I_i = [0,1]$"},
+            {"letter": "C", "text": "Each interval must have positive length"},
+            {"letter": "D", "text": "All intervals must have the same length"}
+          ],
+          "correct": ["A", "B"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "Pairwise disjointness is the first condition for a partition.", "section_ref": "Section 7.1", "notes_quote": "$I_i \\cap I_j = \\varnothing$ for all $i \\neq j$ (pairwise disjoint)"},
+            {"letter": "B", "is_correct": true, "text": "The union covering $[0,1]$ is the second condition.", "section_ref": "Section 7.1", "notes_quote": "$\\bigcup_{i=1}^n I_i = [0,1]$ (covers the whole interval)"},
+            {"letter": "C", "is_correct": false, "text": "Single-point intervals (degenerate intervals) are allowed; positive length is not required.", "section_ref": "Section 7.1", "notes_quote": ""},
+            {"letter": "D", "is_correct": false, "text": "The intervals can have any sizes; equal length is not a requirement.", "section_ref": "Section 7.1", "notes_quote": ""}
+          ]
+        },
+        {
+          "id": "q22",
+          "source_ref": "Section 7.2: Lemma — Product of Two Partitions",
+          "text": "Let $P_1$ and $P_2$ be partitions of $[0,1]$. The intersection product $P = \\{A \\cap B : A \\in P_1, B \\in P_2\\}$ is claimed to be a partition. Which parts of the proof are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Disjointness: if $A \\cap B$ and $A' \\cap B'$ overlap, then $A=A'$ and $B=B'$, so the two sets are equal"},
+            {"letter": "B", "text": "Coverage: any $x \\in [0,1]$ belongs to some $A \\in P_1$ and some $B \\in P_2$, so $x \\in A \\cap B \\in P$"},
+            {"letter": "C", "text": "This lemma is used in the proof of McNaughton's Theorem to refine partitions from subformulas"},
+            {"letter": "D", "text": "Coverage fails if $P_1$ and $P_2$ have different numbers of intervals"}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "If $(A \\cap B) \\cap (A' \\cap B') \\neq \\varnothing$, then $A \\cap A' \\neq \\varnothing$ forces $A=A'$ and $B \\cap B' \\neq \\varnothing$ forces $B=B'$.", "section_ref": "Section 7.2", "notes_quote": "Since $P_1$ is a partition, $A \\cap A' \\neq \\varnothing$ forces $A = A'$; since $P_2$ is a partition, $B = B'$"},
+            {"letter": "B", "is_correct": true, "text": "Coverage of $P$: for any $x \\in [0,1]$, find $A$ in $P_1$ and $B$ in $P_2$ containing $x$; then $x \\in A \\cap B$.", "section_ref": "Section 7.2", "notes_quote": "Let $x \\in [0,1]$. Since $P_1$ covers $[0,1]$, there is some $A \\in P_1$ with $x \\in A$. Since $P_2$ covers $[0,1]$, there is some $B \\in P_2$ with $x \\in B$. Hence $x \\in A \\cap B \\in P$."},
+            {"letter": "C", "is_correct": true, "text": "In the proof of Lemma 8.2 for $G \\wedge H$, the partitions from $G$ and $H$ are refined by their intersection product.", "section_ref": "Section 7.2", "notes_quote": "This lemma is used in the proof of McNaughton's Theorem — when combining the partition of $[0,1]$ from $\\overline{G}$ and the partition from $\\overline{H}$"},
+            {"letter": "D", "is_correct": false, "text": "Coverage holds regardless of the sizes of $P_1$ and $P_2$; both cover $[0,1]$ independently.", "section_ref": "Section 7.2", "notes_quote": ""}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-8",
+      "title": "Truth Functions — Plotting and Inflexion Points",
+      "questions": [
+        {
+          "id": "q23",
+          "source_ref": "Section 8.1: Key Formulas and Their Truth Functions",
+          "text": "Under $\\mathbb{F}^3$, which of the following correctly give the truth functions for repeated conjunction and disjunction? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$p \\wedge p$ has truth function $[2x-1]^1_0$"},
+            {"letter": "B", "text": "$p \\vee p$ has truth function $[2x]^1_0$"},
+            {"letter": "C", "text": "The general pattern: $\\underbrace{p \\wedge \\cdots \\wedge p}_n$ has truth function $[nx-(n-1)]^1_0$"},
+            {"letter": "D", "text": "The general pattern: $\\underbrace{p \\vee \\cdots \\vee p}_n$ has truth function $[nx]^1_0$"},
+            {"letter": "E", "text": "$p \\wedge p \\wedge p \\wedge p$ has truth function $[4x]^1_0$"}
+          ],
+          "correct": ["A", "B", "C", "D"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "$p \\wedge p = \\max(0, x+x-1) = \\max(0, 2x-1) = [2x-1]^1_0$.", "section_ref": "Section 8.1", "notes_quote": "$p \\wedge p$: truth function $\\max(0, 2x-1) = [2x-1]^1_0$"},
+            {"letter": "B", "is_correct": true, "text": "$p \\vee p = \\min(1, x+x) = \\min(1, 2x) = [2x]^1_0$.", "section_ref": "Section 8.1", "notes_quote": "$p \\vee p$: truth function $\\min(1, 2x) = [2x]^1_0$"},
+            {"letter": "C", "is_correct": true, "text": "The $n$-fold conjunction pattern: zero until $x = (n-1)/n$, then rises to 1.", "section_ref": "Section 8.1", "notes_quote": "$\\underbrace{p \\wedge \\cdots \\wedge p}_{n}$ has truth function $[nx - (n-1)]^1_0$"},
+            {"letter": "D", "is_correct": true, "text": "The $n$-fold disjunction pattern: rises from 0 to 1 at $x = 1/n$, then stays at 1.", "section_ref": "Section 8.1", "notes_quote": "$\\underbrace{p \\vee \\cdots \\vee p}_{n}$ has truth function $[nx]^1_0$"},
+            {"letter": "E", "is_correct": false, "text": "$p \\wedge p \\wedge p \\wedge p$ has truth function $[4x-3]^1_0$ (not $[4x]^1_0$). $[4x]^1_0$ is the truth function of $p \\vee p \\vee p \\vee p$.", "section_ref": "Section 8.1", "notes_quote": "$p \\wedge p \\wedge p \\wedge p$: $[4x-3]^1_0$"}
+          ]
+        },
+        {
+          "id": "q24",
+          "source_ref": "Section 8.2: SGT Worked Examples",
+          "text": "For the formula $F = (p \\wedge p) \\vee \\neg p$ under $\\mathbb{F}^3$, which of the following correctly describe the truth function? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "For $x \\leq 1/2$: $F(x) = 1 - x$ (descends from 1 to 1/2)"},
+            {"letter": "B", "text": "For $x > 1/2$: $F(x) = x$ (ascends from 1/2 to 1)"},
+            {"letter": "C", "text": "The function is V-shaped with minimum value $1/2$ at $x = 1/2$"},
+            {"letter": "D", "text": "The inflexion point is at $x = 1/3$"}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "For $x \\leq 1/2$: $p \\wedge p = 0$, so $F = \\min(1, 0 + (1-x)) = 1-x$.", "section_ref": "Section 8.2", "notes_quote": "For $x \\leq \\frac{1}{2}$: $\\max(0,2x-1) = 0$, so $F = \\min(1, 1-x) = 1 - x$"},
+            {"letter": "B", "is_correct": true, "text": "For $x > 1/2$: $p \\wedge p = 2x-1$, so $F = \\min(1, (2x-1)+(1-x)) = \\min(1, x) = x$.", "section_ref": "Section 8.2", "notes_quote": "For $x > \\frac{1}{2}$: $\\max(0,2x-1) = 2x-1$, so $F = \\min(1, (2x-1)+(1-x)) = \\min(1, x) = x$"},
+            {"letter": "C", "is_correct": true, "text": "The function is V-shaped: decreasing slope $-1$ until $x=1/2$, then increasing slope $+1$. Minimum is $1/2$.", "section_ref": "Section 8.2", "notes_quote": "Shape: V-shaped with minimum $\\frac{1}{2}$ at $x = \\frac{1}{2}$, values 1 at $x=0$ and $x=1$."},
+            {"letter": "D", "is_correct": false, "text": "The inflexion point (gradient change) is at $x = 1/2$, not $x = 1/3$.", "section_ref": "Section 8.2", "notes_quote": "Inflexion point: $x = \\frac{1}{2}$ (gradient changes from $-1$ to $+1$)."}
+          ]
+        },
+        {
+          "id": "q25",
+          "source_ref": "Section 8.2: SGT Worked Examples",
+          "text": "For the formula $F = (p \\vee p) \\wedge p$ under $\\mathbb{F}^3$, which of the following correctly describe its truth function? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$F = 0$ for $x \\leq 1/3$"},
+            {"letter": "B", "text": "$F = 3x - 1$ for $1/3 \\leq x \\leq 1/2$ (slope 3)"},
+            {"letter": "C", "text": "$F = x$ for $x > 1/2$ (slope 1)"},
+            {"letter": "D", "text": "There are two inflexion points: $x = 1/3$ and $x = 1/2$"},
+            {"letter": "E", "text": "$F = 2x - 1$ for $1/3 \\leq x \\leq 1/2$ (slope 2)"}
+          ],
+          "correct": ["A", "B", "C", "D"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "For $x \\leq 1/2$: $p \\vee p = 2x$, so $F = \\max(0, 2x+x-1) = \\max(0, 3x-1) = 0$ when $x \\leq 1/3$.", "section_ref": "Section 8.2", "notes_quote": "For $x \\leq \\frac{1}{3}$: $F = 0$."},
+            {"letter": "B", "is_correct": true, "text": "For $1/3 < x \\leq 1/2$: $F = 3x - 1$ (slope 3).", "section_ref": "Section 8.2", "notes_quote": "For $\\frac{1}{3} < x \\leq \\frac{1}{2}$: $F = 3x - 1$."},
+            {"letter": "C", "is_correct": true, "text": "For $x > 1/2$: $p \\vee p = 1$, so $F = \\max(0, 1+x-1) = x$.", "section_ref": "Section 8.2", "notes_quote": "For $x > \\frac{1}{2}$: $[2x]^1_0 = 1$, so $F = \\max(0, 1 + x - 1) = x$."},
+            {"letter": "D", "is_correct": true, "text": "The slope changes at $x=1/3$ (from 0 to 3) and at $x=1/2$ (from 3 to 1).", "section_ref": "Section 8.2", "notes_quote": "Inflexion points: $x = \\frac{1}{3}$ (slope 0 to 3) and $x = \\frac{1}{2}$ (slope 3 to 1)."},
+            {"letter": "E", "is_correct": false, "text": "The slope on $[1/3, 1/2]$ is 3, not 2. $F = 3x - 1$ there.", "section_ref": "Section 8.2", "notes_quote": ""}
+          ]
+        },
+        {
+          "id": "q26",
+          "source_ref": "Section 8.2: SGT Examples — Four-fold formulas",
+          "text": "Under $\\mathbb{F}^3$, consider $F = p \\vee p \\vee p \\vee p$ and $G = p \\wedge p \\wedge p \\wedge p$. Which of the following are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$F$ has truth function $[4x]^1_0$: slope 4 up to $x = 1/4$, then flat at 1"},
+            {"letter": "B", "text": "$G$ has truth function $[4x-3]^1_0$: flat 0 up to $x = 3/4$, then slope 4 up to 1"},
+            {"letter": "C", "text": "The inflexion point of $F$ is $x = 1/4$"},
+            {"letter": "D", "text": "The inflexion point of $G$ is $x = 1/4$"},
+            {"letter": "E", "text": "The inflexion point of $G$ is $x = 3/4$"}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "$p \\vee p \\vee p \\vee p = [4x]^1_0$: rises with slope 4 from 0, reaches 1 at $x=1/4$.", "section_ref": "Section 8.2", "notes_quote": "$(p \\vee p \\vee p \\vee p)$: Truth function $[4x]^1_0$. Shape: Rises linearly with slope 4 from $x=0$ to $x = \\frac{1}{4}$, then constant 1."},
+            {"letter": "B", "is_correct": true, "text": "$p \\wedge p \\wedge p \\wedge p = [4x-3]^1_0$: zero until $x=3/4$, then slope 4.", "section_ref": "Section 8.2", "notes_quote": "$(p \\wedge p \\wedge p \\wedge p)$: Truth function $[4x-3]^1_0$. Shape: Zero from $x=0$ to $x = \\frac{3}{4}$, then rises linearly with slope 4 to reach 1 at $x = 1$."},
+            {"letter": "C", "is_correct": true, "text": "The slope of $F$ changes from 4 to 0 at $x = 1/4$.", "section_ref": "Section 8.2", "notes_quote": "Inflexion point: $x = \\frac{1}{4}$ (slope 4 to 0)."},
+            {"letter": "D", "is_correct": false, "text": "The inflexion point of $G$ is $x = 3/4$, not $1/4$.", "section_ref": "Section 8.2", "notes_quote": ""},
+            {"letter": "E", "is_correct": true, "text": "The slope of $G$ changes from 0 to 4 at $x = 3/4$.", "section_ref": "Section 8.2", "notes_quote": "Inflexion point: $x = \\frac{3}{4}$ (slope 0 to 4)."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-9",
+      "title": "SGT Questions and Full Solutions",
+      "questions": [
+        {
+          "id": "q27",
+          "source_ref": "Section 9 (SGT 8.6): Construct a Formula for a Piecewise Function",
+          "text": "Given the piecewise function in SGT 8.6 which is the maximum of $[2-3x]^1_0$, $[1-x]^1_0$, and $[3x-2]^1_0$, how is it represented as a formula? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$F = G_1 \\underline{\\vee} G_2 \\underline{\\vee} G_3$ where $\\underline{\\vee}$ realises $\\max$"},
+            {"letter": "B", "text": "$G_2 = \\neg p$ since $[1-x]^1_0 = 1-x$ which is the truth function of $\\neg p$"},
+            {"letter": "C", "text": "$G_3 = p \\wedge p \\wedge p$ since $[3x-2]^1_0$ is the truth function of $p \\wedge p \\wedge p$"},
+            {"letter": "D", "text": "$F = G_1 \\underline{\\wedge} G_2 \\underline{\\wedge} G_3$ where $\\underline{\\wedge}$ realises $\\min$"}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "Since $f = \\max(G_1, G_2, G_3)$ and $\\underline{\\vee}$ realises $\\max$, the formula is $F = G_1 \\underline{\\vee} G_2 \\underline{\\vee} G_3$.", "section_ref": "SGT 8.6", "notes_quote": "$F = G_1 \\underline{\\vee} G_2 \\underline{\\vee} G_3$"},
+            {"letter": "B", "is_correct": true, "text": "$[1-x]^1_0 = 1-x$ on $[0,1]$, which is exactly the truth function of $\\neg p$.", "section_ref": "SGT 8.6", "notes_quote": "$[1-x]^1_0 \\mapsto G_2 = \\neg p$"},
+            {"letter": "C", "is_correct": true, "text": "As established in SGT 8.4, $[3x-2]^1_0$ corresponds to $p \\wedge p \\wedge p$.", "section_ref": "SGT 8.6", "notes_quote": "$[3x-2]^1_0 \\mapsto G_3 = (p \\wedge p \\wedge p)$"},
+            {"letter": "D", "is_correct": false, "text": "$\\underline{\\wedge}$ realises $\\min$, not $\\max$. Taking the minimum of the three pieces would give a different function.", "section_ref": "SGT 8.6", "notes_quote": ""}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-10",
+      "title": "Key Definitions",
+      "questions": [
+        {
+          "id": "q28",
+          "source_ref": "Key Definitions",
+          "text": "Which of the following correctly define key terms in Week 8? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$\\bot$ (falsum) is a formula with truth function constantly 0, e.g. $p \\wedge \\neg p$"},
+            {"letter": "B", "text": "$\\top$ (verum) is a formula with truth function constantly 1, e.g. $p \\vee \\neg p$"},
+            {"letter": "C", "text": "An inflexion point is a value $x$ where the gradient (slope) of the truth function changes"},
+            {"letter": "D", "text": "Bézout's Identity states: for $\\gcd(r,s)=1$, there exist $a,b \\in \\mathbb{Z}$ with $ar+bs=1$"},
+            {"letter": "E", "text": "A CPLIC function is one that is continuous, piecewise-linear, with integer coefficients"}
+          ],
+          "correct": ["A", "B", "C", "D", "E"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "$\\bot = p \\wedge \\neg p$ has truth function $\\max(0, x+(1-x)-1) = \\max(0,0) = 0$.", "section_ref": "Key Definitions", "notes_quote": "$\\bot$: Contradiction/falsum: $p \\wedge \\neg p$, truth function constantly 0"},
+            {"letter": "B", "is_correct": true, "text": "$\\top = p \\vee \\neg p$ has truth function $\\min(1, x+(1-x)) = \\min(1,1) = 1$.", "section_ref": "Key Definitions", "notes_quote": "$\\top$: Tautology/verum: $p \\vee \\neg p$, truth function constantly 1"},
+            {"letter": "C", "is_correct": true, "text": "An inflexion point is where the slope changes in the piecewise linear truth function.", "section_ref": "Key Definitions", "notes_quote": "Inflexion point: A point $x$ in the domain of a truth function where the gradient (slope) changes"},
+            {"letter": "D", "is_correct": true, "text": "Bézout's Identity is used in the proof of Lemma 8.4 (sharp approximation).", "section_ref": "Key Definitions", "notes_quote": "Bézout's Identity: For integers $r, s$ with $\\gcd(r,s)=1$, there exist $a, b \\in \\mathbb{Z}$ with $ar + bs = 1$"},
+            {"letter": "E", "is_correct": true, "text": "CPLIC is the abbreviation for the class of functions characterised by McNaughton's Theorem.", "section_ref": "Key Definitions", "notes_quote": "Continuous piecewise-linear function with integer coefficients (CPLIC): A continuous function $f : [0,1] \\to [0,1]$ that is linear with integer slope and intercept on each sub-interval"}
+          ]
+        },
+        {
+          "id": "q29",
+          "source_ref": "Key Definitions — Defined Operators",
+          "text": "Regarding the defined operators $\\underline{\\wedge}$ and $\\underline{\\vee}$ in $\\mathbb{F}^3$, which of the following are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$x \\underline{\\vee} y = (x \\to y) \\to y$"},
+            {"letter": "B", "text": "$\\underline{\\vee}$ realises $\\max(x,y)$"},
+            {"letter": "C", "text": "$\\underline{\\wedge}$ realises $\\min(x,y)$"},
+            {"letter": "D", "text": "$\\underline{\\wedge}$ and $\\underline{\\vee}$ are primitive connectives of $\\mathbb{F}^3$, not defined operators"}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "By definition: $x \\underline{\\vee} y = (x \\to y) \\to y$.", "section_ref": "Section 1.3 / Key Definitions", "notes_quote": "$x \\underline{\\vee} y = (x \\to y) \\to y$"},
+            {"letter": "B", "is_correct": true, "text": "The truth function of $\\underline{\\vee}$ is $\\max(x,y)$, the Gödel disjunction.", "section_ref": "Section 1.3 / Key Definitions", "notes_quote": "$\\underline{\\vee}(x,y) = \\max(x,y)$"},
+            {"letter": "C", "is_correct": true, "text": "The truth function of $\\underline{\\wedge}$ is $\\min(x,y)$, the Gödel conjunction.", "section_ref": "Section 1.3 / Key Definitions", "notes_quote": "$\\underline{\\wedge}(x,y) = \\min(x,y)$"},
+            {"letter": "D", "is_correct": false, "text": "$\\underline{\\wedge}$ and $\\underline{\\vee}$ are abbreviations (defined operators), not primitive connectives.", "section_ref": "Section 1.3", "notes_quote": "two additional binary operators $\\underline{\\wedge}$ and $\\underline{\\vee}$ as abbreviations (defined operators)"}
+          ]
+        },
+        {
+          "id": "q30",
+          "source_ref": "Key Definitions — McNaughton's Theorem Summary",
+          "text": "McNaughton's Theorem (1 Variable) gives a complete characterisation of representable functions in $\\mathbb{F}^3$. Which of the following correctly summarise the theorem and related results? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "A function $f:[0,1]\\to[0,1]$ is representable in $\\mathbb{F}^3$ iff it is a CPLIC function"},
+            {"letter": "B", "text": "Lemma 8.2 proves the 'only if' direction (representable $\\Rightarrow$ CPLIC) by structural induction"},
+            {"letter": "C", "text": "Lemma 8.3 and the Tree Algorithm prove the 'if' direction (every $[nx+m]^1_0$ is representable)"},
+            {"letter": "D", "text": "McNaughton's Theorem was proved in 1963 by Saul Kripke"},
+            {"letter": "E", "text": "The theorem implies that $\\mathbb{F}^3$ can represent any continuous real-valued function on $[0,1]$"}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "This is the precise statement of McNaughton's Theorem (1 variable).", "section_ref": "Key Definitions / Section 2.3", "notes_quote": "McNaughton's Theorem (1 variable): A function $f : [0,1] \\to [0,1]$ is the truth function of a propositional formula in $\\mathbb{F}^3$ iff $f$ is a CPLIC function"},
+            {"letter": "B", "is_correct": true, "text": "Lemma 8.2 establishes the 'only if' direction by structural induction on formula size.", "section_ref": "Key Definitions / Section 3", "notes_quote": "Lemma 8.2: Every truth function of a one-variable $\\mathbb{F}^3$ formula is a CPLIC function (proved by induction)"},
+            {"letter": "C", "is_correct": true, "text": "Lemma 8.3 shows every $[nx+m]^1_0$ is representable; combining pieces gives the full 'if' direction.", "section_ref": "Key Definitions / Section 4", "notes_quote": "Lemma 8.3: For any $n, m \\in \\mathbb{Z}$, $f_{n,m}(x) = [nx+m]^1_0$ is the truth function of some formula $F_{n,m}$"},
+            {"letter": "D", "is_correct": false, "text": "McNaughton's Theorem was proved by Robert McNaughton in 1951, not by Saul Kripke (who introduced Kripke semantics for modal logic in 1963).", "section_ref": "Section 2.3", "notes_quote": "Theorem 8.1 (McNaughton, 1951)"},
+            {"letter": "E", "is_correct": false, "text": "Only CPLIC functions (piecewise linear with integer coefficients) are representable — not all continuous functions. For example, $f(x) = x^2$ is continuous but not representable.", "section_ref": "Section 2.3", "notes_quote": ""}
+          ]
+        }
+      ]
+    }
+  ]
+}

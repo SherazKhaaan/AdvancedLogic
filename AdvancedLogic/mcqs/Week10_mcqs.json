@@ -1,0 +1,1411 @@
+{
+  "module": "AdvancedLogic",
+  "week": 10,
+  "title": "The Tableau Algorithm for Modal Logic",
+  "sections": [
+    {
+      "id": "section-1",
+      "title": "10.1 Why a Tableau Algorithm?",
+      "questions": [
+        {
+          "id": "q1",
+          "source_ref": "Section 10.1: Why a Tableau Algorithm?",
+          "text": "Which of the following correctly explain why truth tables are insufficient for deciding modal satisfiability? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Kripke models are not required to be finite — an infinite number of possible worlds may be needed"},
+            {"letter": "B", "text": "Modal logic has no notion of satisfiability, only validity"},
+            {"letter": "C", "text": "There is no fixed bound on the number of worlds to check"},
+            {"letter": "D", "text": "Simply exhausting all possible models is infeasible"},
+            {"letter": "E", "text": "Propositional truth tables with $n$ variables require $2^n$ rows, which is always tractable"}
+          ],
+          "correct": ["A", "C", "D"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "Kripke models can have infinitely many worlds, making enumeration impossible.",
+              "section_ref": "Section 10.1: Why a Tableau Algorithm?",
+              "notes_quote": "Kripke models are not required to be finite — an infinite number of possible worlds may be needed (e.g., in temporal logics where each world represents a future time instant)"
+            },
+            {
+              "letter": "B",
+              "is_correct": false,
+              "text": "Modal logic does have a notion of satisfiability — the tableau algorithm is designed precisely to decide it.",
+              "section_ref": "Section 10.1: Why a Tableau Algorithm?",
+              "notes_quote": ""
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "Without a bound on the number of worlds, no exhaustive search is possible.",
+              "section_ref": "Section 10.1: Why a Tableau Algorithm?",
+              "notes_quote": "There is no fixed bound on the number of worlds to check"
+            },
+            {
+              "letter": "D",
+              "is_correct": true,
+              "text": "Exhausting all possible Kripke models is infeasible because there are infinitely many of them.",
+              "section_ref": "Section 10.1: Why a Tableau Algorithm?",
+              "notes_quote": "Simply exhausting all possible models is infeasible"
+            },
+            {
+              "letter": "E",
+              "is_correct": false,
+              "text": "While truth tables for propositional logic with $n$ variables have $2^n$ rows, this exponential growth is not 'always tractable' — and more importantly, truth tables cannot handle the unbounded world structure of modal logic.",
+              "section_ref": "Section 10.1: Why a Tableau Algorithm?",
+              "notes_quote": ""
+            }
+          ]
+        },
+        {
+          "id": "q2",
+          "source_ref": "Section 10.1: Why a Tableau Algorithm?",
+          "text": "Which of the following correctly describe the Tableau Algorithm for modal logic? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "It provides a systematic, finite procedure for deciding modal satisfiability and validity"},
+            {"letter": "B", "text": "It works by constructing all possible Kripke models up to a fixed size"},
+            {"letter": "C", "text": "It is designed to overcome the limitations of truth tables for modal logic"},
+            {"letter": "D", "text": "It is only applicable to propositional logic, not modal logic"}
+          ],
+          "correct": ["A", "C"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "The tableau algorithm is described as 'a systematic, finite procedure for deciding modal satisfiability and validity'.",
+              "section_ref": "Section 10.1: Why a Tableau Algorithm?",
+              "notes_quote": "The Tableau Algorithm provides a systematic, finite procedure for deciding modal satisfiability and validity."
+            },
+            {
+              "letter": "B",
+              "is_correct": false,
+              "text": "The tableau algorithm does not enumerate all Kripke models; instead it systematically decomposes formulas and constructs a witness model only when satisfiable.",
+              "section_ref": "Section 10.1: Why a Tableau Algorithm?",
+              "notes_quote": ""
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "The section motivates the tableau algorithm precisely because truth tables are insufficient for modal logic.",
+              "section_ref": "Section 10.1: Why a Tableau Algorithm?",
+              "notes_quote": "For classical propositional logic, satisfiability and validity are decidable by truth tables... However, for modal logic... The Tableau Algorithm provides a systematic, finite procedure"
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "The tableau algorithm is extended specifically to modal logic via tagged formulas and modal rules — it is not limited to propositional logic.",
+              "section_ref": "Section 10.1: Why a Tableau Algorithm?",
+              "notes_quote": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-2",
+      "title": "10.2 Propositional Tableaux",
+      "questions": [
+        {
+          "id": "q3",
+          "source_ref": "Section 10.2.1: Definition",
+          "text": "Which of the following correctly describe a propositional tableau? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "It is a two-column table with a True column and a False column"},
+            {"letter": "B", "text": "It is formally a pair $(\\mathbf{True}, \\mathbf{False}) \\in \\mathcal{P}(\\mathit{Fml}) \\times \\mathcal{P}(\\mathit{Fml})$"},
+            {"letter": "C", "text": "A tableau is closed if $\\mathbf{True} \\cap \\mathbf{False} \\neq \\emptyset$"},
+            {"letter": "D", "text": "A tableau is open if it contains a tautology"},
+            {"letter": "E", "text": "The True column lists subformulas that must be true; the False column lists subformulas that must be false"}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "A propositional tableau is precisely a two-column table.",
+              "section_ref": "Section 10.2.1: Definition",
+              "notes_quote": "A (propositional) tableau (plural: tableaux) is a two-column table with: A True column: lists all subformulas we want to be true; A False column: lists all subformulas we want to be false"
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "This is the formal definition given in Definition 10.1.",
+              "section_ref": "Section 10.2.1: Definition",
+              "notes_quote": "Formally, a tableau is a pair $(\\mathbf{True}, \\mathbf{False}) \\in \\mathcal{P}(\\mathit{Fml}) \\times \\mathcal{P}(\\mathit{Fml})$ where True and False are finite subsets of formulas."
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "Closure is defined as the same formula appearing in both columns — a contradiction.",
+              "section_ref": "Section 10.2.1: Definition",
+              "notes_quote": "A tableau is closed if $\\mathbf{True} \\cap \\mathbf{False} \\neq \\emptyset$ (same formula appears in both columns — contradiction)."
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "A tableau is open if it is NOT closed — i.e., no formula appears in both columns. The presence of a tautology is not the criterion.",
+              "section_ref": "Section 10.2.1: Definition",
+              "notes_quote": ""
+            },
+            {
+              "letter": "E",
+              "is_correct": true,
+              "text": "This directly describes the role of each column in the tableau.",
+              "section_ref": "Section 10.2.1: Definition",
+              "notes_quote": "A True column: lists all subformulas we want to be true; A False column: lists all subformulas we want to be false"
+            }
+          ]
+        },
+        {
+          "id": "q4",
+          "source_ref": "Section 10.2.2: Checking Satisfiability",
+          "text": "To check whether formula $F$ is satisfiable using a propositional tableau, which of the following steps are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Create the initial tableau $( \\{F\\}, \\emptyset )$ with $F$ in the True column"},
+            {"letter": "B", "text": "If any branch results in a fully expanded open tableau, $F$ is satisfiable"},
+            {"letter": "C", "text": "If every branch results in a closed tableau, $F$ is unsatisfiable"},
+            {"letter": "D", "text": "Create the initial tableau $( \\emptyset, \\{F\\} )$ with $F$ in the False column"},
+            {"letter": "E", "text": "The satisfying assignment is: $V(p) = 1 \\iff p \\in \\mathbf{True}$"}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "To check satisfiability, F goes in the True column of the initial tableau.",
+              "section_ref": "Section 10.2.2: Checking Satisfiability",
+              "notes_quote": "To decide whether $F \\in \\mathit{Fml}$ is satisfiable: create the initial tableau $( \\{F\\}, \\emptyset )$ with $F$ in the True column."
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "An open branch witnesses satisfiability.",
+              "section_ref": "Section 10.2.2: Checking Satisfiability",
+              "notes_quote": "If any branch results in a fully expanded open tableau: $F$ is satisfiable."
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "If every branch closes, there is no satisfying assignment.",
+              "section_ref": "Section 10.2.2: Checking Satisfiability",
+              "notes_quote": "If every branch of the algorithm results in a closed tableau: $F$ is unsatisfiable."
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "Placing $F$ in the False column is the setup for checking validity (tautology checking), not satisfiability.",
+              "section_ref": "Section 10.2.2: Checking Satisfiability",
+              "notes_quote": ""
+            },
+            {
+              "letter": "E",
+              "is_correct": true,
+              "text": "The satisfying assignment is read off directly from the True column.",
+              "section_ref": "Section 10.2.2: Checking Satisfiability",
+              "notes_quote": "Read off the satisfying assignment: $V(p) = 1 \\iff p \\in \\mathbf{True}$."
+            }
+          ]
+        },
+        {
+          "id": "q5",
+          "source_ref": "Section 10.2.3: Rules for the True Column",
+          "text": "Which of the following correctly state the tableau rules for the True column? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$(\\neg_\\text{true})$: if $\\neg F \\in \\mathbf{True}$, add $F$ to $\\mathbf{False}$"},
+            {"letter": "B", "text": "$(\\wedge_\\text{true})$: if $(F \\wedge G) \\in \\mathbf{True}$, branch into two sub-tableaux: one with $F$ in True, one with $G$ in True"},
+            {"letter": "C", "text": "$(\\vee_\\text{true})$: if $(F \\vee G) \\in \\mathbf{True}$, branch into two sub-tableaux: one with $F$ in True, one with $G$ in True"},
+            {"letter": "D", "text": "$(\\to_\\text{true})$: if $(F \\to G) \\in \\mathbf{True}$, branch: one with $F$ in False OR one with $G$ in True"},
+            {"letter": "E", "text": "$(\\vee_\\text{true})$: if $(F \\vee G) \\in \\mathbf{True}$, add both $F$ and $G$ to True (non-branching)"}
+          ],
+          "correct": ["A", "C", "D"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "The negation-true rule moves the negated formula to the False column.",
+              "section_ref": "Section 10.2.3: Rules for the True Column",
+              "notes_quote": "$(\\neg_\\text{true})$: If $\\neg F$ appears in True, move $F$ to False and mark $\\neg F$ as expanded"
+            },
+            {
+              "letter": "B",
+              "is_correct": false,
+              "text": "$(\\wedge_\\text{true})$ is a NON-branching rule: both conjuncts are added to the SAME branch in True. Branching is the behaviour of $(\\vee_\\text{true})$ and $(\\wedge_\\text{false})$.",
+              "section_ref": "Section 10.2.3: Rules for the True Column",
+              "notes_quote": ""
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "Disjunction in True is a branching rule — each disjunct goes to a separate branch.",
+              "section_ref": "Section 10.2.3: Rules for the True Column",
+              "notes_quote": "$(\\vee_\\text{true})$: If $(F \\vee G)$ appears in True, branch into two sub-tableaux: one with $F$ added to True, one with $G$ added to True"
+            },
+            {
+              "letter": "D",
+              "is_correct": true,
+              "text": "Implication in True branches: either the antecedent is false (making the implication trivially true) or the consequent is true.",
+              "section_ref": "Section 10.2.3: Rules for the True Column",
+              "notes_quote": "$(\\to_\\text{true})$: If $(F \\to G)$ appears in True, branch: one branch with $F$ in False (i.e., $F$ is false, making $F\\to G$ trivially true), one branch with $G$ in True"
+            },
+            {
+              "letter": "E",
+              "is_correct": false,
+              "text": "$(\\vee_\\text{true})$ is a branching rule, not a non-branching one. Adding both to the same branch would be the rule for $(\\wedge_\\text{true})$.",
+              "section_ref": "Section 10.2.3: Rules for the True Column",
+              "notes_quote": ""
+            }
+          ]
+        },
+        {
+          "id": "q6",
+          "source_ref": "Section 10.2.3: Rules for the True Column",
+          "text": "For the $(\\wedge_\\text{true})$ rule: if $(F \\wedge G) \\in \\mathbf{True}$, what happens? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Both $F$ and $G$ are added to True on the same branch (non-branching)"},
+            {"letter": "B", "text": "$(F \\wedge G)$ is marked as expanded (crossed out)"},
+            {"letter": "C", "text": "The tableau branches into two: one with $F$ in True, one with $G$ in True"},
+            {"letter": "D", "text": "Both $F$ and $G$ are added to False"}
+          ],
+          "correct": ["A", "B"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "Conjunction in True is a non-branching rule — both conjuncts are added to the same branch.",
+              "section_ref": "Section 10.2.3: Rules for the True Column",
+              "notes_quote": "$(\\wedge_\\text{true})$: If $(F \\wedge G)$ appears in True, add both conjuncts $F$ and $G$ to True and mark $(F\\wedge G)$ as expanded"
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "Once expanded, the formula is marked (crossed out) so it is not re-applied.",
+              "section_ref": "Section 10.2.3: Rules for the True Column",
+              "notes_quote": "add both conjuncts $F$ and $G$ to True and mark $(F\\wedge G)$ as expanded"
+            },
+            {
+              "letter": "C",
+              "is_correct": false,
+              "text": "Branching occurs for $(\\vee_\\text{true})$ and $(\\to_\\text{true})$, not $(\\wedge_\\text{true})$. Conjunction is true iff both conjuncts are true — no branching needed.",
+              "section_ref": "Section 10.2.3: Rules for the True Column",
+              "notes_quote": ""
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "Adding both to False would be incorrect; the rule adds them to True since the conjunction is assumed true.",
+              "section_ref": "Section 10.2.3: Rules for the True Column",
+              "notes_quote": ""
+            }
+          ]
+        },
+        {
+          "id": "q7",
+          "source_ref": "Section 10.2.4: Rules for the False Column",
+          "text": "Which of the following correctly state rules for the False column? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$(\\neg_\\text{false})$: if $\\neg F \\in \\mathbf{False}$, add $F$ to $\\mathbf{True}$"},
+            {"letter": "B", "text": "$(\\wedge_\\text{false})$: if $(F \\wedge G) \\in \\mathbf{False}$, branch into $F \\in \\mathbf{False}$ or $G \\in \\mathbf{False}$"},
+            {"letter": "C", "text": "$(\\vee_\\text{false})$: if $(F \\vee G) \\in \\mathbf{False}$, branch into $F \\in \\mathbf{False}$ or $G \\in \\mathbf{False}$"},
+            {"letter": "D", "text": "$(\\to_\\text{false})$: if $(F \\to G) \\in \\mathbf{False}$, add $F$ to $\\mathbf{True}$ and $G$ to $\\mathbf{False}$ (non-branching)"},
+            {"letter": "E", "text": "$(\\vee_\\text{false})$: if $(F \\vee G) \\in \\mathbf{False}$, add both $F$ and $G$ to $\\mathbf{False}$ (non-branching)"}
+          ],
+          "correct": ["A", "B", "D", "E"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "If a negation is false, the inner formula must be true.",
+              "section_ref": "Section 10.2.4: Rules for the False Column",
+              "notes_quote": "$(\\neg_\\text{false})$: If $\\neg F$ appears in False, move $F$ to True"
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "A conjunction is false iff at least one conjunct is false — hence branching.",
+              "section_ref": "Section 10.2.4: Rules for the False Column",
+              "notes_quote": "$(\\wedge_\\text{false})$: $(F \\wedge G)$ is false iff $F$ is false or $G$ is false. Branch"
+            },
+            {
+              "letter": "C",
+              "is_correct": false,
+              "text": "$(\\vee_\\text{false})$ is NON-branching: a disjunction is false iff BOTH disjuncts are false, so both go to False on the same branch.",
+              "section_ref": "Section 10.2.4: Rules for the False Column",
+              "notes_quote": ""
+            },
+            {
+              "letter": "D",
+              "is_correct": true,
+              "text": "An implication is false iff the antecedent is true and the consequent is false.",
+              "section_ref": "Section 10.2.4: Rules for the False Column",
+              "notes_quote": "$(\\to_\\text{false})$: $(F \\to G)$ is false iff $F$ is true and $G$ is false. Add $F$ to True and $G$ to False"
+            },
+            {
+              "letter": "E",
+              "is_correct": true,
+              "text": "A disjunction is false iff both disjuncts are false — both are added to False on the same branch (non-branching).",
+              "section_ref": "Section 10.2.4: Rules for the False Column",
+              "notes_quote": "$(\\vee_\\text{false})$: $(F \\vee G)$ is false iff both $F$ and $G$ are false. Add both to False"
+            }
+          ]
+        },
+        {
+          "id": "q8",
+          "source_ref": "Section 10.2.5: Checking Validity",
+          "text": "To check whether $F$ is a tautology (valid) using the tableau algorithm, which of the following are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Place $F$ in the False column of the initial tableau $( \\emptyset, \\{F\\} )$"},
+            {"letter": "B", "text": "$F$ is valid iff every fully expanded branch is closed (no open branch)"},
+            {"letter": "C", "text": "$F$ is valid iff $\\neg F$ is not satisfiable"},
+            {"letter": "D", "text": "Place $F$ in the True column to check validity"},
+            {"letter": "E", "text": "A single open branch when $F$ is in False provides a counter-model to $F$"}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "Validity checking places F in the False column to search for a counter-model.",
+              "section_ref": "Section 10.2.5: Checking Validity",
+              "notes_quote": "Place $F$ in the False column of the initial tableau $(\\emptyset, \\{F\\})$ and expand."
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "If every branch closes, there is no counter-model, confirming validity.",
+              "section_ref": "Section 10.2.5: Checking Validity",
+              "notes_quote": "$F$ is valid iff every fully expanded branch is closed (no open branch corresponds to a counter-model)."
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "This equivalence is the fundamental connection between validity and satisfiability.",
+              "section_ref": "Section 10.2.5: Checking Validity",
+              "notes_quote": "$F \\text{ is valid} \\iff \\neg F \\text{ is NOT satisfiable}$"
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "Placing $F$ in the True column is for checking satisfiability, not validity. Validity requires placing $F$ in the False column.",
+              "section_ref": "Section 10.2.5: Checking Validity",
+              "notes_quote": ""
+            },
+            {
+              "letter": "E",
+              "is_correct": true,
+              "text": "An open branch when $F$ is in False witnesses a satisfying assignment for $\\neg F$, which is a counter-model to $F$.",
+              "section_ref": "Section 10.2.5: Checking Validity",
+              "notes_quote": "no open branch corresponds to a counter-model"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-3",
+      "title": "10.3 The Modal Tableau Algorithm",
+      "questions": [
+        {
+          "id": "q9",
+          "source_ref": "Section 10.3.1: Motivation and Tagged Formulas",
+          "text": "Which of the following correctly describe tagged formulas in modal tableaux? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "A tagged formula is a pair $(w : F)$ where $w$ is a world label and $F$ is a modal formula"},
+            {"letter": "B", "text": "World labels track which world a formula must be true or false at"},
+            {"letter": "C", "text": "Tagged formulas are only used in the True column, not the False column"},
+            {"letter": "D", "text": "The label $w$ designates a specific world in the to-be-determined Kripke model"},
+            {"letter": "E", "text": "Tagged formulas eliminate the need for a Relation column in modal tableaux"}
+          ],
+          "correct": ["A", "B", "D"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "This is the formal definition of a tagged formula.",
+              "section_ref": "Section 10.3.1: Motivation and Tagged Formulas",
+              "notes_quote": "A tagged formula is a pair $(w : F)$ where: $w$ is a label designating a specific world in the to-be-determined Kripke model; $F \\in \\mathit{Fml}^\\Box$ is a modal formula"
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "In modal logic, satisfiability varies world-by-world, so tagged formulas track which world is involved.",
+              "section_ref": "Section 10.3.1: Motivation and Tagged Formulas",
+              "notes_quote": "In modal logic, satisfiability varies world-by-world. We must track not just whether a subformula should be true/false, but at which world."
+            },
+            {
+              "letter": "C",
+              "is_correct": false,
+              "text": "Tagged formulas appear in both the True and False columns — a modal tableau is closed when a tagged formula appears in both columns.",
+              "section_ref": "Section 10.3.2: Modal Tableaux",
+              "notes_quote": ""
+            },
+            {
+              "letter": "D",
+              "is_correct": true,
+              "text": "The label $w$ represents a specific world in the Kripke model being constructed.",
+              "section_ref": "Section 10.3.1: Motivation and Tagged Formulas",
+              "notes_quote": "$w$ is a label designating a specific world in the to-be-determined Kripke model"
+            },
+            {
+              "letter": "E",
+              "is_correct": false,
+              "text": "Tagged formulas do NOT eliminate the Relation column — a modal tableau has three columns: True, False, and Relation.",
+              "section_ref": "Section 10.3.2: Modal Tableaux",
+              "notes_quote": ""
+            }
+          ]
+        },
+        {
+          "id": "q10",
+          "source_ref": "Section 10.3.2: Modal Tableaux",
+          "text": "Which of the following correctly describe a modal tableau? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "A modal tableau has three columns: True, False, and Relation"},
+            {"letter": "B", "text": "The Relation column stores pairs $(w, u)$ that must be in the accessibility relation $R$"},
+            {"letter": "C", "text": "A modal tableau is closed if a tagged formula $(w:F)$ appears in both True and False"},
+            {"letter": "D", "text": "A modal tableau has only two columns: True and False"},
+            {"letter": "E", "text": "The Relation column stores truth values of propositional variables"}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "Modal tableaux extend propositional tableaux with a third Relation column.",
+              "section_ref": "Section 10.3.2: Modal Tableaux",
+              "notes_quote": "A (modal) tableau is a three-column table with: A True column: tagged (sub)formulas that must be true; A False column: tagged (sub)formulas that must be false; A Relation column: relations $(w, u)$ that must be in the accessibility relation $R$"
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "The Relation column accumulates pairs from the accessibility relation as the algorithm runs.",
+              "section_ref": "Section 10.3.2: Modal Tableaux",
+              "notes_quote": "A Relation column: relations $(w, u)$ that must be in the accessibility relation $R$"
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "Closure in modal tableaux requires the same tagged formula to appear in both columns — a contradiction at the same world.",
+              "section_ref": "Section 10.3.2: Modal Tableaux",
+              "notes_quote": "A modal tableau is closed if $\\mathbf{True} \\cap \\mathbf{False} \\neq \\emptyset$ (a tagged formula $(w:F)$ appears in both columns)"
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "Modal tableaux have three columns — the Relation column is essential for tracking the accessibility relation.",
+              "section_ref": "Section 10.3.2: Modal Tableaux",
+              "notes_quote": ""
+            },
+            {
+              "letter": "E",
+              "is_correct": false,
+              "text": "Truth values of propositional variables are tracked via tagged formulas in the True and False columns, not the Relation column.",
+              "section_ref": "Section 10.3.2: Modal Tableaux",
+              "notes_quote": ""
+            }
+          ]
+        },
+        {
+          "id": "q11",
+          "source_ref": "Section 10.3.3: All Propositional Rules Carry Over",
+          "text": "How do the propositional tableau rules extend to modal tableaux? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "All eight propositional rules remain valid in modal tableaux"},
+            {"letter": "B", "text": "The rules are applied to tagged formulas instead of plain formulas"},
+            {"letter": "C", "text": "For example, $(\\to_\\text{true})$ on $(w:(F\\to G)) \\in \\mathbf{True}$ branches into $(w:F) \\in \\mathbf{False}$ or $(w:G) \\in \\mathbf{True}$"},
+            {"letter": "D", "text": "The propositional rules are completely replaced by four new modal rules"},
+            {"letter": "E", "text": "World labels are ignored when applying propositional rules in modal tableaux"}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "All eight propositional rules carry over to modal tableaux unchanged in structure.",
+              "section_ref": "Section 10.3.3: All Propositional Rules Carry Over",
+              "notes_quote": "All eight propositional rules remain valid, but now applied to tagged formulas."
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "The same rules apply but now to tagged formula pairs $(w:F)$.",
+              "section_ref": "Section 10.3.3: All Propositional Rules Carry Over",
+              "notes_quote": "All eight propositional rules remain valid, but now applied to tagged formulas."
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "This is the direct example given in the notes for how a propositional rule carries over.",
+              "section_ref": "Section 10.3.3: All Propositional Rules Carry Over",
+              "notes_quote": "$(\\to_\\text{true})$ becomes: if $(w:(F\\to G)) \\in \\mathbf{True}$, branch into $(w:F) \\in \\mathbf{False}$ or $(w:G) \\in \\mathbf{True}$"
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "The propositional rules are NOT replaced — they all carry over. The four modal rules are additional rules for $\\Box$ and $\\Diamond$.",
+              "section_ref": "Section 10.3.3: All Propositional Rules Carry Over",
+              "notes_quote": ""
+            },
+            {
+              "letter": "E",
+              "is_correct": false,
+              "text": "World labels are preserved throughout — a rule applied to $(w:F)$ produces tagged formulas at the same world $w$ (for propositional rules) or at a new world (for modal rules).",
+              "section_ref": "Section 10.3.3: All Propositional Rules Carry Over",
+              "notes_quote": ""
+            }
+          ]
+        },
+        {
+          "id": "q12",
+          "source_ref": "Section 10.3.4: Modal Rules",
+          "text": "Which of the following correctly describe the $(\\Diamond_\\text{true})$ modal tableau rule? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "If $(w:\\Diamond F) \\in \\mathbf{True}$, introduce a fresh label $u$ and add $(u:F)$ to True and $(w,u)$ to Relation"},
+            {"letter": "B", "text": "The new label $u$ must be fresh — not appearing elsewhere on the current branch"},
+            {"letter": "C", "text": "If $(w:\\Diamond F) \\in \\mathbf{True}$, add $(w:F)$ to True (no new world needed)"},
+            {"letter": "D", "text": "$(\\Diamond_\\text{true})$ uses sequential numbering $w_0, w_1, w_2, \\ldots$ for fresh labels"},
+            {"letter": "E", "text": "$(\\Diamond_\\text{true})$ should NOT be marked as expanded after application"}
+          ],
+          "correct": ["A", "B", "D"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "This is the precise statement of the $(\\Diamond_\\text{true})$ rule.",
+              "section_ref": "Section 10.3.4: Modal Rules",
+              "notes_quote": "$(\\Diamond_\\text{true})$: If $(w:\\Diamond F)$ appears in True, there must exist some accessible world $u$ where $F$ is true. Introduce a fresh label $u$: add $(u:F)$ to True and $(w,u)$ to Relation"
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "Freshness is critical — reusing an existing label would conflate distinct worlds and corrupt the model.",
+              "section_ref": "Section 10.3.4: Modal Rules",
+              "notes_quote": "IMPORTANT: $u$ must be a fresh label — use sequential numbering $w_0, w_1, w_2, \\ldots$ and take the next available index each time $(\\Diamond_\\text{true})$ is applied."
+            },
+            {
+              "letter": "C",
+              "is_correct": false,
+              "text": "Adding $(w:F)$ to True would be wrong — $\\Diamond F$ is true at $w$ means $F$ is true at some ACCESSIBLE world, not at $w$ itself.",
+              "section_ref": "Section 10.3.4: Modal Rules",
+              "notes_quote": ""
+            },
+            {
+              "letter": "D",
+              "is_correct": true,
+              "text": "Sequential numbering ensures freshness across the branch.",
+              "section_ref": "Section 10.3.4: Modal Rules",
+              "notes_quote": "use sequential numbering $w_0, w_1, w_2, \\ldots$ and take the next available index each time $(\\Diamond_\\text{true})$ is applied"
+            },
+            {
+              "letter": "E",
+              "is_correct": false,
+              "text": "$(\\Diamond_\\text{true})$ CAN be marked as expanded once applied. It is $(\\Box_\\text{true})$ and $(\\Diamond_\\text{false})$ that must NOT be marked as expanded, as they may need re-application.",
+              "section_ref": "Section 10.3.4: Modal Rules",
+              "notes_quote": ""
+            }
+          ]
+        },
+        {
+          "id": "q13",
+          "source_ref": "Section 10.3.4: Modal Rules",
+          "text": "Which of the following correctly describe the $(\\Box_\\text{false})$ rule? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "If $(w:\\Box F) \\in \\mathbf{False}$, introduce a fresh label $u$, add $(u:F)$ to False and $(w,u)$ to Relation"},
+            {"letter": "B", "text": "$(\\Box_\\text{false})$ introduces a fresh world because there must exist some accessible world where $F$ is false"},
+            {"letter": "C", "text": "If $(w:\\Box F) \\in \\mathbf{False}$, add $(w:F)$ to False at the same world"},
+            {"letter": "D", "text": "$(\\Box_\\text{false})$ should NOT be marked as expanded, unlike $(\\Box_\\text{true})$"}
+          ],
+          "correct": ["A", "B"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "This is the exact statement of the $(\\Box_\\text{false})$ rule.",
+              "section_ref": "Section 10.3.4: Modal Rules",
+              "notes_quote": "$(\\Box_\\text{false})$: If $(w:\\Box F)$ appears in False, there must exist some accessible world where $F$ is false. Introduce a fresh label $u$: add $(u:F)$ to False and $(w,u)$ to Relation"
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "$\\Box F$ being false means the universal claim fails at some accessible world.",
+              "section_ref": "Section 10.3.4: Modal Rules",
+              "notes_quote": "$(\\Box_\\text{false})$: If $(w:\\Box F)$ appears in False, there must exist some accessible world where $F$ is false."
+            },
+            {
+              "letter": "C",
+              "is_correct": false,
+              "text": "Adding at the same world would be wrong — $\\Box F$ being false requires a witness world accessible from $w$, not $w$ itself.",
+              "section_ref": "Section 10.3.4: Modal Rules",
+              "notes_quote": ""
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "$(\\Box_\\text{false})$ introduces a new world and CAN be marked as expanded. It is $(\\Box_\\text{true})$ and $(\\Diamond_\\text{false})$ that must NOT be marked as expanded.",
+              "section_ref": "Section 10.3.4: Modal Rules",
+              "notes_quote": ""
+            }
+          ]
+        },
+        {
+          "id": "q14",
+          "source_ref": "Section 10.3.4: Modal Rules",
+          "text": "Why must $(\\Box_\\text{true})$ and $(\\Diamond_\\text{false})$ NOT be marked as expanded after application? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Because additional relations $(w, u)$ may be added to Relation later, requiring re-application"},
+            {"letter": "B", "text": "Because marking them expanded would cause the algorithm to loop infinitely"},
+            {"letter": "C", "text": "Because $\\Box F$ must be true at all accessible worlds, and new accessible worlds may be introduced"},
+            {"letter": "D", "text": "Because these rules do not introduce fresh world labels and must be kept active"},
+            {"letter": "E", "text": "Because $(\\Box_\\text{true})$ and $(\\Diamond_\\text{false})$ propagate across existing relations — and new relations may be added"}
+          ],
+          "correct": ["A", "C", "E"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "New world-pairs may be added by later applications of $(\\Diamond_\\text{true})$ or $(\\Box_\\text{false})$, requiring $(\\Box_\\text{true})$ and $(\\Diamond_\\text{false})$ to be re-applied.",
+              "section_ref": "Section 10.3.4: Modal Rules",
+              "notes_quote": "CRITICAL: Do NOT mark $(w:\\Box F)$ as expanded. It may need to be re-applied if additional relations $(w,u)$ are added to Relation later."
+            },
+            {
+              "letter": "B",
+              "is_correct": false,
+              "text": "Not marking them as expanded does not cause infinite looping — termination is still guaranteed by other means (though transitive frames require loop-checking).",
+              "section_ref": "Section 10.3.4: Modal Rules",
+              "notes_quote": ""
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "$(\\Box_\\text{true})$ must be applied to every accessible world — since new worlds can be introduced, it cannot be finalized until no more relations are added.",
+              "section_ref": "Section 10.3.4: Modal Rules",
+              "notes_quote": "$(\\Box_\\text{true})$: If $(w:\\Box F)$ in True and $(w,u_1),\\ldots,(w,u_n) \\in$ Relation: add $(u_i:F)$ to True for each. CRITICAL: Do NOT mark as expanded."
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "$(\\Box_\\text{true})$ and $(\\Diamond_\\text{false})$ do NOT introduce fresh worlds; the reason they cannot be marked expanded is that new relations may be added later that require them to fire again.",
+              "section_ref": "Section 10.3.4: Modal Rules",
+              "notes_quote": ""
+            },
+            {
+              "letter": "E",
+              "is_correct": true,
+              "text": "They propagate across current relations, and future rules may add new relations, requiring re-propagation.",
+              "section_ref": "Section 10.3.4: Modal Rules",
+              "notes_quote": "CRITICAL: Do NOT mark $(w:\\Diamond F)$ as expanded. It may need to be re-applied if additional relations are added."
+            }
+          ]
+        },
+        {
+          "id": "q15",
+          "source_ref": "Section 10.3.4: Modal Rules",
+          "text": "What does the $(\\Diamond_\\text{false})$ rule do? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "If $(w:\\Diamond F) \\in \\mathbf{False}$, for each $(w, u_i)$ in Relation, add $(u_i:F)$ to False"},
+            {"letter": "B", "text": "It introduces a fresh world label $u$ and adds $(u:F)$ to False"},
+            {"letter": "C", "text": "It must NOT be marked as expanded after application"},
+            {"letter": "D", "text": "$\\Diamond F$ being false at $w$ means $F$ must be false at every accessible world from $w$"}
+          ],
+          "correct": ["A", "C", "D"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "$(\\Diamond_\\text{false})$ propagates falsity to all accessible worlds already in Relation.",
+              "section_ref": "Section 10.3.4: Modal Rules",
+              "notes_quote": "$(\\Diamond_\\text{false})$: If $(w:\\Diamond F)$ appears in False: for each $(w,u_i)$ in Relation, add $(u_i:F)$ to False"
+            },
+            {
+              "letter": "B",
+              "is_correct": false,
+              "text": "Introducing a fresh world is what $(\\Diamond_\\text{true})$ and $(\\Box_\\text{false})$ do. $(\\Diamond_\\text{false})$ propagates across EXISTING relations.",
+              "section_ref": "Section 10.3.4: Modal Rules",
+              "notes_quote": ""
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "Like $(\\Box_\\text{true})$, it may need re-application if new relations are added.",
+              "section_ref": "Section 10.3.4: Modal Rules",
+              "notes_quote": "CRITICAL: Do NOT mark $(w:\\Diamond F)$ as expanded. It may need to be re-applied if additional relations are added."
+            },
+            {
+              "letter": "D",
+              "is_correct": true,
+              "text": "$\\Diamond F$ is false iff F is false at every accessible world — this is the semantic justification of the rule.",
+              "section_ref": "Section 10.3.4: Modal Rules",
+              "notes_quote": "$(\\Diamond_\\text{false})$: If $(w:\\Diamond F)$ appears in False, then $F$ must be false at every accessible world."
+            }
+          ]
+        },
+        {
+          "id": "q16",
+          "source_ref": "Section 10.3.5: Termination and Reading off a Model",
+          "text": "How is a satisfying Kripke model read off from a fully expanded open modal tableau branch? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$W = \\{w_i : (w_i : p) \\in \\mathbf{True} \\cup \\mathbf{False}\\}$ (the set of all world labels appearing)"},
+            {"letter": "B", "text": "$(w_i, w_j) \\in R \\iff (w_i, w_j) \\in \\mathbf{Relation}$"},
+            {"letter": "C", "text": "$V(w_i, p) = 1 \\iff (w_i : p) \\in \\mathbf{True}$"},
+            {"letter": "D", "text": "$V(w_i, p) = 1 \\iff (w_i : p) \\in \\mathbf{False}$"},
+            {"letter": "E", "text": "Models produced by the tableau algorithm always have a tree structure"}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "The set of worlds is exactly the set of world labels appearing in the tableau.",
+              "section_ref": "Section 10.3.5: Termination and Reading off a Model",
+              "notes_quote": "$W = \\{w_i : (w_i : p) \\in \\mathbf{True} \\cup \\mathbf{False}\\}$"
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "The accessibility relation is read directly from the Relation column.",
+              "section_ref": "Section 10.3.5: Termination and Reading off a Model",
+              "notes_quote": "$(w_i, w_j) \\in R \\iff (w_i, w_j) \\in \\mathbf{Relation}$"
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "A propositional variable is true at a world iff the tagged formula appears in the True column.",
+              "section_ref": "Section 10.3.5: Termination and Reading off a Model",
+              "notes_quote": "$V(w_i, p) = 1 \\iff (w_i : p) \\in \\mathbf{True}$"
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "Variables in the False column are false at that world. The correct reading is: $V(w_i, p) = 1 \\iff (w_i : p) \\in \\mathbf{True}$.",
+              "section_ref": "Section 10.3.5: Termination and Reading off a Model",
+              "notes_quote": ""
+            },
+            {
+              "letter": "E",
+              "is_correct": true,
+              "text": "This is the Tree Model Property stated in the notes.",
+              "section_ref": "Section 10.3.5: Termination and Reading off a Model",
+              "notes_quote": "Tree Model Property: Models produced by the tableau algorithm always have a tree structure. Every satisfiable modal formula has a tree model."
+            }
+          ]
+        },
+        {
+          "id": "q17",
+          "source_ref": "Section 10.3.6: Initial Tableau Setup",
+          "text": "Which of the following correctly describe the initial tableau setup for modal tableaux? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "To check satisfiability of $F$: initial tableau with $(w_0 : F)$ in True, everything else empty"},
+            {"letter": "B", "text": "To check validity of $F$: initial tableau with $(w_0 : F)$ in False"},
+            {"letter": "C", "text": "$F$ is valid iff every branch in the False-column expansion closes"},
+            {"letter": "D", "text": "To check satisfiability of $F$: initial tableau with $(w_0 : F)$ in False"},
+            {"letter": "E", "text": "$F$ is valid w.r.t. $\\mathcal{C}$ iff $\\neg F$ is NOT satisfiable w.r.t. $\\mathcal{C}$"}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "Satisfiability checking starts with the formula in the True column at the initial world $w_0$.",
+              "section_ref": "Section 10.3.6: Initial Tableau Setup",
+              "notes_quote": "To check satisfiability of $F$: Initial tableau with $(w_0 : F)$ in True, everything else empty."
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "Validity checking places $F$ in the False column to search for a counter-model.",
+              "section_ref": "Section 10.3.6: Initial Tableau Setup",
+              "notes_quote": "To check validity of $F$: Use $F$ valid $\\iff$ $\\neg F$ not satisfiable. Initial tableau with $(w_0 : F)$ in False and apply rules"
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "If every branch closes when $F$ is in False, no counter-model exists, so $F$ is valid.",
+              "section_ref": "Section 10.3.6: Initial Tableau Setup",
+              "notes_quote": "$F$ is valid iff every branch is closed."
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "Placing $F$ in the False column is for checking validity, not satisfiability.",
+              "section_ref": "Section 10.3.6: Initial Tableau Setup",
+              "notes_quote": ""
+            },
+            {
+              "letter": "E",
+              "is_correct": true,
+              "text": "This is the fundamental equivalence that underpins validity checking for frame classes.",
+              "section_ref": "Section 10.3.6: Initial Tableau Setup",
+              "notes_quote": "$F \\text{ is valid with respect to } \\mathcal{C} \\iff \\neg F \\text{ is NOT satisfiable with respect to } \\mathcal{C}$"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-4",
+      "title": "10.4 Deciding Satisfiability w.r.t. a Class of Frames",
+      "questions": [
+        {
+          "id": "q18",
+          "source_ref": "Section 10.4: Deciding Satisfiability w.r.t. a Class of Frames",
+          "text": "To check satisfiability with respect to a specific class of frames, which of the following modifications to the tableau algorithm are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "After each application of $(\\Diamond_\\text{true})$ or $(\\Box_\\text{false})$, close the Relation set under the additional frame constraints"},
+            {"letter": "B", "text": "For reflexive frames: after adding world label $w_i$, also add $(w_i, w_i)$ to Relation"},
+            {"letter": "C", "text": "For transitive frames: whenever $(x,y)$ and $(y,z)$ are in Relation, also add $(x,z)$"},
+            {"letter": "D", "text": "Frame-restricted tableau checks do not require any modification to the base algorithm"},
+            {"letter": "E", "text": "The extracted model from an open branch will satisfy the required frame property due to the Relation closure"}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "After relation-adding rules, the Relation set must be closed under the required frame constraints.",
+              "section_ref": "Section 10.4: Deciding Satisfiability w.r.t. a Class of Frames",
+              "notes_quote": "after each application of $(\\Diamond_\\text{true})$ or $(\\Box_\\text{false})$ — which add new relations — close the Relation set under the additional constraints required by the frame class."
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "Reflexivity requires every world to be related to itself.",
+              "section_ref": "Section 10.4: Deciding Satisfiability w.r.t. a Class of Frames",
+              "notes_quote": "Example — Reflexive frames: After adding world label $w_i$, also add $(w_i, w_i)$ to Relation."
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "Transitivity requires closing under composition of relations.",
+              "section_ref": "Section 10.4: Deciding Satisfiability w.r.t. a Class of Frames",
+              "notes_quote": "Example — Transitive frames: Whenever $(x,y)$ and $(y,z)$ are added to Relation, also add $(x,z)$ to ensure transitivity."
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "Frame-restricted satisfiability DOES require modification — specifically the closure of the Relation set under the relevant frame properties.",
+              "section_ref": "Section 10.4: Deciding Satisfiability w.r.t. a Class of Frames",
+              "notes_quote": ""
+            },
+            {
+              "letter": "E",
+              "is_correct": true,
+              "text": "By closing Relation under the required properties during the algorithm, any model extracted from an open branch will satisfy those properties.",
+              "section_ref": "Section 10.4: Deciding Satisfiability w.r.t. a Class of Frames",
+              "notes_quote": "This guarantees that any model read from an open tableau will be transitive."
+            }
+          ]
+        },
+        {
+          "id": "q19",
+          "source_ref": "Section 10.4: Deciding Satisfiability w.r.t. a Class of Frames",
+          "text": "Regarding the looping issue on transitive frames, which of the following are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "The formula $F = \\Box(p \\to \\Diamond q) \\wedge \\Box(q \\to \\Diamond p) \\wedge \\Diamond p$ can cause the transitive tableau to loop indefinitely"},
+            {"letter": "B", "text": "Loop-checking (blocking) resolves this by reusing existing world labels when the formula set at a new world matches an existing one"},
+            {"letter": "C", "text": "The looping produces an infinite chain $w_0, w_1, w_2, \\ldots$ alternating $p$ and $q$ values"},
+            {"letter": "D", "text": "The looping issue means transitive modal logic is undecidable"},
+            {"letter": "E", "text": "Blocking/loop-checking ensures termination while preserving completeness"}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "This specific formula is given as the example that causes looping on transitive frames.",
+              "section_ref": "Section 10.4: Deciding Satisfiability w.r.t. a Class of Frames",
+              "notes_quote": "Issue with transitive frames and looping: Some satisfiable formulas on transitive frames can cause the tableau algorithm to loop... For example, $F = \\Box(p \\to \\Diamond q) \\wedge \\Box(q \\to \\Diamond p) \\wedge \\Diamond p$"
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "Blocking/loop-checking resolves termination by reusing world labels when formula sets repeat.",
+              "section_ref": "Section 10.4: Deciding Satisfiability w.r.t. a Class of Frames",
+              "notes_quote": "A fix is to reuse existing world labels when the formula being added to a world already appears there (a blocking or loop-checking mechanism)."
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "The looping creates an infinite alternating chain of worlds.",
+              "section_ref": "Section 10.4: Deciding Satisfiability w.r.t. a Class of Frames",
+              "notes_quote": "causing an infinite chain $w_0, w_1, w_2, \\ldots$ alternating $p$ and $q$"
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "Transitive modal logic (K4) is decidable — the looping issue is a problem with a naive implementation of the tableau algorithm, not with decidability of the logic itself.",
+              "section_ref": "Section 10.4: Deciding Satisfiability w.r.t. a Class of Frames",
+              "notes_quote": ""
+            },
+            {
+              "letter": "E",
+              "is_correct": true,
+              "text": "Blocking terminates the algorithm while still correctly identifying satisfiable formulas.",
+              "section_ref": "Section 10.4: Deciding Satisfiability w.r.t. a Class of Frames",
+              "notes_quote": "This blocking condition ensures termination while preserving completeness."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-5",
+      "title": "10.5 SGT Questions — Worked Examples",
+      "questions": [
+        {
+          "id": "q20",
+          "source_ref": "Section 10.5: SGT 10.1 — Checking Satisfiability",
+          "text": "For $F_1 = \\Diamond(p \\vee q) \\wedge \\Box\\neg p \\wedge \\Box(q \\to \\Diamond r)$, which of the following are true in the tableau analysis? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "The initial tableau has $(w_0 : F_1)$ in True"},
+            {"letter": "B", "text": "Applying $(\\Diamond_\\text{true})$ introduces a fresh world $w_1$ with $(w_1:(p\\vee q))$ in True"},
+            {"letter": "C", "text": "Branch A (where $(w_1:p)$ in True) closes because $(w_1:\\neg p)$ also holds in True"},
+            {"letter": "D", "text": "$F_1$ is unsatisfiable"},
+            {"letter": "E", "text": "A witness model for $F_1$ includes worlds $\\{w_0, w_1, w_2\\}$ with $V(w_1,q)=1$ and $V(w_2,r)=1$"}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "The standard initial setup places the formula to test in True at $w_0$.",
+              "section_ref": "Section 10.5: SGT 10.1",
+              "notes_quote": "Initial tableau: $(w_0 : F_1)$ in True."
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "The $(\\Diamond_\\text{true})$ rule creates a fresh world $w_1$ for the diamond formula.",
+              "section_ref": "Section 10.5: SGT 10.1",
+              "notes_quote": "Apply $(\\Diamond_\\text{true})$ to $(w_0:\\Diamond(p\\vee q))$: introduce fresh $w_1$. Add $(w_1:(p\\vee q))$ to True and $(w_0,w_1)$ to Relation."
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "Branch A closes because $p$ must be both true (from the branch) and false (from $\\Box\\neg p$) at $w_1$.",
+              "section_ref": "Section 10.5: SGT 10.1",
+              "notes_quote": "Branch A: $(w_1:p)$ in True. But $(w_1:\\neg p)$ also in True, so $(w_1:p)$ would go to False — closed (contradiction)."
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "$F_1$ is satisfiable — Branch B leads to an open tableau with a witness model.",
+              "section_ref": "Section 10.5: SGT 10.1",
+              "notes_quote": "$F_1$ is satisfiable."
+            },
+            {
+              "letter": "E",
+              "is_correct": true,
+              "text": "This is the witness model explicitly given in the worked example.",
+              "section_ref": "Section 10.5: SGT 10.1",
+              "notes_quote": "A witness model: $W=\\{w_0,w_1,w_2\\}$, $R=\\{(w_0,w_1),(w_1,w_2)\\}$, $V(w_1,q)=1$, $V(w_2,r)=1$"
+            }
+          ]
+        },
+        {
+          "id": "q21",
+          "source_ref": "Section 10.5: SGT 10.1 — Checking Satisfiability",
+          "text": "For $F_2 = \\Box(p \\to \\Diamond q) \\wedge \\Diamond(p \\wedge \\Box\\neg q)$, which of the following are true? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$F_2$ is unsatisfiable"},
+            {"letter": "B", "text": "The tableau introduces world $w_1$ with $(w_1:p)$ and $(w_1:\\Box\\neg q)$ in True"},
+            {"letter": "C", "text": "The contradiction arises because $(w_2:q)$ is in both True and False"},
+            {"letter": "D", "text": "$F_2$ is satisfiable with two worlds"},
+            {"letter": "E", "text": "Both branches of the expansion close"}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "$F_2$ is explicitly shown to be unsatisfiable in the worked example.",
+              "section_ref": "Section 10.5: SGT 10.1",
+              "notes_quote": "$F_2$ is unsatisfiable."
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "Expanding $(w_1:(p\\wedge\\Box\\neg q))$ yields both $(w_1:p)$ and $(w_1:\\Box\\neg q)$ in True.",
+              "section_ref": "Section 10.5: SGT 10.1",
+              "notes_quote": "Expand $(w_1:(p\\wedge\\Box\\neg q))$: add $(w_1:p)$ and $(w_1:\\Box\\neg q)$ to True."
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "$w_2:q$ is added to True (from $\\Diamond q$) and then to False (from $\\Box\\neg q$ at $w_1$), closing that branch.",
+              "section_ref": "Section 10.5: SGT 10.1",
+              "notes_quote": "Apply $(\\Box_\\text{true})$ to $(w_1:\\Box\\neg q)$ with $(w_1,w_2)$: add $(w_2:\\neg q)$ to True, which means $(w_2:q)$ in False. But $(w_2:q)$ in True — closed."
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "$F_2$ is unsatisfiable — no model of any size satisfies it.",
+              "section_ref": "Section 10.5: SGT 10.1",
+              "notes_quote": ""
+            },
+            {
+              "letter": "E",
+              "is_correct": true,
+              "text": "Both Branch A (p false vs p true) and Branch B (the q/¬q contradiction) close.",
+              "section_ref": "Section 10.5: SGT 10.1",
+              "notes_quote": "Branch A: $(w_1:p)$ in False. But $(w_1:p)$ in True — closed. ... But $(w_2:q)$ in True — closed."
+            }
+          ]
+        },
+        {
+          "id": "q22",
+          "source_ref": "Section 10.5: SGT 10.2 — Proving $A_K$ Valid",
+          "text": "To prove $A_K = \\Box(p \\to q) \\to (\\Box p \\to \\Box q)$ is valid over all frames, which of the following steps in the tableau are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Place $A_K$ in the False column of the initial tableau"},
+            {"letter": "B", "text": "Applying $(\\to_\\text{false})$ twice yields $(w_0:\\Box(p\\to q))$ in True, $(w_0:\\Box p)$ in True, and $(w_0:\\Box q)$ in False"},
+            {"letter": "C", "text": "Applying $(\\Box_\\text{false})$ to $(w_0:\\Box q)$ introduces fresh $w_1$ with $(w_1:q)$ in False"},
+            {"letter": "D", "text": "Branch A (where $(w_1:p)$ is in False) is open"},
+            {"letter": "E", "text": "Both branches close, proving $A_K$ is valid in all frames"}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "To check validity, place the formula in False to search for a counter-model.",
+              "section_ref": "Section 10.5: SGT 10.2",
+              "notes_quote": "To show $A_K$ is valid over all frames, place $A_K$ in False in the initial tableau"
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "Two applications of $(\\to_\\text{false})$ decompose the nested implication.",
+              "section_ref": "Section 10.5: SGT 10.2",
+              "notes_quote": "Apply $(\\to_\\text{false})$: $(w_0:\\Box(p\\to q))$ in True, $(w_0:(\\Box p \\to \\Box q))$ in False. Apply $(\\to_\\text{false})$: $(w_0:\\Box p)$ in True, $(w_0:\\Box q)$ in False."
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "$(\\Box_\\text{false})$ introduces a fresh world where $q$ is false.",
+              "section_ref": "Section 10.5: SGT 10.2",
+              "notes_quote": "Apply $(\\Box_\\text{false})$ to $(w_0:\\Box q)$: introduce $w_1$, add $(w_1:q)$ to False and $(w_0,w_1)$ to Relation."
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "Branch A (where $(w_1:p)$ is in False) is CLOSED because $(w_1:p)$ is also in True (from $(\\Box_\\text{true})$ on $(w_0:\\Box p)$).",
+              "section_ref": "Section 10.5: SGT 10.2",
+              "notes_quote": "Branch A: $(w_1:p)$ in False. But $(w_1:p)$ in True — closed."
+            },
+            {
+              "letter": "E",
+              "is_correct": true,
+              "text": "All branches close, confirming $A_K$ is valid in all frames.",
+              "section_ref": "Section 10.5: SGT 10.2",
+              "notes_quote": "Both branches closed. Therefore $\\neg A_K$ is unsatisfiable, so $A_K$ is valid in all frames."
+            }
+          ]
+        },
+        {
+          "id": "q23",
+          "source_ref": "Section 10.5: SGT 10.3 — Validity over Transitive Frames",
+          "text": "To prove $A_4 = \\Diamond\\Diamond p \\to \\Diamond p$ valid over transitive frames, which of the following are true of the tableau proof? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Place $A_4$ in False: $(w_0:\\Diamond\\Diamond p)$ in True and $(w_0:\\Diamond p)$ in False"},
+            {"letter": "B", "text": "$(\\Diamond_\\text{true})$ introduces $w_1$ with $(w_1:\\Diamond p)$ in True; transitivity later adds $(w_0, w_2)$ to Relation"},
+            {"letter": "C", "text": "$(\\Diamond_\\text{false})$ applied to $(w_0:\\Diamond p)$ with relation $(w_0,w_2)$ yields $(w_2:p)$ in False, causing a contradiction"},
+            {"letter": "D", "text": "The proof works over all frames, not just transitive ones"},
+            {"letter": "E", "text": "Transitivity closure is the key step that closes the tableau"}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "Validity checking places the formula in False, and $(\\to_\\text{false})$ decomposes the implication.",
+              "section_ref": "Section 10.5: SGT 10.3",
+              "notes_quote": "Apply $(\\to_\\text{false})$: $(w_0:\\Diamond\\Diamond p)$ in True, $(w_0:\\Diamond p)$ in False."
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "$w_1$ is introduced by $(\\Diamond_\\text{true})$, and then $w_2$ is introduced from $w_1$, after which transitivity adds $(w_0,w_2)$.",
+              "section_ref": "Section 10.5: SGT 10.3",
+              "notes_quote": "Apply $(\\Diamond_\\text{true})$ to $(w_0:\\Diamond\\Diamond p)$: introduce $w_1$... Transitive closure: $(w_0,w_1),(w_1,w_2) \\in R \\Rightarrow$ add $(w_0,w_2)$ to Relation."
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "Once $(w_0,w_2)$ is in Relation, $(\\Diamond_\\text{false})$ forces $(w_2:p)$ into False, contradicting $(w_2:p)$ in True.",
+              "section_ref": "Section 10.5: SGT 10.3",
+              "notes_quote": "Apply $(\\Diamond_\\text{false})$ to $(w_0:\\Diamond p)$ with $(w_0,w_2)$: add $(w_2:p)$ to False. But $(w_2:p)$ in True — closed."
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "$A_4$ (in this $\\Diamond\\Diamond p \\to \\Diamond p$ form) is only valid over transitive frames — the proof relies on the transitivity closure step.",
+              "section_ref": "Section 10.5: SGT 10.3",
+              "notes_quote": "$A_4$ is valid over all transitive frames."
+            },
+            {
+              "letter": "E",
+              "is_correct": true,
+              "text": "Without transitivity, the relation $(w_0,w_2)$ would not be added, and the branch might remain open.",
+              "section_ref": "Section 10.5: SGT 10.3",
+              "notes_quote": "Transitive closure: $(w_0,w_1),(w_1,w_2) \\in R \\Rightarrow$ add $(w_0,w_2)$ to Relation."
+            }
+          ]
+        },
+        {
+          "id": "q24",
+          "source_ref": "Section 10.5: SGT 10.4 — Looping Issue",
+          "text": "Regarding the looping issue in SGT 10.4 with $F = \\Box(p \\to \\Diamond q) \\wedge \\Box(q \\to \\Diamond p) \\wedge \\Diamond p$ on transitive frames, which of the following are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "The formula $F$ causes an infinite chain $w_0, w_1, w_2, \\ldots$ alternating $p$ and $q$"},
+            {"letter": "B", "text": "The blocking fix checks whether a new world's formula set already matches an existing world on the branch"},
+            {"letter": "C", "text": "If blocking applies, the algorithm reuses an existing world label instead of creating a new one"},
+            {"letter": "D", "text": "The looping proves $F$ is unsatisfiable on transitive frames"},
+            {"letter": "E", "text": "Blocking (loop-checking) ensures termination while preserving completeness"}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "The looping generates new worlds at each step, alternating between $p$ and $q$.",
+              "section_ref": "Section 10.5: SGT 10.4",
+              "notes_quote": "This repeats indefinitely: $w_4, w_5, \\ldots$ ... causing an infinite chain $w_0, w_1, w_2, \\ldots$ alternating $p$ and $q$"
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "The blocking condition is: check if the new world's formula set matches an existing world on the branch.",
+              "section_ref": "Section 10.5: SGT 10.4",
+              "notes_quote": "check whether there already exists a world $w_j$ on the current branch that has the exact same set of formulas labelled to it"
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "Reusing the existing world label prevents infinite generation of new worlds.",
+              "section_ref": "Section 10.5: SGT 10.4",
+              "notes_quote": "reuse $w_j$ (set $(w_i,w_j)$ in Relation) instead of creating a new world"
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "$F$ is satisfiable on transitive frames — the looping is a problem with the algorithm's naive implementation, not with the formula itself.",
+              "section_ref": "Section 10.5: SGT 10.4",
+              "notes_quote": ""
+            },
+            {
+              "letter": "E",
+              "is_correct": true,
+              "text": "Blocking preserves the algorithm's soundness and completeness while guaranteeing termination.",
+              "section_ref": "Section 10.5: SGT 10.4",
+              "notes_quote": "This blocking condition ensures termination while preserving completeness."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-6",
+      "title": "Key Definitions",
+      "questions": [
+        {
+          "id": "q25",
+          "source_ref": "Key Definitions",
+          "text": "Which of the following correctly match tableau terms to their definitions? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "A **branching rule** splits the tableau into two sub-tableaux (e.g., $(\\vee_\\text{true})$, $(\\wedge_\\text{false})$)"},
+            {"letter": "B", "text": "A **non-branching rule** adds formulas to the current tableau without splitting (e.g., $(\\wedge_\\text{true})$, $(\\vee_\\text{false})$)"},
+            {"letter": "C", "text": "A **fresh label** is a world label already appearing elsewhere in the tableau branch"},
+            {"letter": "D", "text": "The **Tree Model Property** states that every satisfiable modal formula is satisfiable in a tree-shaped model"},
+            {"letter": "E", "text": "**Transitive closure** adds $(x,z)$ to Relation whenever $(x,y)$ and $(y,z)$ are both in Relation"}
+          ],
+          "correct": ["A", "B", "D", "E"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "Branching rules split the tree — disjunction in True and conjunction in False both require branching.",
+              "section_ref": "Key Definitions",
+              "notes_quote": "Branching rule: A tableau rule that splits into two sub-tableaux (e.g., $\\vee_\\text{true}$, $\\wedge_\\text{false}$)"
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "Non-branching rules add formulas to the same branch — conjunction in True and disjunction in False are examples.",
+              "section_ref": "Key Definitions",
+              "notes_quote": "Non-branching rule: A tableau rule that adds formulas to the current tableau without splitting (e.g., $\\wedge_\\text{true}$, $\\vee_\\text{false}$)"
+            },
+            {
+              "letter": "C",
+              "is_correct": false,
+              "text": "A fresh label is one that does NOT appear elsewhere on the current branch — it is new and unique.",
+              "section_ref": "Key Definitions",
+              "notes_quote": ""
+            },
+            {
+              "letter": "D",
+              "is_correct": true,
+              "text": "The Tree Model Property is explicitly stated in the notes and is a consequence of the tableau construction.",
+              "section_ref": "Key Definitions",
+              "notes_quote": "Tree model property: Every satisfiable modal formula is satisfiable in a model whose frame is a tree"
+            },
+            {
+              "letter": "E",
+              "is_correct": true,
+              "text": "This is the definition of transitive closure applied to the Relation column.",
+              "section_ref": "Key Definitions",
+              "notes_quote": "Transitive closure: When checking satisfiability w.r.t. transitive frames: if $(x,y),(y,z)$ in Relation, add $(x,z)$"
+            }
+          ]
+        },
+        {
+          "id": "q26",
+          "source_ref": "Key Definitions",
+          "text": "Which of the following correctly describe the four modal tableau rules and their key properties? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$(\\Diamond_\\text{true})$ and $(\\Box_\\text{false})$ introduce fresh world labels"},
+            {"letter": "B", "text": "$(\\Box_\\text{true})$ and $(\\Diamond_\\text{false})$ propagate across existing relations and must NOT be marked as expanded"},
+            {"letter": "C", "text": "$(\\Diamond_\\text{true})$ propagates across existing relations; $(\\Box_\\text{false})$ introduces fresh labels"},
+            {"letter": "D", "text": "All four modal rules introduce fresh world labels"},
+            {"letter": "E", "text": "$(\\Box_\\text{true})$ adds $(u_i:F)$ to True for each $(w,u_i)$ already in Relation"}
+          ],
+          "correct": ["A", "B", "E"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "Both of these rules witness the existence of an accessible world, so they introduce fresh labels.",
+              "section_ref": "Key Definitions",
+              "notes_quote": "$(\\Diamond_\\text{true})$ rule: If $(w:\\Diamond F)$ in True: add fresh $u$, put $(u:F)$ in True, add $(w,u)$ to Relation. $(\\Box_\\text{false})$ rule: If $(w:\\Box F)$ in False: add fresh $u$, put $(u:F)$ in False, add $(w,u)$ to Relation"
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "These rules universally quantify over accessible worlds, and must fire again if new relations are added.",
+              "section_ref": "Key Definitions",
+              "notes_quote": "$(\\Box_\\text{true})$ rule: If $(w:\\Box F)$ in True: for each $(w,u_i)$ in Relation, add $(u_i:F)$ to True. Do NOT mark as expanded. $(\\Diamond_\\text{false})$ rule: If $(w:\\Diamond F)$ in False: for each $(w,u_i)$ in Relation, add $(u_i:F)$ to False. Do NOT mark as expanded."
+            },
+            {
+              "letter": "C",
+              "is_correct": false,
+              "text": "This is reversed: $(\\Diamond_\\text{true})$ introduces fresh labels; $(\\Box_\\text{false})$ also introduces fresh labels. $(\\Box_\\text{true})$ and $(\\Diamond_\\text{false})$ propagate across existing relations.",
+              "section_ref": "Key Definitions",
+              "notes_quote": ""
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "Only $(\\Diamond_\\text{true})$ and $(\\Box_\\text{false})$ introduce fresh labels. $(\\Box_\\text{true})$ and $(\\Diamond_\\text{false})$ propagate across existing relations.",
+              "section_ref": "Key Definitions",
+              "notes_quote": ""
+            },
+            {
+              "letter": "E",
+              "is_correct": true,
+              "text": "$(\\Box_\\text{true})$ applies to all currently known accessible worlds from $w$.",
+              "section_ref": "Key Definitions",
+              "notes_quote": "$(\\Box_\\text{true})$ rule: If $(w:\\Box F)$ in True: for each $(w,u_i)$ in Relation, add $(u_i:F)$ to True."
+            }
+          ]
+        },
+        {
+          "id": "q27",
+          "source_ref": "Key Definitions",
+          "text": "Which of the following correctly distinguish propositional tableaux from modal tableaux? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Propositional tableaux have two columns (True, False); modal tableaux have three columns (True, False, Relation)"},
+            {"letter": "B", "text": "Modal tableaux use tagged formulas $(w:F)$ whereas propositional tableaux use plain formulas"},
+            {"letter": "C", "text": "Modal tableaux have four additional rules for $\\Box$ and $\\Diamond$ beyond the eight propositional rules"},
+            {"letter": "D", "text": "Propositional tableaux can check modal validity but not modal satisfiability"},
+            {"letter": "E", "text": "The closure condition differs: propositional tableaux close when a formula appears in both columns; modal tableaux close when a tagged formula appears in both columns"}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "The Relation column is the key structural addition in modal tableaux.",
+              "section_ref": "Key Definitions",
+              "notes_quote": "Tableau: A two-column (propositional) or three-column (modal) table with True, False, and (for modal) Relation columns"
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "Tagged formulas track which world a formula holds at — essential in modal logic.",
+              "section_ref": "Key Definitions",
+              "notes_quote": "Tagged formula: A pair $(w:F)$ linking a modal formula $F$ to a world label $w$"
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "The four modal rules $(\\Diamond_\\text{true}), (\\Box_\\text{false}), (\\Box_\\text{true}), (\\Diamond_\\text{false})$ extend the eight propositional rules.",
+              "section_ref": "Section 10.3.4: Modal Rules",
+              "notes_quote": "There are four additional rules for formulas involving $\\Box$ and $\\Diamond$"
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "Propositional tableaux cannot check modal validity or satisfiability — they lack the world-tracking apparatus needed for modal logic.",
+              "section_ref": "Key Definitions",
+              "notes_quote": ""
+            },
+            {
+              "letter": "E",
+              "is_correct": true,
+              "text": "The closure condition is analogous but uses tagged formulas in the modal case to ensure the contradiction is at the same world.",
+              "section_ref": "Section 10.3.2: Modal Tableaux",
+              "notes_quote": "A modal tableau is closed if $\\mathbf{True} \\cap \\mathbf{False} \\neq \\emptyset$ (a tagged formula $(w:F)$ appears in both columns)"
+            }
+          ]
+        },
+        {
+          "id": "q28",
+          "source_ref": "Summary",
+          "text": "Which of the following correctly summarise the learning objectives for Week 10? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "A formula $F$ is valid iff placing $F$ in the False column leads to every branch closing"},
+            {"letter": "B", "text": "The algorithm terminates when all formulas are expanded AND every $\\Box$-True and $\\Diamond$-False formula has been applied to all relations"},
+            {"letter": "C", "text": "Frame-restricted satisfiability requires closing the Relation set under the frame properties after each relation-adding rule"},
+            {"letter": "D", "text": "The propositional tableau algorithm has exactly four rules in total"},
+            {"letter": "E", "text": "On transitive frames, blocking/loop-checking (reusing world labels when formula sets repeat) ensures termination"}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "This is the validity-checking procedure stated in the summary.",
+              "section_ref": "Summary",
+              "notes_quote": "LO 2 (Tautology checking): $F$ is valid iff $\\neg F$ is unsatisfiable. Place $F$ in False and run the algorithm; validity holds iff every branch closes."
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "This is the termination condition for modal tableaux.",
+              "section_ref": "Section 10.3.5: Termination and Reading off a Model",
+              "notes_quote": "The algorithm terminates when: All formulas in True and False have been fully expanded, AND every $\\Box$ formula in True and every $\\Diamond$ formula in False has been applied to all relations in Relation"
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "Frame-restricted checks require Relation closure after each relation-adding step.",
+              "section_ref": "Summary",
+              "notes_quote": "LO 6 (Frame-restricted satisfiability): After each relation-adding rule, close Relation under the required frame property"
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "The propositional tableau algorithm has EIGHT rules (four for the True column and four for the False column), not four.",
+              "section_ref": "Summary",
+              "notes_quote": ""
+            },
+            {
+              "letter": "E",
+              "is_correct": true,
+              "text": "Blocking resolves the infinite-looping problem on transitive frames.",
+              "section_ref": "Summary",
+              "notes_quote": "LO 8 (Termination issues): On transitive frames, some satisfiable formulas can cause infinite branching. Blocking/loop-checking (reusing world labels when formula sets repeat) resolves this."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

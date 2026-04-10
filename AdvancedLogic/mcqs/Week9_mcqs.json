@@ -1,0 +1,621 @@
+{
+  "module": "AdvancedLogic",
+  "week": 9,
+  "title": "Week 9: Introduction to Modal Logics — Kripke Semantics and Model-Checking",
+  "sections": [
+    {
+      "id": "section-1",
+      "title": "9.1 Motivation — Why Modal Logic?",
+      "questions": [
+        {
+          "id": "q1",
+          "source_ref": "Section 9.1: Motivation",
+          "text": "Why is classical propositional logic insufficient for reasoning about modalities like 'possibly' and 'necessarily'? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Classical logic operates in a single static world where every proposition is simply true or false"},
+            {"letter": "B", "text": "Classical logic cannot express words like 'possibly', 'necessarily', 'I know that', 'it will be the case that'"},
+            {"letter": "C", "text": "Classical logic has too many connectives and needs to be simplified"},
+            {"letter": "D", "text": "Modal operators are non-truth-functional: $\\Diamond F$'s value is not determined solely by $F$'s value"}
+          ],
+          "correct": ["A", "B", "D"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "Classical propositional logic gives a fixed, here-and-now picture with no notion of possible worlds.", "section_ref": "Section 9.1", "notes_quote": "Classical propositional logic operates in a single, static world where every proposition is simply true or false"},
+            {"letter": "B", "is_correct": true, "text": "Modalities change the mode of truth and cannot be expressed with classical connectives.", "section_ref": "Section 9.1", "notes_quote": "natural language reasoning often involves modalities — words like 'possibly', 'necessarily', 'I know that', 'I believe that', 'it will be the case that'"},
+            {"letter": "C", "is_correct": false, "text": "The motivation is not about too many connectives but about the inability to express modalities.", "section_ref": "Section 9.1", "notes_quote": ""},
+            {"letter": "D", "is_correct": true, "text": "Modal operators are non-truth-functional: knowing $F$ is true/false does not determine $\\Diamond F$.", "section_ref": "Section 9.1", "notes_quote": "Modal operators are non-truth-functional: the truth value of $\\Diamond F$ is not determined solely by the truth value of $F$"}
+          ]
+        },
+        {
+          "id": "q2",
+          "source_ref": "Section 9.1: Why truth tables cannot work",
+          "text": "There are exactly four possible truth tables for a unary connective on $\\{0,1\\}$. Which of the following correctly describes why none of them captures 'possibly'? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Op$_3$ (identity) only allows what is currently true to be possible, ignoring other worlds"},
+            {"letter": "B", "text": "Op$_4$ (always true) would make everything possible, even contradictions"},
+            {"letter": "C", "text": "Op$_1$ (always false) would make nothing possible"},
+            {"letter": "D", "text": "Op$_2$ (negation) would make something possible iff it is currently false, which is wrong"},
+            {"letter": "E", "text": "All four truth tables fail to capture 'possibly' because possibility depends on what happens in other worlds"}
+          ],
+          "correct": ["A", "B", "C", "D", "E"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "Op$_3$ is the identity: $\\text{Op}_3(F) = F$, meaning only what is true is possible — ignoring accessible worlds.", "section_ref": "Section 9.1", "notes_quote": "$\\text{Op}_3$: identity — only what is true is possible"},
+            {"letter": "B", "is_correct": true, "text": "Op$_4$ outputs 1 always: everything is possible, even when nothing is accessible.", "section_ref": "Section 9.1", "notes_quote": "$\\text{Op}_4$: 'true' operator — nothing is impossible"},
+            {"letter": "C", "is_correct": true, "text": "Op$_1$ outputs 0 always: nothing is possible, which is absurd.", "section_ref": "Section 9.1", "notes_quote": "$\\text{Op}_1$: 'false' operator — nothing is possible"},
+            {"letter": "D", "is_correct": true, "text": "Op$_2$ is negation: $F$ is possible iff $F$ is currently false — this is not the intended meaning of possibility.", "section_ref": "Section 9.1", "notes_quote": "$\\text{Op}_2$: negation — not useful"},
+            {"letter": "E", "is_correct": true, "text": "Possibility is relative to accessible worlds, a relational notion that truth tables cannot express.", "section_ref": "Section 9.1", "notes_quote": "None of these satisfactorily captures possibility/necessity. Hence modalities require a richer semantic framework."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-2",
+      "title": "9.2 Well-Formed Modal Formulas",
+      "questions": [
+        {
+          "id": "q3",
+          "source_ref": "Section 9.2: Well-Formed Modal Formulas",
+          "text": "The set $\\mathit{Fml}^\\Box$ of well-formed modal formulas is defined inductively. Which of the following are well-formed modal formulas? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$\\Box p$"},
+            {"letter": "B", "text": "$\\Diamond\\Box p$"},
+            {"letter": "C", "text": "$\\Box(p \\to q)$"},
+            {"letter": "D", "text": "$\\Diamond p \\to \\Box q$"},
+            {"letter": "E", "text": "$p \\Box q$ (p and necessarily q)"}
+          ],
+          "correct": ["A", "B", "C", "D"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "$\\Box p$ is well-formed: $p \\in \\mathit{Fml}^\\Box$ and $\\Box F \\in \\mathit{Fml}^\\Box$ for any $F$.", "section_ref": "Section 9.2", "notes_quote": "Examples of modal formulas: $\\Box p$, $\\Diamond q$, $\\Box(p \\to q)$, $\\Diamond \\Box p$, $\\Box \\Diamond \\neg p$, $\\Diamond p \\to \\Box q$"},
+            {"letter": "B", "is_correct": true, "text": "$\\Diamond\\Box p$ is well-formed: $\\Box p \\in \\mathit{Fml}^\\Box$ and $\\Diamond$ applied to it gives another formula.", "section_ref": "Section 9.2", "notes_quote": "Examples of modal formulas: $\\Diamond \\Box p$"},
+            {"letter": "C", "is_correct": true, "text": "$p \\to q$ is a modal formula; applying $\\Box$ gives $\\Box(p \\to q)$.", "section_ref": "Section 9.2", "notes_quote": "Examples of modal formulas: $\\Box(p \\to q)$"},
+            {"letter": "D", "is_correct": true, "text": "$\\Diamond p$ and $\\Box q$ are modal formulas; combining with $\\to$ gives another.", "section_ref": "Section 9.2", "notes_quote": "Examples of modal formulas: $\\Diamond p \\to \\Box q$"},
+            {"letter": "E", "is_correct": false, "text": "$p \\Box q$ is not syntactically well-formed — $\\Box$ is a unary prefix operator, not a binary infix one.", "section_ref": "Section 9.2", "notes_quote": ""}
+          ]
+        },
+        {
+          "id": "q4",
+          "source_ref": "Section 9.2: Well-Formed Modal Formulas",
+          "text": "Which of the following correctly describe the relationship between $\\mathit{Fml}$ (classical propositional formulas) and $\\mathit{Fml}^\\Box$ (modal formulas)? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$\\mathit{Fml} \\subseteq \\mathit{Fml}^\\Box$: every classical propositional formula is a modal formula"},
+            {"letter": "B", "text": "$\\mathit{Fml}^\\Box \\subseteq \\mathit{Fml}$: every modal formula is a classical formula"},
+            {"letter": "C", "text": "Modal formulas extend propositional formulas by adding $\\Box F$ and $\\Diamond F$ as new constructs"},
+            {"letter": "D", "text": "$\\Box$ and $\\Diamond$ are the two new unary connectives added to propositional logic"}
+          ],
+          "correct": ["A", "C", "D"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "Since the base case and classical connectives are all included in $\\mathit{Fml}^\\Box$, every classical formula is also modal.", "section_ref": "Section 9.2", "notes_quote": "classical propositional formulas are a subset: $\\mathit{Fml} \\subseteq \\mathit{Fml}^\\Box$"},
+            {"letter": "B", "is_correct": false, "text": "$\\mathit{Fml}^\\Box$ is strictly larger; $\\Box p$ is a modal formula but not a classical one.", "section_ref": "Section 9.2", "notes_quote": ""},
+            {"letter": "C", "is_correct": true, "text": "Modal formulas add $\\Box F$ and $\\Diamond F$ to the inductive grammar.", "section_ref": "Section 9.2", "notes_quote": "If $F, G \\in \\mathit{Fml}^\\Box$ then so are: $\\neg F$, $(F \\wedge G)$, $(F \\vee G)$, $(F \\to G)$, $\\Box F$, $\\Diamond F$"},
+            {"letter": "D", "is_correct": true, "text": "$\\Box$ ('necessarily') and $\\Diamond$ ('possibly') are the two new unary modal operators.", "section_ref": "Section 9.2", "notes_quote": "two new unary connectives called modal operators: $\\Diamond F$ ('$F$ is possibly true') and $\\Box F$ ('$F$ is necessarily true')"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-3",
+      "title": "9.3 Kripke Semantics",
+      "questions": [
+        {
+          "id": "q5",
+          "source_ref": "Section 9.3.1: Kripke Models",
+          "text": "A Kripke model $\\mathfrak{M} = \\langle W, R, V \\rangle$ is defined with three components. Which of the following correctly describe these components? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$W$ is a non-empty set of possible worlds"},
+            {"letter": "B", "text": "$R \\subseteq W \\times W$ is a binary accessibility relation on $W$"},
+            {"letter": "C", "text": "$V: W \\times \\text{Prop} \\to \\{0,1\\}$ assigns a Boolean value to each world-proposition pair"},
+            {"letter": "D", "text": "$W$ must be a finite set"},
+            {"letter": "E", "text": "The Kripke frame is the pair $\\mathfrak{F} = \\langle W, R \\rangle$ (without the valuation)"}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "$W$ is the non-empty set of possible worlds (vertices of the directed graph).", "section_ref": "Section 9.3.1", "notes_quote": "$W$ is a non-empty set of possible worlds (vertices)"},
+            {"letter": "B", "is_correct": true, "text": "$R \\subseteq W \\times W$ represents directed accessibility between worlds.", "section_ref": "Section 9.3.1", "notes_quote": "$R \\subseteq W \\times W$ is a binary accessibility relation on $W$ (directed edges between worlds)"},
+            {"letter": "C", "is_correct": true, "text": "$V$ assigns to each world $w$ and proposition $p$ a truth value 0 or 1.", "section_ref": "Section 9.3.1", "notes_quote": "$V : W \\times \\text{Prop} \\to \\{0, 1\\}$ is a propositional valuation"},
+            {"letter": "D", "is_correct": false, "text": "$W$ need not be finite; the definition only requires it to be non-empty.", "section_ref": "Section 9.3.1", "notes_quote": ""},
+            {"letter": "E", "is_correct": true, "text": "The Kripke frame is $\\langle W, R \\rangle$ — the model without the valuation.", "section_ref": "Section 9.3.1", "notes_quote": "The pair $\\mathfrak{F} = \\langle W, R \\rangle$ is the Kripke frame underlying $\\mathfrak{M}$."}
+          ]
+        },
+        {
+          "id": "q6",
+          "source_ref": "Section 9.3.2: Satisfiability and Validity",
+          "text": "The satisfaction relation $\\mathfrak{M}, w \\models F$ is defined for modal formulas. Which of the following correctly state the clauses for $\\Box$ and $\\Diamond$? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$\\mathfrak{M}, w \\models \\Diamond F$ iff there exists $u$ with $(w,u) \\in R$ and $\\mathfrak{M}, u \\models F$"},
+            {"letter": "B", "text": "$\\mathfrak{M}, w \\models \\Box F$ iff for all $u$ with $(w,u) \\in R$, $\\mathfrak{M}, u \\models F$"},
+            {"letter": "C", "text": "$\\mathfrak{M}, w \\models \\Box F$ iff $\\mathfrak{M}, w \\models F$ (Box is the identity)"},
+            {"letter": "D", "text": "If $w$ has no successors in $R$, then $\\Box F$ is vacuously true at $w$"},
+            {"letter": "E", "text": "If $w$ has no successors in $R$, then $\\Diamond F$ is vacuously false at $w$"}
+          ],
+          "correct": ["A", "B", "D", "E"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "$\\Diamond F$ is true at $w$ if $F$ holds at some accessible world.", "section_ref": "Section 9.3.2", "notes_quote": "$\\mathfrak{M}, w \\models \\Diamond F \\iff \\exists u \\in W;\\ (w, u) \\in R \\text{ and } \\mathfrak{M}, u \\models F$"},
+            {"letter": "B", "is_correct": true, "text": "$\\Box F$ is true at $w$ if $F$ holds at all accessible worlds.", "section_ref": "Section 9.3.2", "notes_quote": "$\\mathfrak{M}, w \\models \\Box F \\iff \\forall u \\in W;\\ (w, u) \\in R \\text{ implies } \\mathfrak{M}, u \\models F$"},
+            {"letter": "C", "is_correct": false, "text": "$\\Box F$ looks at all successors of $w$, not at $w$ itself (unless the frame is reflexive).", "section_ref": "Section 9.3.2", "notes_quote": ""},
+            {"letter": "D", "is_correct": true, "text": "With no successors, the universal quantification in $\\Box F$ is vacuously true.", "section_ref": "Section 9.3.2", "notes_quote": "If $w$ has no successors (no $(w, u) \\in R$), then $\\Box F$ is vacuously true"},
+            {"letter": "E", "is_correct": true, "text": "With no successors, the existential in $\\Diamond F$ cannot be satisfied.", "section_ref": "Section 9.3.2", "notes_quote": "If $w$ has no successors (no $(w, u) \\in R$), then $\\Diamond F$ is vacuously false at $w$."}
+          ]
+        },
+        {
+          "id": "q7",
+          "source_ref": "Section 9.3.3: The W(F) Notation",
+          "text": "The notation $W(F)$ is used in model-checking. Which of the following correctly describe it and its use? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$W(F) = \\{w \\in W : \\mathfrak{M}, w \\models F\\}$ is the set of worlds where $F$ holds"},
+            {"letter": "B", "text": "$W(\\neg F) = W \\setminus W(F)$"},
+            {"letter": "C", "text": "$W(F \\wedge G) = W(F) \\cap W(G)$"},
+            {"letter": "D", "text": "$W(F \\vee G) = W(F) \\setminus W(G)$"},
+            {"letter": "E", "text": "$W(\\Diamond F) = \\{w \\in W : \\exists v \\in W(F)$ such that $(w,v) \\in R\\}$"}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "$W(F)$ is defined as the extension of $F$ — the worlds satisfying $F$.", "section_ref": "Section 9.3.3", "notes_quote": "$W(F) = \\{w \\in W : V(w, F) = 1\\}$ for the set of worlds where $F$ is satisfied"},
+            {"letter": "B", "is_correct": true, "text": "Negation flips membership: $W(\\neg F)$ contains exactly those worlds not in $W(F)$.", "section_ref": "Section 9.5", "notes_quote": "$W(\\neg F) = W \\setminus W(F)$"},
+            {"letter": "C", "is_correct": true, "text": "Conjunction corresponds to intersection of world sets.", "section_ref": "Section 9.5", "notes_quote": "$W(F \\wedge G) = W(F) \\cap W(G)$"},
+            {"letter": "D", "is_correct": false, "text": "$W(F \\vee G) = W(F) \\cup W(G)$, not set difference.", "section_ref": "Section 9.5", "notes_quote": "$W(F \\vee G) = W(F) \\cup W(G)$"},
+            {"letter": "E", "is_correct": true, "text": "$W(\\Diamond F)$ is the set of worlds that can see some world in $W(F)$.", "section_ref": "Section 9.5", "notes_quote": "$W(\\Diamond F) = \\{w \\in W : (w, v) \\in R \\text{ for some } v \\in W(F)\\}$"}
+          ]
+        },
+        {
+          "id": "q8",
+          "source_ref": "Section 9.3.4: Validity",
+          "text": "There are different levels in the validity hierarchy for modal formulas. Which of the following correctly describe these levels? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$\\mathfrak{M}, w \\models F$: $F$ is satisfied at a specific world $w$ in model $\\mathfrak{M}$"},
+            {"letter": "B", "text": "$\\mathfrak{M} \\models F$: $F$ is satisfied at every world in model $\\mathfrak{M}$"},
+            {"letter": "C", "text": "$\\mathfrak{F} \\models F$: $F$ is satisfied in every model built on frame $\\mathfrak{F}$"},
+            {"letter": "D", "text": "Validity over a frame implies validity over any model on that frame"},
+            {"letter": "E", "text": "Validity at a world implies validity over the model"}
+          ],
+          "correct": ["A", "B", "C", "D"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "This is the most basic: satisfiability at a specific world.", "section_ref": "Section 9.3.4", "notes_quote": "$\\mathfrak{M}, w \\models F$: fix model and world; existential over nothing"},
+            {"letter": "B", "is_correct": true, "text": "Model validity quantifies universally over worlds in the model.", "section_ref": "Section 9.3.4", "notes_quote": "$F$ is valid over the model $\\mathfrak{M}$ if $\\mathfrak{M}, w \\models F$ for all $w \\in W$"},
+            {"letter": "C", "is_correct": true, "text": "Frame validity quantifies over all worlds and all valuations on the frame.", "section_ref": "Section 9.3.4", "notes_quote": "$F$ is valid over the frame $\\mathfrak{F} = (W, R)$ if $\\mathfrak{M} \\models F$ for every Kripke model $\\mathfrak{M}$ with underlying frame $\\mathfrak{F}$"},
+            {"letter": "D", "is_correct": true, "text": "Frame validity is stronger: it holds for every choice of valuation, so any model satisfies it.", "section_ref": "Section 9.3.4", "notes_quote": ""},
+            {"letter": "E", "is_correct": false, "text": "Validity at a single world does not imply validity over the entire model; other worlds may not satisfy $F$.", "section_ref": "Section 9.3.4", "notes_quote": ""}
+          ]
+        },
+        {
+          "id": "q9",
+          "source_ref": "Section 9.3.5: The Minimal Modal Logic K",
+          "text": "The minimal modal logic $\\mathbf{K}$ is defined as the set of all modal formulas valid in every Kripke frame. Which of the following statements about $\\mathbf{K}$ are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$\\mathbf{K} = \\{F \\in \\mathit{Fml}^\\Box : \\mathfrak{F} \\models F \\text{ for all frames } \\mathfrak{F}\\}$"},
+            {"letter": "B", "text": "The Completeness Theorem states $\\Gamma \\models^{\\mathbf{K}} F$ iff $\\Gamma \\vdash^{\\mathbf{K}} F$"},
+            {"letter": "C", "text": "Axiom $A_K$: $\\Box(p \\to q) \\to (\\Box p \\to \\Box q)$ is valid in all Kripke frames"},
+            {"letter": "D", "text": "$\\mathbf{K}$ is valid only in reflexive Kripke frames"}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "This is the definition of $\\mathbf{K}$ as the set of universal validities.", "section_ref": "Section 9.3.5", "notes_quote": "$\\mathbf{K} = \\{F \\in \\mathit{Fml}^\\Box : \\top \\models^{\\mathbf{K}} F\\} = \\{F : \\mathfrak{F} \\models F \\text{ for all } \\mathfrak{F}\\}$"},
+            {"letter": "B", "is_correct": true, "text": "The Completeness Theorem for $\\mathbf{K}$ equates semantic consequence with provability.", "section_ref": "Section 9.3.5", "notes_quote": "Theorem 9.6 (Completeness of K): $\\Gamma \\models^{\\mathbf{K}} F \\iff \\Gamma \\vdash^{\\mathbf{k}} F$"},
+            {"letter": "C", "is_correct": true, "text": "Axiom $A_K = \\Box(p \\to q) \\to (\\Box p \\to \\Box q)$ is valid in every Kripke frame.", "section_ref": "Section 9.3.5", "notes_quote": "Important tautology (Axiom K): $\\Box(p \\to q) \\to (\\Box p \\to \\Box q)$. This is valid in all Kripke frames."},
+            {"letter": "D", "is_correct": false, "text": "$\\mathbf{K}$ is valid in all Kripke frames (not just reflexive ones). Reflexive frames correspond to the stronger logic $\\mathbf{T}$.", "section_ref": "Section 9.3.5", "notes_quote": ""}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-4",
+      "title": "9.4 Frame Properties and Associated Axioms",
+      "questions": [
+        {
+          "id": "q10",
+          "source_ref": "Section 9.4: Reflexive Frames and A_T",
+          "text": "The axiom $A_T = \\Box p \\to p$ ('if $p$ is necessary then $p$ is true') and reflexive frames. Which of the following are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$A_T$ is not valid in all Kripke frames: a frame with $W=\\{a\\}$, $R=\\varnothing$, $V(a,p)=0$ is a counterexample"},
+            {"letter": "B", "text": "$A_T$ is valid in all reflexive frames"},
+            {"letter": "C", "text": "Proof of validity on reflexive frames: if $\\mathfrak{M},w \\models \\Box p$ then since $(w,w) \\in R$, we get $\\mathfrak{M},w \\models p$"},
+            {"letter": "D", "text": "$A_T$ is valid in all transitive frames as well as reflexive frames"}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "With no successors and $V(a,p)=0$: $\\Box p$ is vacuously true but $p$ is false, violating $A_T$.", "section_ref": "Section 9.4", "notes_quote": "Not valid in all frames: Take $W = \\{a\\}$, $R = \\emptyset$, $V(a,p)=0$. Then $\\Box p$ is vacuously true but $p$ is false, so $\\mathfrak{M}, a \\not\\models A_T$."},
+            {"letter": "B", "is_correct": true, "text": "$A_T$ characterises exactly the class of reflexive frames.", "section_ref": "Section 9.4", "notes_quote": "Valid in all reflexive frames: Proof by contradiction. ...Since the frame is reflexive, $(w,w) \\in R$, so from $\\Box p$ we get $\\mathfrak{M}, w \\models p$"},
+            {"letter": "C", "is_correct": true, "text": "Reflexivity gives $(w,w) \\in R$; applying the $\\Box p$ condition to the self-loop yields $p$ at $w$.", "section_ref": "Section 9.4", "notes_quote": "Since the frame is reflexive, $(w,w) \\in R$, so from $\\Box p$ we get $\\mathfrak{M}, w \\models p$ — contradiction."},
+            {"letter": "D", "is_correct": false, "text": "$A_T$ is not necessarily valid on transitive frames (which need not be reflexive). A counterexample: $W=\\{a,b\}$, $R=\\{(a,b),(b,b)\\}$, $V(a,p)=0$, $V(b,p)=1$. Then $a$ has no self-loop, so $\\Box p$ at $a$ but $p$ is false at $a$.", "section_ref": "Section 9.4", "notes_quote": ""}
+          ]
+        },
+        {
+          "id": "q11",
+          "source_ref": "Section 9.4: Transitive Frames and A_4",
+          "text": "The axiom $A_4 = \\Diamond\\Diamond p \\to \\Diamond p$ ('possibly possibly implies possibly') and transitive frames. Which of the following are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$A_4$ is not valid in all frames: a counterexample uses $W=\\{a,b,c\\}$, $R=\\{(a,b),(b,c)\\}$, $V(c,p)=1$"},
+            {"letter": "B", "text": "In the counterexample, $\\mathfrak{M},a \\models \\Diamond\\Diamond p$ (via $b$ then $c$) but $\\mathfrak{M},a \\not\\models \\Diamond p$ (only $b$ is accessible, $p$ false at $b$)"},
+            {"letter": "C", "text": "$A_4$ is valid in all transitive frames"},
+            {"letter": "D", "text": "Proof of validity on transitive frames: if $\\Diamond\\Diamond p$ at $w$, get $u$ with $(w,u)\\in R$ and $\\Diamond p$ at $u$, get $v$ with $(u,v)\\in R$ and $p$ at $v$; transitivity gives $(w,v)\\in R$ so $\\Diamond p$ at $w$"}
+          ],
+          "correct": ["A", "B", "C", "D"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "The frame $\\{a,b,c\\}$ with $R=\\{(a,b),(b,c)\\}$ is a counterexample to $A_4$ for non-transitive frames.", "section_ref": "Section 9.4", "notes_quote": "Take $W = \\{a,b,c\\}$, $R = \\{(a,b),(b,c)\\}$, $V(c,p)=1$, all others 0"},
+            {"letter": "B", "is_correct": true, "text": "In the counterexample, $a$ can reach $c$ (satisfying $p$) via two steps, but not directly.", "section_ref": "Section 9.4", "notes_quote": "Then $\\mathfrak{M}, a \\models \\Diamond\\Diamond p$ (via $b$ then $c$), but $\\mathfrak{M}, a \\not\\models \\Diamond p$ (only $b$ accessible and $p$ is false there)."},
+            {"letter": "C", "is_correct": true, "text": "$A_4$ characterises exactly the class of transitive frames.", "section_ref": "Section 9.4", "notes_quote": "Valid in all transitive frames"},
+            {"letter": "D", "is_correct": true, "text": "Transitivity closes the two-step path into a direct step, yielding $\\Diamond p$ at $w$.", "section_ref": "Section 9.4", "notes_quote": "By transitivity, $(w,v)\\in R$, so $\\mathfrak{M}, w \\models \\Diamond p$ — contradicts $\\mathfrak{M}, w \\not\\models \\Diamond p$."}
+          ]
+        },
+        {
+          "id": "q12",
+          "source_ref": "Section 9.4: Frame Properties Table",
+          "text": "The correspondence between frame properties and modal axioms is a key theme. Which of the following correctly match frame properties with their axioms? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Reflexive frames ($\\forall x: (x,x)\\in R$) correspond to axiom $A_T: \\Box p \\to p$"},
+            {"letter": "B", "text": "Transitive frames ($(x,y),(y,z)\\in R \\Rightarrow (x,z)\\in R$) correspond to axiom $A_4: \\Diamond\\Diamond p \\to \\Diamond p$"},
+            {"letter": "C", "text": "Symmetric frames ($(x,y)\\in R \\Rightarrow (y,x)\\in R$) correspond to axiom $A_T$"},
+            {"letter": "D", "text": "All Kripke frames (with no additional properties) correspond to minimal logic $\\mathbf{K}$ with axiom $\\Box(p \\to q) \\to (\\Box p \\to \\Box q)$"}
+          ],
+          "correct": ["A", "B", "D"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "$A_T: \\Box p \\to p$ is valid iff the frame is reflexive.", "section_ref": "Section 9.4", "notes_quote": "$A_T$ (T): $\\Box p \\to p$ — Frame Property: Reflexive: $(x,x) \\in R$ for all $x$"},
+            {"letter": "B", "is_correct": true, "text": "$A_4: \\Diamond\\Diamond p \\to \\Diamond p$ is valid iff the frame is transitive.", "section_ref": "Section 9.4", "notes_quote": "$A_4$ (4): $\\Diamond\\Diamond p \\to \\Diamond p$ — Frame Property: Transitive: $(x,y),(y,z)\\in R \\Rightarrow (x,z)\\in R$"},
+            {"letter": "C", "is_correct": false, "text": "Symmetric frames correspond to axiom $B: p \\to \\Box\\Diamond p$, not $A_T$.", "section_ref": "Section 9.4", "notes_quote": ""},
+            {"letter": "D", "is_correct": true, "text": "Logic $\\mathbf{K}$ (with axiom $A_K$) corresponds to all Kripke frames without additional constraints.", "section_ref": "Section 9.3.5", "notes_quote": "This is valid in all Kripke frames."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-5",
+      "title": "9.5 The Labelling Algorithm for Model-Checking",
+      "questions": [
+        {
+          "id": "q13",
+          "source_ref": "Section 9.5: The Labelling Algorithm",
+          "text": "The Labelling Algorithm computes $W(H)$ for a formula $H$ in a Kripke model. Which of the following correctly describe the algorithm? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "The algorithm proceeds bottom-up, processing subformulas in order of increasing size"},
+            {"letter": "B", "text": "$\\Box F$ is pre-processed to $\\neg\\Diamond\\neg F$ before the algorithm runs"},
+            {"letter": "C", "text": "$F \\to G$ is pre-processed to $\\neg F \\vee G$"},
+            {"letter": "D", "text": "To check validity over $\\mathfrak{M}$, we check whether $W(H) = W$"},
+            {"letter": "E", "text": "The algorithm runs top-down, starting from $H$ and decomposing it"}
+          ],
+          "correct": ["A", "B", "C", "D"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "The divide-and-conquer strategy processes smaller subformulas first.", "section_ref": "Section 9.5", "notes_quote": "Use divide-and-conquer on subformulas, processing them in order of increasing size (bottom-up)."},
+            {"letter": "B", "is_correct": true, "text": "$\\Box F$ is rewritten as $\\neg\\Diamond\\neg F$ so only $\\Diamond$ needs a direct case.", "section_ref": "Section 9.5", "notes_quote": "$\\Box F \\mapsto \\neg\\Diamond\\neg F$"},
+            {"letter": "C", "is_correct": true, "text": "Implication is eliminated via $F \\to G \\mapsto \\neg F \\vee G$.", "section_ref": "Section 9.5", "notes_quote": "$F \\to G \\mapsto (\\neg F \\vee G)$"},
+            {"letter": "D", "is_correct": true, "text": "Model validity holds iff every world is in $W(H)$, i.e. $W(H) = W$.", "section_ref": "Section 9.5", "notes_quote": "To check validity over $\\mathfrak{M}$: check whether $W(H) = W$."},
+            {"letter": "E", "is_correct": false, "text": "The algorithm is bottom-up, not top-down. It builds up from atomic formulas.", "section_ref": "Section 9.5", "notes_quote": ""}
+          ]
+        },
+        {
+          "id": "q14",
+          "source_ref": "Section 9.5: Labelling Algorithm — Diamond Case",
+          "text": "In the Labelling Algorithm, the case $H = \\Diamond F$ is computed as follows. Which of the following are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$W(\\Diamond F) = \\{w \\in W : \\exists v \\in W(F)$ such that $(w,v) \\in R\\}$"},
+            {"letter": "B", "text": "$W(\\Diamond F)$ consists of all worlds that have at least one $R$-successor in $W(F)$"},
+            {"letter": "C", "text": "$W(\\Box F) = \\neg\\Diamond\\neg F$ is computed as $W \\setminus W(\\Diamond(W \\setminus W(F)))$"},
+            {"letter": "D", "text": "$W(\\Diamond F) = W(F)$ (Diamond is the identity operator)"}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "A world $w$ is in $W(\\Diamond F)$ iff it can see some world where $F$ holds.", "section_ref": "Section 9.5", "notes_quote": "$W(\\Diamond F) = \\{w \\in W : (w, v) \\in R \\text{ for some } v \\in W(F)\\}$"},
+            {"letter": "B", "is_correct": true, "text": "Equivalently, $w \\in W(\\Diamond F)$ iff $w$ has an $R$-successor in $W(F)$.", "section_ref": "Section 9.5", "notes_quote": "Worlds that can 'see' some world in $W(F)$."},
+            {"letter": "C", "is_correct": true, "text": "Since $\\Box F = \\neg\\Diamond\\neg F$: $W(\\Box F) = W \\setminus W(\\Diamond\\neg F) = W \\setminus W(\\Diamond(W \\setminus W(F)))$.", "section_ref": "Section 9.5", "notes_quote": "After pre-processing, $\\Box F$ becomes $\\neg\\Diamond\\neg F$, handled by Cases 6 and 2."},
+            {"letter": "D", "is_correct": false, "text": "$\\Diamond$ is not the identity: $\\Diamond F$ holds at $w$ based on what happens at successors of $w$, not $w$ itself.", "section_ref": "Section 9.5", "notes_quote": ""}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-6",
+      "title": "9.6 Worked Examples — SGT Questions",
+      "questions": [
+        {
+          "id": "q15",
+          "source_ref": "Section 9.6: SGT 9.1 — Evaluating Formulas",
+          "text": "In SGT 9.1, using the model with $W = \\{a,b,c,d,e\\}$, $W(p) = \\{a,b,c\\}$, $W(q) = \\{b,d\\}$, and the given accessibility relation, compute $W(\\Box(p \\vee \\neg q))$. Which of the following are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$W(\\neg q) = \\{a, c, e\\}$"},
+            {"letter": "B", "text": "$W(p \\vee \\neg q) = \\{a, b, c, e\\}$"},
+            {"letter": "C", "text": "$W(\\Box(p \\vee \\neg q)) = \\{a, b, d, e\\}$"},
+            {"letter": "D", "text": "World $c$ is excluded from $W(\\Box(p \\vee \\neg q))$ because $c$'s only successor $d$ is not in $W(p \\vee \\neg q)$"},
+            {"letter": "E", "text": "$W(\\Box(p \\vee \\neg q)) = \\{a, b, c, d, e\\}$ (valid over the model)"}
+          ],
+          "correct": ["A", "B", "C", "D"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "$W(\\neg q) = W \\setminus W(q) = \\{a,b,c,d,e\\} \\setminus \\{b,d\\} = \\{a,c,e\\}$.", "section_ref": "Section 9.6 / SGT 9.1", "notes_quote": "$W(\\neg q) = \\{a, c, e\\}$"},
+            {"letter": "B", "is_correct": true, "text": "$W(p \\vee \\neg q) = W(p) \\cup W(\\neg q) = \\{a,b,c\\} \\cup \\{a,c,e\\} = \\{a,b,c,e\\}$.", "section_ref": "Section 9.6 / SGT 9.1", "notes_quote": "$W(p \\vee \\neg q) = \\{a, b, c, e\\}$"},
+            {"letter": "C", "is_correct": true, "text": "A world is in $W(\\Box(p \\vee \\neg q))$ iff all its successors are in $\\{a,b,c,e\\}$.", "section_ref": "Section 9.6 / SGT 9.1", "notes_quote": "Answer: $W(\\Box(p \\vee \\neg q)) = \\{a, b, d, e\\}$"},
+            {"letter": "D", "is_correct": true, "text": "$c$'s only successor is $d$, and $d \\notin \\{a,b,c,e\\}$, so $c \\notin W(\\Box(p \\vee \\neg q))$.", "section_ref": "Section 9.6 / SGT 9.1", "notes_quote": "World $c$ has successor $d$, and $d \\notin \\{a,b,c,e\\}$, so $c \\notin W(\\Box(p\\vee\\neg q))$."},
+            {"letter": "E", "is_correct": false, "text": "$W(\\Box(p \\vee \\neg q)) = \\{a,b,d,e\\} \\neq W$, so the formula is not valid over the model.", "section_ref": "Section 9.6 / SGT 9.1", "notes_quote": ""}
+          ]
+        },
+        {
+          "id": "q16",
+          "source_ref": "Section 9.6: SGT 9.1(ii) — Box Diamond p",
+          "text": "Still using the SGT 9.1 model, compute $W(\\Box\\Diamond p)$. Which of the following are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$W(\\Diamond p) = \\{a, d\\}$ because $a$ sees worlds in $W(p) = \\{a,b,c\\}$ and $d$ sees $c \\in W(p)$"},
+            {"letter": "B", "text": "$W(\\Box\\Diamond p) = \\{b, c\\}$"},
+            {"letter": "C", "text": "$b \\in W(\\Box\\Diamond p)$ because $b$ has no successors, making $\\Box$ vacuously true"},
+            {"letter": "D", "text": "$a \\in W(\\Box\\Diamond p)$ because $a$'s successor $e$ satisfies $\\Diamond p$"},
+            {"letter": "E", "text": "$c \\in W(\\Box\\Diamond p)$ because $c$'s only successor $d$ is in $W(\\Diamond p)$"}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "$W(\\Diamond p)$: $a$ can see $b,c,a \\in W(p)$ — yes; $d$ can see $c \\in W(p)$ — yes; $b$ has no successors — no; $c$ sees only $d \\notin W(p)$ — no; $e$ sees only $e \\notin W(p)$ — no.", "section_ref": "Section 9.6 / SGT 9.1", "notes_quote": "$W(\\Diamond p) = \\{a, d\\}$"},
+            {"letter": "B", "is_correct": true, "text": "$W(\\Box\\Diamond p) = \\{b, c\\}$ as computed in the solutions.", "section_ref": "Section 9.6 / SGT 9.1", "notes_quote": "$W(\\Box\\Diamond p) = \\{b, c\\}$"},
+            {"letter": "C", "is_correct": true, "text": "With no successors, the condition 'all successors are in $W(\\Diamond p)$' is vacuously true.", "section_ref": "Section 9.6 / SGT 9.1", "notes_quote": "$b$ has no successors so $\\Box$ is vacuously true"},
+            {"letter": "D", "is_correct": false, "text": "$a$ has successor $e$, and $e \\notin W(\\Diamond p)$ (since $e$ sees only $e \\notin W(p)$). So $a \\notin W(\\Box\\Diamond p)$.", "section_ref": "Section 9.6 / SGT 9.1", "notes_quote": "World $a$ has successor $e$, $e \\notin W(\\Diamond p)."},
+            {"letter": "E", "is_correct": true, "text": "$c$ has only successor $d \\in W(\\Diamond p) = \\{a,d\\}$, so $c \\in W(\\Box\\Diamond p)$.", "section_ref": "Section 9.6 / SGT 9.1", "notes_quote": "$c$ has only successor $d$, and $d \\in W(\\Diamond p)$."}
+          ]
+        },
+        {
+          "id": "q17",
+          "source_ref": "Section 9.6: SGT 9.2 — Distinguishing Worlds",
+          "text": "SGT 9.2 asks for formulas $F_w$ such that $W(F_w) = \\{w\\}$. Which of the following are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$F_b = \\Box\\bot$ (or equivalently $p \\wedge q$ given the valuation) satisfies $W(F_b) = \\{b\\}$"},
+            {"letter": "B", "text": "$F_a = \\Diamond(\\Box p \\wedge \\Box\\neg q)$ satisfies $W(F_a) = \\{a\\}$"},
+            {"letter": "C", "text": "$F_e = \\neg q \\wedge \\Box\\neg q$ is a formula satisfied only at $e$"},
+            {"letter": "D", "text": "It is always possible to distinguish every world in any Kripke model by a modal formula"}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "$\\Box\\bot$ is true iff there are no successors — only $b$ has no successors. Alternatively $p \\wedge q$ holds only at $b$ given the valuation.", "section_ref": "Section 9.6 / SGT 9.2", "notes_quote": "$w = b$: $F_b = (p \\wedge q)$, or $F_b = \\Box\\bot$ where $\\bot$ is a propositional contradiction"},
+            {"letter": "B", "is_correct": true, "text": "From SGT 9.1(iii), $W(\\Diamond(\\Box p \\wedge \\Box\\neg q)) = \\{a\\}$.", "section_ref": "Section 9.6 / SGT 9.2", "notes_quote": "$w = a$: $F_a = \\Diamond(\\Box p \\wedge \\Box\\neg q)$"},
+            {"letter": "C", "is_correct": true, "text": "$e$'s only successor is $e$ itself, and $\\neg q$ holds at $e$, so both conditions are met uniquely at $e$.", "section_ref": "Section 9.6 / SGT 9.2", "notes_quote": "$w = e$: $F_e = \\neg q \\wedge \\Box\\neg q$"},
+            {"letter": "D", "is_correct": false, "text": "In general, not every model has modally distinguishable worlds. Bisimilar worlds satisfy exactly the same modal formulas and cannot be distinguished.", "section_ref": "Section 9.6 / SGT 9.2", "notes_quote": ""}
+          ]
+        },
+        {
+          "id": "q18",
+          "source_ref": "Section 9.6: SGT 9.3 — Proving Universal Validity",
+          "text": "SGT 9.3 proves that $\\Diamond\\neg p \\leftrightarrow \\neg\\Box p$ is valid in all Kripke frames. The proof proceeds by contradiction. Which of the following correctly describe the proof? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Case 1: If $\\mathfrak{M},w \\models \\Diamond\\neg p$ and $\\mathfrak{M},w \\models \\Box p$, then some accessible world has both $p$ true and $p$ false — contradiction"},
+            {"letter": "B", "text": "Case 2: If $\\mathfrak{M},w \\not\\models \\Diamond\\neg p$ and $\\mathfrak{M},w \\models \\neg\\Box p$, then some accessible world satisfies $\\neg p$, giving $\\Diamond\\neg p$ — contradiction"},
+            {"letter": "C", "text": "The equivalence $\\Diamond\\neg p \\leftrightarrow \\neg\\Box p$ expresses a duality between $\\Diamond$ and $\\Box$"},
+            {"letter": "D", "text": "The proof requires the frame to be reflexive"}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "From $\\Diamond\\neg p$: some $u$ with $(w,u)\\in R$ and $V(u,p)=0$. From $\\Box p$: all such $u$ have $V(u,p)=1$. Contradiction.", "section_ref": "Section 9.6 / SGT 9.3", "notes_quote": "Case 1: From $\\Diamond\\neg p$: $\\exists u$ with $(w,u)\\in R$ and $\\mathfrak{M}, u \\models \\neg p$ ... From $\\not\\models \\neg\\Box p$: $\\mathfrak{M}, w \\models \\Box p$ ... Contradiction"},
+            {"letter": "B", "is_correct": true, "text": "From $\\models \\neg\\Box p$: some $u$ with $(w,u)\\in R$ and $p$ false at $u$, giving $\\Diamond\\neg p$ at $w$, contradicting $\\not\\models \\Diamond\\neg p$.", "section_ref": "Section 9.6 / SGT 9.3", "notes_quote": "Case 2: From $\\models \\neg\\Box p$: $\\mathfrak{M}, w \\not\\models \\Box p$, so $\\exists u$ with $(w,u)\\in R$ and $\\mathfrak{M}, u \\not\\models p$ ... But then $\\mathfrak{M}, w \\models \\Diamond\\neg p$"},
+            {"letter": "C", "is_correct": true, "text": "$\\Diamond\\neg p \\leftrightarrow \\neg\\Box p$ is the standard $\\Diamond/\\Box$ duality, holding in all Kripke frames.", "section_ref": "Section 9.6 / SGT 9.3", "notes_quote": ""},
+            {"letter": "D", "is_correct": false, "text": "The proof requires no frame properties — it holds in all Kripke frames (including non-reflexive ones).", "section_ref": "Section 9.6 / SGT 9.3", "notes_quote": "Claim: $A = \\Diamond\\neg p \\leftrightarrow \\neg\\Box p$ is valid in all Kripke frames."}
+          ]
+        },
+        {
+          "id": "q19",
+          "source_ref": "Section 9.6: SGT 9.4 — A_T and Reflexive Frames",
+          "text": "SGT 9.4 asks to give a counter-example showing $A_T = \\Box p \\to p$ is not valid in all frames, and then prove it valid in reflexive frames. Which of the following are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "A minimal counterexample: $W=\\{a\\}$, $R=\\varnothing$, $V(a,p)=0$. Then $\\Box p$ is vacuously true but $p$ is false."},
+            {"letter": "B", "text": "Another counterexample: $W=\\{a,b\\}$, $R=\\{(a,b)\\}$, $V(a,p)=0$, $V(b,p)=1$. Then $\\mathfrak{M},a \\models \\Box p$ but $\\mathfrak{M},a \\not\\models p$."},
+            {"letter": "C", "text": "Validity on reflexive frames is proved by contradiction: assume $\\mathfrak{M},w \\models \\Box p$ and $\\mathfrak{M},w \\not\\models p$, then reflexivity gives $(w,w)\\in R$, so $p$ must hold at $w$ — contradiction."},
+            {"letter": "D", "text": "Validity on reflexive frames requires transitivity, not just reflexivity."}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "With $R=\\varnothing$ and $V(a,p)=0$: $\\Box p$ at $a$ (vacuously) but $p$ false at $a$.", "section_ref": "Section 9.6 / SGT 9.4", "notes_quote": "Minimal: $W = \\{a\\}$, $R = \\emptyset$, $V(a,p)=0$. Then $\\Box p$ is vacuously true (no successors) but $p$ is false"},
+            {"letter": "B", "is_correct": true, "text": "$a$ has only successor $b$ where $p$ holds, so $\\mathfrak{M},a \\models \\Box p$, but $p$ is false at $a$ itself.", "section_ref": "Section 9.6 / SGT 9.4", "notes_quote": "Slightly larger: $W = \\{a,b\\}$, $R = \\{(a,b)\\}$, $V(a,p)=0$, $V(b,p)=1$. Then $\\mathfrak{M}, a \\models \\Box p$ but $\\mathfrak{M}, a \\not\\models p$."},
+            {"letter": "C", "is_correct": true, "text": "Reflexivity gives $(w,w)\\in R$; since $\\Box p$ holds, $p$ must hold at $w$ — contradicting $\\not\\models p$.", "section_ref": "Section 9.6 / SGT 9.4", "notes_quote": "Proof by contradiction: suppose $\\mathfrak{M}, w \\not\\models \\Box p \\to p$ on a reflexive frame. Then $\\mathfrak{M}, w \\models \\Box p$ (1) and $\\mathfrak{M}, w \\not\\models p$ (2). Since the frame is reflexive: $(w,w) \\in R$. From (1), $\\mathfrak{M}, w \\models p$. Contradicts (2)."},
+            {"letter": "D", "is_correct": false, "text": "$A_T$ validity requires only reflexivity, not transitivity.", "section_ref": "Section 9.6 / SGT 9.4", "notes_quote": ""}
+          ]
+        },
+        {
+          "id": "q20",
+          "source_ref": "Section 9.6: SGT 9.5 — A_4 and Transitive Frames",
+          "text": "SGT 9.5 concerns $A_4 = \\Diamond\\Diamond p \\to \\Diamond p$. Which of the following are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Counterexample: $W=\\{a,b,c\\}$, $R=\\{(a,b),(b,c)\\}$, $V(c,p)=1$, others 0. $A_4$ fails at $a$."},
+            {"letter": "B", "text": "On a transitive frame: from $\\Diamond\\Diamond p$ at $w$, get $u$ with $(w,u)\\in R$ and $\\Diamond p$ at $u$; get $v$ with $(u,v)\\in R$ and $p$ at $v$; transitivity gives $(w,v)\\in R$, so $\\Diamond p$ at $w$"},
+            {"letter": "C", "text": "The proof of $A_4$ on transitive frames uses proof by contradiction"},
+            {"letter": "D", "text": "$A_4$ holds on all Kripke frames, not just transitive ones"}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "$a$ reaches $c$ (where $p$ holds) via two hops but not directly. So $\\Diamond\\Diamond p$ at $a$ but $\\Diamond p$ fails.", "section_ref": "Section 9.6 / SGT 9.5", "notes_quote": "$W = \\{a,b,c\\}$, $R = \\{(a,b),(b,c)\\}$, $V(a,p)=V(b,p)=0$, $V(c,p)=1$. Then $\\mathfrak{M}, a \\models \\Diamond\\Diamond p$ (reach $c$ via $b$), but $\\mathfrak{M}, a \\not\\models \\Diamond p$"},
+            {"letter": "B", "is_correct": true, "text": "Transitivity shortcuts $(w,u),(u,v)\\in R$ to $(w,v)\\in R$, giving $\\Diamond p$ at $w$.", "section_ref": "Section 9.6 / SGT 9.5", "notes_quote": "By transitivity: $(w,u),(u,v)\\in R \\Rightarrow (w,v)\\in R$. So $\\mathfrak{M}, w \\models \\Diamond p$"},
+            {"letter": "C", "is_correct": true, "text": "The proof supposes $\\Diamond\\Diamond p$ at $w$ but $\\not\\models \\Diamond p$, then derives $\\Diamond p$ via transitivity — a contradiction.", "section_ref": "Section 9.6 / SGT 9.5", "notes_quote": "Proof by contradiction: suppose $\\mathfrak{M}, w \\models \\Diamond\\Diamond p$ (16) but $\\mathfrak{M}, w \\not\\models \\Diamond p$ (17) on a transitive frame."},
+            {"letter": "D", "is_correct": false, "text": "$A_4$ fails on non-transitive frames (as the counterexample shows). It is valid exactly on transitive frames.", "section_ref": "Section 9.6 / SGT 9.5", "notes_quote": ""}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-7",
+      "title": "Key Definitions",
+      "questions": [
+        {
+          "id": "q21",
+          "source_ref": "Key Definitions: Kripke Model vs Frame",
+          "text": "Which of the following correctly distinguish a Kripke model from a Kripke frame? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "A Kripke model $\\mathfrak{M} = \\langle W, R, V \\rangle$ includes a valuation $V$; a Kripke frame $\\mathfrak{F} = \\langle W, R \\rangle$ does not"},
+            {"letter": "B", "text": "Frame validity ($\\mathfrak{F} \\models F$) is stronger than model validity ($\\mathfrak{M} \\models F$) because it quantifies over all valuations"},
+            {"letter": "C", "text": "A frame and a model have the same number of worlds $W$"},
+            {"letter": "D", "text": "Validity over a class of frames means the formula holds for every frame in that class under every valuation"}
+          ],
+          "correct": ["A", "B", "D"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "The frame is the structural component (worlds + accessibility); the model adds propositional truth assignments.", "section_ref": "Key Definitions", "notes_quote": "Kripke model: A triple $\\mathfrak{M} = \\langle W, R, V \\rangle$: worlds, accessibility relation, valuation; Kripke frame: A pair $\\mathfrak{F} = \\langle W, R \\rangle$: worlds and accessibility relation (no valuation)"},
+            {"letter": "B", "is_correct": true, "text": "Frame validity universally quantifies over both worlds and valuations; model validity only quantifies over worlds.", "section_ref": "Key Definitions", "notes_quote": "$\\mathfrak{F} \\models F$: fix frame; universal over worlds and valuations"},
+            {"letter": "C", "is_correct": false, "text": "While the same $W$ underlies both, this is trivially true. The key distinction is the presence or absence of $V$.", "section_ref": "Key Definitions", "notes_quote": ""},
+            {"letter": "D", "is_correct": true, "text": "Validity over a class of frames: $F$ valid in every frame from the class under every valuation.", "section_ref": "Key Definitions", "notes_quote": "$F$ is valid over a class of frames $\\mathcal{C}$ if $\\mathfrak{F} \\models F$ for every $\\mathfrak{F} \\in \\mathcal{C}$"}
+          ]
+        },
+        {
+          "id": "q22",
+          "source_ref": "Key Definitions: Accessibility Relation and Possible Worlds",
+          "text": "Which of the following correctly describe the concept of possible worlds and the accessibility relation in Kripke semantics? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$(w, u) \\in R$ means 'world $u$ is accessible from world $w$'"},
+            {"letter": "B", "text": "To evaluate $\\Diamond F$ at $w$, we look at all successors of $w$ in $R$"},
+            {"letter": "C", "text": "Possible worlds are vertices of a directed graph, with accessibility edges"},
+            {"letter": "D", "text": "The accessibility relation must be an equivalence relation in all Kripke models"},
+            {"letter": "E", "text": "A possible world $w$ has its own propositional valuation, so different worlds can assign different truth values to the same proposition"}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "$(w,u) \\in R$ represents the accessibility direction from $w$ to $u$.", "section_ref": "Key Definitions", "notes_quote": "Accessibility relation: $R \\subseteq W \\times W$; $(w,u)\\in R$ means '$u$ is accessible from $w$'"},
+            {"letter": "B", "is_correct": true, "text": "$\\Diamond F$ is true at $w$ iff $F$ holds at some $R$-successor of $w$.", "section_ref": "Key Definitions", "notes_quote": "$\\Diamond F$ is true at $w$ iff $F$ is true at some accessible world"},
+            {"letter": "C", "is_correct": true, "text": "A Kripke model has the structure of a directed graph with labelled vertices.", "section_ref": "Key Definitions", "notes_quote": "Intuition: $W$ is a directed graph of possible worlds. $(w, u) \\in R$ means 'world $u$ is accessible from world $w$'."},
+            {"letter": "D", "is_correct": false, "text": "The accessibility relation in a general Kripke model (logic $\\mathbf{K}$) has no required properties. Equivalence relations correspond to modal logic $\\mathbf{S5}$.", "section_ref": "Key Definitions", "notes_quote": ""},
+            {"letter": "E", "is_correct": true, "text": "Each world $w$ has its own valuation $V(w, \\cdot)$, allowing different truth assignments per world.", "section_ref": "Key Definitions", "notes_quote": "Possible world: A node $w \\in W$ representing a state of affairs with its own propositional valuation"}
+          ]
+        },
+        {
+          "id": "q23",
+          "source_ref": "Key Definitions: Modal Logic K",
+          "text": "Which of the following statements about the minimal modal logic $\\mathbf{K}$ are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$\\mathbf{K}$ is the set of all modal formulas valid in every Kripke frame"},
+            {"letter": "B", "text": "Axiom $A_K = \\Box(p \\to q) \\to (\\Box p \\to \\Box q)$ is a tautology of $\\mathbf{K}$"},
+            {"letter": "C", "text": "The Completeness Theorem for $\\mathbf{K}$: semantic consequence equals provability ($\\Gamma \\models^\\mathbf{K} F \\iff \\Gamma \\vdash^\\mathbf{K} F$)"},
+            {"letter": "D", "text": "$\\mathbf{K}$ contains axiom $A_T$ ($\\Box p \\to p$) as a tautology valid in all frames"},
+            {"letter": "E", "text": "Logics $\\mathbf{T}$ and $\\mathbf{K4}$ are extensions of $\\mathbf{K}$ obtained by restricting to reflexive and transitive frames respectively"}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "$\\mathbf{K}$ collects all universal validities over all Kripke frames.", "section_ref": "Key Definitions", "notes_quote": "Minimal modal logic K: The set of all modal formulas valid in all Kripke frames"},
+            {"letter": "B", "is_correct": true, "text": "$A_K$ is valid in all Kripke frames and is thus in $\\mathbf{K}$.", "section_ref": "Section 9.3.5", "notes_quote": "Important tautology (Axiom K): $\\Box(p \\to q) \\to (\\Box p \\to \\Box q)$. This is valid in all Kripke frames."},
+            {"letter": "C", "is_correct": true, "text": "The Completeness Theorem for $\\mathbf{K}$ states that semantic and syntactic consequence coincide.", "section_ref": "Section 9.3.5", "notes_quote": "Theorem 9.6 (Completeness of K): $\\Gamma \\models^{\\mathbf{K}} F \\iff \\Gamma \\vdash^{\\mathbf{k}} F$"},
+            {"letter": "D", "is_correct": false, "text": "$A_T = \\Box p \\to p$ is NOT a tautology of $\\mathbf{K}$; it fails in non-reflexive frames. It belongs to the stronger logic $\\mathbf{T}$.", "section_ref": "Section 9.4", "notes_quote": "Not valid in all frames"},
+            {"letter": "E", "is_correct": true, "text": "Logic $\\mathbf{T}$ extends $\\mathbf{K}$ with $A_T$ (reflexive frames); $\\mathbf{K4}$ extends $\\mathbf{K}$ with $A_4$ (transitive frames).", "section_ref": "Section 9.4", "notes_quote": ""}
+          ]
+        },
+        {
+          "id": "q24",
+          "source_ref": "Key Definitions: Model-Checking and Labelling Algorithm",
+          "text": "Which of the following correctly describe model-checking and the Labelling Algorithm? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Model-checking is the problem: given $\\mathfrak{M}$, $w$, and $F$, does $\\mathfrak{M}, w \\models F$?"},
+            {"letter": "B", "text": "The Labelling Algorithm computes $W(F)$ bottom-up by processing subformulas from smallest to largest"},
+            {"letter": "C", "text": "Pre-processing rewrites $\\Box F$ as $\\neg\\Diamond\\neg F$ and $F \\to G$ as $\\neg F \\vee G$"},
+            {"letter": "D", "text": "The algorithm runs in exponential time in the number of worlds"},
+            {"letter": "E", "text": "To check if $\\mathfrak{M} \\models F$ (model validity), check that $W(F) = W$"}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "Model-checking determines truth of a formula at a specified world in a given model.", "section_ref": "Key Definitions", "notes_quote": "Model-checking: Determining whether $\\mathfrak{M}, w \\models F$ for a given model, world, and formula"},
+            {"letter": "B", "is_correct": true, "text": "The divide-and-conquer strategy works bottom-up on the formula structure.", "section_ref": "Key Definitions", "notes_quote": "Labelling Algorithm: Bottom-up algorithm computing $W(F)$ by processing subformulas in order of size"},
+            {"letter": "C", "is_correct": true, "text": "Pre-processing eliminates $\\Box$ and $\\to$, reducing to $\\neg$, $\\vee$, $\\wedge$, $\\Diamond$.", "section_ref": "Section 9.5", "notes_quote": "Pre-processing step: Rewrite $H$ using these equivalences to eliminate $\\to$ and $\\Box$: $F \\to G \\mapsto (\\neg F \\vee G)$ and $\\Box F \\mapsto \\neg\\Diamond\\neg F$"},
+            {"letter": "D", "is_correct": false, "text": "The algorithm runs in polynomial time (linear in model size times formula size), not exponential.", "section_ref": "Section 9.5", "notes_quote": ""},
+            {"letter": "E", "is_correct": true, "text": "Model validity means $F$ holds at every world, i.e. $W(F) = W$.", "section_ref": "Section 9.5", "notes_quote": "To check validity over $\\mathfrak{M}$: check whether $W(H) = W$."}
+          ]
+        },
+        {
+          "id": "q25",
+          "source_ref": "Key Definitions: Summary of Frame Properties",
+          "text": "Which of the following correctly summarise key frame properties and their modal significance? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "A reflexive frame has $(w,w) \\in R$ for all $w \\in W$"},
+            {"letter": "B", "text": "A transitive frame has: if $(x,y) \\in R$ and $(y,z) \\in R$ then $(x,z) \\in R$"},
+            {"letter": "C", "text": "Reflexive + transitive + symmetric frames correspond to modal logic $\\mathbf{S5}$"},
+            {"letter": "D", "text": "Transitive frames satisfy $A_T = \\Box p \\to p$"},
+            {"letter": "E", "text": "Modal logic $\\mathbf{T}$ is the logic of reflexive frames and is strictly stronger than $\\mathbf{K}$"}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "A reflexive frame has every world accessible to itself.", "section_ref": "Key Definitions", "notes_quote": "Reflexive frame: A frame where $(x,x)\\in R$ for all $x\\in W$"},
+            {"letter": "B", "is_correct": true, "text": "Transitivity closes two-step paths into direct connections.", "section_ref": "Key Definitions", "notes_quote": "Transitive frame: A frame where $(x,y),(y,z)\\in R \\Rightarrow (x,z)\\in R$"},
+            {"letter": "C", "is_correct": true, "text": "Logic $\\mathbf{S5}$ is complete with respect to equivalence relations (reflexive + symmetric + transitive).", "section_ref": "Key Definitions (extended)", "notes_quote": ""},
+            {"letter": "D", "is_correct": false, "text": "Transitive frames satisfy $A_4 = \\Diamond\\Diamond p \\to \\Diamond p$, not $A_T$. The counterexample to $A_T$ uses a non-reflexive (but trivially transitive) frame.", "section_ref": "Section 9.4", "notes_quote": ""},
+            {"letter": "E", "is_correct": true, "text": "$\\mathbf{T}$ extends $\\mathbf{K}$ by adding $A_T$, making it strictly stronger (more tautologies, fewer valid frames).", "section_ref": "Section 9.4", "notes_quote": ""}
+          ]
+        },
+        {
+          "id": "q26",
+          "source_ref": "Key Definitions: Non-Truth-Functionality",
+          "text": "Modal operators are described as 'non-truth-functional'. Which of the following correctly explain this? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "The truth value of $\\Diamond F$ at $w$ is not determined solely by the truth value of $F$ at $w$"},
+            {"letter": "B", "text": "Whether $\\Diamond F$ is true at $w$ depends on what happens at other accessible worlds"},
+            {"letter": "C", "text": "There are only four possible truth tables for a unary connective on $\\{0,1\\}$, and none captures 'possibly'"},
+            {"letter": "D", "text": "$\\Diamond$ is non-truth-functional because it has three possible output values: 0, $\\frac{1}{2}$, and 1"}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "Even if $F$ is false at $w$, $\\Diamond F$ may be true at $w$ if $F$ holds at some accessible world.", "section_ref": "Key Definitions / Section 9.1", "notes_quote": "Non-truth-functional: An operator whose value is not determined solely by the truth value of its argument"},
+            {"letter": "B", "is_correct": true, "text": "Possibility depends on accessible worlds — a global/relational feature not captured by local truth tables.", "section_ref": "Section 9.1", "notes_quote": "Modal operators are non-truth-functional: the truth value of $\\Diamond F$ is not determined solely by the truth value of $F$"},
+            {"letter": "C", "is_correct": true, "text": "None of the four unary truth tables (identity, negation, constant 0, constant 1) captures possibility.", "section_ref": "Section 9.1", "notes_quote": "There are only four possible truth tables for a unary connective; none captures 'possibly' or 'necessarily'"},
+            {"letter": "D", "is_correct": false, "text": "Classical Kripke semantics for $\\Diamond$ is two-valued (0 or 1). Three values relate to fuzzy/many-valued logic, not modal logic.", "section_ref": "Section 9.1", "notes_quote": ""}
+          ]
+        },
+        {
+          "id": "q27",
+          "source_ref": "Key Definitions: Satisfaction Clauses",
+          "text": "The satisfaction clauses for classical connectives in modal logic use the classical two-valued semantics. Which of the following are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$V(w, \\neg F) = 1 - V(w, F)$"},
+            {"letter": "B", "text": "$V(w, F \\wedge G) = \\min(V(w,F), V(w,G))$"},
+            {"letter": "C", "text": "$V(w, F \\to G) = \\max(1 - V(w,F), V(w,G))$"},
+            {"letter": "D", "text": "$V(w, F \\vee G) = V(w,F) \\cdot V(w,G)$"},
+            {"letter": "E", "text": "$V(w, \\Box F) = \\min\\{V(u,F) : (w,u) \\in R\\}$"}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "Negation flips truth: $V(w, \\neg F) = 1 - V(w, F)$.", "section_ref": "Section 9.3.2", "notes_quote": "$V(w, \\neg F) = 1 - V(w, F)$"},
+            {"letter": "B", "is_correct": true, "text": "Conjunction is the minimum of the two values (two-valued = classical and).", "section_ref": "Section 9.3.2", "notes_quote": "$V(w, F \\wedge G) = \\min(V(w, F),\\ V(w, G))$"},
+            {"letter": "C", "is_correct": true, "text": "Implication: $\\max(1-V(w,F), V(w,G))$ is the classical two-valued implication.", "section_ref": "Section 9.3.2", "notes_quote": "$V(w, F \\to G) = \\max(1 - V(w, F),\\ V(w, G))$"},
+            {"letter": "D", "is_correct": false, "text": "$V(w, F \\vee G) = \\max(V(w,F), V(w,G))$, not the product.", "section_ref": "Section 9.3.2", "notes_quote": "$V(w, F \\vee G) = \\max(V(w, F),\\ V(w, G))$"},
+            {"letter": "E", "is_correct": true, "text": "$\\Box F$ is true iff $F$ is true at all successors — the minimum over successors.", "section_ref": "Section 9.3.2", "notes_quote": "$V(w, \\Box F) = \\min\\{V(u, F) : (w, u) \\in R\\}$"}
+          ]
+        },
+        {
+          "id": "q28",
+          "source_ref": "Key Definitions: Completeness and Logics K, T, K4",
+          "text": "Which of the following correctly describe the relationship between logics $\\mathbf{K}$, $\\mathbf{T}$, and $\\mathbf{K4}$? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$\\mathbf{K} \\subseteq \\mathbf{T}$: every tautology of $\\mathbf{K}$ is also a tautology of $\\mathbf{T}$"},
+            {"letter": "B", "text": "$\\mathbf{T}$ is obtained from $\\mathbf{K}$ by adding $A_T = \\Box p \\to p$ and restricting to reflexive frames"},
+            {"letter": "C", "text": "$\\mathbf{K4}$ is obtained from $\\mathbf{K}$ by adding $A_4 = \\Diamond\\Diamond p \\to \\Diamond p$ and restricting to transitive frames"},
+            {"letter": "D", "text": "$\\mathbf{K}$, $\\mathbf{T}$, and $\\mathbf{K4}$ are all complete (semantics coincides with proof system)"},
+            {"letter": "E", "text": "$\\mathbf{T}$ and $\\mathbf{K4}$ are incomparable: neither is a subset of the other"}
+          ],
+          "correct": ["A", "B", "C", "D"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "$\\mathbf{T}$ adds new axioms to $\\mathbf{K}$, so $\\mathbf{K} \\subseteq \\mathbf{T}$ (every $\\mathbf{K}$-valid formula is $\\mathbf{T}$-valid).", "section_ref": "Section 9.4", "notes_quote": ""},
+            {"letter": "B", "is_correct": true, "text": "Logic $\\mathbf{T}$ is $\\mathbf{K}$ plus $A_T$, valid on reflexive frames.", "section_ref": "Section 9.4", "notes_quote": "$A_T$ (T): $\\Box p \\to p$ — Frame Property: Reflexive"},
+            {"letter": "C", "is_correct": true, "text": "Logic $\\mathbf{K4}$ is $\\mathbf{K}$ plus $A_4$, valid on transitive frames.", "section_ref": "Section 9.4", "notes_quote": "$A_4$ (4): $\\Diamond\\Diamond p \\to \\Diamond p$ — Frame Property: Transitive"},
+            {"letter": "D", "is_correct": true, "text": "All three logics have completeness theorems relating semantics to proof systems.", "section_ref": "Section 9.3.5", "notes_quote": "Theorem 9.6 (Completeness of K)"},
+            {"letter": "E", "is_correct": false, "text": "$\\mathbf{T}$ and $\\mathbf{K4}$ are indeed incomparable in the general case (neither is contained in the other), but the statement's tone implies a definitive structural claim beyond what is in the notes. The fact that $A_T \\notin \\mathbf{K4}$ (non-reflexive transitive frames) and $A_4 \\notin \\mathbf{T}$ (reflexive non-transitive frames) shows they are incomparable, which is correct. However this fact is not explicitly stated in the week 9 notes, so it should not be selected.", "section_ref": "Section 9.4", "notes_quote": ""}
+          ]
+        },
+        {
+          "id": "q29",
+          "source_ref": "Section 9.3.2: Empty Successors and Vacuous Truth",
+          "text": "Consider a world $w$ in a Kripke model with no successors (i.e. no $u$ with $(w,u) \\in R$). Which of the following are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$\\mathfrak{M}, w \\models \\Box F$ for every formula $F$ (vacuously true)"},
+            {"letter": "B", "text": "$\\mathfrak{M}, w \\not\\models \\Diamond F$ for every formula $F$ (vacuously false)"},
+            {"letter": "C", "text": "$\\mathfrak{M}, w \\models \\Box\\bot$ where $\\bot$ is a contradiction (even though $\\bot$ is never true)"},
+            {"letter": "D", "text": "$\\mathfrak{M}, w \\models \\Diamond F$ for every formula $F$ (vacuously true)"}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "The universal condition for $\\Box F$ ('all successors satisfy $F$') is vacuously true when there are no successors.", "section_ref": "Section 9.3.2", "notes_quote": "If $w$ has no successors (no $(w, u) \\in R$), then $\\Box F$ is vacuously true"},
+            {"letter": "B", "is_correct": true, "text": "The existential condition for $\\Diamond F$ ('some successor satisfies $F$') cannot be met with no successors.", "section_ref": "Section 9.3.2", "notes_quote": "If $w$ has no successors (no $(w, u) \\in R$), then $\\Diamond F$ is vacuously false at $w$."},
+            {"letter": "C", "is_correct": true, "text": "$\\Box\\bot$ requires all successors to satisfy $\\bot$; with no successors this is vacuously true. This is exploited in SGT 9.2 to identify worlds with no successors.", "section_ref": "Section 9.3.2 / SGT 9.2", "notes_quote": "$F_b = \\Box\\bot$ where $\\bot$ is a propositional contradiction (since $b$ has no successors, $\\Box\\bot$ is vacuously true only at $b$)"},
+            {"letter": "D", "is_correct": false, "text": "$\\Diamond F$ is vacuously false (not true) when there are no successors: the existential has no witness.", "section_ref": "Section 9.3.2", "notes_quote": ""}
+          ]
+        },
+        {
+          "id": "q30",
+          "source_ref": "Key Definitions: Summary",
+          "text": "Which of the following correctly summarise the key results and definitions from Week 9? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Kripke semantics was introduced in 1963 by Saul Kripke to give models for modal logic"},
+            {"letter": "B", "text": "The key insight for $\\Diamond$: truth at a world depends on truth at accessible worlds, not just the current world"},
+            {"letter": "C", "text": "Modal logic $\\mathbf{K}$ is the weakest normal modal logic, valid on all Kripke frames"},
+            {"letter": "D", "text": "The Labelling Algorithm checks model validity by computing $W(F)$ bottom-up and verifying $W(F) = W$"},
+            {"letter": "E", "text": "$A_T$ and $A_4$ are both tautologies of $\\mathbf{K}$ (valid in all frames)"}
+          ],
+          "correct": ["A", "B", "C", "D"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "Saul Kripke introduced possible-worlds semantics for modal logic in 1963.", "section_ref": "Section 9.3", "notes_quote": "Introduced in 1963 by Saul Kripke."},
+            {"letter": "B", "is_correct": true, "text": "$\\Diamond F$ at $w$ is determined by $F$'s truth at $w$'s $R$-successors — a relational, not purely local, feature.", "section_ref": "Key Definitions", "notes_quote": "$\\Diamond F$ is true at $w$ iff $F$ is true at some accessible world"},
+            {"letter": "C", "is_correct": true, "text": "$\\mathbf{K}$ is the minimal modal logic: valid in all Kripke frames, the foundation for stronger logics.", "section_ref": "Key Definitions", "notes_quote": "Minimal modal logic K: The set of all modal formulas valid in all Kripke frames"},
+            {"letter": "D", "is_correct": true, "text": "The Labelling Algorithm computes $W(F)$ and checks if $W(F) = W$ for model validity.", "section_ref": "Section 9.5", "notes_quote": "To check validity over $\\mathfrak{M}$: check whether $W(H) = W$."},
+            {"letter": "E", "is_correct": false, "text": "$A_T = \\Box p \\to p$ is NOT a tautology of $\\mathbf{K}$ (fails on non-reflexive frames); $A_4 = \\Diamond\\Diamond p \\to \\Diamond p$ is NOT a tautology of $\\mathbf{K}$ (fails on non-transitive frames). They are tautologies of $\\mathbf{T}$ and $\\mathbf{K4}$ respectively.", "section_ref": "Section 9.4", "notes_quote": "Not valid in all frames"}
+          ]
+        }
+      ]
+    }
+  ]
+}

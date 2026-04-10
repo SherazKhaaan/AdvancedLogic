@@ -1,0 +1,549 @@
+{
+  "module": "AdvancedLogic",
+  "week": 7,
+  "title": "The Mostert–Shields Theorems — Classification of Continuous T-Norms and T-Conorms",
+  "sections": [
+    {
+      "id": "section-1",
+      "title": "1. Background and Motivation",
+      "questions": [
+        {
+          "id": "q1",
+          "source_ref": "Section 1.1: The Three Canonical T-Norms",
+          "text": "Which of the following correctly state the three canonical t-norms $F^1_{\\wedge}$, $F^2_{\\wedge}$, $F^3_{\\wedge}$? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$F^1_{\\wedge}(x,y) = \\min(x,y)$, corresponding to Gödel / $\\mathbb{F}^1$ logic."},
+            {"letter": "B", "text": "$F^2_{\\wedge}(x,y) = xy$, corresponding to Product / $\\mathbb{F}^2$ logic."},
+            {"letter": "C", "text": "$F^3_{\\wedge}(x,y) = \\max(0, x+y-1)$, corresponding to Łukasiewicz / $\\mathbb{F}^3$ logic."},
+            {"letter": "D", "text": "$F^2_{\\wedge}(x,y) = \\min(x,y)$ and $F^1_{\\wedge}(x,y) = xy$."},
+            {"letter": "E", "text": "The three canonical t-norms are mutually isomorphic as ordered structures."}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "$F^1_\\wedge(x,y) = \\min(x,y)$ is the Gödel/minimum t-norm.", "section_ref": "Section 1.1: The Three Canonical T-Norms", "notes_quote": "$F^1_\\wedge(x,y)$: $\\min(x,y)$, Godel / $\\mathbb{F}^1$"},
+            {"letter": "B", "is_correct": true, "text": "$F^2_\\wedge(x,y) = xy$ is the product t-norm.", "section_ref": "Section 1.1: The Three Canonical T-Norms", "notes_quote": "$F^2_\\wedge(x,y)$: $xy$, Product / $\\mathbb{F}^2$"},
+            {"letter": "C", "is_correct": true, "text": "$F^3_\\wedge(x,y) = \\max(0,x+y-1)$ is the Łukasiewicz t-norm.", "section_ref": "Section 1.1: The Three Canonical T-Norms", "notes_quote": "$F^3_\\wedge(x,y)$: $\\max(0, x+y-1)$, Łukasiewicz / $\\mathbb{F}^3$"},
+            {"letter": "D", "is_correct": false, "text": "The labels are swapped. $F^1_\\wedge = \\min$ and $F^2_\\wedge = xy$, not the other way around.", "section_ref": "Section 1.1: The Three Canonical T-Norms", "notes_quote": ""},
+            {"letter": "E", "is_correct": false, "text": "The three canonical t-norms are NOT mutually isomorphic. The notes explicitly state this: $F^1_\\wedge(x,x) = x$ for all $x$, whereas $F^2_\\wedge(x,x) = x^2 < x$ for $0 < x < 1$.", "section_ref": "Section 1.1: The Three Canonical T-Norms", "notes_quote": "These are not mutually isomorphic: $F^1_\\wedge(x,x) = x$ for all $x$, whereas $F^2_\\wedge(x,x) = x^2 < x$ for $0 < x < 1$"}
+          ]
+        },
+        {
+          "id": "q2",
+          "source_ref": "Section 1.2: The Disc Notation",
+          "text": "Which of the following correctly describe the disc notation $B_{\\delta}(a,b)$? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$B_{\\delta}(a,b) = \\{(x,y) \\in [0,1]^2 : (x-a)^2 + (y-b)^2 < \\delta^2\\}$."},
+            {"letter": "B", "text": "$B_{\\delta}(a,b)$ is the open disc of radius $\\delta$ centred at $(a,b)$ in $[0,1]^2$."},
+            {"letter": "C", "text": "$B_{\\delta}(a,b)$ is used in the $\\varepsilon$-$\\delta$ formulation of continuity for functions of two variables."},
+            {"letter": "D", "text": "$B_{\\delta}(a,b) = \\{(x,y) \\in [0,1]^2 : |x-a| < \\delta \\text{ and } |y-b| < \\delta\\}$."},
+            {"letter": "E", "text": "Topologists call $B_{\\delta}(a,b)$ a 'ball' of dimension 2."}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "This is the exact definition of $B_\\delta(a,b)$ given in the notes.", "section_ref": "Section 1.2: The Disc Notation", "notes_quote": "$B_\\delta(a,b) = \\{(x,y) \\in [0,1]^2 : (x-a)^2 + (y-b)^2 < \\delta^2\\}$"},
+            {"letter": "B", "is_correct": true, "text": "The notes describe $B_\\delta(a,b)$ as an open disc of radius $\\delta$ centred at $(a,b)$.", "section_ref": "Section 1.2: The Disc Notation", "notes_quote": "the open disc of radius $\\delta$ centred at $(a,b) \\in [0,1]^2$"},
+            {"letter": "C", "is_correct": true, "text": "The disc notation is introduced specifically for the $\\varepsilon$-$\\delta$ formulation of continuity for binary functions.", "section_ref": "Section 1.2: The Disc Notation", "notes_quote": "This is used in the $\\varepsilon$-$\\delta$ formulation of continuity for functions of two variables"},
+            {"letter": "D", "is_correct": false, "text": "This is the definition of a square (Chebyshev ball), not the Euclidean open disc. The disc uses the Euclidean distance $(x-a)^2 + (y-b)^2 < \\delta^2$.", "section_ref": "Section 1.2: The Disc Notation", "notes_quote": ""},
+            {"letter": "E", "is_correct": true, "text": "The notes parenthetically note that topologists call this a 'ball' of dimension 2.", "section_ref": "Section 1.2: The Disc Notation", "notes_quote": "Topologists call this a 'ball' of dimension 2, hence the notation $B$"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-2",
+      "title": "2. Continuous T-Norms: The Four Axioms",
+      "questions": [
+        {
+          "id": "q3",
+          "source_ref": "Section 2.1: Definitions — Properties (C1)–(C4)",
+          "text": "Which of the following correctly state axioms (C1)–(C4) for a continuous t-norm $\\wedge : [0,1]^2 \\to [0,1]$? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "(C1) Boolean: $0 \\wedge 0 = 1 \\wedge 0 = 0 \\wedge 1 = 0$ and $1 \\wedge 1 = 1$."},
+            {"letter": "B", "text": "(C2) Increasing: if $z < z'$ then $(x \\wedge z) \\leq (x \\wedge z')$ and $(z \\wedge y) \\leq (z' \\wedge y)$."},
+            {"letter": "C", "text": "(C3) Continuous: for all $(a,b) \\in [0,1]^2$ and $\\varepsilon > 0$, $\\exists \\delta > 0$ such that $|(x \\wedge y) - (x' \\wedge y')| < \\varepsilon$ whenever $(x,y) \\in B_{\\delta}(a,b)$."},
+            {"letter": "D", "text": "(C4) Commutative: $x \\wedge y = y \\wedge x$ for all $x, y \\in [0,1]$."},
+            {"letter": "E", "text": "(C4) Associative: $(x \\wedge y) \\wedge z = x \\wedge (y \\wedge z)$."}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "(C1) specifies the Boolean boundary behaviour of the t-norm.", "section_ref": "Section 2.1: Definitions — Properties (C1)–(C4)", "notes_quote": "(C1) Boolean: $0 \\wedge 0 = 1 \\wedge 0 = 0 \\wedge 1 = 0$ and $1 \\wedge 1 = 1$"},
+            {"letter": "B", "is_correct": true, "text": "(C2) requires $\\wedge$ to be monotone (increasing) in each argument.", "section_ref": "Section 2.1: Definitions — Properties (C1)–(C4)", "notes_quote": "(C2) Increasing (monotone): $\\wedge$ is increasing in each component. That is, if $z < z'$ then $(x \\wedge z) \\leq (x \\wedge z')$ and $(z \\wedge y) \\leq (z' \\wedge y)$"},
+            {"letter": "C", "is_correct": true, "text": "(C3) is the epsilon-delta continuity condition for the binary function $\\wedge$.", "section_ref": "Section 2.1: Definitions — Properties (C1)–(C4)", "notes_quote": "(C3) Continuous: $\\wedge$ is continuous as a function $[0,1]^2 \\to [0,1]$"},
+            {"letter": "D", "is_correct": false, "text": "Commutativity is NOT one of the four axioms (C1)–(C4). The four axioms are: (C1) Boolean, (C2) Increasing, (C3) Continuous, (C4) Associative.", "section_ref": "Section 2.1: Definitions — Properties (C1)–(C4)", "notes_quote": ""},
+            {"letter": "E", "is_correct": true, "text": "(C4) is associativity of $\\wedge$.", "section_ref": "Section 2.1: Definitions — Properties (C1)–(C4)", "notes_quote": "(C4) Associative: $((x \\wedge y) \\wedge z) = (x \\wedge (y \\wedge z))$"}
+          ]
+        },
+        {
+          "id": "q4",
+          "source_ref": "Section 2.2: Derived Properties",
+          "text": "Which of the following are derived properties of any t-norm (provable from (C1)–(C4))? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$x \\wedge 0 = 0 \\wedge x = 0$ for all $x \\in [0,1]$."},
+            {"letter": "B", "text": "$x \\wedge 1 = 1 \\wedge x = x$ for all $x \\in [0,1]$."},
+            {"letter": "C", "text": "$x \\wedge x \\leq x$ for all $x \\in [0,1]$."},
+            {"letter": "D", "text": "$x \\wedge x = x$ for all $x \\in [0,1]$ (idempotency)."},
+            {"letter": "E", "text": "$x \\wedge y = y \\wedge x$ for all $x,y$ (commutativity is derived, not axiomatic)."}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "$x \\wedge 0 = 0$ is a derived property (i) from (C1)–(C4).", "section_ref": "Section 2.2: Derived Properties", "notes_quote": "(i) $x \\wedge 0 = 0 \\wedge x = 0$"},
+            {"letter": "B", "is_correct": true, "text": "$x \\wedge 1 = x$ is derived property (ii).", "section_ref": "Section 2.2: Derived Properties", "notes_quote": "(ii) $x \\wedge 1 = 1 \\wedge x = x$"},
+            {"letter": "C", "is_correct": true, "text": "$x \\wedge x \\leq x$ is derived property (iii).", "section_ref": "Section 2.2: Derived Properties", "notes_quote": "(iii) $x \\wedge x \\leq x$"},
+            {"letter": "D", "is_correct": false, "text": "Idempotency ($x \\wedge x = x$) does NOT hold for all t-norms. For $F^2_\\wedge$: $x \\wedge x = x^2 < x$ for $x \\in (0,1)$. The correct derived property is $x \\wedge x \\leq x$.", "section_ref": "Section 2.2: Derived Properties", "notes_quote": ""},
+            {"letter": "E", "is_correct": false, "text": "Commutativity is not listed as a derived property in the notes; it is not one of the four axioms (C1)–(C4) either. The notes do not claim commutativity follows from (C1)–(C4) in general.", "section_ref": "Section 2.2: Derived Properties", "notes_quote": ""}
+          ]
+        },
+        {
+          "id": "q5",
+          "source_ref": "Section 2.3: Continuity Implies Limit-Commutativity",
+          "text": "Regarding the result that continuity implies limit-commutativity, which of the following are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "If $\\wedge$ satisfies (C3), then $\\left(\\lim_{n \\to \\infty} x_n\\right) \\wedge y = \\lim_{n \\to \\infty}(x_n \\wedge y)$ for any convergent sequence $x_n$ and any $y$."},
+            {"letter": "B", "text": "The proof uses: given $\\varepsilon > 0$, by (C3) there exists $\\delta > 0$ such that $(x_n, y) \\in B_\\delta(L, y)$ implies $|(x_n \\wedge y) - (L \\wedge y)| < \\varepsilon$."},
+            {"letter": "C", "text": "The result requires $\\wedge$ to satisfy all four axioms (C1)–(C4), not just continuity."},
+            {"letter": "D", "text": "Since $x_n \\to L$, there exists $N$ such that $|x_n - L| < \\delta$ for $n \\geq N$, placing $(x_n,y)$ inside $B_\\delta(L,y)$."},
+            {"letter": "E", "text": "This result shows that limits and $\\wedge$ can always be interchanged, regardless of continuity."}
+          ],
+          "correct": ["A", "B", "D"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "This is the exact statement of the limit-commutativity result.", "section_ref": "Section 2.3: Continuity Implies Limit-Commutativity", "notes_quote": "$\\left(\\lim_{n \\to \\infty} x_n\\right) \\wedge y = \\lim_{n \\to \\infty}(x_n \\wedge y)$"},
+            {"letter": "B", "is_correct": true, "text": "The proof proceeds exactly this way using (C3).", "section_ref": "Section 2.3: Continuity Implies Limit-Commutativity", "notes_quote": "by (C3) there is some $\\delta > 0$ such that $|(x_n \\wedge y) - (L \\wedge y)| < \\varepsilon$ whenever $(x_n, y) \\in B_\\delta(L, y)$"},
+            {"letter": "C", "is_correct": false, "text": "The proof only uses (C3) (continuity). The other axioms (C1), (C2), (C4) are not required for this particular result.", "section_ref": "Section 2.3: Continuity Implies Limit-Commutativity", "notes_quote": "If $\\wedge$ satisfies (C3), then..."},
+            {"letter": "D", "is_correct": true, "text": "This is the key step linking the sequence convergence to the disc condition.", "section_ref": "Section 2.3: Continuity Implies Limit-Commutativity", "notes_quote": "Since $x_n \\to L$, there is $N \\geq 0$ such that $|x_n - L| < \\delta$ for all $n \\geq N$, which places $(x_n, y)$ inside $B_\\delta(L,y)$"},
+            {"letter": "E", "is_correct": false, "text": "The interchange of limits with $\\wedge$ requires continuity (C3). Without continuity, it need not hold.", "section_ref": "Section 2.3: Continuity Implies Limit-Commutativity", "notes_quote": ""}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-3",
+      "title": "3. Verifying the Three Standard T-Norms",
+      "questions": [
+        {
+          "id": "q6",
+          "source_ref": "Section 3.1: F1 = min(x,y) — Verifying (C1)–(C4)",
+          "text": "In the verification that $F^1_{\\wedge}(x,y) = \\min(x,y)$ is a continuous t-norm, which of the following steps are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "(C1): $\\min(0,0) = \\min(1,0) = \\min(0,1) = 0$ and $\\min(1,1) = 1$."},
+            {"letter": "B", "text": "(C4): $\\min(\\min(x,y),z) = \\min(x,\\min(y,z))$ because $t \\leq \\min(a,b) \\iff t \\leq a$ and $t \\leq b$."},
+            {"letter": "C", "text": "(C3): When $a = b$, take $\\delta = \\varepsilon$; when $a \\neq b$, choose $\\delta = \\min(\\varepsilon, |a-b|/(2\\sqrt{2}))$ to keep the disc in one half-plane."},
+            {"letter": "D", "text": "(C2) for $\\min$: if $z < z'$ and $x \\leq z$, then $\\min(x,z) = x = \\min(x,z')$."},
+            {"letter": "E", "text": "(C3): The key difficulty arises at points where $a = b$, where a larger $\\delta$ must be used."}
+          ],
+          "correct": ["A", "B", "C", "D"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "Direct computation verifies (C1) for $\\min$.", "section_ref": "Section 3.1: F1 = min(x,y)", "notes_quote": "$\\min(0,0) = \\min(1,0) = \\min(0,1) = 0$ and $\\min(1,1) = 1$"},
+            {"letter": "B", "is_correct": true, "text": "Associativity of min follows from: $t \\leq \\min(\\min(x,y),z)$ iff $t \\leq x$ and $t \\leq y$ and $t \\leq z$ iff $t \\leq \\min(x,\\min(y,z))$.", "section_ref": "Section 3.1: F1 = min(x,y)", "notes_quote": "$t \\leq \\min(\\min(x,y),z) \\iff t \\leq x$ and $t \\leq y$ and $t \\leq z \\iff t \\leq \\min(x,\\min(y,z))$"},
+            {"letter": "C", "is_correct": true, "text": "The continuity proof splits into cases $a = b$ and $a \\neq b$ with different $\\delta$ choices.", "section_ref": "Section 3.1: F1 = min(x,y)", "notes_quote": "If $a = b$: take $\\delta = \\varepsilon$... If $a \\neq b$: choose $\\delta = \\min\\!\\left(\\varepsilon, \\frac{|a-b|}{2\\sqrt{2}}\\right)$"},
+            {"letter": "D", "is_correct": true, "text": "This is one of the three cases for verifying (C2) for $\\min$.", "section_ref": "Section 3.1: F1 = min(x,y)", "notes_quote": "If $x \\leq z$: $\\min(x,z) = x \\leq x = \\min(x,z')$"},
+            {"letter": "E", "is_correct": false, "text": "The case $a = b$ is actually simpler ($\\delta = \\varepsilon$ suffices). The harder case is $a \\neq b$, which requires keeping the disc in a single half-plane.", "section_ref": "Section 3.1: F1 = min(x,y)", "notes_quote": ""}
+          ]
+        },
+        {
+          "id": "q7",
+          "source_ref": "Section 3.2: F2 = xy — Verifying (C3) Continuity",
+          "text": "In the verification of (C3) for $F^2_{\\wedge}(x,y) = xy$, with $x = a+u$, $y = b+v$ and $|u|,|v| < \\delta$, which of the following are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$|xy - ab| = |(a+u)(b+v) - ab| = |av + bu + uv|$."},
+            {"letter": "B", "text": "$|av + bu + uv| \\leq a|v| + b|u| + |uv| < \\delta + \\delta + \\delta^2$ (using $a,b \\leq 1$ and $|u|,|v| < \\delta$)."},
+            {"letter": "C", "text": "Choosing $\\delta = \\varepsilon/3$ ensures $\\delta + \\delta + \\delta^2 \\leq \\varepsilon$."},
+            {"letter": "D", "text": "Choosing $\\delta = \\varepsilon/2$ ensures $\\delta + \\delta + \\delta^2 \\leq \\varepsilon$."},
+            {"letter": "E", "text": "(C4) for $F^2_\\wedge = xy$: $(xy)z = x(yz)$ by associativity of multiplication over $\\mathbb{R}$."}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "Expanding $(a+u)(b+v) - ab = av + bu + uv$.", "section_ref": "Section 3.2: F2 = xy", "notes_quote": "$|xy - ab| = |(a+u)(b+v) - ab| = |av + bu + uv|$"},
+            {"letter": "B", "is_correct": true, "text": "Triangle inequality and $a,b \\leq 1$ give the bound $\\delta + \\delta + \\delta^2$.", "section_ref": "Section 3.2: F2 = xy", "notes_quote": "$|av + bu + uv| \\leq a|v| + b|u| + |uv| < \\delta + \\delta + \\delta^2$"},
+            {"letter": "C", "is_correct": true, "text": "$\\delta = \\varepsilon/3$: $\\delta + \\delta + \\delta^2 = \\varepsilon/3 + \\varepsilon/3 + (\\varepsilon/3)^2 \\leq \\varepsilon$ for small $\\varepsilon$.", "section_ref": "Section 3.2: F2 = xy", "notes_quote": "Choose $\\delta = \\varepsilon/3$; then $\\delta + \\delta + \\delta^2 = \\varepsilon/3 + \\varepsilon/3 + (\\varepsilon/3)^2 \\leq \\varepsilon$"},
+            {"letter": "D", "is_correct": false, "text": "$\\delta = \\varepsilon/2$: $\\varepsilon/2 + \\varepsilon/2 + (\\varepsilon/2)^2 = \\varepsilon + \\varepsilon^2/4 > \\varepsilon$. The correct choice is $\\delta = \\varepsilon/3$.", "section_ref": "Section 3.2: F2 = xy", "notes_quote": ""},
+            {"letter": "E", "is_correct": true, "text": "Associativity of $xy$ over $\\mathbb{R}$ immediately gives (C4).", "section_ref": "Section 3.2: F2 = xy", "notes_quote": "(C4): $(xy)z = x(yz)$ by associativity of multiplication over $\\mathbb{R}$"}
+          ]
+        },
+        {
+          "id": "q8",
+          "source_ref": "Section 3.3: F3 = max(0, x+y-1) — Verifying (C1) and (C2)",
+          "text": "In verifying that $F^3_{\\wedge}(x,y) = \\max(0, x+y-1)$ is a continuous t-norm, which of the following are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "(C1): $\\max(0, 0+0-1) = \\max(0,1+0-1) = \\max(0,0+1-1) = 0$ and $\\max(0,1+1-1) = 1$."},
+            {"letter": "B", "text": "(C2): If $z < z'$, then $x+z-1 \\leq x+z'-1$, so $\\max(0,x+z-1) \\leq \\max(0,x+z'-1)$."},
+            {"letter": "C", "text": "(C3): When $a+b < 1$, both $\\max(0,x+y-1)$ and $\\max(0,a+b-1)$ equal 0 for $(x,y) \\in B_\\delta(a,b)$ (small $\\delta$), giving difference 0."},
+            {"letter": "D", "text": "(C1): $\\max(0,1+1-1) = \\max(0,0) = 0$, so $1 \\wedge 1 = 0$."},
+            {"letter": "E", "text": "(C4) for $F^3_\\wedge$ is verified by direct computation analogous to the associativity of bounded addition."}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "Direct computation verifies (C1) for the Łukasiewicz t-norm.", "section_ref": "Section 3.3: F3 = max(0,x+y-1)", "notes_quote": "$\\max(0, 0+0-1) = \\max(0, 1+0-1) = \\max(0, 0+1-1) = \\max(0,0) = 0$; $\\max(0, 1+1-1) = \\max(0,1) = 1$"},
+            {"letter": "B", "is_correct": true, "text": "Since $x+z-1 \\leq x+z'-1$ and both are clamped to $\\geq 0$, the inequality holds.", "section_ref": "Section 3.3: F3 = max(0,x+y-1)", "notes_quote": "$\\max(0, x+z-1) \\leq \\max(0, x+z'-1)$ since $x + z - 1 \\leq x + z' - 1$ and both are clamped to be $\\geq 0$"},
+            {"letter": "C", "is_correct": true, "text": "When $a+b < 1$: choosing $\\delta$ small enough keeps $x+y-1 < 0$ for $(x,y) \\in B_\\delta(a,b)$, so both outputs are 0.", "section_ref": "Section 3.3: F3 = max(0,x+y-1)", "notes_quote": "If $(a,b)$ has $a+b < 1$: then $a+b-1 < 0$ and $x+y-1 < 0$ for $(x,y) \\in B_\\delta(a,b)$, so both sides are 0"},
+            {"letter": "D", "is_correct": false, "text": "$\\max(0,1+1-1) = \\max(0,1) = 1$, not 0. So $1 \\wedge 1 = 1$ as required by (C1).", "section_ref": "Section 3.3: F3 = max(0,x+y-1)", "notes_quote": "$\\max(0, 1+1-1) = \\max(0,1) = 1$"},
+            {"letter": "E", "is_correct": true, "text": "(C4) for $F^3_\\wedge$ is verified by direct computation, similar to associativity of bounded addition.", "section_ref": "Section 3.3: F3 = max(0,x+y-1)", "notes_quote": "(C4): Verified by direct computation (analogous to the associativity of bounded addition)"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-4",
+      "title": "4. The Mostert–Shields Theorem for Conjunction",
+      "questions": [
+        {
+          "id": "q9",
+          "source_ref": "Section 4.1: The Chimera Idea",
+          "text": "Which of the following correctly describe the 'chimera' concept in the Mostert–Shields Theorem? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Any continuous t-norm must be a chimera: it behaves like $F^1_\\wedge$, $F^2_\\wedge$, or $F^3_\\wedge$ on each sub-interval of $[0,1]$."},
+            {"letter": "B", "text": "A chimera t-norm behaves like $F^1_\\wedge = \\min$ OUTSIDE the sub-intervals and like $F^2_\\wedge$ or $F^3_\\wedge$ on each sub-interval."},
+            {"letter": "C", "text": "$F^1_\\wedge$, $F^2_\\wedge$, $F^3_\\wedge$ are the ONLY continuous t-norms (up to isomorphism)."},
+            {"letter": "D", "text": "The Mostert–Shields Theorem was published in 1957."},
+            {"letter": "E", "text": "A chimera t-norm may include both type 2 (product-like) and type 3 (Łukasiewicz-like) sub-intervals."}
+          ],
+          "correct": ["A", "B", "D", "E"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "Any continuous t-norm must be a chimera of the three canonical t-norms.", "section_ref": "Section 4.1: The Chimera Idea", "notes_quote": "any continuous t-norm must be a chimera of these three, meaning it behaves like one of the three t-norms on each sub-interval of $[0,1]$"},
+            {"letter": "B", "is_correct": true, "text": "Outside the identified sub-intervals, the chimera behaves exactly like $\\min$.", "section_ref": "Section 4.1: The Chimera Idea", "notes_quote": "like $F^1_\\wedge = \\min$ outside those sub-intervals"},
+            {"letter": "C", "is_correct": false, "text": "This is FALSE. The notes state 'the answer is NO' — there are infinitely many continuous t-norms (all chimeras), not just three.", "section_ref": "Section 4.1: The Chimera Idea", "notes_quote": "The answer is no — but any continuous t-norm must be a chimera of these three"},
+            {"letter": "D", "is_correct": true, "text": "Theorem 6.1 is attributed to Mostert–Shields (1957).", "section_ref": "Section 4.7: Theorem 6.1 / 6.5", "notes_quote": "Theorem 6.1 (Mostert–Shields, 1957)"},
+            {"letter": "E", "is_correct": true, "text": "A chimera can contain multiple sub-intervals of both types (type 2 and type 3), each behaving differently.", "section_ref": "Section 4.1: The Chimera Idea", "notes_quote": ""}
+          ]
+        },
+        {
+          "id": "q10",
+          "source_ref": "Section 4.2: The Idempotent Set A",
+          "text": "Which of the following correctly characterise the idempotent set $A = \\{z \\in [0,1] : z \\wedge z = z\\}$? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Always $0, 1 \\in A$ for any t-norm, by axiom (C1)."},
+            {"letter": "B", "text": "For $F^1_\\wedge = \\min$: every $z \\in [0,1]$ is in $A$."},
+            {"letter": "C", "text": "For $F^2_\\wedge = xy$: only $z = 0$ and $z = 1$ are in $A$."},
+            {"letter": "D", "text": "For $F^3_\\wedge = \\max(0,x+y-1)$: only $\\{0,1\\}$ are in $A$."},
+            {"letter": "E", "text": "For $F^2_\\wedge = xy$: $z \\in A$ iff $z^2 = z$, which holds for all $z \\in [0,1]$."}
+          ],
+          "correct": ["A", "B", "C", "D"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "By (C1): $0 \\wedge 0 = 0$ and $1 \\wedge 1 = 1$, so $0, 1 \\in A$ always.", "section_ref": "Section 4.2: The Idempotent Set A", "notes_quote": "always $0, 1 \\in A$ since $0 \\wedge 0 = 0$ and $1 \\wedge 1 = 1$ by (C1)"},
+            {"letter": "B", "is_correct": true, "text": "For $F^1_\\wedge$: $\\min(z,z) = z$ for every $z$, so $A = [0,1]$.", "section_ref": "Section 4.2: The Idempotent Set A", "notes_quote": "For $F^1_\\wedge$, every $z \\in [0,1]$ is in $A$"},
+            {"letter": "C", "is_correct": true, "text": "For $F^2_\\wedge$: $z^2 = z$ iff $z = 0$ or $z = 1$.", "section_ref": "Section 4.2: The Idempotent Set A", "notes_quote": "For $F^2_\\wedge$, only $z = 0$ and $z = 1$ are in $A$ (since $z^2 = z$ iff $z = 0$ or $z = 1$)"},
+            {"letter": "D", "is_correct": true, "text": "For $F^3_\\wedge$: $\\max(0,2z-1) = z$ requires $2z-1 = z$, i.e. $z=1$, or $0 = z$. So $A = \\{0,1\\}$.", "section_ref": "Section 4.2: The Idempotent Set A", "notes_quote": "For $F^3_\\wedge$, only $\\{0, 1\\}$"},
+            {"letter": "E", "is_correct": false, "text": "$z^2 = z$ iff $z(z-1) = 0$ iff $z = 0$ or $z = 1$. It does NOT hold for all $z \\in [0,1]$.", "section_ref": "Section 4.2: The Idempotent Set A", "notes_quote": ""}
+          ]
+        },
+        {
+          "id": "q11",
+          "source_ref": "Section 4.3: Lemma 6.2 — Min Behaviour Near Idempotents",
+          "text": "Which of the following correctly state Lemma 6.2 and its proof? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Lemma 6.2: If $z \\wedge z = z$ and $x \\leq z \\leq y$, then $x \\wedge y = x = \\min(x,y)$."},
+            {"letter": "B", "text": "Lemma 6.2: If $z \\wedge z = z$ and $y \\leq z \\leq x$, then $x \\wedge y = y = \\min(x,y)$."},
+            {"letter": "C", "text": "The proof uses: $x = z \\wedge t$ for some $t$ (by IVT), then $x = (z \\wedge z) \\wedge t = z \\wedge (z \\wedge t) \\leq y \\wedge (z \\wedge t) = y \\wedge x$."},
+            {"letter": "D", "text": "Lemma 6.2 shows that outside the sub-intervals $[a_i, b_i]$ (where all points are idempotents), $\\wedge$ must act like $\\min$."},
+            {"letter": "E", "text": "The proof of Lemma 6.2 uses only axioms (C1) and (C4), not (C2)."}
+          ],
+          "correct": ["A", "B", "C", "D"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "Part (i) of Lemma 6.2.", "section_ref": "Section 4.3: Lemma 6.2", "notes_quote": "(i) For all $x \\leq z \\leq y$ we have $(x \\wedge y) = x = \\min(x,y)$"},
+            {"letter": "B", "is_correct": true, "text": "Part (ii) of Lemma 6.2.", "section_ref": "Section 4.3: Lemma 6.2", "notes_quote": "(ii) For all $y \\leq z \\leq x$ we have $(x \\wedge y) = y = \\min(x,y)$"},
+            {"letter": "C", "is_correct": true, "text": "This is exactly the proof chain given in the notes.", "section_ref": "Section 4.3: Lemma 6.2", "notes_quote": "$x = z \\wedge t = (z \\wedge z) \\wedge t = z \\wedge (z \\wedge t) \\leq y \\wedge (z \\wedge t) = y \\wedge x$"},
+            {"letter": "D", "is_correct": true, "text": "Lemma 6.2 is the key to establishing that $\\wedge = \\min$ outside the sub-intervals identified by $A$.", "section_ref": "Section 4.7: Theorem 6.1 / 6.5", "notes_quote": "Combine Lemma 6.2 (outside the sub-intervals, $\\wedge$ equals $\\min$)"},
+            {"letter": "E", "is_correct": false, "text": "The proof uses (C2) in the step $z \\wedge (z \\wedge t) \\leq y \\wedge (z \\wedge t)$ (since $z \\leq y$ and $\\wedge$ is increasing). So (C2) is used.", "section_ref": "Section 4.3: Lemma 6.2", "notes_quote": "$\\leq y \\wedge (z \\wedge t)$ by (C2), since $z \\leq y$"}
+          ]
+        },
+        {
+          "id": "q12",
+          "source_ref": "Section 4.4: Interval Classification — Types 2 and 3",
+          "text": "Which of the following correctly distinguish Type 2 and Type 3 sub-intervals in the Mostert–Shields framework? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Both Type 2 and Type 3 sub-intervals $[a,b]$ satisfy: $a,b \\in A$ and $(a,b) \\cap A = \\varnothing$."},
+            {"letter": "B", "text": "Type 2: $z \\wedge z \\neq a$ for all $z \\in (a,b)$ — isomorphic to $F^2_\\wedge = xy$."},
+            {"letter": "C", "text": "Type 3: $z \\wedge z = a$ for some $z \\in (a,b)$ — isomorphic to $F^3_\\wedge = \\max(0,x+y-1)$."},
+            {"letter": "D", "text": "Type 2: $z \\wedge z = b$ for some $z \\in (a,b)$ — isomorphic to $F^2_\\wedge$."},
+            {"letter": "E", "text": "Type 3: $z \\wedge z = a$ for some $z \\in (a,b)$ — isomorphic to $F^1_\\wedge = \\min$."}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "Both types share the same framework: $a,b \\in A$ with no idempotents in the interior $(a,b)$.", "section_ref": "Section 4.4: Interval Classification", "notes_quote": "$a_i, b_i \\in A$ and $(a_i, b_i) \\cap A = \\varnothing$"},
+            {"letter": "B", "is_correct": true, "text": "Type 2 intervals are those where $z \\wedge z \\neq a$ for all interior $z$, and they are isomorphic to $F^2_\\wedge$.", "section_ref": "Section 4.4: Interval Classification", "notes_quote": "Type 2: $z \\wedge z \\neq a_i$ for all $z \\in (a_i, b_i)$ — behaves like $F^2_\\wedge = xy$"},
+            {"letter": "C", "is_correct": true, "text": "Type 3 intervals are those where some interior $z$ satisfies $z \\wedge z = a$, and they are isomorphic to $F^3_\\wedge$.", "section_ref": "Section 4.4: Interval Classification", "notes_quote": "Type 3: $z \\wedge z = a_i$ for some $z \\in (a_i, b_i)$ — behaves like $F^3_\\wedge = \\max(0, x+y-1)$"},
+            {"letter": "D", "is_correct": false, "text": "Type 2 is defined by $z \\wedge z \\neq a$ (NOT $= b$). The condition $z \\wedge z = b$ is not how Type 2 is defined.", "section_ref": "Section 4.4: Interval Classification", "notes_quote": ""},
+            {"letter": "E", "is_correct": false, "text": "Type 3 intervals are isomorphic to $F^3_\\wedge$ (Łukasiewicz), not $F^1_\\wedge = \\min$.", "section_ref": "Section 4.4: Interval Classification", "notes_quote": "Type 3: ... behaves like $F^3_\\wedge = \\max(0, x+y-1)$"}
+          ]
+        },
+        {
+          "id": "q13",
+          "source_ref": "Section 4.5: Lemma 6.3 — Type 2 Intervals are Isomorphic to F2",
+          "text": "Regarding Lemma 6.3 (Type 2 intervals isomorphic to $F^2_{\\wedge}$), which of the following are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "The isomorphism $\\rho : [0,1] \\to [a,b]$ is defined using $\\wedge$-exponentiation: $\\rho(x) = c^{\\wedge r}$ where $r = -\\log_2(x)$."},
+            {"letter": "B", "text": "$\\wedge$-exponentiation satisfies $(x^{\\wedge r} \\wedge x^{\\wedge s}) = x^{\\wedge(r+s)}$ for real $r,s > 0$."},
+            {"letter": "C", "text": "If $r < s$ then $x^{\\wedge r} \\geq x^{\\wedge s}$ — exponentiation is order-reversing in the exponent."},
+            {"letter": "D", "text": "The isomorphism $\\rho$ maps $x = 0 \\mapsto b$ and $x = 1 \\mapsto a$."},
+            {"letter": "E", "text": "Lemma 6.3 proves that $\\langle [a,b], <, \\wedge \\rangle \\cong \\langle [0,1], <, \\times \\rangle$."}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "The isomorphism uses $\\wedge$-exponentiation with $r = -\\log_2(x)$.", "section_ref": "Section 4.5: Lemma 6.3", "notes_quote": "$\\rho(x) = \\begin{cases} a & \\text{if } x = 0 \\\\ b & \\text{if } x = 1 \\\\ c^{\\wedge r} & \\text{if } 0 < x < 1 \\text{ where } r = -\\log_2(x) \\end{cases}$"},
+            {"letter": "B", "is_correct": true, "text": "The key algebraic property of $\\wedge$-exponentiation.", "section_ref": "Section 4.5: Lemma 6.3", "notes_quote": "$(x^{\\wedge r} \\wedge x^{\\wedge s}) = x^{\\wedge(r+s)}$ for real $r, s > 0$"},
+            {"letter": "C", "is_correct": true, "text": "Larger exponents give smaller values (since $x \\wedge x \\leq x$), so exponentiation is order-reversing.", "section_ref": "Section 4.5: Lemma 6.3", "notes_quote": "If $r < s$ then $x^{\\wedge r} \\geq x^{\\wedge s}$ (exponentiation is order-reversing)"},
+            {"letter": "D", "is_correct": false, "text": "The isomorphism maps $x=0 \\mapsto a$ and $x=1 \\mapsto b$, not the other way round.", "section_ref": "Section 4.5: Lemma 6.3", "notes_quote": "$\\rho(x) = \\begin{cases} a & \\text{if } x = 0 \\\\ b & \\text{if } x = 1 \\end{cases}$"},
+            {"letter": "E", "is_correct": true, "text": "Lemma 6.3 states $\\langle [a,b], <, \\wedge \\rangle \\cong \\langle [0,1], <, \\times \\rangle$ for type 2 intervals.", "section_ref": "Section 4.5: Lemma 6.3", "notes_quote": "$\\langle [a,b], <, \\wedge \\rangle \\cong \\langle [0,1], <, \\times \\rangle$"}
+          ]
+        },
+        {
+          "id": "q14",
+          "source_ref": "Section 4.6: Lemma 6.4 — Type 3 Intervals are Isomorphic to F3",
+          "text": "Regarding Lemma 6.4 (Type 3 intervals isomorphic to $F^3_{\\wedge}$), which of the following are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "The order-reversing map $\\rho : [0,2] \\to [a,b]$ is defined by $\\rho(x) = c^{\\wedge x}$ for $0 < x < 2$, with $\\rho(0) = b$ and $\\rho(2) = a$."},
+            {"letter": "B", "text": "To get an order-preserving isomorphism, compose with $\\sigma(x) = 2(1-x)$, giving $\\rho \\circ \\sigma : [0,1] \\to [a,b]$."},
+            {"letter": "C", "text": "In a type 3 interval, the largest value $c \\in [a,b]$ with $c \\wedge c = a$ plays a key role in constructing the isomorphism."},
+            {"letter": "D", "text": "For type 3, $c^{\\wedge r} = a$ for all $r \\geq 2$ (since $c \\wedge c = a$ is an idempotent)."},
+            {"letter": "E", "text": "Lemma 6.4 proves $\\langle [a,b], <, \\wedge \\rangle \\cong \\langle [0,1], <, F^2_\\wedge \\rangle$ for type 3 intervals."}
+          ],
+          "correct": ["A", "B", "C", "D"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "The order-reversing map $\\rho$ from $[0,2]$ to $[a,b]$ is defined as stated.", "section_ref": "Section 4.6: Lemma 6.4", "notes_quote": "$\\rho(x) = \\begin{cases} a & \\text{if } x = 2 \\\\ b & \\text{if } x = 0 \\\\ c^{\\wedge x} & \\text{if } 0 < x < 2 \\end{cases}$"},
+            {"letter": "B", "is_correct": true, "text": "Composing with the order-reversing $\\sigma(x) = 2(1-x)$ yields an order-preserving isomorphism.", "section_ref": "Section 4.6: Lemma 6.4", "notes_quote": "compose with the order-reversing isomorphism $\\sigma : [0,1] \\to [0,2]$ defined by $\\sigma(x) = 2(1-x)$. Then $\\rho \\circ \\sigma : [0,1] \\to [a,b]$ is an order-preserving isomorphism"},
+            {"letter": "C", "is_correct": true, "text": "The largest $c$ in $[a,b]$ with $c \\wedge c = a$ is used to define the $\\wedge$-exponentiation base.", "section_ref": "Section 4.6: Lemma 6.4", "notes_quote": "Let $c \\in [a,b]$ be the largest value with $c \\wedge c = a$"},
+            {"letter": "D", "is_correct": true, "text": "Since $c \\wedge c = a$ and $a$ is an idempotent ($a \\wedge a = a$), all further exponents give $a$.", "section_ref": "Section 4.6: Lemma 6.4", "notes_quote": "$c^{\\wedge r} = a$ for all $r \\geq 2$ (since $c \\wedge c = a$, which is an idempotent)"},
+            {"letter": "E", "is_correct": false, "text": "Lemma 6.4 proves $\\langle [a,b], <, \\wedge \\rangle \\cong \\langle [0,1], <, F^3_\\wedge \\rangle$ (Łukasiewicz), NOT $F^2_\\wedge$ (product). Type 3 corresponds to $F^3_\\wedge$.", "section_ref": "Section 4.6: Lemma 6.4", "notes_quote": "$\\langle [a,b], <, \\wedge \\rangle \\cong \\langle [0,1], \\max(0, x+y-1), < \\rangle$"}
+          ]
+        },
+        {
+          "id": "q15",
+          "source_ref": "Section 4.7: Theorem 6.1 / 6.5 — Mostert–Shields for Conjunction",
+          "text": "Which of the following correctly state Theorem 6.1 (Mostert–Shields for $\\wedge$)? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "If $z \\wedge z \\neq a$ for all $z \\in (a,b)$ (Type 2), then $\\langle [a,b], <, \\wedge \\rangle \\cong \\langle [0,1], <, F^2_\\wedge \\rangle$."},
+            {"letter": "B", "text": "If $z \\wedge z = a$ for some $z \\in (a,b)$ (Type 3), then $\\langle [a,b], <, \\wedge \\rangle \\cong \\langle [0,1], <, F^3_\\wedge \\rangle$."},
+            {"letter": "C", "text": "Outside the sub-intervals (when $x,y$ do not share any common sub-interval $[a,b]$ with $a,b \\in A$, $(a,b) \\cap A = \\varnothing$): $(x \\wedge y) = \\min(x,y)$."},
+            {"letter": "D", "text": "The theorem is proved by combining Lemmas 6.2, 6.3, and 6.4."},
+            {"letter": "E", "text": "Outside sub-intervals, $\\wedge$ behaves like $F^2_\\wedge = xy$."}
+          ],
+          "correct": ["A", "B", "C", "D"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "Type 2 case of Theorem 6.1.", "section_ref": "Section 4.7: Theorem 6.1 / 6.5", "notes_quote": "If $z \\wedge z \\neq a$ for all $z \\in (a,b)$ (Type 2) then $\\langle [a,b], <, \\wedge \\rangle \\cong \\langle [0,1], <, F^2_\\wedge \\rangle$"},
+            {"letter": "B", "is_correct": true, "text": "Type 3 case of Theorem 6.1.", "section_ref": "Section 4.7: Theorem 6.1 / 6.5", "notes_quote": "If $z \\wedge z = a$ for some $z \\in (a,b)$ (Type 3) then $\\langle [a,b], <, \\wedge \\rangle \\cong \\langle [0,1], <, F^3_\\wedge \\rangle$"},
+            {"letter": "C", "is_correct": true, "text": "Outside the sub-intervals, the t-norm is exactly $\\min$.", "section_ref": "Section 4.7: Theorem 6.1 / 6.5", "notes_quote": "Otherwise... $(x \\wedge y) = F^1_\\wedge(x,y) = \\min(x,y)$"},
+            {"letter": "D", "is_correct": true, "text": "The proof summary cites exactly these three lemmas.", "section_ref": "Section 4.7: Theorem 6.1 / 6.5", "notes_quote": "Combine Lemma 6.2 (outside the sub-intervals, $\\wedge$ equals $\\min$) with Lemma 6.3 (type 2 sub-intervals are isomorphic to $F^2_\\wedge$) and Lemma 6.4 (type 3 sub-intervals are isomorphic to $F^3_\\wedge$)"},
+            {"letter": "E", "is_correct": false, "text": "Outside sub-intervals, $\\wedge$ behaves like $F^1_\\wedge = \\min$, NOT $F^2_\\wedge = xy$.", "section_ref": "Section 4.7: Theorem 6.1 / 6.5", "notes_quote": "$(x \\wedge y) = F^1_\\wedge(x,y) = \\min(x,y)$"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-5",
+      "title": "5. The Mostert–Shields Theorem for Disjunction",
+      "questions": [
+        {
+          "id": "q16",
+          "source_ref": "Section 5.1: Axioms (D1)–(D4) for T-Conorms",
+          "text": "Which of the following correctly state the axioms for a continuous t-conorm $\\vee : [0,1]^2 \\to [0,1]$? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "(D1) Boolean: $0 \\vee 0 = 0$ and $1 \\vee 0 = 0 \\vee 1 = 1 \\vee 1 = 1$."},
+            {"letter": "B", "text": "(D2) Increasing: if $z < z'$ then $(x \\vee z) \\leq (x \\vee z')$ and $(z \\vee y) \\leq (z' \\vee y)$."},
+            {"letter": "C", "text": "(D3) Continuous: for all $(a,b) \\in [0,1]^2$ and $\\varepsilon > 0$, $\\exists \\delta > 0$ such that $|(x \\vee y) - (a \\vee b)| < \\varepsilon$ whenever $(x,y) \\in B_\\delta(a,b)$."},
+            {"letter": "D", "text": "(D4) Associative: $(x \\vee y) \\vee z = x \\vee (y \\vee z)$."},
+            {"letter": "E", "text": "(D1) Boolean: $1 \\vee 1 = 0$ and $0 \\vee 0 = 1$."}
+          ],
+          "correct": ["A", "B", "C", "D"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "(D1) is the Boolean boundary condition for t-conorms.", "section_ref": "Section 5.1: Axioms (D1)–(D4)", "notes_quote": "(D1) Boolean: $0 \\vee 0 = 0$ and $1 \\vee 0 = 0 \\vee 1 = 1 \\vee 1 = 1$"},
+            {"letter": "B", "is_correct": true, "text": "(D2) is the monotonicity condition for t-conorms.", "section_ref": "Section 5.1: Axioms (D1)–(D4)", "notes_quote": "(D2) Increasing: If $z < z'$ then $(x \\vee z) \\leq (x \\vee z')$ and $(z \\vee y) \\leq (z' \\vee y)$"},
+            {"letter": "C", "is_correct": true, "text": "(D3) is continuity in the $\\varepsilon$-$\\delta$ sense for binary functions.", "section_ref": "Section 5.1: Axioms (D1)–(D4)", "notes_quote": "(D3) Continuous: For all $(a,b) \\in [0,1]^2$ and $\\varepsilon > 0$, there is $\\delta > 0$ such that $|(x \\vee y) - (a \\vee b)| < \\varepsilon$ whenever $(x,y) \\in B_\\delta(a,b)$"},
+            {"letter": "D", "is_correct": true, "text": "(D4) is associativity of $\\vee$.", "section_ref": "Section 5.1: Axioms (D1)–(D4)", "notes_quote": "(D4) Associative: $((x \\vee y) \\vee z) = (x \\vee (y \\vee z))$"},
+            {"letter": "E", "is_correct": false, "text": "This reverses (D1). For a t-conorm: $0 \\vee 0 = 0$ (not 1) and $1 \\vee 1 = 1$ (not 0). The pattern is dual to t-norms.", "section_ref": "Section 5.1: Axioms (D1)–(D4)", "notes_quote": ""}
+          ]
+        },
+        {
+          "id": "q17",
+          "source_ref": "Section 5.2: Theorem 6.6 — Mostert–Shields for Disjunction",
+          "text": "Which of the following correctly state Theorem 6.6 (Mostert–Shields for $\\vee$)? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Let $A = \\{z \\in [0,1] : z \\vee z = z\\}$. For $[a,b]$ with $a,b \\in A$ and $(a,b) \\cap A = \\varnothing$:"},
+            {"letter": "B", "text": "If $z \\vee z \\neq b$ for all $z \\in (a,b)$: $\\langle [a,b], <, \\vee \\rangle \\cong \\langle [0,1], <, F^2_\\vee \\rangle$."},
+            {"letter": "C", "text": "If $z \\vee z = b$ for some $z \\in (a,b)$: $\\langle [a,b], <, \\vee \\rangle \\cong \\langle [0,1], <, F^3_\\vee \\rangle$."},
+            {"letter": "D", "text": "Otherwise: $(x \\vee y) = F^1_\\vee(x,y) = \\max(x,y)$."},
+            {"letter": "E", "text": "For t-conorms, type 2 intervals are those where $z \\vee z = a$ for some $z \\in (a,b)$."}
+          ],
+          "correct": ["A", "B", "C", "D"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "The idempotent set for t-conorms is $A = \\{z : z \\vee z = z\\}$.", "section_ref": "Section 5.2: Theorem 6.6", "notes_quote": "let $A = \\{z \\in [0,1] : z \\vee z = z\\}$"},
+            {"letter": "B", "is_correct": true, "text": "If no interior $z$ satisfies $z \\vee z = b$, the interval is isomorphic to $F^2_\\vee$.", "section_ref": "Section 5.2: Theorem 6.6", "notes_quote": "If $z \\vee z \\neq b$ for all $z \\in (a,b)$: $\\langle [a,b], <, \\vee \\rangle \\cong \\langle [0,1], <, F^2_\\vee \\rangle$"},
+            {"letter": "C", "is_correct": true, "text": "If some interior $z$ satisfies $z \\vee z = b$, the interval is isomorphic to $F^3_\\vee$.", "section_ref": "Section 5.2: Theorem 6.6", "notes_quote": "If $z \\vee z = b$ for some $z \\in (a,b)$: $\\langle [a,b], <, \\vee \\rangle \\cong \\langle [0,1], <, F^3_\\vee \\rangle$"},
+            {"letter": "D", "is_correct": true, "text": "Outside the sub-intervals, $\\vee$ equals $\\max$.", "section_ref": "Section 5.2: Theorem 6.6", "notes_quote": "Otherwise: $(x \\vee y) = F^1_\\vee(x,y) = \\max(x,y)$"},
+            {"letter": "E", "is_correct": false, "text": "For t-conorms, the type 2 condition is $z \\vee z \\neq b$ (not $= a$). The $b$ is the upper endpoint, reflecting the dual structure.", "section_ref": "Section 5.2: Theorem 6.6", "notes_quote": ""}
+          ]
+        },
+        {
+          "id": "q18",
+          "source_ref": "Section 5.3: Deriving the Disjunction Result from Conjunction",
+          "text": "Which of the following correctly describe how the Mostert–Shields theorem for $\\vee$ is derived from the theorem for $\\wedge$? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "For any t-conorm $\\vee$ satisfying (D1)–(D4), define $x \\wedge y = 1 - ((1-x) \\vee (1-y))$; this $\\wedge$ satisfies (C1)–(C4)."},
+            {"letter": "B", "text": "$F^1_\\wedge(x,y) = 1 - F^1_\\vee(1-x, 1-y)$, $F^2_\\wedge(x,y) = 1 - F^2_\\vee(1-x,1-y)$, $F^3_\\wedge(x,y) = 1 - F^3_\\vee(1-x,1-y)$."},
+            {"letter": "C", "text": "If $\\langle [a,b], <, \\wedge \\rangle \\cong \\langle [0,1], <, F^k_\\wedge \\rangle$ then $\\langle [a,b], <, \\vee \\rangle \\cong \\langle [0,1], <, F^k_\\vee \\rangle$."},
+            {"letter": "D", "text": "The three canonical t-conorms are $F^1_\\vee = \\max(x,y)$, $F^2_\\vee = x+y-xy$, $F^3_\\vee = \\min(1,x+y)$."},
+            {"letter": "E", "text": "The duality relation is $x \\vee y = 1 - ((1-x) \\wedge (1-y))$, derived by applying De Morgan's law."}
+          ],
+          "correct": ["A", "B", "C", "D", "E"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "The duality construction: from any t-conorm, one can define a t-norm via this formula.", "section_ref": "Section 5.3: Deriving the Disjunction Result", "notes_quote": "For any t-conorm $\\vee$ satisfying (D1)–(D4), define $(x \\wedge y) = 1 - ((1-x) \\vee (1-y))$. This $\\wedge$ satisfies (C1)–(C4)"},
+            {"letter": "B", "is_correct": true, "text": "The three pairs of canonical t-norms and t-conorms are related by this duality.", "section_ref": "Section 5.3: Deriving the Disjunction Result", "notes_quote": "$F^1_\\wedge(x,y) = 1 - F^1_\\vee(1-x, 1-y)$, $F^2_\\wedge(x,y) = 1 - F^2_\\vee(1-x, 1-y)$, $F^3_\\wedge(x,y) = 1 - F^3_\\vee(1-x, 1-y)$"},
+            {"letter": "C", "is_correct": true, "text": "The isomorphism type transfers from $\\wedge$ to $\\vee$ via the duality.", "section_ref": "Section 5.3: Deriving the Disjunction Result", "notes_quote": "if $\\langle [a,b], <, \\wedge \\rangle \\cong \\langle [0,1], <, F^k_\\wedge \\rangle$ for $k = 2, 3$, then $\\langle [a,b], <, \\vee \\rangle \\cong \\langle [0,1], <, F^k_\\vee \\rangle$"},
+            {"letter": "D", "is_correct": true, "text": "The three canonical t-conorms are $\\max$, $x+y-xy$, and $\\min(1,x+y)$.", "section_ref": "Section 5.1: Axioms (D1)–(D4)", "notes_quote": "$F^1_\\vee(x,y)$: $\\max(x,y)$; $F^2_\\vee(x,y)$: $x + y - xy$; $F^3_\\vee(x,y)$: $\\min(1, x+y)$"},
+            {"letter": "E", "is_correct": true, "text": "The duality formula $x \\vee y = 1 - ((1-x) \\wedge (1-y))$ is equivalent to De Morgan's law.", "section_ref": "Section 5.3: Deriving the Disjunction Result", "notes_quote": ""}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-6",
+      "title": "6. SGT Questions and Full Solutions",
+      "questions": [
+        {
+          "id": "q19",
+          "source_ref": "Section 6: Question 7.4 — Continuity Implies Limit Commutativity",
+          "text": "In the solution to Question 7.4 (continuity implies limit-commutativity), which of the following are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Let $L = \\lim x_n$. We want to show $\\lim_{n\\to\\infty}(x_n \\wedge y) = L \\wedge y$."},
+            {"letter": "B", "text": "By (C3), for any $\\varepsilon > 0$, $\\exists \\delta > 0$ such that $(x_n, y) \\in B_\\delta(L,y)$ implies $|(x_n \\wedge y) - (L \\wedge y)| < \\varepsilon$."},
+            {"letter": "C", "text": "Since $x_n \\to L$, $\\exists N$ such that $|x_n - L| < \\delta$ for $n \\geq N$, which means $(x_n,y) \\in B_\\delta(L,y)$."},
+            {"letter": "D", "text": "The proof requires $\\wedge$ to satisfy all four axioms (C1)–(C4)."},
+            {"letter": "E", "text": "The proof works for any two convergent sequences $x_n, y_n$ simultaneously."}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "The proof goal is stated this way.", "section_ref": "Section 6: Question 7.4", "notes_quote": "Let $L = \\lim x_n$... Want to show: $\\exists N$ such that $|(x_n \\wedge y) - (L \\wedge y)| < \\varepsilon$ for $n \\geq N$"},
+            {"letter": "B", "is_correct": true, "text": "This is the key continuity step.", "section_ref": "Section 6: Question 7.4", "notes_quote": "by (C3), $\\exists \\delta > 0$ such that $|(x_n \\wedge y) - (L \\wedge y)| < \\varepsilon$ whenever $(x_n, y) \\in B_\\delta(L, y)$"},
+            {"letter": "C", "is_correct": true, "text": "$|x_n - L| < \\delta$ places $(x_n,y)$ inside the disc $B_\\delta(L,y)$ (the $y$-component doesn't change).", "section_ref": "Section 6: Question 7.4", "notes_quote": "Since $x_n \\to L$, $\\exists N$ such that $|x_n - L| < \\delta$ for $n \\geq N$, which means $(x_n, y) \\in B_\\delta(L, y)$"},
+            {"letter": "D", "is_correct": false, "text": "Only (C3) (continuity) is needed for this proof. The other axioms are not invoked.", "section_ref": "Section 6: Question 7.4", "notes_quote": ""},
+            {"letter": "E", "is_correct": false, "text": "The proof as given only handles one variable sequence $x_n$ with fixed $y$. Extending to two sequences $x_n, y_n$ simultaneously requires a more general argument.", "section_ref": "Section 6: Question 7.4", "notes_quote": ""}
+          ]
+        },
+        {
+          "id": "q20",
+          "source_ref": "Section 6: Question 7.5 — Chimera Function",
+          "text": "For the chimera function $x \\wedge y = \\dfrac{xy}{\\max(x, y, \\frac{1}{2})}$, which of the following are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "When $x, y \\leq \\frac{1}{2}$: $\\max(x,y,\\frac{1}{2}) = \\frac{1}{2}$, so $x \\wedge y = 2xy$."},
+            {"letter": "B", "text": "When $\\frac{1}{2} < x \\leq y$: $\\max(x,y,\\frac{1}{2}) = y$, so $x \\wedge y = x = \\min(x,y)$."},
+            {"letter": "C", "text": "When $\\frac{1}{2} < y \\leq x$: $x \\wedge y = y = \\min(x,y)$."},
+            {"letter": "D", "text": "The idempotent set is $A = \\{0\\} \\cup [\\frac{1}{2}, 1]$."},
+            {"letter": "E", "text": "The idempotent set is $A = [0,1]$ (all elements are idempotent)."}
+          ],
+          "correct": ["A", "B", "C", "D"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "When both $x,y \\leq 1/2$, the max is $1/2$, so $x \\wedge y = xy/(1/2) = 2xy$.", "section_ref": "Section 6: Question 7.5", "notes_quote": "If $x, y \\leq \\frac{1}{2}$: $\\max(x, y, \\frac{1}{2}) = \\frac{1}{2}$, so $x \\wedge y = 2xy$"},
+            {"letter": "B", "is_correct": true, "text": "When $1/2 < x \\leq y$, $\\max = y$, so $x \\wedge y = xy/y = x = \\min(x,y)$.", "section_ref": "Section 6: Question 7.5", "notes_quote": "If $\\frac{1}{2} < x \\leq y$: $\\max(x, y, \\frac{1}{2}) = y$, so $x \\wedge y = \\frac{xy}{y} = x = \\min(x,y)$"},
+            {"letter": "C", "is_correct": true, "text": "When $1/2 < y \\leq x$, $\\max = x$, so $x \\wedge y = xy/x = y = \\min(x,y)$.", "section_ref": "Section 6: Question 7.5", "notes_quote": "If $\\frac{1}{2} < y \\leq x$: $\\max(x, y, \\frac{1}{2}) = x$, so $x \\wedge y = \\frac{xy}{x} = y = \\min(x,y)$"},
+            {"letter": "D", "is_correct": true, "text": "For $z \\geq 1/2$: $z \\wedge z = z^2/z = z$. For $0 < z < 1/2$: $z \\wedge z = 2z^2 \\neq z$. For $z = 0$: $0 \\wedge 0 = 0$.", "section_ref": "Section 6: Question 7.5 Part (ii)", "notes_quote": "$A = \\{0\\} \\cup \\left[\\frac{1}{2}, 1\\right]$"},
+            {"letter": "E", "is_correct": false, "text": "For $z \\in (0,1/2)$: $z \\wedge z = 2z^2 \\neq z$, so these elements are NOT idempotent. $A \\neq [0,1]$.", "section_ref": "Section 6: Question 7.5 Part (ii)", "notes_quote": ""}
+          ]
+        },
+        {
+          "id": "q21",
+          "source_ref": "Section 6: Question 7.5 — Chimera Characterisation and Verification",
+          "text": "Regarding the chimera characterisation and verification of (C1)–(C4) for $x \\wedge y = xy/\\max(x,y,\\frac{1}{2})$, which of the following are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "On $[0, \\frac{1}{2}]$: $x \\wedge y = 2xy$ is isomorphic to $F^2_\\wedge$ via $\\rho(z) = 2z$, since $\\rho(x \\wedge y) = 2(2xy) = 4xy = (2x)(2y) = \\rho(x)\\rho(y)$."},
+            {"letter": "B", "text": "Outside $[0, \\frac{1}{2}]$ (when $\\max(x,y) > \\frac{1}{2}$): $\\wedge$ is exactly $\\min(x,y) = F^1_\\wedge$."},
+            {"letter": "C", "text": "The Łukasiewicz t-norm $F^3_\\wedge$ appears in this chimera."},
+            {"letter": "D", "text": "(C3) verification: the boundary $x = 1/2$ or $y = 1/2$ poses no discontinuity because $2xy = \\min(x,y)$ on that boundary."},
+            {"letter": "E", "text": "(C4) for $x,y,z \\leq 1/2$: $(x \\wedge y) \\wedge z = (2xy) \\wedge z = 2(2xy)z = 4xyz = x \\wedge (2yz) = 4xyz$."}
+          ],
+          "correct": ["A", "B", "D", "E"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "The isomorphism $\\rho(z) = 2z$ maps $[0,1/2]$ to $[0,1]$ and converts $2xy$ to $xy$ (product t-norm).", "section_ref": "Section 6: Question 7.5 Part (iii)", "notes_quote": "On $[0, \\frac{1}{2}]$: $x \\wedge y = 2xy$, which is isomorphic to the product t-norm $F^2_\\wedge$ under the isomorphism $\\rho(z) = 2z$, since $\\rho(x \\wedge y) = 2(2xy) = 4xy = (2x)(2y) = \\rho(x)\\rho(y)$"},
+            {"letter": "B", "is_correct": true, "text": "Outside the sub-interval, $\\wedge = \\min$.", "section_ref": "Section 6: Question 7.5 Part (iii)", "notes_quote": "Outside this interval (i.e. when $\\max(x,y) > \\frac{1}{2}$): $\\wedge$ is exactly the minimum t-norm $F^1_\\wedge = \\min(x,y)$"},
+            {"letter": "C", "is_correct": false, "text": "The notes explicitly state: 'The Łukasiewicz t-norm $F^3_\\wedge$ does NOT appear in this particular chimera.'", "section_ref": "Section 6: Question 7.5 Part (iii)", "notes_quote": "The Łukasiewicz t-norm $F^3_\\wedge$ does not appear in this particular chimera"},
+            {"letter": "D", "is_correct": true, "text": "On the boundary $y = x = 1/2$: $2 \\cdot x \\cdot 1/2 = x = \\min(x,1/2)$; similarly for $y = 1/2$. So both formulas agree.", "section_ref": "Section 6: Question 7.5 Part (i) — C3", "notes_quote": "When $y \\leq x = \\frac{1}{2}$: $2xy = y = \\min(x,y)$. When $x \\leq y = \\frac{1}{2}$: $2xy = x = \\min(x,y)$. So both pieces agree on the boundary — no discontinuity"},
+            {"letter": "E", "is_correct": true, "text": "This is the associativity verification for the case $x,y,z \\leq 1/2$.", "section_ref": "Section 6: Question 7.5 Part (i) — C4", "notes_quote": "$(x \\wedge y) \\wedge z = (2xy) \\wedge z = 2(2xy)z = 4xyz$; $x \\wedge (y \\wedge z) = x \\wedge (2yz) = 2x(2yz) = 4xyz$"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-7",
+      "title": "Key Definitions",
+      "questions": [
+        {
+          "id": "q22",
+          "source_ref": "Key Definitions Table — T-norm and T-conorm",
+          "text": "Which of the following correctly match terms to their definitions from the Key Definitions table? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "A **t-norm** is a binary function $\\wedge : [0,1]^2 \\to [0,1]$ satisfying (C1) Boolean, (C2) Increasing, (C3) Continuous, (C4) Associative."},
+            {"letter": "B", "text": "A **t-conorm** is a binary function $\\vee : [0,1]^2 \\to [0,1]$ satisfying (D1)–(D4), the dual axioms."},
+            {"letter": "C", "text": "An **idempotent element** is a value $z \\in [0,1]$ such that $z \\wedge z = z$ (or $z \\vee z = z$)."},
+            {"letter": "D", "text": "The **idempotent set** is $A = \\{z \\in [0,1] : z \\wedge z \\neq z\\}$."},
+            {"letter": "E", "text": "$B_\\delta(a,b)$ is the open disc of radius $\\delta$ centred at $(a,b)$: $\\{(x,y) \\in [0,1]^2 : (x-a)^2 + (y-b)^2 < \\delta^2\\}$."}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "Exact definition from the key definitions table.", "section_ref": "Key Definitions", "notes_quote": "T-norm: A binary function $\\wedge : [0,1]^2 \\to [0,1]$ satisfying (C1) Boolean, (C2) Increasing, (C3) Continuous, (C4) Associative"},
+            {"letter": "B", "is_correct": true, "text": "Exact definition from the key definitions table.", "section_ref": "Key Definitions", "notes_quote": "T-conorm: A binary function $\\vee : [0,1]^2 \\to [0,1]$ satisfying (D1)–(D4), the dual axioms"},
+            {"letter": "C", "is_correct": true, "text": "Exact definition from the key definitions table.", "section_ref": "Key Definitions", "notes_quote": "Idempotent element: A value $z \\in [0,1]$ such that $z \\wedge z = z$ (or $z \\vee z = z$)"},
+            {"letter": "D", "is_correct": false, "text": "The idempotent set is $A = \\{z : z \\wedge z = z\\}$ (elements that ARE idempotent), not $\\{z : z \\wedge z \\neq z\\}$.", "section_ref": "Key Definitions", "notes_quote": "Idempotent set $A$: $A = \\{z \\in [0,1] : z \\wedge z = z\\}$"},
+            {"letter": "E", "is_correct": true, "text": "Exact definition from the key definitions table.", "section_ref": "Key Definitions", "notes_quote": "$B_\\delta(a,b)$: Open disc of radius $\\delta$ centred at $(a,b)$: $\\{(x,y) \\in [0,1]^2 : (x-a)^2 + (y-b)^2 < \\delta^2\\}$"}
+          ]
+        },
+        {
+          "id": "q23",
+          "source_ref": "Key Definitions Table — Chimera, Types 2 and 3",
+          "text": "Which of the following correctly define 'chimera', 'Type 2 interval', and 'Type 3 interval'? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "A **chimera** is a t-norm that behaves like $F^1_\\wedge$ outside sub-intervals and like $F^2_\\wedge$ or $F^3_\\wedge$ on each sub-interval $[a_i,b_i]$ with $a_i,b_i \\in A$."},
+            {"letter": "B", "text": "A **Type 2 interval** $[a,b]$ has $a,b \\in A$, $(a,b) \\cap A = \\varnothing$, and $z \\wedge z \\neq a$ for all $z \\in (a,b)$ — isomorphic to $F^2_\\wedge$."},
+            {"letter": "C", "text": "A **Type 3 interval** $[a,b]$ has $a,b \\in A$, $(a,b) \\cap A = \\varnothing$, and $z \\wedge z = a$ for some $z \\in (a,b)$ — isomorphic to $F^3_\\wedge$."},
+            {"letter": "D", "text": "A **Type 2 interval** is one where $z \\wedge z = a$ for all $z \\in (a,b)$ — isomorphic to $F^3_\\wedge$."},
+            {"letter": "E", "text": "$\\wedge$-exponentiation is extended to real exponents via limits of rational exponents, using continuity (IVT + monotonicity)."}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "Exact definition of chimera from the key definitions table.", "section_ref": "Key Definitions", "notes_quote": "Chimera: A t-norm that behaves like $F^1_\\wedge$ outside sub-intervals and like $F^2_\\wedge$ or $F^3_\\wedge$ on each sub-interval $[a_i, b_i]$ with $a_i, b_i \\in A$"},
+            {"letter": "B", "is_correct": true, "text": "Exact definition of Type 2 interval.", "section_ref": "Key Definitions", "notes_quote": "Type 2 interval: Sub-interval $[a,b]$ with $a,b \\in A$, $(a,b)\\cap A = \\varnothing$, and $z \\wedge z \\neq a$ for all $z \\in (a,b)$ — isomorphic to $F^2_\\wedge$"},
+            {"letter": "C", "is_correct": true, "text": "Exact definition of Type 3 interval.", "section_ref": "Key Definitions", "notes_quote": "Type 3 interval: Sub-interval $[a,b]$ with $a,b \\in A$, $(a,b)\\cap A = \\varnothing$, and $z \\wedge z = a$ for some $z \\in (a,b)$ — isomorphic to $F^3_\\wedge$"},
+            {"letter": "D", "is_correct": false, "text": "This is the definition of a Type 3 interval, not Type 2. Type 2 is defined by $z \\wedge z \\neq a$ for all interior $z$.", "section_ref": "Key Definitions", "notes_quote": ""},
+            {"letter": "E", "is_correct": true, "text": "The key definitions table describes $\\wedge$-exponentiation extended to real exponents via limits.", "section_ref": "Key Definitions", "notes_quote": "$\\wedge$-exponentiation: $x^{\\wedge n} = x \\wedge \\cdots \\wedge x$ ($n$ times); extended to rationals via IVT and to reals via limits"}
+          ]
+        },
+        {
+          "id": "q24",
+          "source_ref": "Key Definitions Table — Isomorphisms",
+          "text": "Which of the following correctly distinguish order-preserving and order-reversing isomorphisms? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "An **order-preserving isomorphism** $\\rho : [a,b] \\to [c,d]$ satisfies $\\rho(x) \\leq \\rho(y) \\iff x \\leq y$."},
+            {"letter": "B", "text": "An **order-reversing isomorphism** $\\rho$ satisfies $\\rho(x) \\leq \\rho(y) \\iff x \\geq y$."},
+            {"letter": "C", "text": "In Lemma 6.4, the map $\\rho(x) = c^{\\wedge x}$ from $[0,2]$ to $[a,b]$ is order-reversing."},
+            {"letter": "D", "text": "Composing two order-reversing isomorphisms gives an order-preserving isomorphism."},
+            {"letter": "E", "text": "An order-reversing isomorphism cannot be used to establish that two structures are isomorphic."}
+          ],
+          "correct": ["A", "B", "C", "D"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "Exact definition from the key definitions table.", "section_ref": "Key Definitions", "notes_quote": "Order-preserving isomorphism: A bijection $\\rho : [a,b] \\to [c,d]$ with $\\rho(x) \\leq \\rho(y) \\iff x \\leq y$ and $\\rho(x \\wedge y) = \\rho(x) \\star \\rho(y)$"},
+            {"letter": "B", "is_correct": true, "text": "Exact definition from the key definitions table.", "section_ref": "Key Definitions", "notes_quote": "Order-reversing isomorphism: A bijection $\\rho$ with $\\rho(x) \\leq \\rho(y) \\iff x \\geq y$ and the operation compatibility"},
+            {"letter": "C", "is_correct": true, "text": "The map $\\rho(x) = c^{\\wedge x}$ is order-reversing since larger exponents give smaller values (exponentiation is order-reversing).", "section_ref": "Section 4.6: Lemma 6.4", "notes_quote": "This is an order-reversing isomorphism (since $\\rho(x) < \\rho(y)$ iff $x > y$)"},
+            {"letter": "D", "is_correct": true, "text": "The composition of two order-reversing maps is order-preserving. This is used in Lemma 6.4: $\\rho \\circ \\sigma$ is order-preserving because both $\\rho$ and $\\sigma$ are order-reversing.", "section_ref": "Section 4.6: Lemma 6.4", "notes_quote": "$\\rho \\circ \\sigma : [0,1] \\to [a,b]$ is an order-preserving isomorphism"},
+            {"letter": "E", "is_correct": false, "text": "Order-reversing isomorphisms do establish isomorphism between structures — but between structures with reversed orderings. In Lemma 6.4, an order-reversing map is used as an intermediate step.", "section_ref": "Section 4.6: Lemma 6.4", "notes_quote": ""}
+          ]
+        },
+        {
+          "id": "q25",
+          "source_ref": "Summary: LO1–LO7",
+          "text": "Which of the following correctly summarise key results of Week 7? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Any continuous t-norm satisfies the derived properties $x \\wedge 0 = 0$, $x \\wedge 1 = x$, and $x \\wedge x \\leq x$."},
+            {"letter": "B", "text": "The Mostert–Shields theorem shows that any continuous t-norm is determined up to isomorphism by its idempotent set $A$."},
+            {"letter": "C", "text": "The duality $(x \\wedge y) = 1 - ((1-x) \\vee (1-y))$ derives the t-conorm theorem from the t-norm theorem."},
+            {"letter": "D", "text": "For the chimera $xy/\\max(x,y,1/2)$, the idempotent set is $A = (0,1/2)$."},
+            {"letter": "E", "text": "The isomorphism to $F^3_\\wedge$ (type 3 intervals) is obtained by composing two order-reversing maps."}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "These are the three derived properties (i)–(iii) from (C1)–(C4).", "section_ref": "Section 2.2: Derived Properties", "notes_quote": "(i) $x \\wedge 0 = 0$; (ii) $x \\wedge 1 = x$; (iii) $x \\wedge x \\leq x$"},
+            {"letter": "B", "is_correct": true, "text": "The idempotent set $A$ determines which sub-intervals exist and hence the full chimera structure.", "section_ref": "Summary", "notes_quote": "LO4 (Mostert–Shields for $\\wedge$): Any continuous t-norm is a chimera of $F^1_\\wedge$, $F^2_\\wedge$, $F^3_\\wedge$. The idempotent set $A$ carves $[0,1]$ into sub-intervals"},
+            {"letter": "C", "is_correct": true, "text": "The duality formula converts any t-conorm into a t-norm, allowing the conjunction result to imply the disjunction result.", "section_ref": "Summary", "notes_quote": "LO6 (Mostert–Shields for $\\vee$): The dual theorem for t-conorms holds by the duality $(x \\wedge y) = 1 - ((1-x) \\vee (1-y))$"},
+            {"letter": "D", "is_correct": false, "text": "The idempotent set for $xy/\\max(x,y,1/2)$ is $A = \\{0\\} \\cup [1/2, 1]$, not $(0,1/2)$. Elements in $(0,1/2)$ are NOT idempotent.", "section_ref": "Section 6: Question 7.5 Part (ii)", "notes_quote": "$A = \\{0\\} \\cup \\left[\\frac{1}{2}, 1\\right]$"},
+            {"letter": "E", "is_correct": true, "text": "The isomorphism to $F^3_\\wedge$ is $\\rho \\circ \\sigma$ where $\\rho$ (order-reversing) and $\\sigma(x) = 2(1-x)$ (order-reversing) compose to give an order-preserving isomorphism.", "section_ref": "Summary", "notes_quote": "LO5 (Isomorphisms): the isomorphism to $F^3_\\wedge$ requires composing an order-reversing isomorphism with another order-reversing map $\\sigma(x) = 2(1-x)$"}
+          ]
+        }
+      ]
+    }
+  ]
+}

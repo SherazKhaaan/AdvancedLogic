@@ -1,0 +1,1945 @@
+{
+  "module": "AdvancedLogic",
+  "week": 2,
+  "title": "Non-monotonic Reasoning, Argumentation and Dialogue",
+  "sections": [
+    {
+      "id": "section-1",
+      "title": "1. Logic Programming as Non-monotonic Reasoning",
+      "questions": [
+        {
+          "id": "q1",
+          "source_ref": "Section 1.1: Background",
+          "text": "Which of the following correctly describe negation-as-failure (NOT) in logic programming? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "NOT X succeeds if and only if X cannot be proved from the current KB."},
+            {"letter": "B", "text": "NOT X is equivalent to classical negation $\\neg X$."},
+            {"letter": "C", "text": "A rule of the form h(X) :- b(X), NOT c(X) concludes h(X) when b(X) holds and c(X) cannot be proved."},
+            {"letter": "D", "text": "NOT X succeeds if X is provably false."}
+          ],
+          "correct": ["A", "C"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "Negation-as-failure succeeds when the system cannot derive the goal, not when it is classically false.",
+              "section_ref": "Section 1.1: Background",
+              "notes_quote": "NOT, meaning 'cannot be proved.'"
+            },
+            {
+              "letter": "B",
+              "is_correct": false,
+              "text": "Logic programs do not use strict classical negation. NOT is weaker — it only reflects unprovability, not falsity.",
+              "section_ref": "Section 1.1: Background",
+              "notes_quote": ""
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "This is exactly the reading of a logic programming rule with negation-as-failure.",
+              "section_ref": "Section 1.1: Background",
+              "notes_quote": "h(X) :- b_1(X), b_2(X), NOT c(X) meaning: conclude h(X) if b_1(X) and b_2(X) hold and c(X) cannot be proved."
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "NOT X does not require X to be provably false — only that X cannot be proved. These differ under an open-world assumption.",
+              "section_ref": "Section 1.1: Background",
+              "notes_quote": ""
+            }
+          ]
+        },
+        {
+          "id": "q2",
+          "source_ref": "Section 1.2: Non-monotonic Consequence Relation",
+          "text": "Which statements about the logic programming consequence relation KB |~ Q are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "KB |~ Q holds if the query ?Q returns true for some instantiation of variables in Q."},
+            {"letter": "B", "text": "The relation is monotonic: if KB |~ Q then KB union {R} |~ Q for any R."},
+            {"letter": "C", "text": "Adding new rules to KB can invalidate previously derivable consequences."},
+            {"letter": "D", "text": "The relation is defined only for ground (variable-free) queries."}
+          ],
+          "correct": ["A", "C"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "The consequence relation holds when Prolog returns true for some variable instantiation.",
+              "section_ref": "Section 1.2: Non-monotonic Consequence Relation",
+              "notes_quote": "if and only if the query ?Q returns true for some instantiation of variables in Q."
+            },
+            {
+              "letter": "B",
+              "is_correct": false,
+              "text": "The relation is explicitly non-monotonic — adding rules can block previously-firing NOT conditions.",
+              "section_ref": "Section 1.2: Non-monotonic Consequence Relation",
+              "notes_quote": ""
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "This is the defining feature of non-monotonic consequence — the Tweety trilogy demonstrates this.",
+              "section_ref": "Section 1.3: Worked Example: The Tweety Trilogy",
+              "notes_quote": "This demonstrates non-monotonicity: adding a formula to the KB invalidates a previously derivable consequence."
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "The definition allows variable instantiation, so non-ground queries are permitted.",
+              "section_ref": "Section 1.2: Non-monotonic Consequence Relation",
+              "notes_quote": ""
+            }
+          ]
+        },
+        {
+          "id": "q3",
+          "source_ref": "Section 1.3: Worked Example: The Tweety Trilogy",
+          "text": "In KB1 (penguin(tweety), bird(X):-penguin(X), fly(X):-bird(X),NOT abnormal_fly(X)), which of the following hold? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "KB1 |~ fly(tweety) because abnormal_fly(tweety) cannot be proved."},
+            {"letter": "B", "text": "KB1 |~ fly(tweety) because tweety is classically entailed to fly."},
+            {"letter": "C", "text": "Rule 3 fires because the NOT abnormal_fly(tweety) condition succeeds."},
+            {"letter": "D", "text": "KB1 does not derive fly(tweety) because tweety is a penguin."}
+          ],
+          "correct": ["A", "C"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "Since abnormal_fly(tweety) has no supporting rule or fact, NOT abnormal_fly(tweety) succeeds, so rule 3 fires.",
+              "section_ref": "Section 1.3: Worked Example: The Tweety Trilogy",
+              "notes_quote": "since abnormal_fly(tweety) cannot be proved, rule 3 fires and: KB1 |~ fly(tweety)"
+            },
+            {
+              "letter": "B",
+              "is_correct": false,
+              "text": "This is a logic program, not a classical KB. The derivation is via negation-as-failure, not classical entailment.",
+              "section_ref": "Section 1.3: Worked Example: The Tweety Trilogy",
+              "notes_quote": ""
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "NOT abnormal_fly(tweety) succeeds because there is no proof of abnormal_fly(tweety) in KB1.",
+              "section_ref": "Section 1.3: Worked Example: The Tweety Trilogy",
+              "notes_quote": "since abnormal_fly(tweety) cannot be proved, rule 3 fires"
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "Being a penguin does not block fly in KB1 — there is no rule making penguins abnormal_fly in KB1.",
+              "section_ref": "Section 1.3: Worked Example: The Tweety Trilogy",
+              "notes_quote": ""
+            }
+          ]
+        },
+        {
+          "id": "q4",
+          "source_ref": "Section 1.3: Worked Example: The Tweety Trilogy",
+          "text": "When rule 4 (abnormal_fly(X):-penguin(X),NOT DC_comic(X)) is added to form KB2, which of the following are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "KB2 |~ fly(tweety) is no longer derivable."},
+            {"letter": "B", "text": "abnormal_fly(tweety) becomes derivable in KB2."},
+            {"letter": "C", "text": "Rule 3's NOT abnormal_fly(tweety) condition now fails."},
+            {"letter": "D", "text": "Adding rule 4 illustrates that logic programming is monotonic."}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "Once abnormal_fly(tweety) is derivable, the NOT condition in rule 3 fails and fly(tweety) can no longer be derived.",
+              "section_ref": "Section 1.3: Worked Example: The Tweety Trilogy",
+              "notes_quote": "KB2 does not derive fly(tweety)"
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "Rule 4 fires because penguin(tweety) holds and DC_comic(tweety) cannot be proved.",
+              "section_ref": "Section 1.3: Worked Example: The Tweety Trilogy",
+              "notes_quote": "DC_comic(tweety) cannot be proved, so rule 4 fires and we derive abnormal_fly(tweety)."
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "Since abnormal_fly(tweety) is now derivable, NOT abnormal_fly(tweety) fails, blocking rule 3.",
+              "section_ref": "Section 1.3: Worked Example: The Tweety Trilogy",
+              "notes_quote": "Rule 3 can no longer fire (its NOT abnormal_fly condition fails)"
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "This is precisely an example of non-monotonicity — adding rule 4 removes a previously derivable consequence.",
+              "section_ref": "Section 1.3: Worked Example: The Tweety Trilogy",
+              "notes_quote": "This demonstrates non-monotonicity: adding a formula to the KB invalidates a previously derivable consequence."
+            }
+          ]
+        },
+        {
+          "id": "q5",
+          "source_ref": "Section 1.3: Worked Example: The Tweety Trilogy",
+          "text": "After adding fact DC_comic(tweety) to form KB3, which of the following hold? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "KB3 |~ fly(tweety) is reinstated."},
+            {"letter": "B", "text": "Rule 4 can no longer fire because DC_comic(tweety) is now provable."},
+            {"letter": "C", "text": "abnormal_fly(tweety) remains derivable in KB3."},
+            {"letter": "D", "text": "KB3 demonstrates that non-monotonicity can restore consequences removed by earlier additions."}
+          ],
+          "correct": ["A", "B", "D"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "With abnormal_fly(tweety) no longer derivable, NOT abnormal_fly(tweety) succeeds again and rule 3 fires.",
+              "section_ref": "Section 1.3: Worked Example: The Tweety Trilogy",
+              "notes_quote": "KB3 |~ fly(tweety)"
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "Rule 4 requires NOT DC_comic(X); since DC_comic(tweety) is now proved, the NOT condition fails.",
+              "section_ref": "Section 1.3: Worked Example: The Tweety Trilogy",
+              "notes_quote": "Now DC_comic(tweety) is provable, so rule 4 can no longer fire."
+            },
+            {
+              "letter": "C",
+              "is_correct": false,
+              "text": "abnormal_fly(tweety) is no longer derivable — rule 4 is blocked by DC_comic(tweety) being provable.",
+              "section_ref": "Section 1.3: Worked Example: The Tweety Trilogy",
+              "notes_quote": "abnormal_fly(tweety) is no longer derivable."
+            },
+            {
+              "letter": "D",
+              "is_correct": true,
+              "text": "The trilogy shows NM in all directions: add rule → lose consequence; add fact → regain consequence.",
+              "section_ref": "Section 1.3: Worked Example: The Tweety Trilogy",
+              "notes_quote": "Non-monotonicity is illustrated three ways: adding rule 4 removes fly(tweety); adding fact 5 reinstates it."
+            }
+          ]
+        },
+        {
+          "id": "q6",
+          "source_ref": "Section 1.4: Decision/Preference Example",
+          "text": "In the Cinema vs Restaurant example, which of the following are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Without a preference rule, both Goal(cinema) and Goal(restaurant) are derivable."},
+            {"letter": "B", "text": "Adding Goal(restaurant) > Goal(cinema) makes Goal(restaurant) the unique non-monotonic consequence."},
+            {"letter": "C", "text": "Without preferences the KB is inconsistent."},
+            {"letter": "D", "text": "Preferences resolve dilemmas where multiple conflicting goals are derivable."}
+          ],
+          "correct": ["A", "B", "D"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "Both rules fire given birthday and desire to celebrate, creating a genuine dilemma.",
+              "section_ref": "Section 1.4: Decision/Preference Example",
+              "notes_quote": "Both Goal(cinema) and Goal(restaurant) are derivable — a genuine dilemma."
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "The preference fact strictly orders the two goals, resolving the dilemma in favour of restaurant.",
+              "section_ref": "Section 1.4: Decision/Preference Example",
+              "notes_quote": "resolves the dilemma: Goal(restaurant) becomes the unique non-monotonic consequence."
+            },
+            {
+              "letter": "C",
+              "is_correct": false,
+              "text": "The KB is not inconsistent — it simply has two competing derivable goals, which is a dilemma, not a contradiction.",
+              "section_ref": "Section 1.4: Decision/Preference Example",
+              "notes_quote": ""
+            },
+            {
+              "letter": "D",
+              "is_correct": true,
+              "text": "Preferences are a key tool in non-monotonic reasoning for selecting among competing conclusions.",
+              "section_ref": "Section 1.4: Decision/Preference Example",
+              "notes_quote": "Adding the preference fact resolves the dilemma."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-2",
+      "title": "2. Maxiconsistent Approaches",
+      "questions": [
+        {
+          "id": "q7",
+          "source_ref": "Section 2.1: Motivation",
+          "text": "Which of the following correctly motivate the maxiconsistent approach? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Classical logic is monotonic: KB |= alpha implies KB union {beta} |= alpha."},
+            {"letter": "B", "text": "An inconsistent classical KB entails every formula (ex falso quodlibet)."},
+            {"letter": "C", "text": "The maxiconsistent approach works with maximal consistent subsets to avoid explosion."},
+            {"letter": "D", "text": "Classical logic is already non-monotonic so no special treatment is needed."}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "Monotonicity of classical logic is one of the key properties the maxiconsistent approach must work around.",
+              "section_ref": "Section 2.1: Motivation",
+              "notes_quote": "Classical logic is monotonic: KB |= alpha implies KB union {beta} |= alpha."
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "Ex falso quodlibet is precisely why an inconsistent KB is useless in classical logic.",
+              "section_ref": "Section 2.1: Motivation",
+              "notes_quote": "when a classical KB is inconsistent, every formula follows (ex falso quodlibet)."
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "By working with maximal consistent subsets, the approach avoids the explosion of the full inconsistent KB.",
+              "section_ref": "Section 2.1: Motivation",
+              "notes_quote": "The maxiconsistent approach avoids this by working with maximal consistent subsets of the KB."
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "Classical logic is monotonic, not non-monotonic. Special techniques are needed.",
+              "section_ref": "Section 2.1: Motivation",
+              "notes_quote": ""
+            }
+          ]
+        },
+        {
+          "id": "q8",
+          "source_ref": "Section 2.2: The Subclass Principle",
+          "text": "Regarding the subclass principle applied to the Tweety example (KB2 with penguin(X)->neg fly(X) added), which are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "The subclass principle justifies preferring the penguin rule over the bird rule."},
+            {"letter": "B", "text": "KB2 classically entails both fly(tweety) and neg fly(tweety)."},
+            {"letter": "C", "text": "The subclass principle says rules for a subclass take priority over rules for the superclass."},
+            {"letter": "D", "text": "The subclass principle says rules for the superclass always override subclass rules."}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "Penguins are a subclass of birds, so the penguin-specific rule is preferred.",
+              "section_ref": "Section 2.2: The Subclass Principle",
+              "notes_quote": "The subclass principle justifies preferring rule 4 over rule 3: rules expressing properties of a subclass (penguins) take priority."
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "Using rules 1,2,3 gives fly(tweety); using rules 1,4 gives neg fly(tweety) — a contradiction.",
+              "section_ref": "Section 2.2: The Subclass Principle",
+              "notes_quote": "KB2 classically entails both fly(tweety) (via 1,2,3) and neg fly(tweety) (via 1,4) — a contradiction."
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "This is the definition of the subclass principle as stated in the notes.",
+              "section_ref": "Section 2.2: The Subclass Principle",
+              "notes_quote": "rules expressing properties of a subclass (penguins) take priority over rules expressing properties of the superclass (birds)."
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "This is the reverse of the subclass principle — more specific (subclass) rules take priority.",
+              "section_ref": "Section 2.2: The Subclass Principle",
+              "notes_quote": ""
+            }
+          ]
+        },
+        {
+          "id": "q9",
+          "source_ref": "Section 2.3: Total Ordering and Stratification",
+          "text": "Which of the following correctly describe a stratified knowledge base? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Formulas in the same stratum have the same priority (are equivalent under the ordering)."},
+            {"letter": "B", "text": "A formula in stratum S_i has strictly higher priority than one in S_j when i < j."},
+            {"letter": "C", "text": "Temporal ordering (more recent = higher priority) is a valid criterion for stratification."},
+            {"letter": "D", "text": "All formulas must be in the same stratum for the procedure to work."}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "Formulas in the same equivalence class (stratum) have the same priority.",
+              "section_ref": "Section 2.3: Total Ordering and Stratification",
+              "notes_quote": "alpha, beta in S_i iff alpha approx beta (same equivalence class)"
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "Lower stratum index means higher priority in the stratified ordering.",
+              "section_ref": "Section 2.3: Total Ordering and Stratification",
+              "notes_quote": "alpha in S_i, beta in S_j, i < j implies alpha > beta (higher stratum = higher priority)"
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "Temporal ordering is explicitly listed as a valid criterion for the priority ordering.",
+              "section_ref": "Section 2.3: Total Ordering and Stratification",
+              "notes_quote": "Other criteria for ordering include: temporal ordering (more recently acquired information has higher priority)."
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "The whole point of stratification is to distribute formulas across multiple strata with different priorities.",
+              "section_ref": "Section 2.3: Total Ordering and Stratification",
+              "notes_quote": ""
+            }
+          ]
+        },
+        {
+          "id": "q10",
+          "source_ref": "Section 2.4: Preferred Maximal Consistent Subsets",
+          "text": "Which of the following correctly describe the procedure for computing preferred mcs? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Start by finding all maximal consistent subsets of S_1 (the highest-priority stratum)."},
+            {"letter": "B", "text": "At each step, maximally consistently extend with formulas from the next stratum."},
+            {"letter": "C", "text": "Each preferred mcs E_1 union ... union E_n must be such that each prefix is a maximal consistent subset of the corresponding union of strata."},
+            {"letter": "D", "text": "The procedure starts with the lowest-priority stratum and works upward."}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "Step 1 of the procedure is to find all maximal consistent subsets of S_1.",
+              "section_ref": "Section 2.4: Preferred Maximal Consistent Subsets",
+              "notes_quote": "Find all maximal consistent subsets E_1, ..., E_m of S_1."
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "Each extension is then maximally consistently extended with the next stratum's formulas.",
+              "section_ref": "Section 2.4: Preferred Maximal Consistent Subsets",
+              "notes_quote": "For each E_i, maximally consistently extend with formulas from S_2."
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "This is the formal definition of a preferred mcs.",
+              "section_ref": "Section 2.4: Preferred Maximal Consistent Subsets",
+              "notes_quote": "E_1 union ... union E_i is a maximal (under set inclusion) consistent subset of S_1 union ... union S_i"
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "The procedure works top-down from the highest-priority stratum (S_1), not bottom-up.",
+              "section_ref": "Section 2.4: Preferred Maximal Consistent Subsets",
+              "notes_quote": ""
+            }
+          ]
+        },
+        {
+          "id": "q11",
+          "source_ref": "Section 2.4: Preferred Maximal Consistent Subsets",
+          "text": "For S1={a, a->b, neg b}, S2={c, neg c}, S3={d}, which of the following are correct about the preferred mcs? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "There are exactly three maximal consistent subsets of S1."},
+            {"letter": "B", "text": "Each mcs of S1 is extended to two subsets when processing S2={c, neg c}."},
+            {"letter": "C", "text": "There are exactly six preferred mcs in total after processing all strata."},
+            {"letter": "D", "text": "d is included in every preferred mcs because it is consistent with all of them."}
+          ],
+          "correct": ["A", "B", "C", "D"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "{a,a->b}, {a,neg b}, {a->b,neg b} are the three mcs of S1.",
+              "section_ref": "Section 2.4: Preferred Maximal Consistent Subsets",
+              "notes_quote": "So E_1={a,a->b}, E_2={a,neg b}, E_3={a->b,neg b}."
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "S2 contains c and neg c which are mutually inconsistent, so each mcs of S1 branches into two extensions.",
+              "section_ref": "Section 2.4: Preferred Maximal Consistent Subsets",
+              "notes_quote": "E_1 -> E_{1.1}={a,a->b,c}; E_{1.2}={a,a->b,neg c}"
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "3 mcs of S1 x 2 extensions each from S2 = 6 total preferred mcs.",
+              "section_ref": "Section 2.4: Preferred Maximal Consistent Subsets",
+              "notes_quote": "These six sets are the preferred mcs of KB."
+            },
+            {
+              "letter": "D",
+              "is_correct": true,
+              "text": "d from S3 is consistent with all six partial extensions, so it is added to all.",
+              "section_ref": "Section 2.4: Preferred Maximal Consistent Subsets",
+              "notes_quote": "extend each with S_3={d} (consistent with all)"
+            }
+          ]
+        },
+        {
+          "id": "q12",
+          "source_ref": "Section 2.5: Credulous and Sceptical Consequence Relations",
+          "text": "Which of the following correctly describe credulous and sceptical consequence? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "KB |~_cred alpha holds if alpha follows from at least one preferred mcs."},
+            {"letter": "B", "text": "KB |~_scept alpha holds if alpha follows from all preferred mcs."},
+            {"letter": "C", "text": "The bottom (contradiction) can be a credulous consequence if the KB is inconsistent enough."},
+            {"letter": "D", "text": "A sceptical consequence is also a credulous consequence."}
+          ],
+          "correct": ["A", "B", "D"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "Credulous consequence requires existence of at least one preferred mcs that entails alpha.",
+              "section_ref": "Section 2.5: Credulous and Sceptical Consequence Relations",
+              "notes_quote": "KB |~_cred alpha iff there exists E in mcs(KB) such that E |= alpha"
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "Sceptical consequence requires all preferred mcs to entail alpha.",
+              "section_ref": "Section 2.5: Credulous and Sceptical Consequence Relations",
+              "notes_quote": "KB |~_scept alpha iff for all E in mcs(KB): E |= alpha"
+            },
+            {
+              "letter": "C",
+              "is_correct": false,
+              "text": "No individual preferred mcs is inconsistent, so the contradiction is never a credulous consequence.",
+              "section_ref": "Section 2.5: Credulous and Sceptical Consequence Relations",
+              "notes_quote": "No individual preferred mcs is inconsistent, so bot is not a credulous consequence."
+            },
+            {
+              "letter": "D",
+              "is_correct": true,
+              "text": "If alpha follows from all preferred mcs, it certainly follows from at least one.",
+              "section_ref": "Section 2.5: Credulous and Sceptical Consequence Relations",
+              "notes_quote": ""
+            }
+          ]
+        },
+        {
+          "id": "q13",
+          "source_ref": "Section 2.5: Credulous and Sceptical Consequence Relations",
+          "text": "In the six-mcs example (S1={a,a->b,neg b}, S2={c,neg c}, S3={d}), which of the following are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "d is a sceptical consequence."},
+            {"letter": "B", "text": "c is a sceptical consequence."},
+            {"letter": "C", "text": "neg c is a credulous consequence."},
+            {"letter": "D", "text": "bot (contradiction) is a credulous consequence."}
+          ],
+          "correct": ["A", "C"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "d appears in every one of the six preferred mcs, so it is a sceptical consequence.",
+              "section_ref": "Section 2.5: Credulous and Sceptical Consequence Relations",
+              "notes_quote": "d is in every preferred mcs => d is a sceptical consequence."
+            },
+            {
+              "letter": "B",
+              "is_correct": false,
+              "text": "c appears in only three of the six mcs (those with c from S2), so it is credulous but not sceptical.",
+              "section_ref": "Section 2.5: Credulous and Sceptical Consequence Relations",
+              "notes_quote": "a, neg b, c, neg c are credulous (in at least one) but not sceptical."
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "neg c appears in at least one preferred mcs (those extended with neg c from S2).",
+              "section_ref": "Section 2.5: Credulous and Sceptical Consequence Relations",
+              "notes_quote": "a, neg b, c, neg c are credulous (in at least one) but not sceptical."
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "No preferred mcs is inconsistent, so the contradiction is never a credulous consequence.",
+              "section_ref": "Section 2.5: Credulous and Sceptical Consequence Relations",
+              "notes_quote": "bot is not credulous."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-3",
+      "title": "3. Default Logic Approaches",
+      "questions": [
+        {
+          "id": "q14",
+          "source_ref": "Section 3.1: Structure of a Default Theory",
+          "text": "Which of the following correctly describe the structure of a default theory (W, Defaults)? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "W is a consistent set of classical well-formed formulas."},
+            {"letter": "B", "text": "A default rule alpha_1,...,alpha_n => beta means: if the antecedents hold, then typically beta."},
+            {"letter": "C", "text": "A default with antecedent top (truth) is always applicable."},
+            {"letter": "D", "text": "W may be inconsistent as long as the defaults compensate."}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "W must be a consistent set of classical formulas — it is the factual world description.",
+              "section_ref": "Section 3.1: Structure of a Default Theory",
+              "notes_quote": "W — a consistent set of classical well-formed formulas (factual world description)."
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "Default rules express typical/usual conclusions given their antecedents.",
+              "section_ref": "Section 3.1: Structure of a Default Theory",
+              "notes_quote": "if alpha_1 and ... and alpha_n, then usually / typically / under normal circumstances beta."
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "Top is always true, so a default with antecedent top requires no prerequisite.",
+              "section_ref": "Section 3.1: Structure of a Default Theory",
+              "notes_quote": "A default with antecedent top (truth) is always applicable (requires no prerequisite)."
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "W must be consistent. The entire approach assumes W does not already lead to contradiction.",
+              "section_ref": "Section 3.1: Structure of a Default Theory",
+              "notes_quote": ""
+            }
+          ]
+        },
+        {
+          "id": "q15",
+          "source_ref": "Section 3.2: Default Extensions — Formal Definition",
+          "text": "Which conditions must a set E satisfy to be a default extension of (W, Defaults)? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "E = Cn(W union the consequents of all applicable defaults)."},
+            {"letter": "B", "text": "E must be consistent (E does not derive bot)."},
+            {"letter": "C", "text": "E must be maximal under set inclusion among sets satisfying conditions 1 and 2."},
+            {"letter": "D", "text": "E must include the consequents of all defaults regardless of whether their antecedents hold."}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "E is the classical closure of W plus the consequents of defaults whose antecedents are in E.",
+              "section_ref": "Section 3.2: Default Extensions — Formal Definition",
+              "notes_quote": "E = Cn(W union consequents of applicable defaults)"
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "Extensions must be consistent — this prevents trivial explosion.",
+              "section_ref": "Section 3.2: Default Extensions — Formal Definition",
+              "notes_quote": "E does not derive bot (E is consistent)"
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "Maximality ensures we apply as many defaults as possible without contradiction.",
+              "section_ref": "Section 3.2: Default Extensions — Formal Definition",
+              "notes_quote": "E is maximal (under set inclusion) satisfying 1 and 2"
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "Only defaults whose antecedents are in E contribute their consequents — applicability is required.",
+              "section_ref": "Section 3.2: Default Extensions — Formal Definition",
+              "notes_quote": ""
+            }
+          ]
+        },
+        {
+          "id": "q16",
+          "source_ref": "Section 3.3: Constructing Extensions — Procedure",
+          "text": "Which of the following correctly describe the procedure for constructing default extensions? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Start with Cn(W)."},
+            {"letter": "B", "text": "Add the consequent of an applicable default only if it is consistent with the current set."},
+            {"letter": "C", "text": "Different choices of defaults to apply first can yield different extensions."},
+            {"letter": "D", "text": "All defaults must be applied in a fixed predetermined order."}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "The procedure initialises with the classical closure of the world knowledge.",
+              "section_ref": "Section 3.3: Constructing Extensions — Procedure",
+              "notes_quote": "Start with Cn(W)."
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "Consistency checking prevents contradictory consequents from being added.",
+              "section_ref": "Section 3.3: Constructing Extensions — Procedure",
+              "notes_quote": "add consequent(d_i) if consistent."
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "The order in which defaults are selected can lead to different extensions.",
+              "section_ref": "Section 3.3: Constructing Extensions — Procedure",
+              "notes_quote": "Different choices of defaults yield different extensions."
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "Without a priority ordering, defaults can be applied in any order, potentially yielding multiple extensions.",
+              "section_ref": "Section 3.3: Constructing Extensions — Procedure",
+              "notes_quote": ""
+            }
+          ]
+        },
+        {
+          "id": "q17",
+          "source_ref": "Section 3.4: Worked Example: Tweety (No Priority)",
+          "text": "In the Tweety default example with D1=bird(X)=>fly(X), D2=penguin(X)=>neg fly(X), D3=top=>wings(X), and no priority ordering, which are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "There are two default extensions: one containing fly(tweety) and one containing neg fly(tweety)."},
+            {"letter": "B", "text": "wings(tweety) is a sceptical consequence (in both extensions)."},
+            {"letter": "C", "text": "fly(tweety) is a sceptical consequence."},
+            {"letter": "D", "text": "neg fly(tweety) is a credulous consequence."}
+          ],
+          "correct": ["A", "B", "D"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "Applying D1 first gives fly(tweety) in E1; applying D2 first gives neg fly(tweety) in E2.",
+              "section_ref": "Section 3.4: Worked Example: Tweety (No Priority)",
+              "notes_quote": "E1 = Cn(W union {wings(tweety), fly(tweety)}), E2 = Cn(W union {wings(tweety), neg fly(tweety)})"
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "D3 (top=>wings) is applied in both extensions, so wings(tweety) is in both.",
+              "section_ref": "Section 3.4: Worked Example: Tweety (No Priority)",
+              "notes_quote": "wings(tweety) is in both extensions => sceptical consequence."
+            },
+            {
+              "letter": "C",
+              "is_correct": false,
+              "text": "fly(tweety) is only in E1, not E2, so it is credulous but not sceptical.",
+              "section_ref": "Section 3.4: Worked Example: Tweety (No Priority)",
+              "notes_quote": "fly(tweety) and neg fly(tweety) are each in one extension only => credulous but not sceptical."
+            },
+            {
+              "letter": "D",
+              "is_correct": true,
+              "text": "neg fly(tweety) is in E2, so it is a credulous consequence.",
+              "section_ref": "Section 3.4: Worked Example: Tweety (No Priority)",
+              "notes_quote": "fly(tweety) and neg fly(tweety) are each in one extension only => credulous but not sceptical."
+            }
+          ]
+        },
+        {
+          "id": "q18",
+          "source_ref": "Section 3.5: Priority Ordering Over Defaults",
+          "text": "With priority ordering D2 > D1 (penguin rule beats bird rule) in the Tweety example, which are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "There is a single extension containing neg fly(tweety)."},
+            {"letter": "B", "text": "neg fly(tweety) is both a credulous and sceptical consequence."},
+            {"letter": "C", "text": "fly(tweety) is neither a credulous nor a sceptical consequence."},
+            {"letter": "D", "text": "The priority ordering creates two extensions instead of one."}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "With D2 applied first, neg fly(tweety) blocks D1, leaving only one extension.",
+              "section_ref": "Section 3.5: Priority Ordering Over Defaults",
+              "notes_quote": "Single extension: E2 = Cn(W union {wings(tweety), neg fly(tweety)})"
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "With only one extension, neg fly(tweety) follows from all extensions (sceptical) and at least one (credulous).",
+              "section_ref": "Section 3.5: Priority Ordering Over Defaults",
+              "notes_quote": "neg fly(tweety) is both a sceptical and credulous consequence"
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "fly(tweety) is blocked in the single extension, so it is in no extension.",
+              "section_ref": "Section 3.5: Priority Ordering Over Defaults",
+              "notes_quote": "fly(tweety) is neither."
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "Priority ordering reduces the number of extensions — here to exactly one, not two.",
+              "section_ref": "Section 3.5: Priority Ordering Over Defaults",
+              "notes_quote": ""
+            }
+          ]
+        },
+        {
+          "id": "q19",
+          "source_ref": "Section 3.6: Second Worked Example",
+          "text": "For W={a,a->b,c} and defaults (1:top=>neg c, 2:b=>d, 3:d=>neg a, 4:a=>neg d) with ordering 1>2>3>4, which are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Default 1 is skipped because neg c is inconsistent with c in W."},
+            {"letter": "B", "text": "Default 2 fires because b is in Cn(W)."},
+            {"letter": "C", "text": "Default 3 is skipped because neg a would be inconsistent with a already derived."},
+            {"letter": "D", "text": "The single extension is Cn(W union {d})."}
+          ],
+          "correct": ["A", "B", "C", "D"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "c is in W, so neg c would be immediately inconsistent — default 1 is skipped.",
+              "section_ref": "Section 3.6: Second Worked Example",
+              "notes_quote": "Default 1: antecedent top holds, but consequent neg c is inconsistent with c in W. Skip."
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "a->b and a are both in W, so b is in Cn(W), making default 2 applicable.",
+              "section_ref": "Section 3.6: Second Worked Example",
+              "notes_quote": "Default 2: antecedent b: since a, a->b in W, we have b in Cn(W). Add d."
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "a is in Cn(W union {d}) and neg a would contradict it, so default 3 is skipped.",
+              "section_ref": "Section 3.6: Second Worked Example",
+              "notes_quote": "Default 3: would add neg a; but a in Cn(W union {d}) — inconsistent. Skip."
+            },
+            {
+              "letter": "D",
+              "is_correct": true,
+              "text": "After applying only default 2, no other defaults can fire consistently.",
+              "section_ref": "Section 3.6: Second Worked Example",
+              "notes_quote": "Single extension: Cn(W union {d})."
+            }
+          ]
+        },
+        {
+          "id": "q20",
+          "source_ref": "Section 3.7: SGT Worked Example",
+          "text": "For W={neg a or neg b or neg c, d->neg c} and defaults (1:top=>a, 2:a=>d, 3:top=>c, 4:d=>b) with NO ordering, which are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "There are two default extensions."},
+            {"letter": "B", "text": "E1 = Cn(W union {a,d,b})."},
+            {"letter": "C", "text": "E2 = Cn(W union {a,c})."},
+            {"letter": "D", "text": "With ordering 1>2>3>4, there is still more than one extension."}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "Without ordering, two orderings of default application lead to two distinct extensions.",
+              "section_ref": "Section 3.7: SGT Worked Example",
+              "notes_quote": "Without ordering — two extensions"
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "Applying 1,2,4 in order gives E1=Cn(W union {a,d,b}).",
+              "section_ref": "Section 3.7: SGT Worked Example",
+              "notes_quote": "E1 = Cn(W union {a,d,b})"
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "Applying 1 then 3 gives E2=Cn(W union {a,c}); default 2 is blocked because d->neg c and c forces neg d.",
+              "section_ref": "Section 3.7: SGT Worked Example",
+              "notes_quote": "E2 = Cn(W union {a,c})"
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "With ordering 1>2>3>4, only one extension results: Cn(W union {a,d,b}).",
+              "section_ref": "Section 3.7: SGT Worked Example",
+              "notes_quote": "With ordering 1>2>3>4 — one extension only: Cn(W union {a,d,b})."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-4",
+      "title": "4. Non-monotonic Reasoning as Argumentation",
+      "questions": [
+        {
+          "id": "q21",
+          "source_ref": "Section 4.1: The Core Idea",
+          "text": "Which of the following correctly describe the core idea of argumentation-based non-monotonic reasoning? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Non-monotonic reasoning can be viewed as a decision procedure for choosing between arguments for conflicting claims."},
+            {"letter": "B", "text": "Arguments are built from the KB using premises and rules, then related by attacks."},
+            {"letter": "C", "text": "The claims of winning arguments correspond to the non-monotonic consequences."},
+            {"letter": "D", "text": "The argumentative approach requires abandoning all three non-monotonic logics."}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "This is Dung's key insight from 1995.",
+              "section_ref": "Section 4.1: The Core Idea",
+              "notes_quote": "Non-monotonic reasoning can be viewed as a decision procedure for choosing between arguments for conflicting claims."
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "Arguments are constructed from KB elements and then related by an attack relation.",
+              "section_ref": "Section 4.1: The Core Idea",
+              "notes_quote": "Arguments are built from the KB (using premises and rules) and related by attacks."
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "Evaluating winning arguments yields the non-monotonic consequences.",
+              "section_ref": "Section 4.1: The Core Idea",
+              "notes_quote": "Evaluating which arguments are winning yields the non-monotonic consequences."
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "The argumentative approach unifies and characterises the three NM logics — it does not replace them.",
+              "section_ref": "Section 4.1: The Core Idea",
+              "notes_quote": ""
+            }
+          ]
+        },
+        {
+          "id": "q22",
+          "source_ref": "Section 4.2: Argumentation Framework (Dung 1995)",
+          "text": "Which of the following correctly describe a Dung argumentation framework AF = <AR, attacks>? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "AR is a set of arguments."},
+            {"letter": "B", "text": "attacks is a binary relation on AR x AR."},
+            {"letter": "C", "text": "attacks(A,B) means A is a counter-argument to (attacks) B."},
+            {"letter": "D", "text": "The attack relation must be symmetric."}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "AR is the set of all arguments in the framework.",
+              "section_ref": "Section 4.2: Argumentation Framework (Dung 1995)",
+              "notes_quote": "AR is a set of arguments"
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "The attack relation is a subset of AR x AR.",
+              "section_ref": "Section 4.2: Argumentation Framework (Dung 1995)",
+              "notes_quote": "attacks ⊆ AR × AR is a binary relation."
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "attacks(A,B) means A attacks (is a counter-argument to) B.",
+              "section_ref": "Section 4.2: Argumentation Framework (Dung 1995)",
+              "notes_quote": "attacks(A,B) means A is a counter-argument to B (attacks B)."
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "The attack relation is not required to be symmetric — A can attack B without B attacking A.",
+              "section_ref": "Section 4.2: Argumentation Framework (Dung 1995)",
+              "notes_quote": ""
+            }
+          ]
+        },
+        {
+          "id": "q23",
+          "source_ref": "Section 4.3: Constructing Arguments from Logic Programs",
+          "text": "In the logic programming argumentative framework, which of the following are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Argument A attacks argument B if A's claim X challenges an assumption NOT X in B."},
+            {"letter": "B", "text": "In KB2, argument A2 (claiming abnormal_fly(tweety)) attacks A1 (which assumes NOT abnormal_fly(tweety))."},
+            {"letter": "C", "text": "An unattacked argument is always winning."},
+            {"letter": "D", "text": "An argument attacked by a winning argument is itself winning."}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "The attack rule for LP is that a claim X defeats an assumption NOT X in another argument.",
+              "section_ref": "Section 4.3: Constructing Arguments from Logic Programs",
+              "notes_quote": "Argument A attacks argument B if A's claim X challenges an assumption in B of the form NOT X."
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "A2 proves abnormal_fly(tweety), directly challenging A1's NOT abnormal_fly(tweety) assumption.",
+              "section_ref": "Section 4.3: Constructing Arguments from Logic Programs",
+              "notes_quote": "A2 attacks A1: A2's claim abnormal_fly(tweety) challenges A1's assumption NOT abnormal_fly(tweety)."
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "An unattacked argument has no challenger, so it is winning by Rule 1 (all zero attackers are OUT).",
+              "section_ref": "Section 4.3: Constructing Arguments from Logic Programs",
+              "notes_quote": "A2 is unattacked => A2 is winning."
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "An argument attacked by a winning argument is losing (OUT), not winning.",
+              "section_ref": "Section 4.3: Constructing Arguments from Logic Programs",
+              "notes_quote": "A1 is attacked by a winning argument => A1 is losing."
+            }
+          ]
+        },
+        {
+          "id": "q24",
+          "source_ref": "Section 4.4: Constructing Arguments from Classical KBs",
+          "text": "Which of the following correctly describe arguments from a stratified classical KB? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "An argument is a tuple [Delta, alpha] where Delta is a minimal consistent subset of KB that classically entails alpha."},
+            {"letter": "B", "text": "Argument A=[Delta_1, alpha] attacks B=[Delta_2, beta] if alpha negates a premise in Delta_2."},
+            {"letter": "C", "text": "An attack from A to B succeeds if the attacked premise in B is not ordered above the attacking premises in A."},
+            {"letter": "D", "text": "An attack always succeeds regardless of the priority ordering of premises."}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "Arguments from classical KBs are minimal entailing subsets with their claim.",
+              "section_ref": "Section 4.4: Constructing Arguments from Classical KBs",
+              "notes_quote": "Delta ⊆ KB, Delta |= alpha; No proper subset of Delta classically entails alpha; Delta is consistent."
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "The attack rule for classical KBs targets premises directly.",
+              "section_ref": "Section 4.4: Constructing Arguments from Classical KBs",
+              "notes_quote": "A=[Delta_1,alpha] attacks B=[Delta_2,beta] if the claim alpha of A negates a premise in Delta_2."
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "Higher-priority premises in the attacked argument can cancel the attack.",
+              "section_ref": "Section 4.4: Constructing Arguments from Classical KBs",
+              "notes_quote": "the attack from A to B is cancelled if B uses higher-priority premises than A."
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "Priority ordering can cancel attacks — higher-priority premises in B defeat lower-priority attacks from A.",
+              "section_ref": "Section 4.4: Constructing Arguments from Classical KBs",
+              "notes_quote": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-5",
+      "title": "5. Applying Preferences",
+      "questions": [
+        {
+          "id": "q25",
+          "source_ref": "Section 5.1: When Preferences Are Needed",
+          "text": "Which of the following correctly describe when and how preferences are applied? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Preferences are needed when two arguments attack each other symmetrically (a genuine dilemma)."},
+            {"letter": "B", "text": "If argument A is preferred to B, the attack from B to A is cancelled."},
+            {"letter": "C", "text": "If argument A is preferred to B, only the attack from A to B survives."},
+            {"letter": "D", "text": "If A is preferred to B, both attacks A->B and B->A are cancelled."}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "Preferences resolve symmetric dilemmas where neither argument can defeat the other without external ordering.",
+              "section_ref": "Section 5.1: When Preferences Are Needed",
+              "notes_quote": "Preferences are needed when two arguments attack each other symmetrically (a genuine dilemma)."
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "The weaker argument's attack on the stronger is cancelled by the preference.",
+              "section_ref": "Section 5.1: When Preferences Are Needed",
+              "notes_quote": "If argument A is preferred to (stronger than) argument B (i.e., A > B), then the attack from B to A is cancelled."
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "Only the attack from the preferred argument to the non-preferred one survives.",
+              "section_ref": "Section 5.1: When Preferences Are Needed",
+              "notes_quote": "Only the attack from A to B survives."
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "Only the weaker argument's attack is cancelled; the stronger argument's attack remains.",
+              "section_ref": "Section 5.1: When Preferences Are Needed",
+              "notes_quote": ""
+            }
+          ]
+        },
+        {
+          "id": "q26",
+          "source_ref": "Section 5.2: Sources of Preferences",
+          "text": "Which of the following are valid sources of preferences over arguments? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Goal/decision preferences: Goal(restaurant) > Goal(cinema) makes the restaurant argument preferred."},
+            {"letter": "B", "text": "Priority over defaults: d_i > d_j means arguments built using d_i defeat those built using d_j."},
+            {"letter": "C", "text": "Stratification: premises in higher strata defeat premises in lower strata."},
+            {"letter": "D", "text": "Alphabetical ordering of argument names."}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "Goal preferences from the decision/preference framework directly order arguments.",
+              "section_ref": "Section 5.2: Sources of Preferences",
+              "notes_quote": "If Goal(restaurant) > Goal(cinema), then the argument for restaurant is preferred over the argument for cinema."
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "Default priority ordering translates directly into argument preference.",
+              "section_ref": "Section 5.2: Sources of Preferences",
+              "notes_quote": "Priority over defaults: d_i > d_j means arguments built using d_i defeat arguments built using d_j."
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "Stratification of classical formulas provides the third source of argument preference.",
+              "section_ref": "Section 5.2: Sources of Preferences",
+              "notes_quote": "Stratification of classical formulas: Premises in higher strata defeat premises in lower strata."
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "Alphabetical ordering of argument labels has no semantic significance in the framework.",
+              "section_ref": "Section 5.2: Sources of Preferences",
+              "notes_quote": ""
+            }
+          ]
+        },
+        {
+          "id": "q27",
+          "source_ref": "Section 5.3: General Principle",
+          "text": "What are the steps of the general argumentative procedure applicable to all three NM logics? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Construct arguments from the KB using facts and rules/defaults/classical formulas."},
+            {"letter": "B", "text": "Identify attacks between arguments."},
+            {"letter": "C", "text": "Apply preferences to decide which attacks succeed."},
+            {"letter": "D", "text": "The claims of winning arguments become the non-monotonic consequences."}
+          ],
+          "correct": ["A", "B", "C", "D"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "Step 1: Build arguments from the KB.",
+              "section_ref": "Section 5.3: General Principle",
+              "notes_quote": "Construct arguments from the KB (using facts and rules/defaults/classical formulas)."
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "Step 2: Identify which arguments undermine assumptions or premises of others.",
+              "section_ref": "Section 5.3: General Principle",
+              "notes_quote": "Identify attacks (an argument attacks another if its claim undermines an assumption or premise)."
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "Step 3: Use preference orderings to filter successful attacks.",
+              "section_ref": "Section 5.3: General Principle",
+              "notes_quote": "Apply preferences (from orderings over rules/formulas/goals) to decide which attacks succeed."
+            },
+            {
+              "letter": "D",
+              "is_correct": true,
+              "text": "Step 5: The claims of winning arguments are the NM consequences.",
+              "section_ref": "Section 5.3: General Principle",
+              "notes_quote": "Claims of winning arguments = non-monotonic consequences of the KB."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-6",
+      "title": "6. Labelling Argumentation Frameworks",
+      "questions": [
+        {
+          "id": "q28",
+          "source_ref": "Section 6.2: The Labelling Function",
+          "text": "Which of the following correctly describe the labelling function in an AF? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "A labelling assigns each argument one of three labels: IN, OUT, or UNDEC."},
+            {"letter": "B", "text": "IN means the argument is winning (accepted)."},
+            {"letter": "C", "text": "OUT means the argument is losing (rejected)."},
+            {"letter": "D", "text": "UNDEC arguments are those that have no attackers."}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "The labelling is a total function from arguments to the three-label set.",
+              "section_ref": "Section 6.2: The Labelling Function",
+              "notes_quote": "A labelling is a total function L: A -> {IN, OUT, UNDEC}"
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "IN indicates a winning, justified, accepted argument.",
+              "section_ref": "Section 6.2: The Labelling Function",
+              "notes_quote": "IN = winning (justified, accepted)"
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "OUT indicates a losing, overruled, rejected argument.",
+              "section_ref": "Section 6.2: The Labelling Function",
+              "notes_quote": "OUT = losing (overruled, rejected)"
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "Arguments with no attackers are IN (by Rule 1 vacuously). UNDEC applies when no attacker is IN but at least one is UNDEC.",
+              "section_ref": "Section 6.3: Three Labelling Rules",
+              "notes_quote": ""
+            }
+          ]
+        },
+        {
+          "id": "q29",
+          "source_ref": "Section 6.3: Three Labelling Rules",
+          "text": "Which of the following correctly state the three labelling rules for a legal labelling? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Rule 1: x is labelled IN if all attackers of x are OUT."},
+            {"letter": "B", "text": "Rule 2: x is labelled OUT if at least one attacker of x is IN."},
+            {"letter": "C", "text": "Rule 3: x is labelled UNDEC if no attacker is IN and at least one attacker is UNDEC."},
+            {"letter": "D", "text": "Rule 1: x is labelled IN only if it has no attackers at all."}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "Rule 1 includes the vacuous case where x has no attackers — all zero attackers are trivially OUT.",
+              "section_ref": "Section 6.3: Three Labelling Rules",
+              "notes_quote": "Rule 1: All attackers of x are OUT => x is IN"
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "A single IN attacker is enough to make x OUT.",
+              "section_ref": "Section 6.3: Three Labelling Rules",
+              "notes_quote": "Rule 2: At least one attacker of x is IN => x is OUT"
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "UNDEC requires no IN attacker but at least one UNDEC attacker.",
+              "section_ref": "Section 6.3: Three Labelling Rules",
+              "notes_quote": "Rule 3: No attacker of x is IN, AND at least one attacker of x is UNDEC => x is UNDEC"
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "Rule 1 applies when all attackers are OUT, which includes the case of no attackers (vacuously true).",
+              "section_ref": "Section 6.3: Three Labelling Rules",
+              "notes_quote": "Special case: if x has no attackers, then Rule 1 applies vacuously — x must be IN."
+            }
+          ]
+        },
+        {
+          "id": "q30",
+          "source_ref": "Section 6.4: Worked Example: Five-Argument Framework",
+          "text": "In the five-argument framework (A5 attacks A1; A2 unattacked; A3 and A4 attack each other), which labellings are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "A5 is labelled IN because it has no attackers."},
+            {"letter": "B", "text": "A1 is labelled OUT because its attacker A5 is IN."},
+            {"letter": "C", "text": "A3 and A4 are both labelled UNDEC."},
+            {"letter": "D", "text": "A2 is labelled OUT because A3 and A4 are fighting each other."}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "A5 has no attackers, so Rule 1 applies vacuously: A5 is IN.",
+              "section_ref": "Section 6.4: Worked Example: Five-Argument Framework",
+              "notes_quote": "A5: none -> IN — Rule 1 (vacuously: all zero attackers are OUT)"
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "A1's only attacker is A5 which is IN, so Rule 2 applies: A1 is OUT.",
+              "section_ref": "Section 6.4: Worked Example: Five-Argument Framework",
+              "notes_quote": "A1: A5 (IN) -> OUT — Rule 2: has an IN attacker"
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "A3 and A4 attack each other; neither has an IN attacker, each has an UNDEC attacker, so Rule 3 applies to both.",
+              "section_ref": "Section 6.4: Worked Example: Five-Argument Framework",
+              "notes_quote": "A3: A4 (UNDEC) -> UNDEC; A4: A3 (UNDEC) -> UNDEC"
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "A2 is unattacked and therefore IN by Rule 1 (vacuously).",
+              "section_ref": "Section 6.4: Worked Example: Five-Argument Framework",
+              "notes_quote": "A2: none -> IN — Rule 1 (vacuously)"
+            }
+          ]
+        },
+        {
+          "id": "q31",
+          "source_ref": "Section 6.5: Multiple Legal Labellings",
+          "text": "For a symmetric dilemma x <-> y (x attacks y and y attacks x), which of the following are legal labellings? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "L1: x=UNDEC, y=UNDEC"},
+            {"letter": "B", "text": "L2: x=IN, y=OUT"},
+            {"letter": "C", "text": "L3: x=OUT, y=IN"},
+            {"letter": "D", "text": "L4: x=IN, y=IN"}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "Both UNDEC: each has an UNDEC attacker and no IN attacker, satisfying Rule 3.",
+              "section_ref": "Section 6.5: Multiple Legal Labellings",
+              "notes_quote": "L1: UNDEC, UNDEC — Yes — Rule 3 for both"
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "x=IN (attacker y is OUT satisfies Rule 1); y=OUT (attacker x is IN satisfies Rule 2).",
+              "section_ref": "Section 6.5: Multiple Legal Labellings",
+              "notes_quote": "L2: IN, OUT — Yes"
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "Symmetric to L2 with roles reversed — also a valid legal labelling.",
+              "section_ref": "Section 6.5: Multiple Legal Labellings",
+              "notes_quote": "L3: OUT, IN — Yes — symmetric to L2"
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "If x=IN then y should be OUT (Rule 2: y has IN attacker x). Similarly if y=IN then x should be OUT. Both IN violates Rule 2.",
+              "section_ref": "Section 6.5: Multiple Legal Labellings",
+              "notes_quote": ""
+            }
+          ]
+        },
+        {
+          "id": "q32",
+          "source_ref": "Section 6.6: Preferred Labelling",
+          "text": "Which of the following correctly characterise preferred labellings? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "A preferred labelling maximises the set of IN-labelled arguments."},
+            {"letter": "B", "text": "Preferred labellings correspond to credulous semantics."},
+            {"letter": "C", "text": "A framework may have multiple preferred labellings."},
+            {"letter": "D", "text": "The grounded labelling is always a preferred labelling."}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "A labelling is preferred if no other legal labelling has a strict superset of IN arguments.",
+              "section_ref": "Section 6.6: Preferred Labelling",
+              "notes_quote": "no other legal labelling makes more arguments IN."
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "Preferred labellings are the credulous labellings — they maximise winning arguments.",
+              "section_ref": "Section 6.6: Preferred Labelling",
+              "notes_quote": "Preferred labellings are the credulous labellings — they maximise the set of winning arguments."
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "Each possible resolution of a dilemma can yield a different preferred labelling.",
+              "section_ref": "Section 6.6: Preferred Labelling",
+              "notes_quote": "A framework may have multiple preferred labellings (one for each possible resolution of dilemmas)."
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "The grounded labelling is the most sceptical (fewest IN arguments) and is generally not a preferred labelling unless the framework has no dilemmas.",
+              "section_ref": "Section 6.6: Preferred Labelling",
+              "notes_quote": ""
+            }
+          ]
+        },
+        {
+          "id": "q33",
+          "source_ref": "Section 6.7: Grounded Labelling",
+          "text": "Which of the following correctly characterise the grounded labelling? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "The grounded labelling is the unique legal labelling with a minimal set of IN arguments."},
+            {"letter": "B", "text": "It corresponds to the sceptical consequence relation."},
+            {"letter": "C", "text": "It corresponds to the least fixed point of F_AF."},
+            {"letter": "D", "text": "There can be multiple grounded labellings in any AF."}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "The grounded labelling minimises IN arguments — no other legal labelling has fewer IN arguments.",
+              "section_ref": "Section 6.7: Grounded Labelling",
+              "notes_quote": "The grounded labelling L is unique and satisfies: for all other legal labellings L*, the set of IN arguments under L* is not a strict subset of the IN arguments under L."
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "The grounded labelling gives the sceptical consequences — claims in IN only if they win in the most conservative evaluation.",
+              "section_ref": "Section 6.7: Grounded Labelling",
+              "notes_quote": "The grounded labelling is the sceptical labelling."
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "The grounded extension (least fixed point of F_AF) corresponds to the grounded labelling.",
+              "section_ref": "Section 6.7: Grounded Labelling",
+              "notes_quote": "It corresponds to the grounded extension (least fixpoint of F_AF) from Dung 1995."
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "The grounded labelling is unique — there is exactly one grounded labelling per AF.",
+              "section_ref": "Section 6.7: Grounded Labelling",
+              "notes_quote": "The grounded labelling L is unique"
+            }
+          ]
+        },
+        {
+          "id": "q34",
+          "source_ref": "Section 6.8: Larger Example: V/W/X/Y Framework",
+          "text": "In the V/W/X/Y framework (V attacks W and X; W attacks V and X; X attacks Y), which are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "The grounded labelling labels all four arguments UNDEC."},
+            {"letter": "B", "text": "L2 (V=IN, W=OUT, X=OUT, Y=IN) is a preferred labelling."},
+            {"letter": "C", "text": "L3 (W=IN, V=OUT, X=OUT, Y=IN) is a preferred labelling."},
+            {"letter": "D", "text": "There is only one preferred labelling in this framework."}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "The grounded labelling has an empty IN set — all UNDEC is the most sceptical outcome.",
+              "section_ref": "Section 6.8: Larger Example: V/W/X/Y Framework",
+              "notes_quote": "L1: V=UNDEC, W=UNDEC, X=UNDEC, Y=UNDEC (all undecided — grounded labelling)"
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "L2 is a preferred labelling — V wins the V/W dilemma, X is blocked, Y reinstated.",
+              "section_ref": "Section 6.8: Larger Example: V/W/X/Y Framework",
+              "notes_quote": "L2: V=IN, W=OUT, X=OUT, Y=IN (preferred)."
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "L3 is the symmetric preferred labelling where W wins instead of V.",
+              "section_ref": "Section 6.8: Larger Example: V/W/X/Y Framework",
+              "notes_quote": "L3: W=IN, V=OUT, X=OUT, Y=IN (preferred)."
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "There are two preferred labellings (L2 and L3), corresponding to the two ways to resolve the V/W dilemma.",
+              "section_ref": "Section 6.8: Larger Example: V/W/X/Y Framework",
+              "notes_quote": ""
+            }
+          ]
+        },
+        {
+          "id": "q35",
+          "source_ref": "Section 6.9: Odd Cycle",
+          "text": "Which of the following are correct about odd cycles in argumentation frameworks? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "In an odd cycle (e.g., V->X->W->V), the only legal labelling assigns all arguments UNDEC."},
+            {"letter": "B", "text": "Odd cycles can produce preferred labellings with IN arguments."},
+            {"letter": "C", "text": "An odd cycle is a cycle where the number of arguments is odd."},
+            {"letter": "D", "text": "The UNDEC-only labelling of an odd cycle is both the grounded and the only preferred labelling."}
+          ],
+          "correct": ["A", "C", "D"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "For odd cycles, assigning any argument IN or OUT leads to a violation of the labelling rules.",
+              "section_ref": "Section 6.9: Odd Cycle",
+              "notes_quote": "For a cycle V->X->W->V (odd cycle), the only legal labelling makes all arguments UNDEC."
+            },
+            {
+              "letter": "B",
+              "is_correct": false,
+              "text": "In an odd cycle, no legal labelling can assign any argument IN — all must be UNDEC.",
+              "section_ref": "Section 6.9: Odd Cycle",
+              "notes_quote": ""
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "An odd cycle is a directed cycle with an odd number of nodes/arguments.",
+              "section_ref": "Section 6.9: Odd Cycle",
+              "notes_quote": "a cycle V->X->W->V (odd cycle)"
+            },
+            {
+              "letter": "D",
+              "is_correct": true,
+              "text": "Since there is only one legal labelling (all UNDEC), it is trivially both the grounded and the only preferred labelling.",
+              "section_ref": "Section 6.9: Odd Cycle",
+              "notes_quote": "the only legal labelling makes all arguments UNDEC."
+            }
+          ]
+        },
+        {
+          "id": "q36",
+          "source_ref": "Section 6.10: Non-odd Cycle Example",
+          "text": "In the non-odd cycle example (Y<->Z symmetric attack, V<->W symmetric attack, V attacks X, W attacks X), which are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "The grounded labelling labels all arguments UNDEC."},
+            {"letter": "B", "text": "L2 (Z=IN, Y=OUT, W=OUT, V=IN, X=OUT) is a preferred labelling."},
+            {"letter": "C", "text": "L1 (Y=IN, Z=OUT) is a preferred labelling."},
+            {"letter": "D", "text": "Both preferred labellings have the same number of IN arguments."}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "The grounded labelling assigns all arguments UNDEC in this framework.",
+              "section_ref": "Section 6.10: Non-odd Cycle Example",
+              "notes_quote": "Grounded labelling: all UNDEC."
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "L2 has Z and V winning, giving two IN arguments.",
+              "section_ref": "Section 6.10: Non-odd Cycle Example",
+              "notes_quote": "L2 (preferred): Z=IN, Y=OUT, W=OUT, V=IN, X=OUT."
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "L1 has Y winning but no resolution of V/W, so only one IN argument.",
+              "section_ref": "Section 6.10: Non-odd Cycle Example",
+              "notes_quote": "L1 (preferred): Y=IN, Z=OUT, V=UNDEC, W=UNDEC, X=UNDEC."
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "L1 has one IN argument (Y) and L2 has two (Z and V) — different numbers, but both are preferred because neither's IN set is a superset of the other's.",
+              "section_ref": "Section 6.10: Non-odd Cycle Example",
+              "notes_quote": "L1 has one IN-argument (Y) and L2 has two (Z, V) — but both are preferred because neither's IN-set is a superset of the other's."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-7",
+      "title": "7. Connecting Arguments to Non-monotonic Consequences",
+      "questions": [
+        {
+          "id": "q37",
+          "source_ref": "Section 7: Connecting Arguments to NM Consequences",
+          "text": "Which of the following correctly map AF concepts to NM logic concepts? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "IN arguments in preferred labellings correspond to credulous consequences."},
+            {"letter": "B", "text": "IN arguments in the grounded labelling correspond to sceptical consequences."},
+            {"letter": "C", "text": "An OUT argument's claim is not a consequence of the KB."},
+            {"letter": "D", "text": "An UNDEC argument's claim is always a credulous consequence."}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "Preferred labellings give credulous membership — the claim is accepted in at least one consistent position.",
+              "section_ref": "Section 7: Connecting Arguments to NM Consequences",
+              "notes_quote": "Preferred labelling (IN arguments) | Credulous consequences"
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "The grounded labelling's IN set corresponds to sceptical consequences — accepted in all positions.",
+              "section_ref": "Section 7: Connecting Arguments to NM Consequences",
+              "notes_quote": "Grounded labelling (IN arguments) | Sceptical consequences"
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "OUT arguments have their claims defeated — the claim is not a consequence.",
+              "section_ref": "Section 7: Connecting Arguments to NM Consequences",
+              "notes_quote": "Argument is OUT | Claim is not a consequence"
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "An UNDEC argument's claim represents a dilemma — it is neither IN nor OUT, and is not a credulous consequence.",
+              "section_ref": "Section 7: Connecting Arguments to NM Consequences",
+              "notes_quote": "Argument is UNDEC | Claim is neither in nor out (dilemma)"
+            }
+          ]
+        },
+        {
+          "id": "q38",
+          "source_ref": "Section 7: Connecting Arguments to NM Consequences",
+          "text": "Which of the following are correct about how the three NM logics map to the argumentative framework? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "In logic programming, arguments are chains of LP rules and facts; attacks target NOT X assumptions."},
+            {"letter": "B", "text": "In default logic, arguments correspond to applicable default chains; priorities resolve conflicts."},
+            {"letter": "C", "text": "In the maxiconsistent approach, arguments are [Delta, alpha] tuples; attacks negate a premise; preferences come from stratification."},
+            {"letter": "D", "text": "The argumentative characterisation of maxiconsistent reasoning is fully examinable."}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "LP arguments use NOT X assumptions as attack targets.",
+              "section_ref": "Section 7: Connecting Arguments to NM Consequences",
+              "notes_quote": "Logic Programming: arguments are chains of LP rules and facts; attacks on NOT X assumptions."
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "Default logic arguments are constructed from applicable defaults with priority ordering resolving conflicts.",
+              "section_ref": "Section 7: Connecting Arguments to NM Consequences",
+              "notes_quote": "Default Logic: arguments correspond to applicable default chains; priorities resolve conflicts."
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "Maxiconsistent arguments are minimal entailing subsets; stratification provides preferences.",
+              "section_ref": "Section 7: Connecting Arguments to NM Consequences",
+              "notes_quote": "Maxiconsistent: arguments are [Delta, alpha] tuples; attacks negate a premise; preferences from stratification."
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "The notes explicitly state that the argumentative characterisation of maxiconsistent reasoning is NOT examinable.",
+              "section_ref": "Section 5.3: General Principle",
+              "notes_quote": "Note: The argumentative characterisation of maxi-consistent non-monotonic reasoning is not examinable."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-8",
+      "title": "8. Dung (1995) — Key Formal Definitions",
+      "questions": [
+        {
+          "id": "q39",
+          "source_ref": "Section 8.1: Core Definitions — Conflict-free and Admissible",
+          "text": "Which of the following correctly define conflict-free and admissible sets in Dung's framework? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "A set S is conflict-free if no argument in S attacks another argument in S."},
+            {"letter": "B", "text": "An argument A is acceptable w.r.t. S if every attacker of A is itself attacked by S."},
+            {"letter": "C", "text": "A conflict-free set S is admissible if each argument in S is acceptable w.r.t. S."},
+            {"letter": "D", "text": "An admissible set may contain arguments that attack each other."}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "Conflict-free sets have no internal attacks.",
+              "section_ref": "Section 8.1: Core Definitions",
+              "notes_quote": "A set S of arguments is conflict-free if there are no A, B in S such that A attacks B."
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "Acceptability requires that S defends A against all its attackers.",
+              "section_ref": "Section 8.1: Core Definitions",
+              "notes_quote": "An argument A in AR is acceptable w.r.t. a set S iff for each B in AR: if B attacks A then B is attacked by S."
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "Admissibility combines conflict-freeness with collective defence.",
+              "section_ref": "Section 8.1: Core Definitions",
+              "notes_quote": "A conflict-free set S is admissible iff each argument in S is acceptable w.r.t. S."
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "An admissible set must be conflict-free — no internal attacks are permitted.",
+              "section_ref": "Section 8.1: Core Definitions",
+              "notes_quote": ""
+            }
+          ]
+        },
+        {
+          "id": "q40",
+          "source_ref": "Section 8.1: Core Definitions — Preferred Extension",
+          "text": "Which of the following correctly describe preferred extensions in Dung's framework? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "A preferred extension is a maximal (under set inclusion) admissible set."},
+            {"letter": "B", "text": "Every AF possesses at least one preferred extension (Corollary 12)."},
+            {"letter": "C", "text": "Every stable extension is a preferred extension."},
+            {"letter": "D", "text": "Every preferred extension is a stable extension."}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "Preferred extensions are maximal admissible sets — no admissible superset exists.",
+              "section_ref": "Section 8.1: Core Definitions",
+              "notes_quote": "A preferred extension is a maximal (under set inclusion) admissible set."
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "Dung's Corollary 12 guarantees at least one preferred extension always exists.",
+              "section_ref": "Section 8.1: Core Definitions",
+              "notes_quote": "Corollary 12: Every AF possesses at least one preferred extension."
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "Lemma 15 states every stable extension is preferred (but not vice versa).",
+              "section_ref": "Section 8.1: Core Definitions",
+              "notes_quote": "Lemma 15: Every stable extension is a preferred extension, but not vice versa."
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "Not every preferred extension is stable — Lemma 15 explicitly states 'not vice versa'.",
+              "section_ref": "Section 8.1: Core Definitions",
+              "notes_quote": "Lemma 15: Every stable extension is a preferred extension, but not vice versa."
+            }
+          ]
+        },
+        {
+          "id": "q41",
+          "source_ref": "Section 8.1: Core Definitions — Stable Extension",
+          "text": "Which of the following correctly describe stable extensions? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "A conflict-free set S is a stable extension iff S attacks each argument not in S."},
+            {"letter": "B", "text": "S is a stable extension iff S equals the set of arguments not attacked by S."},
+            {"letter": "C", "text": "Every preferred extension is a stable extension."},
+            {"letter": "D", "text": "A stable extension must be conflict-free."}
+          ],
+          "correct": ["A", "B", "D"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "Stable extensions attack everything outside themselves.",
+              "section_ref": "Section 8.1: Core Definitions",
+              "notes_quote": "A conflict-free set S is a stable extension iff S attacks each argument not in S."
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "This is Lemma 14 — an equivalent characterisation of stable extensions.",
+              "section_ref": "Section 8.1: Core Definitions",
+              "notes_quote": "Lemma 14: S is a stable extension iff S = {A | A is not attacked by S}."
+            },
+            {
+              "letter": "C",
+              "is_correct": false,
+              "text": "The converse fails — preferred extensions need not be stable (Lemma 15).",
+              "section_ref": "Section 8.1: Core Definitions",
+              "notes_quote": "Lemma 15: Every stable extension is a preferred extension, but not vice versa."
+            },
+            {
+              "letter": "D",
+              "is_correct": true,
+              "text": "The definition of stable extension explicitly requires conflict-freeness.",
+              "section_ref": "Section 8.1: Core Definitions",
+              "notes_quote": "A conflict-free set S is a stable extension iff..."
+            }
+          ]
+        },
+        {
+          "id": "q42",
+          "source_ref": "Section 8.1: Core Definitions — Characteristic Function and Grounded Extension",
+          "text": "Which of the following correctly describe the characteristic function F_AF and grounded extension? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "F_AF(S) = {A | A is acceptable w.r.t. S}."},
+            {"letter": "B", "text": "F_AF is monotonic with respect to set inclusion (Lemma 19)."},
+            {"letter": "C", "text": "The grounded extension GE_AF is the least fixed point of F_AF."},
+            {"letter": "D", "text": "The grounded extension is the largest complete extension."}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "F_AF maps a set S to the set of all arguments acceptable with respect to S.",
+              "section_ref": "Section 8.1: Core Definitions",
+              "notes_quote": "F_AF(S) = {A | A is acceptable w.r.t. S}"
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "Lemma 19 establishes the monotonicity of F_AF, which guarantees a least fixed point exists.",
+              "section_ref": "Section 8.1: Core Definitions",
+              "notes_quote": "Lemma 19: F_AF is monotonic (w.r.t. set inclusion)."
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "The grounded extension is defined as the least fixed point of the characteristic function.",
+              "section_ref": "Section 8.1: Core Definitions",
+              "notes_quote": "The grounded extension GE_AF is the least fixed point of F_AF."
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "The grounded extension is the least (smallest) complete extension, not the largest.",
+              "section_ref": "Section 8.1: Core Definitions",
+              "notes_quote": "The grounded extension is the least (w.r.t. set inclusion) complete extension."
+            }
+          ]
+        },
+        {
+          "id": "q43",
+          "source_ref": "Section 8.1: Core Definitions — Complete Extension",
+          "text": "Which of the following correctly describe complete extensions and their relationship to other extension types? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "A complete extension is an admissible set S where every argument acceptable w.r.t. S is already in S."},
+            {"letter": "B", "text": "Each preferred extension is a complete extension."},
+            {"letter": "C", "text": "The grounded extension is the least complete extension."},
+            {"letter": "D", "text": "Every complete extension is a preferred extension."}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "Complete extensions are admissible sets that are closed under the acceptability condition.",
+              "section_ref": "Section 8.1: Core Definitions",
+              "notes_quote": "An admissible set S is a complete extension iff each argument acceptable w.r.t. S belongs to S."
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "Theorem 25(1) states each preferred extension is a complete extension.",
+              "section_ref": "Section 8.1: Core Definitions",
+              "notes_quote": "Each preferred extension is a complete extension (not vice versa)."
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "Theorem 25(2) establishes the grounded extension as the least complete extension.",
+              "section_ref": "Section 8.1: Core Definitions",
+              "notes_quote": "The grounded extension is the least (w.r.t. set inclusion) complete extension."
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "Not every complete extension is preferred — preferred extensions are maximal complete extensions.",
+              "section_ref": "Section 8.1: Core Definitions",
+              "notes_quote": "Each preferred extension is a complete extension (not vice versa)."
+            }
+          ]
+        },
+        {
+          "id": "q44",
+          "source_ref": "Section 8.2: Labellings (Modgil and Caminada)",
+          "text": "Which of the following correctly describe the relationship between labellings and extensions? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "The labelling approach provides an equivalent procedural characterisation of AF semantics to the extension-based approach."},
+            {"letter": "B", "text": "Credulous membership: A is IN in some preferred labelling iff A is in some preferred extension."},
+            {"letter": "C", "text": "Sceptical membership: A is IN in the grounded labelling iff A is in all preferred extensions."},
+            {"letter": "D", "text": "The labelling approach and extension-based approach always give different results."}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "The labelling approach is equivalent to the extension-based approach — both characterise the same semantics.",
+              "section_ref": "Section 8.2: Labellings",
+              "notes_quote": "The labelling approach provides an alternative, procedural characterisation of AF semantics that is equivalent to the extension-based approach."
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "Being IN in a preferred labelling corresponds exactly to membership in a preferred extension.",
+              "section_ref": "Section 8.2: Labellings",
+              "notes_quote": "Credulous membership: Is A contained in an extension? (A is IN in some preferred labelling)"
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "Being IN in the grounded labelling corresponds to membership in all preferred extensions (sceptical membership).",
+              "section_ref": "Section 8.2: Labellings",
+              "notes_quote": "Sceptical membership: Is A contained in all extensions? (A is IN in the grounded labelling)"
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "The two approaches are equivalent — they give identical results by design.",
+              "section_ref": "Section 8.2: Labellings",
+              "notes_quote": ""
+            }
+          ]
+        },
+        {
+          "id": "q45",
+          "source_ref": "Section 8.1: Core Definitions — Finitary AF",
+          "text": "Which of the following correctly describe finitary argumentation frameworks? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "An AF is finitary if each argument has only finitely many attackers."},
+            {"letter": "B", "text": "For finitary AFs, F_AF is omega-continuous (Lemma 28)."},
+            {"letter": "C", "text": "Omega-continuity of F_AF in finitary AFs means the grounded extension can be computed iteratively."},
+            {"letter": "D", "text": "All AFs are finitary by definition."}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {
+              "letter": "A",
+              "is_correct": true,
+              "text": "A finitary AF restricts each argument to having finitely many attackers.",
+              "section_ref": "Section 8.1: Core Definitions",
+              "notes_quote": "An AF is finitary iff for each argument A, there are only finitely many arguments in AR which attack A."
+            },
+            {
+              "letter": "B",
+              "is_correct": true,
+              "text": "Lemma 28 establishes omega-continuity for finitary AFs.",
+              "section_ref": "Section 8.1: Core Definitions",
+              "notes_quote": "Lemma 28: If AF is finitary, then F_AF is omega-continuous."
+            },
+            {
+              "letter": "C",
+              "is_correct": true,
+              "text": "Omega-continuity allows the least fixed point to be reached by iterative application of F_AF starting from the empty set.",
+              "section_ref": "Section 8.1: Core Definitions",
+              "notes_quote": ""
+            },
+            {
+              "letter": "D",
+              "is_correct": false,
+              "text": "AFs can be non-finitary (arguments with infinitely many attackers), which is why finitary is a special condition.",
+              "section_ref": "Section 8.1: Core Definitions",
+              "notes_quote": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

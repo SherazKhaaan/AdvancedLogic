@@ -1,0 +1,673 @@
+{
+  "module": "AdvancedLogic",
+  "week": 3,
+  "title": "Argument Game Proof Theories and Dialogues",
+  "sections": [
+    {
+      "id": "section-1",
+      "title": "Recap: Argumentation Frameworks and Labellings",
+      "questions": [
+        {
+          "id": "q1",
+          "source_ref": "Section 1: Recap: Argumentation Frameworks and Labellings",
+          "text": "An Argumentation Framework (AF) is formally defined as which of the following? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "A pair $\\langle \\text{Args}, \\text{Attacks} \\rangle$ where Args is a set of arguments and Attacks $\\subseteq$ Args $\\times$ Args"},
+            {"letter": "B", "text": "A directed graph where nodes are arguments and edges represent attack relations"},
+            {"letter": "C", "text": "A triple $\\langle \\text{Args}, \\text{Attacks}, \\text{Supports} \\rangle$ with both attack and support relations"},
+            {"letter": "D", "text": "A function from arguments to labels IN, OUT, or UN"}
+          ],
+          "correct": ["A", "B"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "This is the formal definition of an AF.", "section_ref": "Section 1: Recap: Argumentation Frameworks and Labellings", "notes_quote": "An Argumentation Framework (AF) is a pair $\\langle \\text{Args}, \\text{Attacks} \\rangle$ where $\\text{Args}$ is a set of arguments and $\\text{Attacks} \\subseteq \\text{Args} \\times \\text{Args}$ is a binary attack relation."},
+            {"letter": "B", "is_correct": true, "text": "An AF is equivalently described as a directed graph where nodes are arguments and directed edges represent attacks.", "section_ref": "Section 1: Recap: Argumentation Frameworks and Labellings", "notes_quote": "An Argumentation Framework (AF) is a pair $\\langle \\text{Args}, \\text{Attacks} \\rangle$"},
+            {"letter": "C", "is_correct": false, "text": "The standard AF definition includes only attack relations, not support relations. Support is an extension found in bipolar AFs, not the basic definition.", "section_ref": "Section 1: Recap: Argumentation Frameworks and Labellings", "notes_quote": ""},
+            {"letter": "D", "is_correct": false, "text": "A labelling is a function from arguments to labels — but that describes a labelling, not an AF itself.", "section_ref": "Section 1: Recap: Argumentation Frameworks and Labellings", "notes_quote": ""}
+          ]
+        },
+        {
+          "id": "q2",
+          "source_ref": "Section 1: Recap: Argumentation Frameworks and Labellings",
+          "text": "Which conditions correctly define when a labelling assigns label IN to argument X? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Every attacker of X is labelled OUT"},
+            {"letter": "B", "text": "X has no attackers at all"},
+            {"letter": "C", "text": "At least one attacker of X is labelled IN"},
+            {"letter": "D", "text": "X has no IN attackers and at least one UN attacker"}
+          ],
+          "correct": ["A", "B"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "The condition for IN is that every attacker is OUT.", "section_ref": "Section 1: Recap: Argumentation Frameworks and Labellings", "notes_quote": "$\\mathcal{L}(X) = \\text{IN}$ iff every attacker of $X$ is labelled OUT"},
+            {"letter": "B", "is_correct": true, "text": "If X has no attackers, then vacuously every attacker is OUT, so X is labelled IN.", "section_ref": "Section 1: Recap: Argumentation Frameworks and Labellings", "notes_quote": "$\\mathcal{L}(X) = \\text{IN}$ iff every attacker of $X$ is labelled OUT"},
+            {"letter": "C", "is_correct": false, "text": "Having at least one IN attacker is the condition for OUT, not IN.", "section_ref": "Section 1: Recap: Argumentation Frameworks and Labellings", "notes_quote": "$\\mathcal{L}(X) = \\text{OUT}$ iff at least one attacker of $X$ is labelled IN"},
+            {"letter": "D", "is_correct": false, "text": "This is the condition for UN, not IN.", "section_ref": "Section 1: Recap: Argumentation Frameworks and Labellings", "notes_quote": "$\\mathcal{L}(X) = \\text{UN}$ iff $X$ has no IN attackers and at least one UN attacker"}
+          ]
+        },
+        {
+          "id": "q3",
+          "source_ref": "Section 1: Recap: Argumentation Frameworks and Labellings",
+          "text": "Which statements correctly describe the grounded labelling? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "It is the unique labelling with the smallest possible set of IN arguments"},
+            {"letter": "B", "text": "It is the most sceptical labelling"},
+            {"letter": "C", "text": "There may be multiple grounded labellings for a given AF"},
+            {"letter": "D", "text": "It has the largest possible set of IN arguments"}
+          ],
+          "correct": ["A", "B"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "The grounded labelling is unique and minimises the IN set.", "section_ref": "Section 1: Recap: Argumentation Frameworks and Labellings", "notes_quote": "The grounded labelling is the unique labelling with the smallest possible set of IN arguments (most sceptical)."},
+            {"letter": "B", "is_correct": true, "text": "Most sceptical means the fewest arguments are accepted as IN.", "section_ref": "Section 1: Recap: Argumentation Frameworks and Labellings", "notes_quote": "The grounded labelling is the unique labelling with the smallest possible set of IN arguments (most sceptical)."},
+            {"letter": "C", "is_correct": false, "text": "The grounded labelling is unique — there is exactly one grounded labelling per AF.", "section_ref": "Section 1: Recap: Argumentation Frameworks and Labellings", "notes_quote": "The grounded labelling is the unique labelling"},
+            {"letter": "D", "is_correct": false, "text": "Having the largest IN set describes preferred labellings, not the grounded labelling.", "section_ref": "Section 1: Recap: Argumentation Frameworks and Labellings", "notes_quote": "The preferred labelling(s) are labellings with the largest possible set of IN arguments (most credulous)"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-2",
+      "title": "Argument Games — Basic Idea",
+      "questions": [
+        {
+          "id": "q4",
+          "source_ref": "Section 2.1: Motivation",
+          "text": "What is the primary motivation for using argument game proof theories instead of computing labellings directly? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Computing labellings directly requires examining the whole framework, which may be expensive"},
+            {"letter": "B", "text": "Argument games allow checking whether a specific argument is IN without computing the full labelling"},
+            {"letter": "C", "text": "Argument games always produce results faster than direct computation for any AF"},
+            {"letter": "D", "text": "Direct labelling computation is impossible for frameworks with cycles"}
+          ],
+          "correct": ["A", "B"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "The notes explicitly state direct computation requires examining the whole framework.", "section_ref": "Section 2.1: Motivation", "notes_quote": "Computing labellings directly requires examining the whole framework."},
+            {"letter": "B", "is_correct": true, "text": "Argument games provide a targeted proof-theoretic approach for a specific argument.", "section_ref": "Section 2.1: Motivation", "notes_quote": "Argument game proof theories provide an alternative: to check whether a specific argument $X$ is labelled IN, we play a two-player dialogue game rather than computing the full labelling."},
+            {"letter": "C", "is_correct": false, "text": "The notes do not claim argument games are always faster — this is not stated and depends on the AF.", "section_ref": "Section 2.1: Motivation", "notes_quote": ""},
+            {"letter": "D", "is_correct": false, "text": "Direct labelling computation is possible for cyclic frameworks — cycles produce UN labels in grounded semantics.", "section_ref": "Section 2.1: Motivation", "notes_quote": ""}
+          ]
+        },
+        {
+          "id": "q5",
+          "source_ref": "Section 2.2: The Two Players",
+          "text": "Which of the following correctly describe the roles of PRO and OPP in an argument game? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "PRO argues in favour of the argument under question and wants to show it wins"},
+            {"letter": "B", "text": "OPP argues against the argument and wants to show it loses"},
+            {"letter": "C", "text": "PRO always moves first"},
+            {"letter": "D", "text": "OPP always moves first"},
+            {"letter": "E", "text": "PRO and OPP move simultaneously on each turn"}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "PRO is the proponent, arguing for the initial argument.", "section_ref": "Section 2.2: The Two Players", "notes_quote": "PRO (the Proponent): argues in favour of the argument under question. PRO wants to show the argument wins."},
+            {"letter": "B", "is_correct": true, "text": "OPP is the opponent, arguing against.", "section_ref": "Section 2.2: The Two Players", "notes_quote": "OPP (the Opponent): argues against the argument. OPP wants to show it loses."},
+            {"letter": "C", "is_correct": true, "text": "PRO always moves first — this is established in the basic mechanics.", "section_ref": "Section 2.2: The Two Players", "notes_quote": "The game is a turn-taking exchange of attack moves. PRO always moves first."},
+            {"letter": "D", "is_correct": false, "text": "OPP does not move first — PRO always moves first.", "section_ref": "Section 2.2: The Two Players", "notes_quote": "PRO always moves first."},
+            {"letter": "E", "is_correct": false, "text": "Moves are turn-taking, not simultaneous.", "section_ref": "Section 2.2: The Two Players", "notes_quote": "The game is a turn-taking exchange of attack moves."}
+          ]
+        },
+        {
+          "id": "q6",
+          "source_ref": "Section 2.3: Game Mechanics",
+          "text": "Which statements correctly describe the game mechanics of an argument game? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "The initial move is PRO asserting the argument whose status is being questioned"},
+            {"letter": "B", "text": "Each subsequent move must be an argument that attacks the previous argument"},
+            {"letter": "C", "text": "A player loses a dispute if they cannot produce an attacking argument"},
+            {"letter": "D", "text": "PRO wins the overall game by winning at least one dispute"},
+            {"letter": "E", "text": "Backtracking allows a stuck player to try a different attack from a previous move"}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "The initial move establishes the argument being argued for.", "section_ref": "Section 2.3: Game Mechanics", "notes_quote": "Initial move: PRO asserts an argument $X$ (the argument whose status is being questioned)."},
+            {"letter": "B", "is_correct": true, "text": "All moves must be attacks on the preceding move.", "section_ref": "Section 2.3: Game Mechanics", "notes_quote": "Subsequent moves: Each player responds to the previous move by producing an argument that attacks the previous argument."},
+            {"letter": "C", "is_correct": true, "text": "Being stuck (no moves) means losing the dispute.", "section_ref": "Section 2.3: Game Mechanics", "notes_quote": "Losing condition: A player loses a dispute if they cannot produce an attacking argument (they are stuck with no moves)."},
+            {"letter": "D", "is_correct": false, "text": "PRO must win every dispute in the winning strategy, not just one. Winning a single dispute is insufficient.", "section_ref": "Section 2.3: Game Mechanics", "notes_quote": "PRO wins the overall game if PRO has a winning strategy — a set of disputes such that PRO wins every dispute in the strategy, regardless of which dispute OPP forces."},
+            {"letter": "E", "is_correct": true, "text": "Backtracking lets a player try alternative attacks from an earlier position.", "section_ref": "Section 2.3: Game Mechanics", "notes_quote": "Backtracking: If a player is stuck in one branch, they may backtrack to a previous move and try a different attack, creating a new dispute."}
+          ]
+        },
+        {
+          "id": "q7",
+          "source_ref": "Section 2.4: Terminology",
+          "text": "Which of the following correctly define argument game terminology? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "A dispute is a path from the root to a leaf in the game tree"},
+            {"letter": "B", "text": "The game tree contains all possible moves from the initial move, with PRO and OPP nodes alternating"},
+            {"letter": "C", "text": "A winning strategy $T'$ is a subtree of the game tree such that PRO wins every dispute in $T'$"},
+            {"letter": "D", "text": "A dispute is the entire game tree including all branches"},
+            {"letter": "E", "text": "When asked to write a game tree, you only need to show one winning path"}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "A dispute is one root-to-leaf path in the game tree.", "section_ref": "Section 2.4: Terminology", "notes_quote": "Dispute: A path from the root to a leaf in the game tree"},
+            {"letter": "B", "is_correct": true, "text": "The game tree represents all possible plays.", "section_ref": "Section 2.4: Terminology", "notes_quote": "Game tree: The full tree of all possible moves from the initial move, with PRO nodes and OPP nodes alternating"},
+            {"letter": "C", "is_correct": true, "text": "A winning strategy is a subtree in which PRO wins all disputes.", "section_ref": "Section 2.4: Terminology", "notes_quote": "Winning strategy $T'$: A subtree of the game tree such that PRO wins every dispute in $T'$"},
+            {"letter": "D", "is_correct": false, "text": "A dispute is a single root-to-leaf path, not the entire game tree.", "section_ref": "Section 2.4: Terminology", "notes_quote": "Dispute: A path from the root to a leaf in the game tree"},
+            {"letter": "E", "is_correct": false, "text": "You must write the complete game tree, not just one path. The notes explicitly say this.", "section_ref": "Section 2.4: Terminology", "notes_quote": "When asked to write a game tree, you must write the complete game tree showing all possible moves, not just one path."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-3",
+      "title": "Game Rules",
+      "questions": [
+        {
+          "id": "q8",
+          "source_ref": "Section 3.1: Grounded Game Rules",
+          "text": "Which statements correctly describe the rules of the grounded argument game? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Rule G1: Players alternate moves, with PRO moving first"},
+            {"letter": "B", "text": "Rule G2: Each move must be an argument that attacks the previous argument"},
+            {"letter": "C", "text": "Rule G3: PRO cannot repeat an argument already used in the same dispute"},
+            {"letter": "D", "text": "Rule G3: OPP cannot repeat an argument already used in the same dispute"},
+            {"letter": "E", "text": "The grounded game has four rules including a winning strategy condition"}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "G1 establishes the turn-taking order.", "section_ref": "Section 3.1: Grounded Game Rules", "notes_quote": "Rule G1 (Turn-taking): Players alternate moves. PRO moves first."},
+            {"letter": "B", "is_correct": true, "text": "G2 requires each move to attack the previous one.", "section_ref": "Section 3.1: Grounded Game Rules", "notes_quote": "Rule G2 (Attack): Each move must be an argument that attacks the previous argument."},
+            {"letter": "C", "is_correct": true, "text": "G3 restricts PRO from repeating arguments, not OPP.", "section_ref": "Section 3.1: Grounded Game Rules", "notes_quote": "Rule G3 (PRO no-repeat): PRO cannot repeat an argument that PRO has already used in the same dispute."},
+            {"letter": "D", "is_correct": false, "text": "In the grounded game, it is PRO who cannot repeat, not OPP. OPP cannot repeat only in the preferred game.", "section_ref": "Section 3.1: Grounded Game Rules", "notes_quote": "Rule G3 (PRO no-repeat): PRO cannot repeat an argument that PRO has already used in the same dispute."},
+            {"letter": "E", "is_correct": false, "text": "The grounded game has three rules (G1, G2, G3). The extra winning strategy condition is only for the preferred game.", "section_ref": "Section 3.1: Grounded Game Rules", "notes_quote": "The grounded game has three rules"}
+          ]
+        },
+        {
+          "id": "q9",
+          "source_ref": "Section 3.1: Grounded Game Rules",
+          "text": "What is the rationale for Rule G3 (PRO no-repeat) in the grounded game? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "If PRO must repeat an argument, it indicates a cycle, and cyclic support should not count as IN in the grounded semantics"},
+            {"letter": "B", "text": "The grounded semantics is the most sceptical, so we are conservative about what is IN"},
+            {"letter": "C", "text": "PRO no-repeat prevents infinite games by ensuring termination"},
+            {"letter": "D", "text": "G3 corresponds to the preferred semantics wanting the largest consistent set"}
+          ],
+          "correct": ["A", "B"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "Cycles detected via PRO needing to repeat indicate the argument should not be IN.", "section_ref": "Section 3.1: Grounded Game Rules", "notes_quote": "If PRO must repeat an argument, it indicates a cycle — we do not want to count cyclic support as IN in the grounded semantics."},
+            {"letter": "B", "is_correct": true, "text": "The grounded semantics is conservative (sceptical) about IN membership.", "section_ref": "Section 3.1: Grounded Game Rules", "notes_quote": "in the grounded labelling (the most sceptical semantics), we are conservative about what is IN."},
+            {"letter": "C", "is_correct": false, "text": "While G3 may help termination, the stated rationale is about cyclic support and scepticism, not simply termination.", "section_ref": "Section 3.1: Grounded Game Rules", "notes_quote": ""},
+            {"letter": "D", "is_correct": false, "text": "The largest consistent set rationale applies to preferred semantics and the WS condition, not G3 in the grounded game.", "section_ref": "Section 3.1: Grounded Game Rules", "notes_quote": ""}
+          ]
+        },
+        {
+          "id": "q10",
+          "source_ref": "Section 3.2: Preferred Game Rules",
+          "text": "Which statements correctly describe the rules of the preferred argument game? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Rule P1: Players alternate moves, with PRO moving first"},
+            {"letter": "B", "text": "Rule P3: OPP cannot repeat an argument already used in the same dispute"},
+            {"letter": "C", "text": "A winning strategy must satisfy: no two PRO arguments in $T'$ attack each other"},
+            {"letter": "D", "text": "Rule P3: PRO cannot repeat an argument already used in the same dispute"},
+            {"letter": "E", "text": "The preferred game has no additional conditions beyond P1, P2, P3"}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "P1 is the same turn-taking rule as G1.", "section_ref": "Section 3.2: Preferred Game Rules", "notes_quote": "Rule P1 (Turn-taking): Players alternate moves. PRO moves first."},
+            {"letter": "B", "is_correct": true, "text": "In the preferred game, OPP (not PRO) cannot repeat.", "section_ref": "Section 3.2: Preferred Game Rules", "notes_quote": "Rule P3 (OPP no-repeat): OPP cannot repeat an argument that OPP has already used in the same dispute."},
+            {"letter": "C", "is_correct": true, "text": "The WS condition ensures the winning strategy corresponds to a conflict-free set.", "section_ref": "Section 3.2: Preferred Game Rules", "notes_quote": "Condition WS: No two PRO arguments in $T'$ attack each other."},
+            {"letter": "D", "is_correct": false, "text": "In the preferred game, it is OPP not PRO who cannot repeat. PRO no-repeat is the grounded game rule G3.", "section_ref": "Section 3.2: Preferred Game Rules", "notes_quote": "Rule P3 (OPP no-repeat): OPP cannot repeat an argument that OPP has already used in the same dispute."},
+            {"letter": "E", "is_correct": false, "text": "The preferred game has an additional Condition WS: no two PRO arguments in $T'$ attack each other.", "section_ref": "Section 3.2: Preferred Game Rules", "notes_quote": "Condition WS: No two PRO arguments in $T'$ attack each other."}
+          ]
+        },
+        {
+          "id": "q11",
+          "source_ref": "Section 3.2: Preferred Game Rules",
+          "text": "What is the rationale for Condition WS (no two PRO arguments attacking each other) in the preferred game? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "It ensures PRO's arguments form a conflict-free set, matching what preferred labellings require"},
+            {"letter": "B", "text": "The preferred semantics seeks the largest consistent set of IN arguments, and consistency means no self-attack"},
+            {"letter": "C", "text": "It prevents PRO from using the same argument twice in one dispute"},
+            {"letter": "D", "text": "It corresponds to the grounded semantics being the most sceptical"}
+          ],
+          "correct": ["A", "B"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "The WS condition enforces conflict-freeness for PRO's arguments across the whole strategy.", "section_ref": "Section 3.2: Preferred Game Rules", "notes_quote": "The no-mutual-attack condition on PRO's arguments ensures the winning strategy corresponds to a consistent (conflict-free) set — exactly what preferred labellings require."},
+            {"letter": "B", "is_correct": true, "text": "Preferred labellings maximise IN while remaining conflict-free.", "section_ref": "Section 3.2: Preferred Game Rules", "notes_quote": "in the preferred labelling, we want the largest consistent set of IN arguments."},
+            {"letter": "C", "is_correct": false, "text": "Preventing PRO from repeating in a dispute is Rule G3 (grounded game), not Condition WS.", "section_ref": "Section 3.2: Preferred Game Rules", "notes_quote": ""},
+            {"letter": "D", "is_correct": false, "text": "Condition WS is specific to the preferred game; the grounded semantics is captured by G3 (PRO no-repeat).", "section_ref": "Section 3.2: Preferred Game Rules", "notes_quote": ""}
+          ]
+        },
+        {
+          "id": "q12",
+          "source_ref": "Section 3.3: Summary Comparison",
+          "text": "Which comparisons between the grounded and preferred games are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "In the grounded game, PRO cannot repeat in a dispute; in the preferred game, OPP cannot repeat"},
+            {"letter": "B", "text": "The grounded game establishes membership in the grounded labelling; the preferred game establishes membership in some preferred labelling"},
+            {"letter": "C", "text": "The preferred game has an additional winning-strategy condition absent from the grounded game"},
+            {"letter": "D", "text": "Both games restrict both PRO and OPP from repeating arguments"},
+            {"letter": "E", "text": "The grounded game has an extra winning-strategy condition; the preferred game does not"}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "The key distinction: PRO no-repeat for grounded, OPP no-repeat for preferred.", "section_ref": "Section 3.3: Summary Comparison", "notes_quote": "PRO cannot repeat in dispute: Yes (G3) [Grounded]. OPP cannot repeat in dispute: Yes (P3) [Preferred]."},
+            {"letter": "B", "is_correct": true, "text": "Each game's winning strategy characterises a different semantics.", "section_ref": "Section 3.3: Summary Comparison", "notes_quote": "Semantics established: Grounded labelling [Grounded]. Preferred labelling [Preferred]."},
+            {"letter": "C", "is_correct": true, "text": "The WS condition (no two PRO args attacking each other) is only in the preferred game.", "section_ref": "Section 3.3: Summary Comparison", "notes_quote": "Extra condition on winning strategy: None [Grounded]. No two PRO args in $T'$ attack each other [Preferred]."},
+            {"letter": "D", "is_correct": false, "text": "Each game restricts only one player from repeating: PRO in grounded, OPP in preferred.", "section_ref": "Section 3.3: Summary Comparison", "notes_quote": ""},
+            {"letter": "E", "is_correct": false, "text": "It is the preferred game that has the extra winning-strategy condition, not the grounded game.", "section_ref": "Section 3.3: Summary Comparison", "notes_quote": "Extra condition on winning strategy: None [Grounded]. No two PRO args in $T'$ attack each other [Preferred]."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-4",
+      "title": "Winning Strategies",
+      "questions": [
+        {
+          "id": "q13",
+          "source_ref": "Section 4.1: Definition",
+          "text": "Which conditions must a subtree $T'$ satisfy to be a winning strategy for PRO? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "The root of $T'$ is PRO's initial argument"},
+            {"letter": "B", "text": "Every OPP node in $T'$ has all its children included"},
+            {"letter": "C", "text": "Every PRO node in $T'$ has at least one child included"},
+            {"letter": "D", "text": "Every leaf of $T'$ is a node at which OPP is stuck"},
+            {"letter": "E", "text": "Every PRO node in $T'$ has all its children included"}
+          ],
+          "correct": ["A", "B", "C", "D"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "The winning strategy must be rooted at the initial PRO argument.", "section_ref": "Section 4.1: Definition", "notes_quote": "The root of $T'$ is PRO's initial argument."},
+            {"letter": "B", "is_correct": true, "text": "OPP can play any available move, so all OPP choices must be covered.", "section_ref": "Section 4.1: Definition", "notes_quote": "Every OPP node in $T'$ has all its children included (OPP can play any move)."},
+            {"letter": "C", "is_correct": true, "text": "PRO only needs to choose one response (not all) at each PRO node.", "section_ref": "Section 4.1: Definition", "notes_quote": "Every PRO node in $T'$ has at least one child included (PRO chooses one response)."},
+            {"letter": "D", "is_correct": true, "text": "Every leaf must be a position where OPP cannot move — meaning PRO wins that dispute.", "section_ref": "Section 4.1: Definition", "notes_quote": "Every leaf of $T'$ is a node at which OPP is stuck (OPP cannot move)."},
+            {"letter": "E", "is_correct": false, "text": "PRO nodes only need at least one child in $T'$, not all children. PRO chooses one response; it is OPP nodes that need all children included.", "section_ref": "Section 4.1: Definition", "notes_quote": "Every PRO node in $T'$ has at least one child included (PRO chooses one response)."}
+          ]
+        },
+        {
+          "id": "q14",
+          "source_ref": "Section 4.2: How to Identify a Winning Strategy",
+          "text": "What is the correct procedure for identifying a winning strategy from a game tree? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Write the complete game tree for the game"},
+            {"letter": "B", "text": "Identify all disputes (root-to-leaf paths)"},
+            {"letter": "C", "text": "Find a subtree where all OPP nodes have all children included and all PRO nodes have at least one child, with all leaves won by PRO"},
+            {"letter": "D", "text": "For the preferred game, additionally verify no two PRO arguments in the subtree attack each other"},
+            {"letter": "E", "text": "Select only the disputes where PRO wins and declare any single winning dispute as the winning strategy"}
+          ],
+          "correct": ["A", "B", "C", "D"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "The complete game tree must be written first.", "section_ref": "Section 4.2: How to Identify a Winning Strategy", "notes_quote": "Write the complete game tree for the game."},
+            {"letter": "B", "is_correct": true, "text": "All disputes must be identified to check which PRO wins.", "section_ref": "Section 4.2: How to Identify a Winning Strategy", "notes_quote": "Identify all disputes (root-to-leaf paths)."},
+            {"letter": "C", "is_correct": true, "text": "This is the structural definition of a winning strategy subtree.", "section_ref": "Section 4.2: How to Identify a Winning Strategy", "notes_quote": "Find a subtree where every OPP node's children are all included and every PRO node has at least one child, such that all leaves are won by PRO."},
+            {"letter": "D", "is_correct": true, "text": "The WS condition must be verified for the preferred game.", "section_ref": "Section 4.2: How to Identify a Winning Strategy", "notes_quote": "For preferred game: additionally verify no two PRO arguments in the subtree attack each other."},
+            {"letter": "E", "is_correct": false, "text": "A single winning dispute is insufficient. A winning strategy must cover all OPP moves. OPP nodes must have all children in the strategy.", "section_ref": "Section 4.2: How to Identify a Winning Strategy", "notes_quote": ""}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-5",
+      "title": "Worked Examples",
+      "questions": [
+        {
+          "id": "q15",
+          "source_ref": "Section 5.1: Simple Example A attacks B, B attacks A",
+          "text": "Consider AF: $A \\to B$, $B \\to A$. Which statements about the grounded game for 'Is A IN?' are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "PRO plays A; OPP plays B; PRO must attack B but cannot repeat A (Rule G3) and has no other attacker; PRO is stuck"},
+            {"letter": "B", "text": "PRO has no winning strategy in the grounded game for A"},
+            {"letter": "C", "text": "A is NOT in the grounded labelling, consistent with A being labelled UN"},
+            {"letter": "D", "text": "PRO wins the grounded game because it can repeat A to counter B"},
+            {"letter": "E", "text": "Both A and B are UN in the grounded labelling of this AF"}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "PRO cannot repeat A due to G3 and has no other attacker of B, so gets stuck.", "section_ref": "Section 5.1: Simple Example A attacks B, B attacks A", "notes_quote": "PRO must attack B and cannot repeat A (Rule G3). PRO has no other attacker of B, so PRO is stuck."},
+            {"letter": "B", "is_correct": true, "text": "There is no winning strategy for PRO in the grounded game for A.", "section_ref": "Section 5.1: Simple Example A attacks B, B attacks A", "notes_quote": "PRO has no winning strategy → A is not in the grounded labelling."},
+            {"letter": "C", "is_correct": true, "text": "A is not IN in the grounded labelling; it is UN.", "section_ref": "Section 5.1: Simple Example A attacks B, B attacks A", "notes_quote": "Consistent with A = UN."},
+            {"letter": "D", "is_correct": false, "text": "In the grounded game, PRO cannot repeat (G3). Repeating A is allowed only in the preferred game.", "section_ref": "Section 5.1: Simple Example A attacks B, B attacks A", "notes_quote": "PRO must attack B and cannot repeat A (Rule G3)."},
+            {"letter": "E", "is_correct": true, "text": "The mutual attack creates a symmetric cycle where both are UN in the grounded labelling.", "section_ref": "Section 5.1: Simple Example A attacks B, B attacks A", "notes_quote": "Grounded labelling: Both $A$ and $B$ are UN (odd even cycle — UN/UN is the grounded labelling)."}
+          ]
+        },
+        {
+          "id": "q16",
+          "source_ref": "Section 5.1: Simple Example A attacks B, B attacks A",
+          "text": "For the same AF ($A \\to B$, $B \\to A$), which statements about the preferred game for 'Is A IN?' are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "PRO plays A; OPP plays B; PRO plays A again (allowed, since P3 restricts OPP not PRO); OPP cannot repeat B (P3) and is stuck"},
+            {"letter": "B", "text": "PRO has a winning strategy in the preferred game for A"},
+            {"letter": "C", "text": "A is in a preferred labelling of this AF"},
+            {"letter": "D", "text": "The WS condition is satisfied because PRO only played A (no two distinct PRO args attack each other)"},
+            {"letter": "E", "text": "The preferred labellings of this AF are $\\{A=\\text{IN}, B=\\text{OUT}\\}$ and $\\{A=\\text{OUT}, B=\\text{IN}\\}$"}
+          ],
+          "correct": ["A", "B", "C", "D", "E"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "In the preferred game OPP cannot repeat, so after playing B once OPP is stuck when PRO plays A again.", "section_ref": "Section 5.1: Simple Example A attacks B, B attacks A", "notes_quote": "PRO plays A (attacks B). OPP cannot repeat B (Rule P3) and has no other attacker of A, so OPP is stuck."},
+            {"letter": "B", "is_correct": true, "text": "PRO wins the dispute and has a winning strategy.", "section_ref": "Section 5.1: Simple Example A attacks B, B attacks A", "notes_quote": "PRO has a winning strategy → A is in a preferred labelling."},
+            {"letter": "C", "is_correct": true, "text": "A is IN in the preferred labelling {A=IN, B=OUT}.", "section_ref": "Section 5.1: Simple Example A attacks B, B attacks A", "notes_quote": "Consistent with A = IN in the preferred labelling $\\{A=\\text{IN}, B=\\text{OUT}\\}$."},
+            {"letter": "D", "is_correct": true, "text": "PRO only used A, so there are no two distinct PRO arguments to attack each other.", "section_ref": "Section 5.1: Simple Example A attacks B, B attacks A", "notes_quote": "Check no-mutual-attack: PRO only played A once, so no two PRO args attack each other."},
+            {"letter": "E", "is_correct": true, "text": "The two preferred labellings correspond to each argument being IN while the other is OUT.", "section_ref": "Section 5.1: Simple Example A attacks B, B attacks A", "notes_quote": "Preferred labellings: $\\{A = \\text{IN}, B = \\text{OUT}\\}$ and $\\{A = \\text{OUT}, B = \\text{IN}\\}$."}
+          ]
+        },
+        {
+          "id": "q17",
+          "source_ref": "Section 5.2: Main Running Example",
+          "text": "In the running example ($D \\to C \\to B \\to A$, $E \\to B$, $F \\to A$), which statements about the grounded game for 'Is A IN?' are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "There are three disputes: D1 (A→F→stuck), D2 (A→B→E→stuck), D3 (A→B→C→D→stuck)"},
+            {"letter": "B", "text": "PRO wins dispute D2 because E has no attackers and OPP is stuck"},
+            {"letter": "C", "text": "PRO loses dispute D1 because F has no attackers so PRO is stuck after OPP plays F"},
+            {"letter": "D", "text": "PRO has a winning strategy because it wins D2"},
+            {"letter": "E", "text": "A is NOT in the grounded labelling because D1 cannot be won"}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "The three disputes are as described, branching on OPP's first move (F or B) and PRO's second move (E or C).", "section_ref": "Section 5.2: Main Running Example", "notes_quote": "Three disputes total: D1: A → F → PRO stuck. D2: A → B → E → OPP stuck. D3: A → B → C → D → PRO stuck."},
+            {"letter": "B", "is_correct": true, "text": "In D2, E has no attackers so OPP is stuck after PRO plays E.", "section_ref": "Section 5.2: Main Running Example", "notes_quote": "D2: A → B → E → OPP stuck. PRO wins."},
+            {"letter": "C", "is_correct": true, "text": "When OPP plays F, PRO cannot attack F (no attackers of F), so PRO is stuck.", "section_ref": "Section 5.2: Main Running Example", "notes_quote": "D1: A → F → PRO stuck. PRO loses."},
+            {"letter": "D", "is_correct": false, "text": "Winning D2 alone is not enough. A winning strategy must cover all OPP moves. OPP can also play F (leading to D1 which PRO loses). So no winning strategy exists.", "section_ref": "Section 5.2: Main Running Example", "notes_quote": "For a winning strategy PRO would need to win all disputes in the strategy, including D1. But D1 cannot be won. No winning strategy exists."},
+            {"letter": "E", "is_correct": true, "text": "Since D1 cannot be won and OPP can force D1, there is no winning strategy for PRO.", "section_ref": "Section 5.2: Main Running Example", "notes_quote": "No winning strategy exists → A is not in the grounded labelling. Consistent with A = OUT."}
+          ]
+        },
+        {
+          "id": "q18",
+          "source_ref": "Section 5.3: Preferred Game Example",
+          "text": "Regarding the preferred vs grounded game comparison in Section 5.3, which statements are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "In the preferred game, PRO can repeat an argument; this allows PRO to win when OPP is restricted by P3"},
+            {"letter": "B", "text": "In the grounded game, PRO gets stuck when forced to cycle due to Rule G3"},
+            {"letter": "C", "text": "An argument can be in a preferred labelling but not in the grounded labelling"},
+            {"letter": "D", "text": "In the preferred game, OPP can repeat an argument since P3 only restricts PRO"}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "PRO has no repeat restriction in the preferred game, enabling it to cycle and force OPP into a stuck position.", "section_ref": "Section 5.3: Preferred Game Example", "notes_quote": "Preferred game — PRO can win by repeating A. In a preferred game, PRO is allowed to repeat. When OPP uses an argument and PRO can counter it with A again (because P3 restricts OPP not PRO), the game can terminate in PRO's favour."},
+            {"letter": "B", "is_correct": true, "text": "G3 prevents PRO from repeating, so PRO gets stuck when a cycle is encountered in the grounded game.", "section_ref": "Section 5.3: Preferred Game Example", "notes_quote": "Grounded game — Same AF: PRO cannot repeat (G3). PRO gets stuck when forced to cycle."},
+            {"letter": "C", "is_correct": true, "text": "This is the key result — an argument may be in a preferred labelling but not the grounded labelling.", "section_ref": "Section 5.3: Preferred Game Example", "notes_quote": "PRO has a winning strategy → argument is in a preferred labelling. PRO has no winning strategy → argument is not in the grounded labelling."},
+            {"letter": "D", "is_correct": false, "text": "P3 restricts OPP from repeating, not PRO. OPP cannot repeat in the preferred game.", "section_ref": "Section 5.3: Preferred Game Example", "notes_quote": "Rule P3 (OPP no-repeat): OPP cannot repeat an argument that OPP has already used in the same dispute."}
+          ]
+        },
+        {
+          "id": "q19",
+          "source_ref": "Section 5.4: Odd Loop Example",
+          "text": "For an AF with an odd cycle ($A \\to B \\to C \\to A$), which statements are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "In the grounded game, PRO gets stuck due to the no-repeat rule G3 and cannot win"},
+            {"letter": "B", "text": "Arguments in odd cycles end up as UN in the grounded labelling"},
+            {"letter": "C", "text": "The grounded game correctly reflects that odd-cycle arguments are not IN in the grounded labelling"},
+            {"letter": "D", "text": "PRO can win the grounded game in an odd cycle by using backtracking"}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "The no-repeat rule G3 prevents PRO from cycling, leading to PRO being stuck.", "section_ref": "Section 5.4: Odd Loop Example", "notes_quote": "In the grounded game, the game will cycle indefinitely (or PRO gets stuck due to no-repeat rule G3) and PRO cannot win."},
+            {"letter": "B", "is_correct": true, "text": "Odd-cycle arguments are labelled UN in the grounded labelling.", "section_ref": "Section 5.4: Odd Loop Example", "notes_quote": "arguments in odd cycles are not in the grounded labelling (they end up UN)."},
+            {"letter": "C", "is_correct": true, "text": "The game result (PRO cannot win) correctly corresponds to the labelling (UN, not IN).", "section_ref": "Section 5.4: Odd Loop Example", "notes_quote": "This is correct: arguments in odd cycles are not in the grounded labelling (they end up UN)."},
+            {"letter": "D", "is_correct": false, "text": "Backtracking does not help in an odd cycle — PRO still gets stuck because G3 prevents any repeat and all paths cycle.", "section_ref": "Section 5.4: Odd Loop Example", "notes_quote": ""}
+          ]
+        },
+        {
+          "id": "q20",
+          "source_ref": "Section 5.5: LGT Sheet Example Triangle AF",
+          "text": "For the triangle AF ($A \\to B$, $B \\to C$, $C \\to A$), which statements are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "All three arguments are UN in the grounded labelling"},
+            {"letter": "B", "text": "The preferred game tree for 'Is A IN?' has 12 disputes"},
+            {"letter": "C", "text": "The winning strategy for the preferred game on A consists of disputes d3 and d9"},
+            {"letter": "D", "text": "Efficiency Rule 1 states PRO cannot move X if X attacks or is attacked by an argument Y already moved by PRO in the same dispute"},
+            {"letter": "E", "text": "A is IN in the grounded labelling of the triangle AF"}
+          ],
+          "correct": ["A", "B", "C", "D"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "In a pure 3-cycle, all arguments end up UN in the grounded labelling.", "section_ref": "Section 5.5: LGT Sheet Example Triangle AF", "notes_quote": "For the triangle, all three arguments end up UN in the grounded labelling."},
+            {"letter": "B", "is_correct": true, "text": "The full preferred game tree for this AF has 12 disputes.", "section_ref": "Section 5.5: LGT Sheet Example Triangle AF", "notes_quote": "The full game tree from the LGT answers has 12 disputes d1–d12."},
+            {"letter": "C", "is_correct": true, "text": "The winning strategy identified in the LGT answers uses disputes d3 and d9.", "section_ref": "Section 5.5: LGT Sheet Example Triangle AF", "notes_quote": "The winning strategy consists of disputes d3 and d9."},
+            {"letter": "D", "is_correct": true, "text": "This is Efficiency Rule 1 from the LGT answers.", "section_ref": "Section 5.5: LGT Sheet Example Triangle AF", "notes_quote": "Efficiency Rule 1: PRO cannot move argument $X$ if $X$ attacks or is attacked by an argument $Y$ already moved by PRO in the same dispute."},
+            {"letter": "E", "is_correct": false, "text": "A is UN (not IN) in the grounded labelling due to the cyclic structure.", "section_ref": "Section 5.5: LGT Sheet Example Triangle AF", "notes_quote": "For the triangle, all three arguments end up UN in the grounded labelling."}
+          ]
+        },
+        {
+          "id": "q21",
+          "source_ref": "Section 5.6: SGT Sheet Example AF1",
+          "text": "In SGT AF1 ($B \\to C$, $D \\to C$, $G \\to D$, $H \\to G$, $E \\to C$), for the grounded game 'Is H IN?', which statements are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "The grounded labelling gives H = IN, G = OUT, D = IN, C = OUT, B = IN, E = OUT"},
+            {"letter": "B", "text": "The single winning dispute is: PRO H → OPP G → PRO D → OPP C → PRO B, with OPP stuck at B"},
+            {"letter": "C", "text": "H is in the grounded labelling"},
+            {"letter": "D", "text": "The grounded game for H requires multiple disputes to establish a winning strategy"},
+            {"letter": "E", "text": "B has no attackers, so when PRO plays B, OPP is stuck and PRO wins"}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "This is the grounded labelling from the solutions.", "section_ref": "Section 5.6: SGT Sheet Example AF1", "notes_quote": "Grounded labelling of AF1: $B = \\text{IN}$, $C = \\text{OUT}$, $D = \\text{IN}$, $E = \\text{OUT}$, $G = \\text{OUT}$, $H = \\text{IN}$"},
+            {"letter": "B", "is_correct": true, "text": "The single dispute follows the chain H→G→D→C→B, ending with OPP stuck.", "section_ref": "Section 5.6: SGT Sheet Example AF1", "notes_quote": "Single dispute: $H \\to G \\to D \\to C \\to B$, OPP stuck at B. PRO wins."},
+            {"letter": "C", "is_correct": true, "text": "H is in the grounded labelling as confirmed by the winning strategy.", "section_ref": "Section 5.6: SGT Sheet Example AF1", "notes_quote": "H is in the grounded labelling."},
+            {"letter": "D", "is_correct": false, "text": "The grounded game for H has a single dispute forming the winning strategy; multiple disputes are not needed.", "section_ref": "Section 5.6: SGT Sheet Example AF1", "notes_quote": "Winning strategy: this single dispute."},
+            {"letter": "E", "is_correct": true, "text": "B has no attackers, so OPP cannot respond when PRO plays B.", "section_ref": "Section 5.6: SGT Sheet Example AF1", "notes_quote": "PRO: B ← OPP has no move (B has no attackers) → PRO wins"}
+          ]
+        },
+        {
+          "id": "q22",
+          "source_ref": "Section 5.7: SGT Sheet Example AF2",
+          "text": "Regarding SGT AF2, which statements are correct? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "The grounded labelling has G = IN, H = OUT, K = IN"},
+            {"letter": "B", "text": "Arguments A through F are all UN in the grounded labelling of AF2"},
+            {"letter": "C", "text": "F is in at least one preferred labelling of AF2"},
+            {"letter": "D", "text": "Two winning strategies exist for the preferred game 'Is F IN?'"},
+            {"letter": "E", "text": "F is IN in the grounded labelling of AF2"}
+          ],
+          "correct": ["A", "B", "C", "D"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "The isolated chain G→H→K gives G=IN, H=OUT, K=IN.", "section_ref": "Section 5.7: SGT Sheet Example AF2", "notes_quote": "$G = \\text{IN}$, $H = \\text{OUT}$, $K = \\text{IN}$"},
+            {"letter": "B", "is_correct": true, "text": "Arguments A–F are all UN in the grounded labelling.", "section_ref": "Section 5.7: SGT Sheet Example AF2", "notes_quote": "$A = \\text{UN}$, $B = \\text{UN}$, $C = \\text{UN}$, $D = \\text{UN}$, $E = \\text{UN}$, $F = \\text{UN}$"},
+            {"letter": "C", "is_correct": true, "text": "Two winning strategies for the preferred game confirm F is in at least one preferred labelling.", "section_ref": "Section 5.7: SGT Sheet Example AF2", "notes_quote": "Two winning strategies exist (from solutions). Each dispute in the winning strategy is itself a separate winning strategy — indicating $F$ is in at least one preferred labelling."},
+            {"letter": "D", "is_correct": true, "text": "The solutions identify two winning strategies for the preferred game on F.", "section_ref": "Section 5.7: SGT Sheet Example AF2", "notes_quote": "Two winning strategies exist (from solutions)."},
+            {"letter": "E", "is_correct": false, "text": "F is UN in the grounded labelling, not IN.", "section_ref": "Section 5.7: SGT Sheet Example AF2", "notes_quote": "$F = \\text{UN}$"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-6",
+      "title": "Formal Definitions",
+      "questions": [
+        {
+          "id": "q23",
+          "source_ref": "Section 6.1: Grounded Game Formal",
+          "text": "Which conditions define a grounded dispute formally? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "The sequence alternates between PRO moves (even indices) and OPP moves (odd indices)"},
+            {"letter": "B", "text": "For each $i > 0$: $X_i$ attacks $X_{i-1}$"},
+            {"letter": "C", "text": "No PRO argument appears twice in the sequence"},
+            {"letter": "D", "text": "No OPP argument appears twice in the sequence"},
+            {"letter": "E", "text": "$X_0$ is an argument chosen by OPP"}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "G1 requires alternation with PRO at even indices.", "section_ref": "Section 6.1: Grounded Game Formal", "notes_quote": "G1: The sequence alternates between PRO moves (even indices) and OPP moves (odd indices)."},
+            {"letter": "B", "is_correct": true, "text": "G2 requires each move to attack the preceding one.", "section_ref": "Section 6.1: Grounded Game Formal", "notes_quote": "G2: For each $i > 0$: $X_i$ attacks $X_{i-1}$ (i.e., $(X_i, X_{i-1}) \\in \\text{Attacks}$)."},
+            {"letter": "C", "is_correct": true, "text": "G3 (PRO no-repeat) is the no-repetition condition for PRO.", "section_ref": "Section 6.1: Grounded Game Formal", "notes_quote": "G3: No PRO argument appears twice in the sequence (PRO no-repeat)."},
+            {"letter": "D", "is_correct": false, "text": "OPP no-repeat is Rule P3 in the preferred game, not a condition of grounded disputes.", "section_ref": "Section 6.1: Grounded Game Formal", "notes_quote": ""},
+            {"letter": "E", "is_correct": false, "text": "$X_0$ is PRO's initial argument, not OPP's. PRO always moves first.", "section_ref": "Section 6.1: Grounded Game Formal", "notes_quote": ""}
+          ]
+        },
+        {
+          "id": "q24",
+          "source_ref": "Section 6.1: Grounded Game Formal",
+          "text": "The Theorem connecting grounded games to labellings states: (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$X_0$ is in the grounded labelling iff PRO has a winning strategy in the grounded game for $X_0$"},
+            {"letter": "B", "text": "PRO has a winning strategy iff every OPP node in the subtree has all its children in $T'$, every PRO node has at least one child, and every leaf is a stuck OPP position"},
+            {"letter": "C", "text": "$X_0$ is in the grounded labelling iff PRO wins at least one dispute in the grounded game"},
+            {"letter": "D", "text": "$X_0$ is in a preferred labelling iff PRO has a winning strategy in the grounded game"}
+          ],
+          "correct": ["A", "B"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "This is the soundness and completeness theorem for the grounded game.", "section_ref": "Section 6.1: Grounded Game Formal", "notes_quote": "Theorem: $X_0$ is in the grounded labelling iff PRO has a winning strategy in the grounded game for $X_0$."},
+            {"letter": "B", "is_correct": true, "text": "These are the structural conditions defining a winning strategy.", "section_ref": "Section 6.1: Grounded Game Formal", "notes_quote": "Every OPP node has all its children in $T'$. Every PRO node has at least one child in $T'$. Every leaf of $T'$ is a node where OPP has no move."},
+            {"letter": "C", "is_correct": false, "text": "Winning one dispute is insufficient. A winning strategy must cover all OPP moves.", "section_ref": "Section 6.1: Grounded Game Formal", "notes_quote": ""},
+            {"letter": "D", "is_correct": false, "text": "The grounded game characterises the grounded labelling, not preferred labellings. Preferred labellings are characterised by the preferred game.", "section_ref": "Section 6.1: Grounded Game Formal", "notes_quote": ""}
+          ]
+        },
+        {
+          "id": "q25",
+          "source_ref": "Section 6.2: Preferred Game Formal",
+          "text": "Which conditions define a preferred winning strategy $T'$ formally? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "No OPP argument appears twice in the dispute sequence (P3)"},
+            {"letter": "B", "text": "No two PRO arguments in $T'$ attack each other (Condition WS)"},
+            {"letter": "C", "text": "$X_0$ is in some preferred labelling iff PRO has a winning strategy in the preferred game for $X_0$"},
+            {"letter": "D", "text": "No two OPP arguments in $T'$ attack each other"},
+            {"letter": "E", "text": "PRO nodes in $T'$ must have all their children included"}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "P3 is the OPP no-repeat rule for preferred disputes.", "section_ref": "Section 6.2: Preferred Game Formal", "notes_quote": "P3: No OPP argument appears twice in the sequence (OPP no-repeat)."},
+            {"letter": "B", "is_correct": true, "text": "Condition WS is the additional requirement on preferred winning strategies.", "section_ref": "Section 6.2: Preferred Game Formal", "notes_quote": "WS: No two PRO arguments in $T'$ attack each other."},
+            {"letter": "C", "is_correct": true, "text": "This is the theorem connecting the preferred game to preferred labellings.", "section_ref": "Section 6.2: Preferred Game Formal", "notes_quote": "Theorem: $X_0$ is in some preferred labelling iff PRO has a winning strategy in the preferred game for $X_0$."},
+            {"letter": "D", "is_correct": false, "text": "The no-mutual-attack condition applies to PRO's arguments, not OPP's arguments.", "section_ref": "Section 6.2: Preferred Game Formal", "notes_quote": "WS: No two PRO arguments in $T'$ attack each other."},
+            {"letter": "E", "is_correct": false, "text": "PRO nodes only need at least one child in $T'$, not all children. It is OPP nodes that need all children in $T'$.", "section_ref": "Section 6.2: Preferred Game Formal", "notes_quote": "Every PRO node has at least one child in $T'$."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-7",
+      "title": "Generalisation to Dialogues (LO3 — Not Examined)",
+      "questions": [
+        {
+          "id": "q26",
+          "source_ref": "Section 7.1: From Games to Dialogues",
+          "text": "How do dialogues differ from argument games? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Argument games are played between two agents with shared knowledge; dialogues generalise to multiple agents with distributed knowledge"},
+            {"letter": "B", "text": "In dialogues, each agent may know only part of the relevant information"},
+            {"letter": "C", "text": "Dialogues require a central knowledge repository to function"},
+            {"letter": "D", "text": "Dialogues formalise communication through locutions and protocols"}
+          ],
+          "correct": ["A", "B", "D"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "Dialogues extend games to multi-agent distributed settings.", "section_ref": "Section 7.1: From Games to Dialogues", "notes_quote": "An argument game is played between two agents (PRO and OPP) with shared knowledge. A dialogue generalises this to multiple agents with distributed knowledge — each agent knows only part of the relevant information."},
+            {"letter": "B", "is_correct": true, "text": "Distributed knowledge means each agent has partial information.", "section_ref": "Section 7.1: From Games to Dialogues", "notes_quote": "each agent knows only part of the relevant information."},
+            {"letter": "C", "is_correct": false, "text": "Dialogues enable distributed reasoning without a central knowledge repository.", "section_ref": "Section 7.6: Distributed Non-Monotonic Reasoning", "notes_quote": "agents reason jointly without needing a central knowledge repository."},
+            {"letter": "D", "is_correct": true, "text": "Locutions and protocols formalise the communication in dialogues.", "section_ref": "Section 7.2: Locutions", "notes_quote": ""}
+          ]
+        },
+        {
+          "id": "q27",
+          "source_ref": "Section 7.2: Locutions",
+          "text": "Which of the following are correctly defined locutions in dialogue theory? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "$\\text{claim}(q)$: Agent asserts claim $q$"},
+            {"letter": "B", "text": "$\\text{why}(q)$: Agent challenges claim $q$, asking for justification"},
+            {"letter": "C", "text": "$\\text{argue}(X, q)$: Agent presents argument $X$ with conclusion $q$"},
+            {"letter": "D", "text": "$\\text{retract}(q)$: Agent withdraws a previously made claim $q$"}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "claim(q) is one of the three defined locution types.", "section_ref": "Section 7.2: Locutions", "notes_quote": "$\\text{claim}(q)$: Agent asserts claim $q$"},
+            {"letter": "B", "is_correct": true, "text": "why(q) is a challenge locution.", "section_ref": "Section 7.2: Locutions", "notes_quote": "$\\text{why}(q)$: Agent challenges claim $q$, asking for justification"},
+            {"letter": "C", "is_correct": true, "text": "argue(X,q) is the argument-presenting locution.", "section_ref": "Section 7.2: Locutions", "notes_quote": "$\\text{argue}(X, q)$: Agent presents argument $X$ with conclusion $q$ to support or rebut"},
+            {"letter": "D", "is_correct": false, "text": "retract is not one of the three locution types defined in the notes. The three types are claim, why, and argue.", "section_ref": "Section 7.2: Locutions", "notes_quote": ""}
+          ]
+        },
+        {
+          "id": "q28",
+          "source_ref": "Section 7.5: Soundness and Completeness Results",
+          "text": "Which of the following correctly state the Soundness and Completeness results (SC1, SC2, Combined SC) for dialogues? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "SC1: A claim $p$ is winning in the locution graph iff $p$ is the conclusion of a justified argument in the AF implicitly defined by the locution graph"},
+            {"letter": "B", "text": "SC2: Argument $X$ is a winning argument in the AF iff the conclusion $q$ of $X$ is non-monotonically inferred from the knowledge base"},
+            {"letter": "C", "text": "Combined SC: A dialogue establishes claim$(q)$ iff $q$ is a non-monotonic inference from all exchanged knowledge"},
+            {"letter": "D", "text": "Combined SC: A dialogue establishes claim$(q)$ iff $q$ is classically provable from all exchanged knowledge"}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "SC1 links locution graph winning claims to justified arguments.", "section_ref": "Section 7.5: Soundness and Completeness Results", "notes_quote": "SC1: A claim $p$ is winning in the locution graph iff $p$ is the conclusion of a justified argument in the AF implicitly defined by the locution graph."},
+            {"letter": "B", "is_correct": true, "text": "SC2 connects winning arguments in the AF to non-monotonic inference.", "section_ref": "Section 7.5: Soundness and Completeness Results", "notes_quote": "SC2: Argument $X$ is a winning argument in the AF iff the conclusion $q$ of $X$ is non-monotonically inferred from the knowledge base."},
+            {"letter": "C", "is_correct": true, "text": "The combined SC result is the core theoretical result linking dialogues to non-monotonic reasoning.", "section_ref": "Section 7.5: Soundness and Completeness Results", "notes_quote": "Combined SC: A dialogue establishes $\\text{claim}(q)$ iff $q$ is a non-monotonic inference from all the knowledge exchanged during the dialogue."},
+            {"letter": "D", "is_correct": false, "text": "The Combined SC concerns non-monotonic inference, not classical provability. Classical and non-monotonic inference are different.", "section_ref": "Section 7.5: Soundness and Completeness Results", "notes_quote": "Combined SC: A dialogue establishes $\\text{claim}(q)$ iff $q$ is a non-monotonic inference from all the knowledge exchanged during the dialogue."}
+          ]
+        },
+        {
+          "id": "q29",
+          "source_ref": "Section 7.6: Distributed Non-Monotonic Reasoning",
+          "text": "Which statements correctly characterise distributed non-monotonic reasoning via dialogues? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "Multiple agents with partial knowledge can engage in a structured dialogue to jointly derive non-monotonic inferences"},
+            {"letter": "B", "text": "The conclusion of the dialogue equals the non-monotonic inference from pooling all agents' knowledge bases"},
+            {"letter": "C", "text": "The dialogue protocol ensures only relevant knowledge is exchanged"},
+            {"letter": "D", "text": "Agents require a central knowledge repository to achieve non-monotonic inference in dialogues"}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "Dialogues enable joint non-monotonic reasoning with partial knowledge.", "section_ref": "Section 7.6: Distributed Non-Monotonic Reasoning", "notes_quote": "Multiple agents, each with partial knowledge, can engage in a structured dialogue."},
+            {"letter": "B", "is_correct": true, "text": "The dialogue result equals what would be inferred by pooling all knowledge.", "section_ref": "Section 7.6: Distributed Non-Monotonic Reasoning", "notes_quote": "The conclusion of the dialogue (whatever claim is established) is exactly the non-monotonic inference that would follow from pooling all the agents' knowledge bases together."},
+            {"letter": "C", "is_correct": true, "text": "The protocol controls what knowledge gets exchanged.", "section_ref": "Section 7.6: Distributed Non-Monotonic Reasoning", "notes_quote": "The dialogue protocol ensures that only relevant knowledge is exchanged."},
+            {"letter": "D", "is_correct": false, "text": "Dialogues explicitly enable reasoning without a central repository.", "section_ref": "Section 7.6: Distributed Non-Monotonic Reasoning", "notes_quote": "agents reason jointly without needing a central knowledge repository."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-8",
+      "title": "Applications and Value Alignment (LO4 — Not Examined)",
+      "questions": [
+        {
+          "id": "q30",
+          "source_ref": "Section 8.1: The Value Alignment Problem",
+          "text": "Which statements correctly describe the value alignment problem? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "It is the challenge of ensuring AI systems make decisions aligned with human values and preferences"},
+            {"letter": "B", "text": "Human values are complex, context-dependent, and often conflicting"},
+            {"letter": "C", "text": "Different people or cultures may have different values, making alignment non-trivial"},
+            {"letter": "D", "text": "The value alignment problem has been fully solved by modern LLMs"}
+          ],
+          "correct": ["A", "B", "C"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "This is the definition of the value alignment problem.", "section_ref": "Section 8.1: The Value Alignment Problem", "notes_quote": "The value alignment problem is the challenge of ensuring that AI systems make decisions that are aligned with human values and preferences."},
+            {"letter": "B", "is_correct": true, "text": "The complexity of human values is a core challenge.", "section_ref": "Section 8.1: The Value Alignment Problem", "notes_quote": "Human values are complex, context-dependent, and often conflicting."},
+            {"letter": "C", "is_correct": true, "text": "Cultural and individual variation adds difficulty.", "section_ref": "Section 8.1: The Value Alignment Problem", "notes_quote": "Different people or cultures may have different values."},
+            {"letter": "D", "is_correct": false, "text": "The notes describe alignment as a critical ongoing challenge — not as solved.", "section_ref": "Section 8.1: The Value Alignment Problem", "notes_quote": "As AI systems become more capable and autonomous, ensuring alignment is increasingly critical."}
+          ]
+        },
+        {
+          "id": "q31",
+          "source_ref": "Section 8.3: SocrAPPs",
+          "text": "Which statements correctly describe SocrAPPs? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "SocrAPPs are LLM-based tools designed to conduct Socratic dialogues"},
+            {"letter": "B", "text": "Their goal is to inculcate critical thinking rather than simply providing answers"},
+            {"letter": "C", "text": "The LLM takes the role of a Socratic interlocutor, asking probing questions"},
+            {"letter": "D", "text": "SocrAPPs operate without any connection to argumentation theory"},
+            {"letter": "E", "text": "The locution graph in a SocrAPP dialogue implicitly defines an AF"}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "SocrAPPs conduct Socratic dialogues.", "section_ref": "Section 8.3: SocrAPPs", "notes_quote": "SocrAPPs (Socratic Applications) are LLM-based tools designed to conduct Socratic dialogues"},
+            {"letter": "B", "is_correct": true, "text": "The goal is critical thinking development.", "section_ref": "Section 8.3: SocrAPPs", "notes_quote": "The goal is to inculcate critical thinking in users rather than simply providing answers."},
+            {"letter": "C", "is_correct": true, "text": "The LLM acts as the Socratic questioner.", "section_ref": "Section 8.3: SocrAPPs", "notes_quote": "The LLM takes the role of a Socratic interlocutor, asking probing questions."},
+            {"letter": "D", "is_correct": false, "text": "SocrAPPs are explicitly connected to argumentation theory — the locution graph defines an AF and the SC results apply.", "section_ref": "Section 8.4: Connection to Argumentation Theory", "notes_quote": "SocrAPPs instantiate the dialogue theory formalised in LO3"},
+            {"letter": "E", "is_correct": true, "text": "The LLM-user exchange creates a locution graph implicitly defining an AF.", "section_ref": "Section 8.4: Connection to Argumentation Theory", "notes_quote": "The locution graph implicitly defines an AF."}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section-9",
+      "title": "Key Definitions",
+      "questions": [
+        {
+          "id": "q32",
+          "source_ref": "Section 9: Key Definitions",
+          "text": "Which of the following correctly state key distinctions between grounded and preferred semantics for argument games? (Select ALL that apply.)",
+          "options": [
+            {"letter": "A", "text": "In the grounded game PRO cannot repeat; in the preferred game OPP cannot repeat"},
+            {"letter": "B", "text": "A winning strategy is a subtree, not a single dispute — it must cover all OPP choices"},
+            {"letter": "C", "text": "The preferred extra condition (WS) requires no two PRO arguments in the winning strategy to attack each other"},
+            {"letter": "D", "text": "For the exam procedure, you should write only the winning path rather than the complete game tree"},
+            {"letter": "E", "text": "The grounded labelling is unique; preferred labellings may be multiple"}
+          ],
+          "correct": ["A", "B", "C", "E"],
+          "explanations": [
+            {"letter": "A", "is_correct": true, "text": "This is the core distinction: PRO restricted in grounded, OPP restricted in preferred.", "section_ref": "Section 10: Summary", "notes_quote": "In the grounded game, PRO cannot repeat. In the preferred game, OPP cannot repeat."},
+            {"letter": "B", "is_correct": true, "text": "A winning strategy must cover all OPP possibilities.", "section_ref": "Section 10: Summary", "notes_quote": "A winning strategy is a subtree covering all OPP choices, not just one path. PRO must be able to respond to every possible OPP move."},
+            {"letter": "C", "is_correct": true, "text": "This is Condition WS, the additional constraint on preferred winning strategies.", "section_ref": "Section 10: Summary", "notes_quote": "Even if PRO wins every dispute in a subtree, the subtree is only a valid preferred winning strategy if no two PRO arguments in it attack each other."},
+            {"letter": "D", "is_correct": false, "text": "The exam procedure requires writing the complete game tree first, not just one path.", "section_ref": "Section 10: Summary", "notes_quote": "Exam procedure: Always write the complete game tree first, then identify the winning strategy (or lack thereof) as a subtree."},
+            {"letter": "E", "is_correct": true, "text": "Uniqueness of grounded labelling and multiplicity of preferred labellings are key properties.", "section_ref": "Section 1: Recap", "notes_quote": "The grounded labelling is the unique labelling with the smallest possible set of IN arguments. The preferred labelling(s) are labellings with the largest possible set of IN arguments; there may be more than one."}
+          ]
+        }
+      ]
+    }
+  ]
+}
