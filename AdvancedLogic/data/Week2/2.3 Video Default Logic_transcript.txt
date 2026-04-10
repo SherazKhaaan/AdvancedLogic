@@ -1,0 +1,577 @@
+00:00:06,550 --> 00:00:10,290
+So let's now turn to
+the third example of a
+00:00:10,290 --> 00:00:13,550
+non-monotonic logic.
+In particular, a class
+00:00:13,550 --> 00:00:16,650
+of non-monotonic logics
+or approaches to non
+00:00:16,650 --> 00:00:19,150
+-monotonic reasoning
+called default logics.
+00:00:19,750 --> 00:00:23,990
+So in default logics, the
+basic idea is that you
+00:00:23,990 --> 00:00:27,630
+have a consistent
+description of the world, a
+00:00:27,630 --> 00:00:31,130
+factual description of the
+world. So W is just your
+00:00:31,130 --> 00:00:33,710
+set of facts. They're
+assumed to be consistent.
+00:00:33,760 --> 00:00:36,510
+And they're a set of
+classical world-form formulas.
+00:00:36,510 --> 00:00:41,490
+So, again, with our ongoing
+example, we have the fact
+00:00:41,490 --> 00:00:44,310
+that Tweety is a penguin and
+the subclass relationship
+00:00:44,310 --> 00:00:46,910
+stating that penguins
+are a subclass of birds.
+00:00:47,450 --> 00:00:50,950
+Then, in addition
+to this consistent
+00:00:50,950 --> 00:00:53,050
+factual description
+of the world,
+00:00:53,190 --> 00:00:54,310
+W,
+00:00:54,630 --> 00:00:58,150
+you have additionally a
+set of default rules of the
+00:00:58,150 --> 00:01:04,470
+form, if alpha 1 to alpha n
+then by default conclude beta
+00:01:04,470 --> 00:01:08,650
+is the case where alpha 1 to
+alpha n are the antecedents
+00:01:08,650 --> 00:01:11,250
+of the rule and beta is
+the consequent of the rule
+00:01:11,580 --> 00:01:16,590
+essentially defaults of this
+kind express that if alpha
+00:01:16,590 --> 00:01:19,870
+1 and alpha n are the case
+then usually typically
+00:01:19,870 --> 00:01:24,410
+or under normal circumstances
+or again in the most
+00:01:24,410 --> 00:01:28,250
+preferred or normal world it
+follows that beta is the case
+00:01:28,590 --> 00:01:33,970
+so here we have our again
+standard examples if x is
+00:01:33,970 --> 00:01:36,990
+a bird then typically usually
+under normal circumstances
+00:01:36,990 --> 00:01:40,810
+it flies if x is a penguin
+then typically it does
+00:01:40,810 --> 00:01:45,450
+not fly we can also have
+default rules that are just
+00:01:45,450 --> 00:01:48,050
+whose antecedent is just
+true so they're always
+00:01:48,050 --> 00:01:52,030
+applicable they require no
+particular antecedent to be
+00:01:52,030 --> 00:01:56,970
+the case in order to feasibly
+derive the conclusion
+00:01:57,380 --> 00:02:01,730
+So let's say in this
+world that everything is a
+00:02:01,730 --> 00:02:07,150
+bird, right? So any object
+X typically has wings.
+00:02:07,700 --> 00:02:10,450
+OK, so we've got these
+three default rules.
+00:02:11,810 --> 00:02:16,150
+So we have a default
+theory consisting of W, a
+00:02:16,150 --> 00:02:19,070
+factual world description
+and a set of defaults.
+00:02:19,220 --> 00:02:24,550
+Then we can define a
+default extension of the
+00:02:24,550 --> 00:02:27,730
+world, factual world
+description W as follows.
+00:02:27,970 --> 00:02:32,810
+A default extension E
+of the theory W plus
+00:02:32,810 --> 00:02:37,950
+defaults is the classical
+consequences of the
+00:02:37,950 --> 00:02:43,010
+factual description W
+union, the consequence
+00:02:43,010 --> 00:02:48,970
+of all defaults whose
+antecedents are in E.
+00:02:49,730 --> 00:02:52,310
+okay I'll explain this by
+example it'll be easier
+00:02:52,310 --> 00:02:55,640
+to understand what's going
+on here in a minute secondly
+00:02:56,170 --> 00:03:00,070
+such an extension must
+be consistent so e does
+00:03:00,070 --> 00:03:05,710
+not classically entail
+falsity and three e is a
+00:03:05,710 --> 00:03:09,570
+maximal under set inclusion
+set satisfying one and two
+00:03:10,330 --> 00:03:14,030
+of course the intuition
+here is that e consists
+00:03:14,330 --> 00:03:18,670
+of w the consequences of
+w and all the defaults
+00:03:18,670 --> 00:03:24,430
+that can be applied so
+long as the antecedents
+00:03:24,430 --> 00:03:28,970
+of those defaults are in
+E and E is consistent.
+00:03:30,470 --> 00:03:33,710
+So intuitively, how
+do one procedurally
+00:03:33,710 --> 00:03:36,190
+construct such an extension E?
+00:03:36,250 --> 00:03:37,030
+You see,
+00:03:37,620 --> 00:03:43,680
+the definition 1, 2 and
+3 describes what is a
+00:03:43,680 --> 00:03:45,810
+valid default extension,
+but it doesn't really
+00:03:45,810 --> 00:03:48,350
+give you a procedure
+for constructing one.
+00:03:48,470 --> 00:03:50,190
+So intuitively, how would I
+00:03:50,190 --> 00:03:51,830
+go about constructing one?
+00:03:51,970 --> 00:03:56,670
+Well, the idea is you take
+your E, your set W, sorry,
+00:03:56,670 --> 00:04:02,230
+of the factual description
+of the world, and then
+00:04:02,230 --> 00:04:06,910
+you choose any default,
+DI, whose antecedents are
+00:04:06,910 --> 00:04:10,810
+in the consequence, the
+classical consequences of W,
+00:04:11,390 --> 00:04:16,230
+and you add the consequent
+beta of that default, DI,
+00:04:16,230 --> 00:04:19,490
+if you can do so consistently.
+And so you therefore
+00:04:19,490 --> 00:04:25,390
+obtain the consequences of W
+union that consequent beta.
+00:04:25,650 --> 00:04:30,220
+Then you choose another
+default DJ. You check R
+00:04:30,220 --> 00:04:34,810
+is antecedents in
+consequences of W union beta.
+00:04:35,170 --> 00:04:39,570
+If so, you add the
+consequent delta
+00:04:39,570 --> 00:04:42,610
+of the second default
+you chose, DJ,
+00:04:42,730 --> 00:04:46,350
+so long as you can
+consistently do so. And you
+00:04:46,350 --> 00:04:50,870
+obtain the consequences of
+W, union, beta and delta.
+00:04:50,870 --> 00:04:53,610
+And you continue doing
+this until you can't do
+00:04:53,610 --> 00:04:56,400
+this anymore, until you
+can't add consistently
+00:04:56,510 --> 00:04:59,790
+the consequence of any of
+the remaining defaults.
+00:05:03,170 --> 00:05:06,110
+So let's take our
+standard example.
+00:05:06,130 --> 00:05:07,770
+Let's take W.
+00:05:09,430 --> 00:05:13,170
+And we can take the
+consequences of W, which
+00:05:13,170 --> 00:05:20,110
+include Tweetie is a penguin
+and Tweetie is a bird.
+00:05:20,330 --> 00:05:24,330
+OK, so you've got in
+your consequences of W,
+00:05:24,330 --> 00:05:26,070
+you've got, of course,
+that Tweetie is a bird.
+00:05:26,610 --> 00:05:29,190
+Now, let's take
+the first default.
+00:05:29,230 --> 00:05:31,530
+Birds typically or usually fly.
+00:05:32,470 --> 00:05:33,390
+OK,
+00:05:34,170 --> 00:05:36,210
+given we have that Tweetie is a
+00:05:36,210 --> 00:05:37,810
+bird and the consequences of W,
+00:05:38,230 --> 00:05:41,270
+And the antecedent
+of the default birds
+00:05:41,270 --> 00:05:43,290
+typically fly is, of
+course, bird Tweety.
+00:05:43,790 --> 00:05:47,670
+You can consistently add
+the conclusion fly Tweety.
+00:05:48,310 --> 00:05:50,570
+Of course, you
+could also add wings
+00:05:50,570 --> 00:05:53,000
+Tweety. It requires
+no antecedent.
+00:05:53,210 --> 00:05:57,750
+It's just as long as the
+consequences of W do not
+00:05:57,750 --> 00:06:01,490
+contain negation wings
+Tweety, you can therefore
+00:06:01,490 --> 00:06:05,150
+consistently add just wings
+Tweety. So you get one default
+00:06:05,150 --> 00:06:09,670
+extension containing Wings
+Tweety and Fly Tweety.
+00:06:10,790 --> 00:06:15,230
+Can you now additionally
+apply the second default?
+00:06:15,230 --> 00:06:16,510
+Let's check.
+00:06:16,970 --> 00:06:20,050
+In the consequences
+of W, Union,
+00:06:20,050 --> 00:06:22,150
+Wings, Tweety and Fly Tweety,
+00:06:22,730 --> 00:06:26,490
+we have that Tweety is a
+penguin. So the antecedent
+00:06:26,490 --> 00:06:30,630
+of the second default is
+true. but of course we cannot
+00:06:30,630 --> 00:06:34,570
+consistently add the
+consequent negation fly to ET
+00:06:34,850 --> 00:06:41,010
+because we already have
+fly to ET in E1 it's a
+00:06:41,010 --> 00:06:44,550
+member of the consequences
+of E1 so we can't, when
+00:06:44,550 --> 00:06:48,470
+constructing E1 we can't then
+go on to apply the second
+00:06:48,470 --> 00:06:51,430
+default because if we
+did so, adding negation
+00:06:51,430 --> 00:06:55,170
+fly to ET would result in
+inconsistency so we stop
+00:06:55,170 --> 00:07:02,310
+right we have one default
+extension e1 now let's do
+00:07:02,310 --> 00:07:04,990
+the same procedure but
+we choose another default
+00:07:05,710 --> 00:07:09,890
+instead of birds fly
+tweety we choose a
+00:07:09,890 --> 00:07:12,630
+second default penguins
+typically don't fly
+00:07:13,590 --> 00:07:17,130
+as before we can add
+wings tweety to the
+00:07:17,130 --> 00:07:20,430
+consequences of w then
+we look at the second
+00:07:20,430 --> 00:07:25,350
+default penguins typically
+fly is the antecedent
+00:07:25,350 --> 00:07:28,890
+of that default in
+the consequence of w
+00:07:29,430 --> 00:07:32,870
+yes it is because we
+have penguin tweety is in
+00:07:32,870 --> 00:07:36,260
+w so we can apply the
+second default consistently
+00:07:36,260 --> 00:07:41,210
+and add negation fly
+tweety of course we can't
+00:07:41,210 --> 00:07:44,370
+now then go back and
+apply the first default
+00:07:44,370 --> 00:07:46,890
+because this would result
+in adding fly tweety
+00:07:46,890 --> 00:07:49,550
+which would result in an
+inconsistent extension
+00:07:50,730 --> 00:07:56,510
+so we have here two
+default logic extensions
+00:07:57,970 --> 00:08:03,610
+and we notice that
+Wings Tweety is a
+00:08:03,610 --> 00:08:06,690
+consequence of both E1
+and E2 so it's sceptically
+00:08:06,690 --> 00:08:11,130
+entailed by the
+knowledge base KB1
+00:08:11,670 --> 00:08:16,810
+because it is in both default
+extensions but of course
+00:08:16,810 --> 00:08:20,090
+neither fly nor negation
+fly tweety are in both
+00:08:20,090 --> 00:08:24,550
+extensions so they're not
+sceptically, not sceptical
+00:08:24,550 --> 00:08:27,450
+consequences but of course
+they are credulous consequences
+00:08:27,450 --> 00:08:31,310
+there is at least one
+extension, not all, at
+00:08:31,310 --> 00:08:36,630
+least one that classically
+entails fly tweety and at
+00:08:36,630 --> 00:08:39,430
+least one that classically
+entails negation fly tweety
+00:08:42,370 --> 00:08:47,670
+okay but as we've already
+seen we want some way to we
+00:08:47,770 --> 00:08:50,610
+can use the subclass
+relationship that penguins are
+00:08:50,610 --> 00:08:55,170
+a subclass of birds to
+order the defaults so we can
+00:08:55,170 --> 00:08:58,670
+have a linear priority
+ordering of the defaults which
+00:08:58,670 --> 00:09:01,810
+essentially says that look
+the second default that
+00:09:01,810 --> 00:09:06,050
+penguins do not fly is
+stronger as preference over the
+00:09:06,050 --> 00:09:10,010
+first default because as we
+discussed earlier penguins
+00:09:10,010 --> 00:09:15,510
+are a subclass of birds
+so now given this ordering
+00:09:15,960 --> 00:09:21,670
+we can instead of trying to
+apply all the defaults in
+00:09:21,670 --> 00:09:24,990
+a kind of just randomly
+choosing one applying it see
+00:09:24,990 --> 00:09:27,830
+if it's the consequence
+is consistently and so on,
+00:09:27,830 --> 00:09:33,590
+we apply the defaults in
+order of priority. So we start
+00:09:33,590 --> 00:09:36,230
+with the highest priority
+to prioritize default when
+00:09:36,230 --> 00:09:39,570
+we're trying to check what
+defaults consequence we
+00:09:39,570 --> 00:09:42,450
+can add to the consequence
+to the consequences of W.
+00:09:43,640 --> 00:09:46,910
+So we start with rule
+two in this case.
+00:09:46,910 --> 00:09:50,690
+We have we have W.
+We start with two.
+00:09:51,150 --> 00:09:54,530
+We can apply to an ad
+negation fly tweety.
+00:09:55,050 --> 00:09:56,150
+OK,
+00:09:56,870 --> 00:10:01,050
+now having a having a
+having in prioritized and
+00:10:01,050 --> 00:10:05,870
+preferentially applied the
+highly higher prioritized
+00:10:05,870 --> 00:10:12,670
+default to we now cannot
+apply default one, because
+00:10:12,670 --> 00:10:15,630
+if we did so, we would end
+up with an inconsistent
+00:10:15,630 --> 00:10:18,470
+extension containing fly to
+ET and negation fly to ET.
+00:10:18,470 --> 00:10:23,970
+so we stop there we've
+in in in trying out the
+00:10:23,970 --> 00:10:26,690
+different defaults checking
+their antecedents seeing
+00:10:26,690 --> 00:10:30,490
+if the consequence can be
+consistently added we do
+00:10:30,490 --> 00:10:33,070
+so in a way that respects
+the priority ordering of
+00:10:33,070 --> 00:10:37,950
+the defaults and once we've
+done so we stop that's it
+00:10:38,330 --> 00:10:41,870
+so now in this case we
+just get one extension fly
+00:10:42,710 --> 00:10:45,680
+tweety is neither a skeptical
+or credulous consequence
+00:10:45,680 --> 00:10:48,810
+and negation fly to E.T.
+is both a sceptical and
+00:10:48,810 --> 00:10:52,110
+credulous consequence,
+exactly as we would expect.
+00:10:56,570 --> 00:10:59,410
+Let's look at one
+more example. So we
+00:10:59,410 --> 00:11:01,630
+have a consistent
+world description, W,
+00:11:02,630 --> 00:11:05,290
+containing A, A
+implies B and C.
+00:11:05,790 --> 00:11:09,330
+And we have the
+defaults 1 to 4, where 1
+00:11:09,820 --> 00:11:13,230
+is prioritised above
+2, above 3, above 4.
+00:11:13,940 --> 00:11:16,700
+OK, so let's look at
+W and its consequence.
+00:11:16,970 --> 00:11:20,110
+We start with the top
+default, number one.
+00:11:20,390 --> 00:11:22,310
+It cannot be applied,
+00:11:22,690 --> 00:11:25,990
+even though the
+antecedent true is,
+00:11:25,990 --> 00:11:30,210
+you know, it's
+trivially applicable.
+00:11:32,050 --> 00:11:34,710
+If we add the consequent
+negation C, we
+00:11:34,710 --> 00:11:36,450
+end up with an
+inconsistency because W
+00:11:36,450 --> 00:11:41,570
+contains C. So we
+discard, we just pass over
+00:11:41,570 --> 00:11:44,170
+default one. Let's
+look at default two.
+00:11:45,130 --> 00:11:49,230
+Is the antecedent of
+default 2, i.e. B,
+00:11:49,390 --> 00:11:52,910
+in the consequences of W? Yes.
+00:11:52,910 --> 00:11:54,510
+A, A implies B.
+00:11:54,890 --> 00:12:00,990
+Can we add the consequent
+D consistently to W? Yes.
+00:12:01,430 --> 00:12:05,690
+W does not entail negation
+D, and so we add D.
+00:12:06,330 --> 00:12:08,410
+Now let's look at default 3.
+00:12:08,970 --> 00:12:12,470
+well, we have now
+the antecedent D
+00:12:13,310 --> 00:12:17,670
+by virtue of applying
+default 2 we now have that
+00:12:17,670 --> 00:12:20,850
+antecedent, but we can't
+apply it and include
+00:12:20,850 --> 00:12:25,950
+negation A, because A this
+would result in inconsistency,
+00:12:26,100 --> 00:12:30,490
+because A is in the
+consequences of W union D
+00:12:32,550 --> 00:12:36,650
+similarly, even though A,
+when we look at default
+00:12:36,650 --> 00:12:42,250
+4, even though the antecedent
+of default 4, i.e. A,
+00:12:42,370 --> 00:12:47,450
+is in the consequences
+of W union D, we cannot
+00:12:47,450 --> 00:12:49,590
+apply it because if
+we did so we would
+00:12:49,590 --> 00:12:53,030
+add negation D and
+that would result in an
+00:12:53,030 --> 00:12:55,930
+inconsistent extension
+given that rule 2 has
+00:12:55,930 --> 00:12:59,350
+already included D in
+the default extension.
+00:13:00,490 --> 00:13:04,270
+So that just gives you
+an idea of these default
+00:13:04,270 --> 00:13:06,350
+logic approaches to non
+-monotonic reasoning.

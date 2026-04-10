@@ -1,0 +1,276 @@
+00:00:07,290 --> 00:00:09,790
+It is sometimes convenient
+to work not only with
+00:00:09,790 --> 00:00:12,630
+the basic Gabay-Makinson
+rules, but also with some
+00:00:12,630 --> 00:00:15,030
+helpful rules that can be
+derived from those rules.
+00:00:16,390 --> 00:00:18,950
+For example, we have
+the following derived
+00:00:18,950 --> 00:00:21,710
+rule called
+superclassicality that says
+00:00:21,710 --> 00:00:24,250
+that if G is a logical
+consequence of F,
+00:00:24,250 --> 00:00:26,790
+and therefore always
+follows from F,
+00:00:28,100 --> 00:00:29,610
+then it should be the case
+00:00:29,610 --> 00:00:31,850
+that G usually follows from F.
+00:00:32,910 --> 00:00:35,530
+and indeed this rule
+can be derived from
+00:00:35,530 --> 00:00:38,090
+reflexivity together
+with right weakening.
+00:00:40,770 --> 00:00:43,910
+The following rule of
+conditionalisation is
+00:00:43,910 --> 00:00:46,110
+often useful in moving
+conjuncts across the
+00:00:46,110 --> 00:00:48,510
+sequence from left to
+right similar to the
+00:00:48,510 --> 00:00:50,830
+right implication rule
+of propositional logic.
+00:00:51,930 --> 00:00:56,010
+It says that if H usually
+follows from F and G
+00:00:57,330 --> 00:01:00,130
+then the implication
+G implies H
+00:01:00,130 --> 00:01:02,270
+usually follows
+from F on its own.
+00:01:04,510 --> 00:01:06,450
+This rule can be derived from
+00:01:06,450 --> 00:01:09,130
+superclassicality,
+right weakening, left
+00:01:09,130 --> 00:01:11,790
+disjunction and left
+logical equivalence.
+00:01:14,570 --> 00:01:17,030
+The cautious cut rule says that
+00:01:17,030 --> 00:01:19,530
+if H usually
+follows from F and G
+00:01:20,810 --> 00:01:23,890
+and G is usually true
+whenever F is true
+00:01:24,710 --> 00:01:27,710
+then G is somewhat
+redundant and we can
+00:01:27,710 --> 00:01:30,350
+conclude that H usually
+follows from F alone.
+00:01:32,590 --> 00:01:36,000
+This rule can be derived
+from conditionalisation,
+00:01:36,110 --> 00:01:38,270
+right conjunction
+and right weakening.
+00:01:41,270 --> 00:01:43,310
+Negation rationality says that
+00:01:43,310 --> 00:01:45,330
+if H usually follows from F
+00:01:46,430 --> 00:01:50,570
+but doesn't usually follow
+from F together with not G
+00:01:51,570 --> 00:01:53,490
+then it should be the case that
+00:01:53,490 --> 00:01:56,130
+H follows from F
+together with G.
+00:01:59,490 --> 00:02:01,970
+Put another way we
+could write this rule in
+00:02:01,970 --> 00:02:04,350
+terms of its contrapositive
+that says that
+00:02:04,790 --> 00:02:09,690
+if H doesn't follow from
+F and G or from F and not
+00:02:09,690 --> 00:02:13,370
+G then there must be
+something inherent about F
+00:02:13,370 --> 00:02:15,910
+that means that H doesn't
+usually follow from F.
+00:02:18,010 --> 00:02:21,330
+This rule can be derived
+from cautious monotonicity,
+00:02:21,330 --> 00:02:24,770
+rational monotonicity and
+left logical equivalence.
+00:02:28,010 --> 00:02:30,290
+Now consider the
+following premises.
+00:02:31,690 --> 00:02:34,110
+First, that birds usually fly.
+00:02:35,410 --> 00:02:38,170
+Second, that penguins
+usually don't fly.
+00:02:39,410 --> 00:02:43,350
+And third, that penguins
+are birds. or rather that
+00:02:43,350 --> 00:02:46,170
+penguins that are not birds
+are usually impossible.
+00:02:48,610 --> 00:02:50,510
+Pause here and see
+if you are able to
+00:02:50,510 --> 00:02:52,510
+use the Gabay-Makinson
+rules to derive
+00:02:52,510 --> 00:02:54,930
+from these premises
+the conclusion that
+00:02:55,490 --> 00:02:58,910
+birds that are penguins
+usually don't fly
+00:02:59,090 --> 00:03:03,690
+or in other words that B
+and P usually implies not F.
+00:03:11,330 --> 00:03:13,630
+Okay, we start as
+we do at the root of
+00:03:13,630 --> 00:03:15,410
+the tree with the
+sequent that we wish to
+00:03:15,410 --> 00:03:19,430
+prove that B and P
+usually implies not F.
+00:03:21,570 --> 00:03:24,310
+By cautious monotonicity
+we see that we could
+00:03:24,310 --> 00:03:26,710
+derive this sequent if
+we first had the sequence
+00:03:26,710 --> 00:03:32,330
+p usually implies not f
+and p usually implies b.
+00:03:34,550 --> 00:03:37,210
+In other words that
+penguins usually don't
+00:03:37,210 --> 00:03:39,450
+fly and that penguins
+are usually birds.
+00:03:40,880 --> 00:03:44,030
+The first of these is one
+of our premises so we do not
+00:03:44,030 --> 00:03:46,530
+need to expand this branch
+any further as we can take
+00:03:46,530 --> 00:03:49,450
+this as an axiom that we
+can assume without proof.
+00:03:50,670 --> 00:03:53,310
+The second sequence
+is not quite a premise
+00:03:53,310 --> 00:03:55,290
+that we are given,
+but it's very close.
+00:03:57,770 --> 00:03:59,810
+We are given that
+penguins that are
+00:03:59,810 --> 00:04:01,570
+not birds are
+usually impossible.
+00:04:02,450 --> 00:04:05,710
+And so one immediate
+consequence of which is that
+00:04:05,710 --> 00:04:09,970
+P usually implies the
+formula not B implies false,
+00:04:10,470 --> 00:04:12,650
+which we get from
+an application of
+00:04:12,650 --> 00:04:14,550
+our derived rule of
+conditionalisation.
+00:04:17,150 --> 00:04:20,290
+But we know classically
+that not B implies
+00:04:20,290 --> 00:04:23,010
+false is logically
+equivalent to just B.
+00:04:24,330 --> 00:04:27,050
+And so B is a
+logical consequence
+00:04:27,050 --> 00:04:28,970
+of not B implies false.
+00:04:32,540 --> 00:04:34,070
+Hence, we can use the right
+00:04:34,070 --> 00:04:36,090
+weakening rule to
+complete the proof.
+00:04:40,480 --> 00:04:42,690
+Next, let's see whether
+we can show that
+00:04:42,690 --> 00:04:44,170
+it is rational to
+conclude from these
+00:04:44,170 --> 00:04:47,150
+premises that birds are
+usually not penguins.
+00:04:55,070 --> 00:04:56,990
+Before we start with
+a sequence that we
+00:04:56,990 --> 00:05:00,630
+wish to prove that B
+usually implies not P.
+00:05:02,910 --> 00:05:06,010
+From our previous proof
+we already know that
+00:05:06,010 --> 00:05:08,470
+birds that are penguins
+usually don't fly.
+00:05:09,670 --> 00:05:13,150
+And so by the derived
+conditionalization rule we
+00:05:13,150 --> 00:05:16,410
+have that P implies not
+F usually follows from B.
+00:05:17,810 --> 00:05:19,510
+But we also know from our
+00:05:19,510 --> 00:05:21,610
+premises that birds usually fly
+00:05:22,340 --> 00:05:25,370
+and so by the right
+conjunction rule we get
+00:05:25,370 --> 00:05:29,730
+that B usually implies
+P implies not F and F
+00:05:30,870 --> 00:05:33,030
+However it follows
+classically that
+00:05:33,030 --> 00:05:35,610
+this formula logically
+implies not P
+00:05:37,120 --> 00:05:40,110
+Hence we can apply the right
+weakening rule to get the
+00:05:40,110 --> 00:05:43,370
+desired sequence that birds
+are usually not penguins
+00:05:45,830 --> 00:05:48,590
+again since all of the
+leaves of our tree are either
+00:05:48,590 --> 00:05:51,090
+premises or the results
+that we have already proved
+00:05:51,090 --> 00:05:53,930
+from our premises it follows
+that the conclusion is
+00:05:53,930 --> 00:05:56,670
+a rational consequence of
+the premises as required

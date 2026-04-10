@@ -1,0 +1,8 @@
+Learning Objectives
+By the end of this week, you will be able to:
+
+Define what it means for a logic to be (non-)monotonic;
+
+Apply Sequent rules to construct proofs of logical consequences in (classical) propositional logic;
+
+Apply the Gabbay–Makinson rules to construct proofs of rational consequences in propositional non-monotonic logics.

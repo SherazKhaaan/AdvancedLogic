@@ -1,0 +1,970 @@
+00:00:09,500 --> 00:00:11,780
+So let's now look at the
+framework on the left.
+00:00:13,000 --> 00:00:16,840
+And the question is, is D
+in a preferred labelling?
+00:00:17,060 --> 00:00:20,760
+So pro and op alternatively
+move arguments
+00:00:20,760 --> 00:00:23,050
+against each other,
+referencing the framework.
+00:00:23,940 --> 00:00:27,420
+Notice at this stage,
+pro has replied
+00:00:27,420 --> 00:00:29,680
+successfully to
+every op argument.
+00:00:30,300 --> 00:00:32,440
+So pro has replied successfully
+00:00:32,440 --> 00:00:34,480
+to C with A and to B with A.
+00:00:34,840 --> 00:00:37,000
+Pro is allowed to repeat A in
+00:00:37,000 --> 00:00:39,220
+the dispute, as you can see.
+00:00:39,500 --> 00:00:45,020
+And there is no alternative
+backtracking option
+00:00:45,020 --> 00:00:50,260
+for Op to return to,
+no pro argument further
+00:00:50,260 --> 00:00:52,960
+up the dispute that Op
+can return to and try
+00:00:52,960 --> 00:00:56,480
+an alternative attack.
+So pro wins the game.
+00:00:57,410 --> 00:01:01,000
+i mean of course notice
+that at the point when op
+00:01:01,000 --> 00:01:03,380
+moves c against d at the
+beginning of the game
+00:01:03,380 --> 00:01:06,780
+pro instead of moving a
+as shown in the left-hand
+00:01:06,780 --> 00:01:10,700
+dispute here could have
+moved b as shown in this
+00:01:10,700 --> 00:01:14,260
+dispute then op would
+have moved a pros allowed
+00:01:14,260 --> 00:01:18,400
+to repeat b op cannot
+now repeat a there are no
+00:01:18,660 --> 00:01:21,250
+backtracking options
+for op to reply
+00:01:21,250 --> 00:01:23,920
+or with an alternative
+argument to a
+00:01:23,920 --> 00:01:27,400
+pro argument And so
+pro wins the game.
+00:01:29,100 --> 00:01:32,040
+For the same
+framework, the question
+00:01:32,040 --> 00:01:34,240
+is, is D in the
+grounded labelling?
+00:01:34,700 --> 00:01:38,520
+So pro moves D, op moves C.
+On the left-hand dispute,
+00:01:38,520 --> 00:01:42,560
+pro replies to C with A,
+op replies with B to A.
+00:01:42,600 --> 00:01:47,200
+Now, of course, pro
+cannot repeat A on the
+00:01:47,200 --> 00:01:50,460
+left-hand dispute in
+the grounded game.
+00:01:50,920 --> 00:01:56,060
+Similarly, on the right
+-hand side, when pro
+00:01:56,060 --> 00:01:59,520
+backtracks and tries an
+alternative reply B to C,
+00:01:59,680 --> 00:02:02,400
+op replies with A,
+and pro now cannot
+00:02:02,400 --> 00:02:04,480
+repeat B on the
+right-hand dispute.
+00:02:04,480 --> 00:02:06,140
+So pro loses the game.
+00:02:09,100 --> 00:02:12,960
+the OP arguments have not
+been successfully counter
+00:02:12,960 --> 00:02:17,340
+-attacked and there is
+no alternative back
+00:02:17,340 --> 00:02:20,280
+-tracking reply that PRO can
+use to try, for example,
+00:02:20,280 --> 00:02:25,520
+an alternative reply to
+the first move of C by OP
+00:02:27,810 --> 00:02:30,900
+looking at this framework
+on the left-hand side which
+00:02:30,900 --> 00:02:33,700
+is called an odd loop for
+obvious reasons A attacks
+00:02:33,700 --> 00:02:38,720
+C, attacks B, attacks A in
+this game pro cannot repeat
+00:02:38,720 --> 00:02:42,200
+an argument in the dispute
+so pro initially starts with
+00:02:42,200 --> 00:02:46,420
+c at some point pro has
+to repeat c but of course
+00:02:46,420 --> 00:02:49,060
+is not allowed to do so
+because it's the grounded game
+00:02:49,600 --> 00:02:55,160
+pro cannot backtrack and
+reply or use alternatives
+00:02:55,160 --> 00:03:01,640
+against ops arguments
+and so pro loses the game
+00:03:04,240 --> 00:03:07,340
+OK, so C is not in
+the grounded labelling
+00:03:07,340 --> 00:03:10,820
+of the argument
+framework showing A
+00:03:10,820 --> 00:03:12,620
+attacking C, attacking
+B, attacking A.
+00:03:14,400 --> 00:03:16,360
+What about this
+example? Have a look
+00:03:16,360 --> 00:03:17,980
+at the framework on
+the left-hand side.
+00:03:18,960 --> 00:03:20,840
+Look at the left dispute.
+00:03:21,060 --> 00:03:24,080
+So A, B, D, E, D.
+00:03:24,340 --> 00:03:25,220
+Successfully,
+00:03:25,740 --> 00:03:30,100
+Pro replies to the last
+move, E, but with D.
+00:03:31,240 --> 00:03:35,420
+Then PRO backtracks to
+the right-hand dispute,
+00:03:35,420 --> 00:03:38,740
+moves the alternative
+argument C against A,
+00:03:38,860 --> 00:03:43,980
+the dispute evolves,
+and PRO has the last
+00:03:43,980 --> 00:03:46,920
+word with the argument
+E, which PRO repeats.
+00:03:47,180 --> 00:03:50,320
+OP cannot now reply
+to E with D, OP
+00:03:50,320 --> 00:03:53,200
+cannot repeat D in the
+right-hand dispute.
+00:03:53,200 --> 00:03:55,800
+So all OP arguments
+have been successfully
+00:03:55,800 --> 00:03:58,340
+counter-attacked. There
+are no backtracking
+00:03:58,340 --> 00:04:01,180
+alternative options
+for OP to try out.
+00:04:01,240 --> 00:04:03,960
+And so it looks like
+pro should win the game.
+00:04:05,380 --> 00:04:08,120
+But if you look at
+the examples with
+00:04:08,300 --> 00:04:12,760
+some care, you'll
+notice that if a
+00:04:12,760 --> 00:04:15,460
+game, if a grounded
+game is won by pro,
+00:04:15,860 --> 00:04:19,390
+then the arguments moved
+by pro are a subset
+00:04:19,390 --> 00:04:22,440
+of the in arguments in
+a grounded labelling.
+00:04:22,440 --> 00:04:26,680
+And if a preferred game
+is won by pro, then
+00:04:26,680 --> 00:04:29,340
+the arguments moved
+by pro are a subset of
+00:04:29,340 --> 00:04:31,560
+the in arguments in a
+preferred labelling.
+00:04:31,900 --> 00:04:38,000
+so if we return to this
+example you'll notice that
+00:04:38,000 --> 00:04:43,140
+even though it seems like
+pro should win in in in so
+00:04:43,140 --> 00:04:48,620
+doing pro has moved two
+arguments d and e that attack
+00:04:48,620 --> 00:04:52,160
+each other and these two
+arguments cannot of course
+00:04:52,160 --> 00:04:57,140
+coexist in a preferred
+labeling because if d attacks
+00:04:57,140 --> 00:05:00,470
+e and e attacks e they just
+cannot both be in right
+00:05:01,180 --> 00:05:06,080
+so for the preferred games
+you need the additional
+00:05:06,080 --> 00:05:11,060
+check that the arguments
+moved by pro do not attack
+00:05:11,060 --> 00:05:15,000
+each other interestingly
+enough in the grounded game
+00:05:15,480 --> 00:05:19,960
+you are guaranteed that
+arguments moved if that if
+00:05:19,960 --> 00:05:24,480
+there is if the rules have
+been followed and the sense
+00:05:24,480 --> 00:05:28,840
+that all arguments that can
+be moved have been moved,
+00:05:28,840 --> 00:05:33,420
+subject to the non-repetition
+restriction on pro, then
+00:05:33,420 --> 00:05:36,700
+if all of OP's arguments
+are applied to, it must be
+00:05:36,700 --> 00:05:40,120
+the case that no two pro
+arguments attack each other.
+00:05:41,150 --> 00:05:43,400
+So in the grounded
+game, let's now come
+00:05:43,400 --> 00:05:45,720
+to defining formally
+the grounded game.
+00:05:46,780 --> 00:05:50,160
+So we have a framework
+of arguments and attacks,
+00:05:50,730 --> 00:05:54,640
+and we say that x is in
+the grounded labeling of
+00:05:54,640 --> 00:05:57,200
+that framework if and only
+if there is a game tree
+00:05:57,520 --> 00:06:01,920
+right with root x in other
+words pro starts with x
+00:06:01,980 --> 00:06:08,260
+and in if pro moves y in
+any dispute in that game
+00:06:08,260 --> 00:06:11,850
+tree and there is this
+argument z that attacks y then
+00:06:12,060 --> 00:06:16,500
+op moves that argument z
+against y in that dispute.
+00:06:17,120 --> 00:06:20,760
+If op moves y in a dispute
+and there is a z that
+00:06:20,760 --> 00:06:26,000
+attacks y then pro moves
+z against y only if
+00:06:26,000 --> 00:06:29,700
+pro has not already moved
+z in that dispute d.
+00:06:30,780 --> 00:06:34,440
+And then given the game tree
+00:06:35,220 --> 00:06:38,360
+what we are tasked
+with is identifying
+00:06:38,360 --> 00:06:41,160
+a subtree t prime
+of the game tree t
+00:06:41,640 --> 00:06:44,240
+such that every op argument in
+00:06:44,240 --> 00:06:47,080
+T' is attacked by
+a pro-argument.
+00:06:47,080 --> 00:06:50,720
+And this subtree T' we
+call a winning strategy.
+00:06:50,720 --> 00:06:53,080
+I'll illustrate
+this in a moment.
+00:06:53,740 --> 00:06:54,920
+Excuse me.
+00:06:56,830 --> 00:06:58,520
+So, let's have a look at this
+00:06:58,520 --> 00:07:00,480
+argument framework on the left.
+00:07:01,340 --> 00:07:04,940
+We've got the game
+-tree T, right, with two
+00:07:04,940 --> 00:07:09,920
+disputes, A, B, C, D,
+and A, B, E. Now notice,
+00:07:10,040 --> 00:07:14,740
+we can identify a
+subtree T prime of T,
+00:07:14,930 --> 00:07:19,780
+in which every op
+argument, i.e. B, is
+00:07:19,780 --> 00:07:23,540
+attacked by at least
+one pro argument, E.
+00:07:24,560 --> 00:07:26,980
+So intuitively,
+what's going on here
+00:07:26,980 --> 00:07:31,580
+is that pro has tried
+to defend A with
+00:07:31,580 --> 00:07:35,240
+C, but failed
+because D attacked C.
+00:07:36,100 --> 00:07:41,020
+it's sufficient that pro
+finds at least one way
+00:07:41,020 --> 00:07:44,000
+of defending a against
+b and there is such a
+00:07:44,000 --> 00:07:48,100
+way moving e that's why
+t prime is a winning
+00:07:48,100 --> 00:07:53,140
+strategy right it just
+requires one successful
+00:07:53,270 --> 00:07:57,500
+defense of a i.e with
+e the fact that the
+00:07:57,500 --> 00:08:00,120
+defense by c has failed
+is neither here nor there
+00:08:03,220 --> 00:08:06,520
+OK, let's now define
+the preferred game. And
+00:08:06,520 --> 00:08:09,320
+remember, in this game,
+we need this additional
+00:08:09,320 --> 00:08:12,360
+check. Unlike in the
+grounded game, we need
+00:08:12,360 --> 00:08:15,420
+the additional check
+that no two pro-arguments
+00:08:15,420 --> 00:08:17,230
+attack each other in
+a winning strategy.
+00:08:18,240 --> 00:08:21,660
+So the game is very similar
+to the grounded game,
+00:08:21,660 --> 00:08:25,740
+other than this difference
+and the distinction in
+00:08:25,740 --> 00:08:29,340
+the repetition restriction.
+So X is in a preferred
+00:08:29,340 --> 00:08:33,480
+labelling of a framework,
+if pro moves X as a
+00:08:33,480 --> 00:08:38,300
+root argument in a game,
+and if pro moves some Y
+00:08:38,300 --> 00:08:42,420
+in a dispute, and there
+is some Z that attacks Y,
+00:08:42,700 --> 00:08:47,600
+then op moves that Z against
+Y, but only if op, in
+00:08:47,600 --> 00:08:51,420
+this case, has not already
+moved Z in that dispute.
+00:08:53,080 --> 00:08:56,800
+similarly if op moves y and
+there is a z attacking y
+00:08:56,800 --> 00:09:01,280
+in a dispute then pro moves
+z against that y and then
+00:09:01,280 --> 00:09:04,120
+the same idea is with the
+grounded game if there is
+00:09:04,120 --> 00:09:10,120
+a subtree t prime of t such
+that every op move in that
+00:09:10,120 --> 00:09:14,740
+subtree is attacked by a
+pro argument right then
+00:09:14,740 --> 00:09:17,860
+that's called a winning
+strategy so long as in addition
+00:09:17,860 --> 00:09:22,800
+the arguments moved by
+pro in that t prime do not
+00:09:22,800 --> 00:09:31,100
+attack each other so in this
+game here looking at our
+00:09:31,100 --> 00:09:34,980
+earlier example it looks
+like all the conditions are
+00:09:34,980 --> 00:09:38,140
+satisfied except this final
+condition on the winning
+00:09:38,140 --> 00:09:41,980
+strategy right rule in rule
+three of the third game.
+00:09:42,880 --> 00:09:45,380
+The condition being that
+no two pro arguments
+00:09:45,380 --> 00:09:47,780
+attack each other, but
+as we can see here, D and
+00:09:47,780 --> 00:09:50,280
+E attack each other in
+the argument framework.
+00:09:52,320 --> 00:09:54,920
+Let's look at some
+more examples. Let's
+00:09:54,920 --> 00:09:56,330
+have a look at the
+framework on the left.
+00:09:57,580 --> 00:10:01,440
+Is A in the grounded labelling?
+So pro moves A, op moves
+00:10:01,440 --> 00:10:06,320
+B, pro moves C. Op can
+repeat B against C. Now,
+00:10:06,320 --> 00:10:13,590
+notice Pro cannot move A or
+C against this last move by
+00:10:13,590 --> 00:10:17,220
+Op, because, of course, Pro
+cannot repeat in a dispute.
+00:10:17,580 --> 00:10:18,920
+Of course,
+00:10:19,680 --> 00:10:22,960
+Pro could, in fact,
+00:10:23,440 --> 00:10:25,820
+move an alternative
+argument, E,
+00:10:26,540 --> 00:10:27,760
+against B.
+00:10:27,780 --> 00:10:31,860
+So although pro can't move
+C or A, pro can move E.
+00:10:31,960 --> 00:10:35,200
+At this point,
+notice that op cannot
+00:10:35,200 --> 00:10:37,660
+backtrack and move an
+alternative argument.
+00:10:37,720 --> 00:10:40,620
+And so this constitutes
+a winning strategy.
+00:10:41,780 --> 00:10:43,340
+On the other hand,
+00:10:43,510 --> 00:10:46,780
+notice that instead
+of, so we had this left
+00:10:46,780 --> 00:10:49,420
+-hand dispute, right?
+We had A, B, C, B.
+00:10:49,920 --> 00:10:54,600
+Pro could not move C
+or A against B on the
+00:10:54,600 --> 00:10:56,360
+left-hand side because
+they're already
+00:10:56,360 --> 00:10:59,320
+moved in that dispute.
+And then we saw, well,
+00:10:59,320 --> 00:11:02,340
+OK, but pro could have
+moved E against B.
+00:11:03,940 --> 00:11:06,720
+Alternatively, pro could
+have backtracked to
+00:11:06,720 --> 00:11:12,420
+the earlier instance of
+ops move B and moved E
+00:11:12,420 --> 00:11:14,940
+there to define an
+alternative winning strategy.
+00:11:15,330 --> 00:11:18,300
+Now, you can see that
+this is a winning
+00:11:18,300 --> 00:11:22,730
+strategy because every
+op move in this encircled
+00:11:22,730 --> 00:11:26,480
+subtree has been replied
+to by a pro move.
+00:11:26,680 --> 00:11:31,160
+just because I mean C
+00:11:31,820 --> 00:11:33,720
+so just because C
+00:11:34,320 --> 00:11:38,880
+in this case fails to
+defend A because we've not
+00:11:38,890 --> 00:11:42,440
+moved against B on the
+left hand side we can
+00:11:42,440 --> 00:11:45,040
+instead move E against
+B on the right hand side
+00:11:45,040 --> 00:11:47,200
+to as it were define a
+smaller winning strategy
+00:11:47,640 --> 00:11:50,020
+rather than this
+longer winning strategy
+00:11:51,640 --> 00:11:52,600
+okay
+00:11:53,220 --> 00:11:55,580
+so it's kind of a more
+efficient winning strategy
+00:11:56,480 --> 00:11:58,880
+But the important
+point is this,
+00:12:00,020 --> 00:12:03,220
+okay, so when in an
+exam or when in your
+00:12:03,220 --> 00:12:06,560
+exercises, you're asked
+to write out a game tree
+00:12:06,560 --> 00:12:09,740
+and identify winning
+strategies, what I want you
+00:12:09,740 --> 00:12:12,420
+to do is to write out
+the whole game tree and
+00:12:12,560 --> 00:12:15,240
+show all possible
+winning strategies, all
+00:12:15,240 --> 00:12:18,280
+possible ways that the
+game could have evolved.
+00:12:19,640 --> 00:12:23,820
+okay so in this case
+here what we have is
+00:12:23,820 --> 00:12:27,820
+the full game tree right
+according to the rules
+00:12:27,820 --> 00:12:31,440
+of the grounded game
+every move that can
+00:12:31,440 --> 00:12:34,220
+be moved by either pro
+or op has been moved
+00:12:35,000 --> 00:12:39,860
+right and then once you've
+written out the whole
+00:12:39,860 --> 00:12:42,680
+game tree game tree
+following those those rules
+00:12:43,120 --> 00:12:45,940
+you can then identify
+winning strategies
+00:12:45,940 --> 00:12:49,100
+as sub-trees of the
+whole game tree.
+00:12:49,160 --> 00:12:51,410
+So we have the
+winning strategy T1,
+00:12:51,410 --> 00:12:53,760
+which says that C
+replies to B replies
+00:12:53,760 --> 00:12:56,380
+to A, and the
+winning strategy T2.
+00:12:57,500 --> 00:12:59,520
+E replies to B replies to C
+00:12:59,520 --> 00:13:00,980
+replies to B replies to A.
+00:13:03,440 --> 00:13:06,760
+OK, so that's
+important to remember.
+00:13:06,820 --> 00:13:10,480
+I mean, one way to answer
+a question like this
+00:13:10,480 --> 00:13:14,940
+would be to kind of
+procedurally play the game at
+00:13:15,000 --> 00:13:18,020
+the very moment you hit
+a winning strategy, stop.
+00:13:18,400 --> 00:13:22,510
+The idea, what I would
+want you to do when you're
+00:13:22,510 --> 00:13:24,920
+answering exam questions
+or in exercises is to
+00:13:24,920 --> 00:13:28,600
+write out the whole game
+tree, to effectively write
+00:13:28,600 --> 00:13:30,460
+out all the ways in
+which the game could have
+00:13:30,460 --> 00:13:33,040
+evolved and then identify
+the winning strategies.
+00:13:34,140 --> 00:13:36,280
+Let's have a look
+at this example now.
+00:13:36,760 --> 00:13:38,260
+Looking at the framework on the
+00:13:38,260 --> 00:13:40,560
+left, is A in the
+grounded labelling?
+00:13:40,850 --> 00:13:43,420
+So pro starts with A,
+00:13:44,320 --> 00:13:46,820
+op moves C, pro moves D,
+00:13:47,280 --> 00:13:49,040
+op moves E.
+00:13:49,320 --> 00:13:51,600
+Now, at this point, of course,
+00:13:53,400 --> 00:13:57,080
+pro cannot repeat D against E.
+00:13:58,600 --> 00:14:05,330
+So pro backtracks and
+tries an alternative attack
+00:14:06,000 --> 00:14:09,280
+against C by moving B on
+the right-hand side dispute.
+00:14:09,330 --> 00:14:14,640
+so pro moves b op moves
+a pro moves c but op
+00:14:14,640 --> 00:14:19,740
+moves b now at this point
+on the right hand dispute
+00:14:19,740 --> 00:14:23,340
+on the right hand side
+what option does pro have
+00:14:23,340 --> 00:14:25,980
+well the only option
+pro has looking at the
+00:14:25,980 --> 00:14:29,440
+framework is to move a against
+b but in the right hand
+00:14:29,440 --> 00:14:34,540
+dispute pro has already
+moved a the root argument
+00:14:34,540 --> 00:14:38,180
+Remember, a dispute is a
+path from root to leaf.
+00:14:38,660 --> 00:14:41,520
+So pro has already moved
+A in the right-hand
+00:14:41,520 --> 00:14:44,340
+dispute, so pro cannot
+repeat A against B.
+00:14:44,580 --> 00:14:47,220
+Pro cannot repeat
+D against E on the
+00:14:47,220 --> 00:14:49,440
+left-hand side,
+and so pro loses.
+00:14:49,440 --> 00:14:51,480
+A is not in the
+grounded labelling.
+00:14:52,440 --> 00:14:56,100
+What about the
+question, is A in a
+00:14:56,100 --> 00:14:58,020
+preferred labelling
+of the framework?
+00:14:58,960 --> 00:15:04,600
+OK, so let's start with
+pro moves A, op moves c
+00:15:05,340 --> 00:15:08,600
+and essentially we just
+go around that that three
+00:15:08,600 --> 00:15:13,300
+loop so pro moves a op moves
+c b a c b a now it looks
+00:15:13,300 --> 00:15:18,120
+like pro has won that
+dispute has had the last
+00:15:18,120 --> 00:15:21,940
+word by moving a is that a
+potential winning strategy
+00:15:22,680 --> 00:15:29,800
+because if you also look
+at um well i'll come
+00:15:29,800 --> 00:15:31,760
+to that in a moment okay
+is it a potential winning
+00:15:31,760 --> 00:15:36,430
+strategy is the question
+the answer is no because
+00:15:37,770 --> 00:15:42,760
+pro in that dispute on
+the right hand in this
+00:15:42,760 --> 00:15:45,720
+dispute has moved arguments
+that attack each other
+00:15:45,720 --> 00:15:51,620
+okay so this is not a potential
+winning strategy right
+00:15:51,620 --> 00:15:54,080
+pro has moved arguments
+that attack each other
+00:15:56,900 --> 00:15:59,380
+okay so remember we're
+00:15:59,380 --> 00:16:00,720
+interested in the
+whole game tree
+00:16:01,680 --> 00:16:04,540
+pro now backtracks
+00:16:04,940 --> 00:16:07,840
+because the right hand
+dispute is not a potential
+00:16:07,840 --> 00:16:09,740
+winning strategy that's
+procedurally the case but
+00:16:09,740 --> 00:16:11,610
+if you think about the
+whole game tree pro
+00:16:11,820 --> 00:16:17,380
+backtracks and moves D
+against op's earlier move of C
+00:16:17,780 --> 00:16:24,480
+pro moves E sorry op moves
+E pro repeats D on the left
+00:16:24,480 --> 00:16:30,580
+hand dispute at this point
+op cannot repeat E Right.
+00:16:31,280 --> 00:16:34,230
+Moreover, there
+are no alternative
+00:16:34,710 --> 00:16:38,180
+backtracking options
+that op can go to to try
+00:16:38,180 --> 00:16:40,320
+alternative attacks
+on pro's arguments.
+00:16:42,660 --> 00:16:47,760
+So pro backtracks to move
+D against, that should
+00:16:47,760 --> 00:16:51,300
+be E, and establish a
+winning strategy T prime.
+00:16:52,520 --> 00:16:54,260
+notice a typo there
+00:16:55,120 --> 00:16:58,040
+pro backtracks to
+move D against E and
+00:16:58,040 --> 00:17:00,760
+establishes the winning
+strategy T prime
+00:17:01,830 --> 00:17:04,780
+ok so I hope you can see
+that's a winning strategy
+00:17:04,780 --> 00:17:06,760
+and that the right hand
+dispute is not a winning
+00:17:06,760 --> 00:17:10,600
+strategy because for it to
+be a winning strategy no
+00:17:10,600 --> 00:17:13,420
+two pro arguments can
+attack each other and we see
+00:17:13,420 --> 00:17:16,620
+that the arguments A, B, C
+in the right hand dispute
+00:17:16,620 --> 00:17:20,160
+do attack each other even
+though op cannot reply
+00:17:20,160 --> 00:17:25,060
+to that move of a by pro
+in the right-hand dispute.
+00:17:27,340 --> 00:17:31,660
+OK, notice, as I said, that
+when you write out these
+00:17:31,660 --> 00:17:33,380
+game trees, I want you
+to write out according to
+00:17:33,380 --> 00:17:35,640
+the definition of the game.
+So in other words, all
+00:17:35,640 --> 00:17:40,220
+possible moves. So at the
+moment, if we look at this
+00:17:40,220 --> 00:17:44,500
+game tree t, with t prime,
+the winning strategy,
+00:17:44,520 --> 00:17:47,380
+that game tree t is not
+the whole game tree.
+00:17:48,640 --> 00:17:50,380
+Right? So,
+00:17:50,660 --> 00:17:57,960
+even though the rules of
+the game allow for D to move
+00:17:57,960 --> 00:18:02,260
+against C, even though that's
+not going to affect the
+00:18:02,260 --> 00:18:07,040
+existence of the winning
+strategy T prime, if we're
+00:18:07,040 --> 00:18:09,120
+interested in the whole
+game tree, we should also
+00:18:09,120 --> 00:18:13,060
+model the fact that OP could
+have moved D against C on
+00:18:13,060 --> 00:18:16,780
+the right-hand side as an
+alternative to B against C.
+00:18:18,140 --> 00:18:22,200
+right so the and then e pro
+could have moved e against
+00:18:22,200 --> 00:18:25,740
+d the point i'm trying
+to make here is that one
+00:18:25,740 --> 00:18:29,560
+could have established that
+winning strategy t prime
+00:18:29,560 --> 00:18:31,800
+so let's go back to t
+prime here one could have
+00:18:31,800 --> 00:18:34,520
+established a winning strategy
+t prime as a subtree of
+00:18:34,520 --> 00:18:38,740
+the game tree t but strictly
+speaking the game tree
+00:18:38,740 --> 00:18:41,200
+t should include all moves
+that could have been moved
+00:18:41,200 --> 00:18:44,420
+and then you identify the
+winning strategy t prime
+00:18:44,420 --> 00:18:46,980
+on the left hand side of
+the left hand side dispute
+00:18:48,520 --> 00:18:49,600
+okay
+00:18:50,490 --> 00:18:53,320
+so we have the full game tree
+00:18:53,320 --> 00:18:56,420
+we have one winning strategy
+00:18:56,750 --> 00:19:00,980
+A, C, D, E, D, T1
+and of course this
+00:19:00,980 --> 00:19:05,800
+equates with A and D
+being in in a preferred
+00:19:05,800 --> 00:19:07,540
+labelling of the
+argument framework
+00:19:10,460 --> 00:19:11,540
+okay
+00:19:12,860 --> 00:19:17,700
+now Now, I'm going to
+end with this question.
+00:19:18,190 --> 00:19:19,800
+So we saw that
+there's a winning
+00:19:19,800 --> 00:19:22,060
+strategy T1 in this game tree.
+00:19:22,320 --> 00:19:23,160
+Yeah.
+00:19:24,160 --> 00:19:27,700
+Question to you
+is, what about T2?
+00:19:27,740 --> 00:19:30,960
+So now we have the full
+game tree in which we've
+00:19:30,960 --> 00:19:36,100
+extended the right-hand
+side dispute with C, D, E.
+00:19:36,560 --> 00:19:38,660
+We have the full game
+tree here. We have
+00:19:38,660 --> 00:19:43,120
+a dispute that goes
+from E to D, C, A, B,
+00:19:43,120 --> 00:19:47,160
+C, A. that's t2 that's
+a subtree of t right
+00:19:47,340 --> 00:19:52,220
+and and within that
+subtree there are no
+00:19:52,530 --> 00:19:55,260
+alternative replies
+that op can make to pro
+00:19:55,260 --> 00:19:59,400
+arguments all arguments
+are replied to by pro
+00:19:59,400 --> 00:20:03,740
+argument question is is
+t2 a winning strategy
+00:20:06,240 --> 00:20:10,200
+okay if you're interested
+in more um about these
+00:20:10,200 --> 00:20:13,060
+argument games i can
+suggest a book chapter i
+00:20:13,060 --> 00:20:16,900
+wrote with martin caminada
+here in particular you
+00:20:16,900 --> 00:20:18,600
+might have noticed that
+in some of the games i've
+00:20:18,600 --> 00:20:22,340
+described it looks like
+if you're interested in
+00:20:22,340 --> 00:20:25,940
+in in in making the game
+short there are certain
+00:20:25,940 --> 00:20:28,890
+kind of moves that extra
+rules you could impose
+00:20:28,890 --> 00:20:33,160
+right that shorten the
+games so in other words
+00:20:36,300 --> 00:20:40,800
+you could have smaller
+game trees by imposing
+00:20:40,800 --> 00:20:44,560
+extra rules, right? So
+because you have smaller game
+00:20:44,560 --> 00:20:47,640
+trees, they're more
+efficient as games. And yet
+00:20:47,640 --> 00:20:50,360
+you can still, if there
+is a winning strategy,
+00:20:50,380 --> 00:20:52,860
+you can still identify
+a winning strategy.
+00:20:53,740 --> 00:20:56,660
+What I will do is in the
+large group tutorial,
+00:20:56,660 --> 00:20:58,820
+I'll perhaps spend a
+bit of time giving you
+00:20:58,820 --> 00:21:01,440
+some intuitions about
+these additional rules
+00:21:01,440 --> 00:21:04,620
+that you can impose
+to improve efficiency.

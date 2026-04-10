@@ -1,0 +1,810 @@
+00:00:07,320 --> 00:00:09,660
+Okay, in the final
+part of the lecture,
+00:00:09,970 --> 00:00:14,760
+let's be a little bit
+more formal about how,
+00:00:14,760 --> 00:00:18,240
+given an argumentation
+framework of arguments
+00:00:18,370 --> 00:00:22,380
+constructed from an
+underlying knowledge base,
+00:00:23,760 --> 00:00:26,540
+given such a framework of
+00:00:26,540 --> 00:00:28,780
+arguments related
+by these attacks,
+00:00:28,920 --> 00:00:31,980
+how do we formally evaluate
+00:00:31,980 --> 00:00:33,620
+which are the
+winning arguments?
+00:00:36,680 --> 00:00:40,250
+and the way we do this in
+this in this first lecture
+00:00:40,250 --> 00:00:42,940
+what i'm going to describe
+is the use of these
+00:00:42,940 --> 00:00:46,660
+labeling rules to determine
+which arguments are winning
+00:00:48,180 --> 00:00:50,820
+so we've seen how as i
+said we can construct
+00:00:50,820 --> 00:00:53,560
+arguments from a
+knowledge base relate them
+00:00:53,560 --> 00:00:58,360
+by attack and attacks
+see which attacks succeed
+00:00:58,360 --> 00:01:01,420
+given our preferences
+over the arguments
+00:01:02,100 --> 00:01:06,520
+And then we obtain an
+argument framework, which
+00:01:06,520 --> 00:01:10,480
+essentially is a tuple
+or a pair, args, attacks,
+00:01:10,820 --> 00:01:13,140
+where attacks is a binary
+00:01:13,140 --> 00:01:15,060
+relation over the arguments.
+00:01:16,180 --> 00:01:18,910
+OK, so you can think
+actually of a directed
+00:01:18,910 --> 00:01:21,700
+graph, right, in which
+your arguments are
+00:01:21,700 --> 00:01:24,760
+nodes and the
+successful attacks are
+00:01:24,760 --> 00:01:28,200
+directed binary relations
+amongst these nodes.
+00:01:28,700 --> 00:01:30,500
+So we have an example
+of an argument
+00:01:30,500 --> 00:01:34,940
+framework here where A5
+attacks A1, A2 is not
+00:01:34,940 --> 00:01:38,560
+attacked, and A3 and
+A4 attack each other.
+00:01:40,580 --> 00:01:43,900
+So how do we
+assign or how do we
+00:01:43,900 --> 00:01:46,900
+evaluate formally
+which arguments are
+00:01:46,900 --> 00:01:48,620
+winning and which
+arguments are losing?
+00:01:50,060 --> 00:01:53,760
+indeed in some cases we can
+also we may also remember
+00:01:53,760 --> 00:01:57,060
+in the earlier case of a
+logic programming example
+00:01:57,060 --> 00:01:59,760
+where we had a real dilemma
+in some cases we can be we
+00:01:59,760 --> 00:02:02,660
+not be we may may not be
+able to make a definitive
+00:02:02,660 --> 00:02:05,580
+choice of which argument is
+winning and which argument is
+00:02:05,580 --> 00:02:09,680
+losing so how do we go
+about doing this evaluating
+00:02:09,680 --> 00:02:13,940
+the arguments we essentially
+apply a labeling function
+00:02:13,940 --> 00:02:18,960
+right that assigns to each
+argument either the label
+00:02:18,960 --> 00:02:25,600
+in for winning or out for
+losing or un for undecided.
+00:02:26,160 --> 00:02:32,400
+So given an argumentation
+framework we try to determine
+00:02:32,400 --> 00:02:37,660
+a labeling of that
+framework such that it
+00:02:37,660 --> 00:02:44,240
+satisfies the following three
+criteria and an argument
+00:02:44,240 --> 00:02:49,440
+in a framework is said to
+be legitimately in if and
+00:02:49,440 --> 00:02:55,180
+only if all arguments y
+that attack the argument x
+00:02:55,180 --> 00:03:01,100
+are out or losing right
+so argument any argument x
+00:03:01,100 --> 00:03:04,900
+in a framework is winning
+or in if and only if every
+00:03:04,900 --> 00:03:10,940
+one of x's attackers y is
+out or losing an argument
+00:03:10,940 --> 00:03:15,120
+is out or losing if there
+is at least one counter
+00:03:15,120 --> 00:03:20,600
+argument counter argument
+to x some y that is winning
+00:03:21,750 --> 00:03:26,140
+finally an argument x is
+undecided like we just
+00:03:26,140 --> 00:03:29,860
+don't know whether it's
+winning or losing if no y
+00:03:29,860 --> 00:03:33,780
+that attacks x is in because
+if there was such a y,
+00:03:34,080 --> 00:03:36,100
+x would have to be
+out according to
+00:03:36,100 --> 00:03:40,060
+rule 2, and there is
+at least one y that
+00:03:40,060 --> 00:03:43,580
+attacks x that
+itself is undecided.
+00:03:44,540 --> 00:03:46,760
+So if you look at
+this framework here,
+00:03:47,630 --> 00:03:51,240
+a1 is out because there is an
+00:03:51,240 --> 00:03:54,140
+argument a5 that attacks a1,
+00:03:54,980 --> 00:04:00,700
+a5 and a5 is in because,
+well, it doesn't have
+00:04:00,700 --> 00:04:03,500
+any attackers so it
+must itself be in right
+00:04:04,100 --> 00:04:09,160
+so a5 let's just recap
+a5 according to rule one
+00:04:09,210 --> 00:04:13,160
+a5 is in because all
+its attackers are out
+00:04:13,160 --> 00:04:15,020
+but in this case it
+doesn't have any attackers
+00:04:15,420 --> 00:04:18,640
+that means a1 must
+be out according to
+00:04:18,640 --> 00:04:23,980
+rule two look at
+argument a2 again no
+00:04:23,980 --> 00:04:27,280
+argument attacks
+it so it must be in
+00:04:27,940 --> 00:04:31,800
+and now if you look
+at arguments A3 and A4
+00:04:32,500 --> 00:04:35,730
+they can also be given
+their label undecided
+00:04:36,620 --> 00:04:39,120
+because A3 is not attacked by a
+00:04:39,120 --> 00:04:41,240
+winning argument an
+argument that's in
+00:04:41,920 --> 00:04:43,560
+neither is A4
+00:04:44,520 --> 00:04:49,280
+so just have a look at rule
+3 here and in both cases
+00:04:50,720 --> 00:04:53,280
+both A3 is attacked
+by an undecided
+00:04:53,280 --> 00:04:55,480
+argument A4 and vice versa.
+00:04:55,900 --> 00:05:00,680
+So applying these rules
+to a framework, we
+00:05:01,000 --> 00:05:04,540
+see that this labelling,
+L, is a legitimate
+00:05:04,540 --> 00:05:08,680
+labelling given the
+rules 1, 2 and 3.
+00:05:11,560 --> 00:05:12,720
+OK.
+00:05:13,140 --> 00:05:17,060
+Notice also that this
+function lab, which returns
+00:05:17,160 --> 00:05:20,860
+labellings on a framework
+that must satisfy these three
+00:05:20,860 --> 00:05:25,020
+rules, is a one-to-many
+function there may be many
+00:05:25,020 --> 00:05:30,230
+possible labelings that
+satisfy all three rules so
+00:05:30,300 --> 00:05:34,980
+take the standard dilemma
+case okay we've already
+00:05:34,980 --> 00:05:38,440
+seen why x and y could both
+be under are both undecided
+00:05:38,440 --> 00:05:42,560
+according to these rules
+but notice we have another
+00:05:42,560 --> 00:05:48,140
+labeling l2 which makes
+x in or winning and y out
+00:05:48,140 --> 00:05:52,240
+or losing why because if
+you look at rules one and
+00:05:52,240 --> 00:05:55,940
+two they are both satisfied
+by x and y in this case
+00:05:57,440 --> 00:05:59,520
+alternatively we could
+have another labeling that
+00:05:59,520 --> 00:06:04,020
+makes y winning or in and
+x losing so what's going on
+00:06:04,020 --> 00:06:08,320
+here intuitively there's
+a dilemma so we have the x
+00:06:08,320 --> 00:06:12,280
+and y are both undecided
+alternatively you could say
+00:06:12,280 --> 00:06:15,840
+well look it could be the
+case that x is winning in
+00:06:15,840 --> 00:06:19,600
+which case y is losing or
+out or it could be the case
+00:06:19,600 --> 00:06:24,580
+that y is winning and x
+is losing or out so in a
+00:06:24,580 --> 00:06:29,400
+set in essence labelings
+l2 and l3 are as it were
+00:06:29,400 --> 00:06:34,620
+labelings that represent how
+you how one might hypothetically
+00:06:34,620 --> 00:06:39,100
+think about the possible
+cases right that
+00:06:39,100 --> 00:06:42,120
+might pan out if for example
+you had more information.
+00:06:42,280 --> 00:06:45,140
+You might discover more
+information which suggests
+00:06:45,140 --> 00:06:49,720
+that X is winning and Y
+is losing and vice versa.
+00:06:50,410 --> 00:06:52,500
+On the other hand, if
+you just want to look at
+00:06:52,500 --> 00:06:55,600
+the arguments just as
+they are, without any of
+00:06:55,600 --> 00:06:58,060
+this kind of hypothetical
+additional information,
+00:06:58,070 --> 00:07:00,820
+you might just throw your
+hands up and say, we're
+00:07:00,820 --> 00:07:03,670
+in a dilemma, X is
+undecided, Y is undecided.
+00:07:06,630 --> 00:07:09,310
+so let's see how
+this works with
+00:07:09,310 --> 00:07:10,860
+a more complicated framework
+00:07:12,180 --> 00:07:16,460
+on the right hand side
+you'll see that the arguments
+00:07:16,460 --> 00:07:19,860
+are constructed from an
+underlying logic programming
+00:07:19,860 --> 00:07:23,660
+knowledge base right and
+i'll leave it to you to see
+00:07:23,660 --> 00:07:25,860
+why they attack each other
+but you know obviously
+00:07:25,860 --> 00:07:31,040
+you can see that the argument
+v which claims a given
+00:07:31,040 --> 00:07:35,560
+the rule a if not b attacks
+the argument w which
+00:07:36,040 --> 00:07:40,080
+claims b given the assumption
+that a is not provable but
+00:07:40,080 --> 00:07:42,420
+of course v says well look
+i have an argument for a
+00:07:42,420 --> 00:07:48,040
+so v attacks w similarly
+w attacks v for the same
+00:07:48,040 --> 00:07:53,040
+reason w claims b the
+argument v assumes b is not
+00:07:53,040 --> 00:07:57,200
+provable and so i'll leave
+it to you to see that V and W
+00:07:57,200 --> 00:08:01,580
+both attack X and X attacks
+Y for the same reasons.
+00:08:01,880 --> 00:08:06,200
+So in this case, this is
+not the case earlier on
+00:08:06,200 --> 00:08:08,500
+where there were other
+rationales for attacks,
+00:08:08,500 --> 00:08:11,400
+say, for example, because
+arguments made claims
+00:08:11,400 --> 00:08:14,360
+for alternative incompatible
+decision options.
+00:08:15,400 --> 00:08:18,600
+Let's now look at
+all the labellings.
+00:08:19,540 --> 00:08:21,140
+Well, if we look at the rules,
+00:08:21,560 --> 00:08:24,760
+we can see that L1 is a legal
+00:08:24,760 --> 00:08:27,680
+labelling all
+arguments are undecided
+00:08:28,280 --> 00:08:31,940
+right none of the
+arguments in L1 for all the
+00:08:31,940 --> 00:08:34,540
+arguments sorry rather for
+all the arguments in L1
+00:08:34,700 --> 00:08:38,410
+there is no argument
+attacking that is winning
+00:08:38,410 --> 00:08:41,220
+so look at rule 3 and
+there exists at least
+00:08:41,220 --> 00:08:44,340
+one argument attacking
+that is itself undecided
+00:08:45,500 --> 00:08:46,460
+right
+00:08:46,670 --> 00:08:50,900
+but we can also have this
+kind of labelling as L2 and
+00:08:50,900 --> 00:08:55,220
+L3 where in L2 we say well
+look I'm in a dilemma between
+00:08:55,220 --> 00:08:58,080
+V and W but it could be
+the case that V is winning
+00:08:58,580 --> 00:09:00,140
+and so therefore in
+00:09:00,620 --> 00:09:04,160
+in which case W
+must be out because
+00:09:04,160 --> 00:09:07,800
+it has an attacker
+that's winning
+00:09:08,500 --> 00:09:10,260
+X is out
+00:09:10,660 --> 00:09:13,840
+because V attacks X
+and X is winning or
+00:09:13,840 --> 00:09:18,600
+in and Y is in or
+winning because X is out
+00:09:19,830 --> 00:09:22,740
+you could take the other
+as it were horn of the
+00:09:22,740 --> 00:09:28,980
+dilemma and make w winning
+or in v out and we get
+00:09:28,980 --> 00:09:33,520
+actually the same result
+as in l2 x is out y is in
+00:09:34,940 --> 00:09:38,860
+okay so we've got three
+alternative labelings here
+00:09:40,080 --> 00:09:44,220
+now we can then distinguish
+between these labelings
+00:09:44,220 --> 00:09:48,740
+along the following lines We
+say a labelling is preferred
+00:09:49,270 --> 00:09:55,580
+if all other legal labelling's
+L star, for all other
+00:09:55,580 --> 00:10:00,340
+legal labelling's L star,
+the arguments made in by L
+00:10:00,340 --> 00:10:05,540
+star are not a superset of
+the arguments made in by L.
+00:10:08,220 --> 00:10:13,460
+okay so in this
+particular case let's
+00:10:13,460 --> 00:10:20,680
+look at l1 l1 okay
+makes no arguments in
+00:10:21,200 --> 00:10:24,220
+it's not a preferred
+labeling because
+00:10:24,220 --> 00:10:26,100
+there are some other
+labelings l2 and
+00:10:26,100 --> 00:10:29,600
+l3 that make a superset
+of arguments in
+00:10:29,960 --> 00:10:38,020
+in the case of L2, V and Y
+in the case of L3, W and Y
+00:10:39,220 --> 00:10:44,040
+now each of L2 and L3 are
+now actually preferred
+00:10:44,040 --> 00:10:47,360
+labellings because there
+is no other legal labelling
+00:10:48,940 --> 00:10:53,640
+whose in arguments are a
+superset of the in arguments
+00:10:53,640 --> 00:10:58,920
+in L2 or a superset of
+the in arguments in L3
+00:11:00,140 --> 00:11:03,040
+so intuitively the
+preferred labellings
+00:11:03,040 --> 00:11:04,960
+are like these kind of
+hypothetical labellings
+00:11:05,220 --> 00:11:07,980
+well look it could
+be the case that V
+00:11:08,780 --> 00:11:12,900
+is winning and W is
+losing and vice versa
+00:11:14,380 --> 00:11:17,740
+so we have a definition
+of a preferred labelling
+00:11:17,740 --> 00:11:21,360
+here and labellings L2
+and L3 are preferred
+00:11:21,360 --> 00:11:25,080
+labellings because in each
+case there is no other
+00:11:25,080 --> 00:11:28,800
+labelling that satisfies
+all three rules, 1,
+00:11:28,800 --> 00:11:32,280
+2 and 3 so there's no
+other legal labelling that
+00:11:32,280 --> 00:11:34,800
+makes a super set of
+arguments winning or in
+00:11:36,760 --> 00:11:39,860
+On the other hand,
+the grounded labelling
+00:11:39,860 --> 00:11:42,120
+there's only ever one
+grounded labelling
+00:11:42,780 --> 00:11:45,480
+the grounded labelling
+of any framework
+00:11:45,480 --> 00:11:49,000
+is such that for
+all other legal
+00:11:49,000 --> 00:11:51,400
+labellings that
+satisfy rules 1 to 3
+00:11:52,060 --> 00:11:57,660
+For all other legal labellings
+L star, the arguments
+00:11:57,660 --> 00:12:02,020
+made in or winning in L
+star are not a subset,
+00:12:02,160 --> 00:12:06,120
+a strict subset of the
+arguments made in by L.
+00:12:06,580 --> 00:12:11,780
+So that's what defines
+a grounded labelling.
+00:12:12,400 --> 00:12:16,500
+So again, we can
+see now that L1
+00:12:16,500 --> 00:12:19,940
+is the grounded labelling. Why?
+00:12:20,220 --> 00:12:25,300
+Because, well, there's no
+other legal labelling whose
+00:12:25,300 --> 00:12:30,320
+in-arguments are a subset
+of the in-arguments in
+00:12:30,320 --> 00:12:33,640
+L1. Well, it's obvious
+because in the case of L1, the
+00:12:33,640 --> 00:12:36,530
+in-arguments are the empty
+set. And there's no other
+00:12:36,530 --> 00:12:41,780
+legal labelling that has
+a subset of the empty set.
+00:12:43,500 --> 00:12:46,300
+OK, so we have the
+grounded labelling.
+00:12:46,300 --> 00:12:48,360
+So the grounded
+labelling, in some sense,
+00:12:48,580 --> 00:12:51,080
+represents our most
+sceptical position,
+00:12:51,460 --> 00:12:54,700
+right? You recall from
+the earlier parts of the
+00:12:54,700 --> 00:12:56,740
+lecture, you know, we
+have this kind of, we're
+00:12:56,740 --> 00:12:59,120
+credulous in the case of
+the preferred labelling.
+00:12:59,120 --> 00:13:02,380
+We say, well, it could
+be that V is winning or
+00:13:02,380 --> 00:13:05,860
+W is losing, or it could
+be that W is winning
+00:13:05,860 --> 00:13:09,040
+and V is losing. So that's
+kind of the preferred
+00:13:09,040 --> 00:13:12,160
+labellings are like the
+credulous labellings.
+00:13:12,160 --> 00:13:14,880
+The grounded labelling
+is a sceptical labelling.
+00:13:15,200 --> 00:13:17,740
+it says well look in the
+case of the grounded case
+00:13:18,600 --> 00:13:20,600
+there's a dilemma and
+I don't really want
+00:13:20,600 --> 00:13:22,420
+to commit to one
+or the other so I'm
+00:13:22,420 --> 00:13:23,970
+just going to be
+sceptical for the moment
+00:13:27,220 --> 00:13:28,020
+ok
+00:13:29,060 --> 00:13:31,920
+question to you, take a
+minute to think about it what
+00:13:31,920 --> 00:13:34,900
+are the preferred grounded
+labellings for the
+00:13:34,900 --> 00:13:38,040
+following framework this is
+what they call an odd cycle
+00:13:39,000 --> 00:13:42,240
+V attacks X because
+V claims C X
+00:13:42,240 --> 00:13:44,540
+assumes C not
+provable and so on
+00:13:47,500 --> 00:13:51,320
+well there's only one
+preferred ground labelling
+00:13:51,320 --> 00:13:55,500
+I invite you to look
+at the rules 1 to 3
+00:13:55,500 --> 00:14:00,000
+and just spend a minute
+and you'll see and
+00:14:00,000 --> 00:14:03,980
+appreciate there is only
+one possible legal labelling
+00:14:03,980 --> 00:14:07,440
+that satisfies those
+rules 1 to 3 and that
+00:14:07,440 --> 00:14:10,640
+labelling makes all
+the arguments undecided
+00:14:12,750 --> 00:14:14,420
+what about in this case
+00:14:16,620 --> 00:14:19,660
+you can pause here
+take a minute go
+00:14:19,660 --> 00:14:21,420
+through the rules and
+see if you can work
+00:14:21,420 --> 00:14:23,980
+out what all the
+legal labellings are
+00:14:25,420 --> 00:14:29,520
+and we see that
+there is a grounded
+00:14:29,520 --> 00:14:31,180
+labelling the
+grounded labelling is
+00:14:31,180 --> 00:14:34,140
+one that makes all
+arguments undecided
+00:14:35,280 --> 00:14:38,600
+again you can see
+applying rule 3
+00:14:38,900 --> 00:14:41,540
+you'll see that all
+these arguments can
+00:14:41,540 --> 00:14:43,770
+legitimately be
+said to be undecided
+00:14:43,770 --> 00:14:48,200
+according to Rule 3
+for legal labellings.
+00:14:49,300 --> 00:14:51,220
+Now notice, however, there
+00:14:51,220 --> 00:14:52,920
+are two preferred labellings.
+00:14:54,200 --> 00:14:57,500
+L1, which makes Y in, Z out,
+00:14:57,820 --> 00:15:00,300
+and the remaining
+arguments undecided.
+00:15:00,420 --> 00:15:05,960
+And L2, which makes
+Z in and Y out, so
+00:15:05,960 --> 00:15:09,590
+it's again taking the,
+in both cases we're
+00:15:09,590 --> 00:15:11,340
+credulous, we're either
+saying Y could be
+00:15:11,340 --> 00:15:14,500
+in and Z out, or Z
+could be in and Y out.
+00:15:14,760 --> 00:15:16,640
+But in the case of L2,
+00:15:17,580 --> 00:15:20,210
+we don't have that
+W, V and X are
+00:15:20,210 --> 00:15:22,280
+undecided. We have
+that W is out,
+00:15:22,460 --> 00:15:24,700
+V is in and X is out.
+00:15:25,820 --> 00:15:28,960
+Now notice that even though
+00:15:28,960 --> 00:15:31,400
+L1 has only one in-argument,
+00:15:31,400 --> 00:15:37,640
+Y, L2 has more in-arguments
+in terms of just sheer
+00:15:37,640 --> 00:15:43,340
+number, right cardinality
+l2 has has two in arguments
+00:15:43,340 --> 00:15:50,700
+z and v l1 has one in
+argument y however they are
+00:15:50,700 --> 00:15:54,360
+both preferred labelings
+even though l1 has less
+00:15:54,800 --> 00:16:00,900
+a smaller number of in
+arguments why because the in
+00:16:00,900 --> 00:16:06,180
+arguments made in by l2
+l2 are not a superset of
+00:16:06,180 --> 00:16:10,280
+the arguments made in by
+L1. In other words, there is
+00:16:10,280 --> 00:16:17,000
+no legal labelling that
+makes arguments in such
+00:16:17,000 --> 00:16:19,960
+that they are a super set
+of the in arguments in L1.
+00:16:21,200 --> 00:16:25,960
+Okay, so they're both
+preferred labellings.
+00:16:27,840 --> 00:16:31,760
+Okay, so that's it for
+this week's lectures.
+00:16:32,960 --> 00:16:36,680
+As I said, we've looked
+at how to evaluate the non
+00:16:36,680 --> 00:16:39,640
+-monotonic consequences for
+three types of non-monotonic
+00:16:39,640 --> 00:16:43,980
+logics how to construct
+argument frameworks from an
+00:16:43,980 --> 00:16:48,200
+underlying logic programming
+knowledge base possibly
+00:16:48,200 --> 00:16:51,780
+apply preferences to determine
+which attacks succeed
+00:16:52,520 --> 00:16:55,020
+and then evaluate
+which are the winning
+00:16:55,020 --> 00:16:57,040
+arguments using these labelling
+00:16:57,040 --> 00:17:01,020
+rules we've also
+seen how in this way
+00:17:01,940 --> 00:17:05,040
+essentially we can
+to formalise non
+00:17:05,040 --> 00:17:10,020
+-monotonic reasoning in
+terms of the exchange
+00:17:10,020 --> 00:17:12,280
+of argument and
+counter-argument.
+00:17:14,220 --> 00:17:18,520
+And as I've illustrated
+in some of the slides,
+00:17:18,520 --> 00:17:20,290
+if you want, you can
+take a bit more time
+00:17:20,580 --> 00:17:25,580
+to see how this whole process
+of going from a knowledge
+00:17:25,580 --> 00:17:27,400
+base to arguments and
+working out the winning
+00:17:27,400 --> 00:17:29,800
+arguments can also be
+applied to maxi-consistent
+00:17:29,800 --> 00:17:35,040
+approaches to non-monotonic
+reasoning. But as I said, take
+00:17:35,040 --> 00:17:36,720
+some time to have a look
+at that, but you will not
+00:17:36,720 --> 00:17:40,460
+be examined on that aspect
+of this of this lecture.
+00:17:41,620 --> 00:17:45,280
+Next week, in the next
+week's lecture, we'll look
+00:17:45,280 --> 00:17:49,480
+at an alternative way to
+to decide whether arguments
+00:17:49,480 --> 00:17:51,720
+are winning using argument
+game proof theories.
+00:17:52,560 --> 00:17:56,100
+And then develop these
+argument game proof
+00:17:56,100 --> 00:17:58,720
+theories into dialogues
+for distributed
+00:17:58,720 --> 00:18:01,800
+reasoning. for
+distributed reasoning in
+00:18:01,800 --> 00:18:03,720
+which agents communicate
+with each other
+00:18:04,380 --> 00:18:07,340
+and finally next
+week I'll discuss the
+00:18:07,340 --> 00:18:10,940
+importance of these
+dialogues given contemporary
+00:18:10,940 --> 00:18:13,700
+developments in
+artificial intelligence

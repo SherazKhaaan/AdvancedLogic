@@ -1,0 +1,824 @@
+00:00:08,310 --> 00:00:11,570
+So in this part of the
+lecture, the final part of
+00:00:11,570 --> 00:00:15,570
+the lecture, what I want
+to do is just describe how
+00:00:15,570 --> 00:00:20,050
+these argument game proof
+theories can be generalised
+00:00:20,290 --> 00:00:24,970
+to dialogues that allow
+for humans and human and
+00:00:24,970 --> 00:00:29,310
+AI agents to jointly reason
+together, right? to combine
+00:00:29,310 --> 00:00:33,230
+their knowledge so as
+to engage in distributed
+00:00:33,230 --> 00:00:36,610
+non-monotonic reasoning.
+Of course, the idea being
+00:00:36,610 --> 00:00:40,770
+that deciding what is the
+case or deciding what to do
+00:00:42,270 --> 00:00:46,070
+is improved if we can
+combine the knowledge of
+00:00:46,070 --> 00:00:50,130
+multiple agents, especially
+AI agents and human agents.
+00:00:50,590 --> 00:00:56,990
+And then I'll then at the end
+describe and contextualise
+00:00:56,990 --> 00:00:59,890
+the importance of these
+dialogues with respect
+00:00:59,890 --> 00:01:05,150
+to recent advances in
+artificial intelligence.
+00:01:05,690 --> 00:01:10,530
+So generally, in dialogues,
+when we make certain
+00:01:10,530 --> 00:01:13,210
+utterances, when we
+make certain claims or
+00:01:13,210 --> 00:01:18,870
+when we speak, these
+utterances can be formalised
+00:01:18,870 --> 00:01:21,000
+or understood as what's
+called locutions.
+00:01:21,720 --> 00:01:26,350
+and as I said in dialogues
+in which we combine our
+00:01:26,350 --> 00:01:30,490
+knowledge to collaboratively
+decide what is the case as
+00:01:30,490 --> 00:01:34,330
+in what is true or what to
+do what is the best decision
+00:01:34,330 --> 00:01:39,150
+option what's the best
+decision to take we typically
+00:01:39,150 --> 00:01:43,670
+make claims and we move
+arguments and we challenge
+00:01:43,670 --> 00:01:46,750
+each other have you thought
+about this well what
+00:01:46,750 --> 00:01:51,130
+about this counter argument
+etc etc also in such dialogues
+00:01:51,130 --> 00:01:54,250
+we might reason about
+what our preferences are
+00:01:54,250 --> 00:01:58,590
+what our values are so that
+we can decide or make good
+00:01:58,590 --> 00:02:04,250
+decisions about what to do
+and the idea is that one
+00:02:04,250 --> 00:02:08,950
+can then define what's called
+protocols that basically
+00:02:08,950 --> 00:02:14,950
+encode rules as to what
+locutions can be made and
+00:02:14,950 --> 00:02:18,410
+what kinds of replies can
+be made to these locutions.
+00:02:18,990 --> 00:02:22,630
+And then we can evaluate the
+00:02:22,630 --> 00:02:24,710
+status of these locutions.
+00:02:25,010 --> 00:02:28,670
+So when I'm talking about
+a dialogue protocol,
+00:02:28,690 --> 00:02:35,770
+this is like a generalisation
+of the rules that restrict
+00:02:35,770 --> 00:02:42,170
+or identify what arguments
+can be moved in response
+00:02:42,170 --> 00:02:44,510
+to what other arguments
+in argument game-proof
+00:02:44,510 --> 00:02:46,750
+theories, right? So we started
+with these argument game
+00:02:46,750 --> 00:02:51,890
+-proof theories and we had certain
+rules for moving arguments
+00:02:51,890 --> 00:02:55,070
+as counter-arguments
+in these games and we
+00:02:55,070 --> 00:03:02,770
+established the status of
+these arguments in these games,
+00:03:02,770 --> 00:03:06,270
+right, whether they're, as
+it were, winning or losing.
+00:03:07,270 --> 00:03:10,970
+So essentially, we're
+taking that very same idea,
+00:03:11,080 --> 00:03:15,790
+but we're now generalising
+it to dialogues in which
+00:03:15,790 --> 00:03:19,650
+agents not only move whole
+arguments, but make claims
+00:03:19,650 --> 00:03:23,510
+about preferences, they
+can challenge each other,
+00:03:23,780 --> 00:03:28,390
+they can ask Ask another
+agent, well, what is
+00:03:28,390 --> 00:03:31,570
+the reason for your claim,
+et cetera, et cetera.
+00:03:31,790 --> 00:03:36,590
+And the rules that govern
+what are the appropriate
+00:03:36,590 --> 00:03:41,070
+locutions to make generalise
+the rules that we've
+00:03:41,070 --> 00:03:43,990
+already seen in these
+argument game proof theories.
+00:03:44,460 --> 00:03:46,530
+So let me just give you
+a very simple example.
+00:03:46,530 --> 00:03:49,050
+Imagine two agents,
+agent one, agent two.
+00:03:49,630 --> 00:03:50,370
+Right. Right.
+00:03:50,910 --> 00:03:55,350
+Now, agent one claims as in a
+00:03:55,350 --> 00:03:57,370
+locution that Q is the case.
+00:03:57,970 --> 00:04:05,170
+Now, currently,
+during this phase of
+00:04:05,170 --> 00:04:07,270
+the dialogue, or
+given the current
+00:04:07,270 --> 00:04:09,670
+status of the
+dialogue as it is now,
+00:04:10,190 --> 00:04:14,870
+you could say that, well,
+the claim that Q is what's
+00:04:14,870 --> 00:04:16,700
+instead of being saying
+it's a winning argument,
+00:04:17,090 --> 00:04:20,520
+we can say it's a
+winning or in locution.
+00:04:20,730 --> 00:04:24,590
+Why? Because that claim
+has not been challenged.
+00:04:25,930 --> 00:04:29,650
+But the moment, say,
+agent two says, well, why
+00:04:29,650 --> 00:04:32,350
+is it the case that Q?
+So let's say I move Q.
+00:04:32,350 --> 00:04:34,830
+I claim, look, Q is the case.
+00:04:34,830 --> 00:04:36,810
+And somebody I'm speaking with
+00:04:36,810 --> 00:04:39,230
+says, but why is
+it the case that Q?
+00:04:39,850 --> 00:04:45,000
+You can, intuitively,
+you can think of the
+00:04:45,000 --> 00:04:49,350
+status of my claim Q
+being out now, losing.
+00:04:49,450 --> 00:04:55,410
+Why? Because by being asked
+why Q, there is a burden
+00:04:55,410 --> 00:05:00,330
+of proof on me to give
+you, or rather Agent 2,
+00:05:00,610 --> 00:05:03,070
+the premises or
+the reasons that
+00:05:03,070 --> 00:05:06,190
+justify my claim.
+Until I've done so,
+00:05:06,530 --> 00:05:09,570
+my claim that Q is losing,
+00:05:09,770 --> 00:05:15,470
+and your or agent 2's
+question, challenge,
+00:05:15,890 --> 00:05:21,010
+requiring of me or of agent
+1 to give reasons for why
+00:05:21,010 --> 00:05:25,950
+Q is the case, that challenge
+hasn't been, as it were,
+00:05:25,950 --> 00:05:29,450
+met by me, so that challenge
+is now winning. It's in.
+00:05:30,930 --> 00:05:34,050
+Now, but the moment I provide
+00:05:34,050 --> 00:05:35,910
+reasons, I argue, well, look,
+00:05:36,030 --> 00:05:39,750
+Q is the case because
+R, and R implies Q,
+00:05:40,390 --> 00:05:40,950
+right?
+00:05:40,950 --> 00:05:45,450
+So that argument X is
+unchallenged, so it's winning,
+00:05:45,930 --> 00:05:50,250
+right? Because that
+argument replies to your or
+00:05:50,250 --> 00:05:57,570
+agent 2's query to agent 1
+to provide an argument, So
+00:05:57,570 --> 00:06:00,250
+because the argument
+responds to that challenge,
+00:06:00,370 --> 00:06:03,550
+the challenge YQ, the question,
+00:06:03,570 --> 00:06:05,310
+as it were, is now losing,
+00:06:06,310 --> 00:06:06,850
+right?
+00:06:06,850 --> 00:06:11,070
+And because that
+challenge is losing,
+00:06:11,410 --> 00:06:14,210
+my initial claim Q is winning.
+00:06:14,210 --> 00:06:17,810
+So you can see that the
+way in which the status
+00:06:17,810 --> 00:06:22,750
+of these locutions is
+established is similar,
+00:06:23,050 --> 00:06:26,880
+is effectively
+the same as how we
+00:06:26,880 --> 00:06:28,750
+evaluate the status
+of arguments.
+00:06:29,530 --> 00:06:34,150
+So think of the claim
+Q as argument A,
+00:06:34,890 --> 00:06:36,990
+YQ as argument B,
+00:06:37,110 --> 00:06:41,150
+and argue X equals
+etc. as argument C.
+00:06:41,230 --> 00:06:44,470
+C attacks, B attacks A, so C is
+00:06:44,470 --> 00:06:46,850
+winning, B is
+losing, A is winning.
+00:06:47,330 --> 00:06:51,530
+The same principle
+applies now, but at
+00:06:51,530 --> 00:06:54,130
+the level of locutions
+in a dialogue.
+00:06:55,990 --> 00:06:57,030
+Okay.
+00:06:58,350 --> 00:07:01,730
+So, as I've said, we make
+00:07:01,730 --> 00:07:03,230
+locutions in these dialogues
+00:07:03,510 --> 00:07:08,390
+and the idea is that these
+protocol rules identify
+00:07:08,390 --> 00:07:11,670
+what are appropriate
+locutions to be made in
+00:07:11,670 --> 00:07:14,470
+response to other locutions.
+So if you go back to
+00:07:14,470 --> 00:07:17,310
+this example, the protocol
+might say, Well, look,
+00:07:17,310 --> 00:07:23,490
+if an agent claims something
+is the case, like Q,
+00:07:23,750 --> 00:07:26,070
+one appropriate
+reply, not the only
+00:07:26,070 --> 00:07:30,930
+one, one appropriate
+reply would be YQ.
+00:07:31,550 --> 00:07:37,710
+Then if an agent poses the
+challenge YQ, the protocol
+00:07:37,850 --> 00:07:42,410
+dictates that an appropriate
+reply to the question
+00:07:42,410 --> 00:07:46,670
+YQ would be to provide an
+argument that claims Q.
+00:07:46,950 --> 00:07:51,490
+That just gives you a
+flavour of how these protocol
+00:07:51,490 --> 00:07:56,290
+rules kind of generalise
+the rules of argument
+00:07:56,290 --> 00:07:59,170
+games. Because in an argument
+game, essentially the
+00:07:59,170 --> 00:08:01,570
+rules simply say that you
+should only move in one
+00:08:01,570 --> 00:08:04,030
+argument. If somebody
+moves an argument X, the
+00:08:04,030 --> 00:08:06,350
+argument that should be
+moved in reply is an argument
+00:08:06,350 --> 00:08:09,390
+that attacks X. So we've
+generalised these rules.
+00:08:10,990 --> 00:08:14,190
+Now the crucial
+thing here is that
+00:08:14,190 --> 00:08:16,210
+during the course
+of a dialogue,
+00:08:16,370 --> 00:08:17,550
+Right.
+00:08:17,690 --> 00:08:21,710
+You essentially
+identify a graph,
+00:08:21,710 --> 00:08:23,670
+not of arguments,
+but of locutions.
+00:08:24,130 --> 00:08:30,230
+And these locutions
+implicitly, right,
+00:08:30,490 --> 00:08:32,450
+define an argument framework.
+00:08:32,450 --> 00:08:35,910
+In other words, from the
+locutions exchange in
+00:08:35,910 --> 00:08:39,750
+the graph, take the
+contents of those locutions.
+00:08:39,930 --> 00:08:43,950
+That effectively gives
+you a knowledge base. And
+00:08:43,950 --> 00:08:46,750
+from that knowledge base,
+just like we've already
+00:08:46,750 --> 00:08:49,150
+seen in previous lectures,
+you can construct
+00:08:49,150 --> 00:08:52,250
+an argument framework of
+arguments and attacks.
+00:08:53,570 --> 00:08:58,450
+And essentially, the
+idea is that if the goal
+00:08:58,450 --> 00:09:01,230
+of the dialogue is
+to establish whether
+00:09:01,230 --> 00:09:04,710
+some P is the case or
+whether P is the right
+00:09:04,710 --> 00:09:08,430
+decision option, we want
+the following holes.
+00:09:09,590 --> 00:09:17,170
+that P has a winning status
+in the locution graph as
+00:09:17,170 --> 00:09:21,550
+I've just already described
+using the rules that P is
+00:09:21,550 --> 00:09:25,710
+evaluated as a winning
+locution in the dialogue in
+00:09:25,710 --> 00:09:32,990
+the locution graph if and
+only if P is the claim of a
+00:09:32,990 --> 00:09:37,670
+justified argument in the
+argument framework that's
+00:09:37,670 --> 00:09:43,170
+constructed from all the
+information contained in the
+00:09:43,170 --> 00:09:46,450
+locutions that have been
+exchanged in the dialogue.
+00:09:47,110 --> 00:09:50,570
+Okay, this sounds quite
+abstract and probably
+00:09:50,570 --> 00:09:54,090
+difficult to get a handle
+on at first glance, but I
+00:09:54,090 --> 00:09:56,710
+think it's better
+illustrated with the example.
+00:09:56,770 --> 00:10:01,550
+Okay, so let's say
+agent one claims Q.
+00:10:02,350 --> 00:10:03,170
+Okay.
+00:10:04,390 --> 00:10:05,390
+now
+00:10:05,770 --> 00:10:08,690
+the contents of that
+locution Q can be
+00:10:08,690 --> 00:10:10,470
+understood as being
+part of a knowledge
+00:10:10,470 --> 00:10:13,430
+base and from that
+knowledge base
+00:10:13,730 --> 00:10:17,630
+with Q you can construct
+the argument which is just Q
+00:10:18,390 --> 00:10:22,630
+this argument is winning
+nothing is attacking it so
+00:10:22,630 --> 00:10:26,710
+we see here that the claim
+Q in the locution graph is
+00:10:26,710 --> 00:10:30,750
+winning if and only if the
+argument for Q is winning
+00:10:32,310 --> 00:10:33,310
+OK.
+00:10:33,610 --> 00:10:35,590
+Supposedly, as I
+said, agent two
+00:10:35,590 --> 00:10:37,970
+challenges the claim Q with YQ.
+00:10:38,950 --> 00:10:40,730
+Now, at this point,
+00:10:40,850 --> 00:10:42,530
+claim Q is losing.
+00:10:43,690 --> 00:10:46,370
+And if we look at
+the knowledge base
+00:10:46,370 --> 00:10:49,390
+defined by the contents
+of the locutions,
+00:10:49,550 --> 00:10:52,450
+the knowledge base,
+we've now removed
+00:10:52,450 --> 00:10:54,270
+Q from the knowledge base. Why?
+00:10:54,570 --> 00:10:57,310
+Because in the dialogue, Q
+00:10:57,310 --> 00:10:58,950
+has been challenged. Right.
+00:10:59,390 --> 00:11:03,950
+The burden of proof on
+proof of proof on agent one
+00:11:03,950 --> 00:11:07,790
+has not been met. In other
+words, agent one has not
+00:11:07,790 --> 00:11:12,390
+responded to the challenge
+from agent two as to why Q is
+00:11:12,390 --> 00:11:16,350
+the case. So Q is not
+legitimately now part of the
+00:11:16,350 --> 00:11:20,950
+knowledge that's been
+established during the dialogue.
+00:11:20,950 --> 00:11:24,630
+So Q has been removed from
+the knowledge base, which
+00:11:24,630 --> 00:11:28,430
+means we can no longer
+construct an argument for Q.
+00:11:28,790 --> 00:11:31,770
+OK, so we have Q is
+losing in the locution
+00:11:31,770 --> 00:11:33,810
+graph. We do not have a winning
+00:11:33,810 --> 00:11:36,550
+argument for Q in the
+argument framework.
+00:11:39,570 --> 00:11:42,410
+Now, supposing, as
+you've seen, agent one
+00:11:42,410 --> 00:11:44,950
+responds to the
+challenge, fulfills their
+00:11:44,950 --> 00:11:48,590
+burden of proof by
+providing an argument
+00:11:48,590 --> 00:11:51,150
+for Q in response
+to the challenge YQ.
+00:11:53,920 --> 00:11:56,950
+Now, because the burden
+of proof has been
+00:11:56,950 --> 00:12:01,470
+met, the knowledge
+base now contains Q,
+00:12:01,810 --> 00:12:05,970
+the initial claim It also
+contains the contents
+00:12:05,970 --> 00:12:10,370
+of the argument moved
+by agent 1 That's the
+00:12:10,370 --> 00:12:15,950
+premise R and the rule
+R implies Q And from
+00:12:15,950 --> 00:12:19,170
+that knowledge base,
+consisting of R, R implies
+00:12:19,170 --> 00:12:23,230
+Q and Q you can construct
+an argument for Q,
+00:12:24,150 --> 00:12:27,550
+right? And we see
+here the soundness
+00:12:27,550 --> 00:12:28,870
+and completeness of the result.
+00:12:29,450 --> 00:12:34,230
+In the locution graph,
+the claim Q is winning,
+00:12:34,470 --> 00:12:37,850
+as we've already
+discussed. In the argument
+00:12:37,850 --> 00:12:41,150
+framework, we have a
+winning argument for Q.
+00:12:41,870 --> 00:12:44,610
+So I hope this gives
+you the general
+00:12:44,710 --> 00:12:50,990
+idea of how, if we go
+back to this slide,
+00:12:51,210 --> 00:12:55,290
+what we want, in some
+sense, the protocol rules
+00:12:55,290 --> 00:12:58,340
+are designed so that
+if they are followed,
+00:12:59,370 --> 00:13:04,690
+right, if the agents
+comply with the rules
+00:13:04,690 --> 00:13:07,190
+of the protocol, what
+are appropriate locutions
+00:13:07,190 --> 00:13:09,340
+to make in response
+to other locutions,
+00:13:10,270 --> 00:13:14,090
+then if you evaluate
+the status of a locution
+00:13:14,090 --> 00:13:16,370
+and its winning in
+the locution graph,
+00:13:17,120 --> 00:13:20,330
+one can show that
+that locution,
+00:13:20,330 --> 00:13:26,610
+that P, would also be
+the claim of a winning or
+00:13:26,610 --> 00:13:30,410
+justified argument in the
+argument framework constructed
+00:13:30,410 --> 00:13:34,450
+from the contents of the
+locutions in the dialogue.
+00:13:36,110 --> 00:13:40,070
+Okay, look, here's
+a much more complex
+00:13:40,070 --> 00:13:42,490
+example. One doesn't
+need to know the details
+00:13:43,010 --> 00:13:46,970
+about how this result
+is established,
+00:13:47,470 --> 00:13:49,630
+but I just want to give
+you a flavour. If you
+00:13:49,630 --> 00:13:51,930
+look at this continuation
+of the dialogue,
+00:13:51,930 --> 00:13:55,550
+we have other kinds of
+locutions, not just claims,
+00:13:55,550 --> 00:13:59,250
+why, argue, but an agent
+may say, well, one argument
+00:13:59,250 --> 00:14:02,870
+is preferred to another
+argument for this reason.
+00:14:03,590 --> 00:14:06,430
+Another agent might say,
+well, you've said G,
+00:14:06,790 --> 00:14:08,770
+but what does G imply?
+00:14:08,830 --> 00:14:12,170
+You know, what is
+it about G such that
+00:14:14,010 --> 00:14:18,030
+by claiming G, you've
+made a locution relevant
+00:14:18,030 --> 00:14:20,190
+to another previous
+locution. You don't have
+00:14:20,190 --> 00:14:22,870
+to go into the details
+here. I'm just trying to
+00:14:23,170 --> 00:14:25,470
+illustrate or highlight
+to you that there are
+00:14:25,470 --> 00:14:28,270
+a whole bunch of different
+kinds of locutions.
+00:14:28,950 --> 00:14:32,650
+And we can establish the
+following kinds of results.
+00:14:32,650 --> 00:14:35,190
+If we look at this
+locution graph on the left,
+00:14:35,770 --> 00:14:39,550
+we look at the argument
+framework on the right,
+00:14:39,950 --> 00:14:44,970
+Where that argument framework,
+as I've reiterated on
+00:14:44,970 --> 00:14:47,790
+a number of occasions,
+that argument framework is
+00:14:47,790 --> 00:14:51,810
+built from the knowledge
+base, where that knowledge
+00:14:51,810 --> 00:14:56,390
+base basically contains
+all the information in the
+00:14:56,390 --> 00:14:58,650
+locutions that have been
+exchanged in the dialogue.
+00:14:59,910 --> 00:15:04,490
+And we have, evaluating
+the locution graph on the
+00:15:04,490 --> 00:15:10,210
+left, we have that the
+locution claim Q is winning,
+00:15:10,210 --> 00:15:15,800
+and it's winning, and
+this corresponds to an
+00:15:15,800 --> 00:15:21,050
+argument for Q being evaluated
+as a winning argument
+00:15:21,060 --> 00:15:24,010
+in the argument framework
+on the right-hand side.
+00:15:24,010 --> 00:15:26,970
+So we have the soundness
+and completeness result.
+00:15:28,250 --> 00:15:31,210
+The evaluation of a
+locution graph establishes
+00:15:31,210 --> 00:15:36,910
+Q if, and only if, Q is
+the claim of a winning
+00:15:36,910 --> 00:15:39,910
+argument in the argument
+framework constructed
+00:15:39,910 --> 00:15:43,790
+from the knowledge exchanged
+during the dialogue.
+00:15:47,470 --> 00:15:50,550
+Now, if you recall
+from the first lecture
+00:15:51,090 --> 00:15:55,830
+we've already discussed how
+we can that argumentation,
+00:15:55,830 --> 00:15:57,870
+so look at the argument
+framework on the right
+00:15:57,870 --> 00:16:02,610
+hand side that argumentation
+gives you these results
+00:16:02,610 --> 00:16:05,530
+for non-monotonic inference.
+So if we look at the
+00:16:05,530 --> 00:16:09,690
+argument framework on the
+right hand side, right, built
+00:16:09,690 --> 00:16:12,270
+from a knowledge base
+consisting of everything
+00:16:12,270 --> 00:16:16,350
+that's been said in the
+dialogue we have the following
+00:16:16,650 --> 00:16:19,900
+kinds of results that we've
+seen in the first lecture
+00:16:19,900 --> 00:16:24,770
+basically we have that
+q this is now looking at
+00:16:24,770 --> 00:16:29,930
+result sc2 soundness of
+completeness 2 we have that
+00:16:30,920 --> 00:16:33,670
+just looking at the argument
+framework we have a winning
+00:16:33,670 --> 00:16:41,150
+argument for q if and only
+if q is a non-monotonic
+00:16:41,150 --> 00:16:45,770
+inference from the knowledge
+base just just these
+00:16:45,770 --> 00:16:48,230
+are exactly the results
+we discussed in chat in in
+00:16:48,230 --> 00:16:53,070
+in the first lecture right
+so we have sc2 this result
+00:16:53,250 --> 00:16:56,850
+that we have a winning
+argument for q if and only
+00:16:56,850 --> 00:17:01,450
+if Q is non-monotonically
+inferred from the contents
+00:17:01,450 --> 00:17:04,810
+of all the locutions that
+have been exchanged in the
+00:17:04,810 --> 00:17:06,910
+dialogue, from the knowledge
+base, in other words.
+00:17:08,390 --> 00:17:09,990
+Right, so we have this result.
+00:17:09,990 --> 00:17:12,930
+So now we can put these two
+results together, right?
+00:17:13,330 --> 00:17:16,050
+We have the result
+on the left, SC1,
+00:17:16,850 --> 00:17:19,210
+and result on the right, SC2.
+00:17:20,350 --> 00:17:23,470
+And we now have that the
+00:17:23,470 --> 00:17:25,750
+evaluation of the
+locution graph
+00:17:26,490 --> 00:17:30,110
+establishes the claim
+Q, so claim Q, the
+00:17:30,110 --> 00:17:33,670
+dialogue has established
+that Q is the case or
+00:17:33,670 --> 00:17:37,330
+is the right decision
+option, if and only if
+00:17:38,630 --> 00:17:44,950
+Q is the non-monotonic
+inference from all of the
+00:17:44,950 --> 00:17:47,910
+knowledge that has been
+exchanged in the dialogue.
+00:17:48,070 --> 00:17:51,150
+So what do we have
+here effectively then?
+00:17:51,350 --> 00:17:57,650
+We have a formalism for
+distributed non-monotonic
+00:17:57,650 --> 00:18:02,770
+inference. We have a formalism
+that allows us to model
+00:18:02,770 --> 00:18:06,870
+the way in which agents
+can communicate together
+00:18:07,630 --> 00:18:12,470
+and establish claims about
+what is the case or about
+00:18:12,470 --> 00:18:17,490
+what to do, following
+rational principles of
+00:18:17,490 --> 00:18:21,870
+reasoning, argument and
+dialogue that have been
+00:18:21,870 --> 00:18:25,330
+established by these non
+-monotonic logics and argumentative
+00:18:25,330 --> 00:18:28,430
+formalisations of these
+non-monotonic logics.
+00:18:28,750 --> 00:18:32,770
+So we have principled
+accounts of how one
+00:18:32,770 --> 00:18:37,290
+should pool the knowledge
+of multiple agents
+00:18:37,290 --> 00:18:40,440
+so as to rationally
+reason and deliberate
+00:18:40,440 --> 00:18:43,390
+about what is the
+case and what to do.

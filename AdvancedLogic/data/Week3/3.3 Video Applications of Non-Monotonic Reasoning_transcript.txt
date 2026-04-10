@@ -1,0 +1,1014 @@
+00:00:09,240 --> 00:00:12,120
+So finally, let me
+conclude with some examples
+00:00:12,120 --> 00:00:13,840
+of how these kind
+of theoretical
+00:00:13,840 --> 00:00:18,120
+formalizations of dialogue
+could be applied given
+00:00:18,120 --> 00:00:21,340
+recent advances in
+artificial intelligence.
+00:00:21,900 --> 00:00:26,180
+So probably as many of
+you have heard, and we're
+00:00:26,690 --> 00:00:29,820
+constantly told about this
+in the media, but also in
+00:00:29,820 --> 00:00:35,180
+academia, is the concern
+that basically what's called
+00:00:35,180 --> 00:00:39,400
+a value alignment problem.
+Right. So as these AI
+00:00:39,400 --> 00:00:41,920
+systems become more and more
+autonomous, as we start to
+00:00:41,920 --> 00:00:45,840
+delegate more decision
+making and more autonomy to
+00:00:45,840 --> 00:00:48,720
+these systems, how can we
+ensure that the decisions
+00:00:48,720 --> 00:00:52,560
+that these AI systems make
+are aligned with or respect
+00:00:52,560 --> 00:00:58,420
+human values? after all
+our kind of ethical values
+00:00:58,420 --> 00:01:02,260
+our preferences they change
+over time for one thing
+00:01:03,700 --> 00:01:10,300
+secondly in some sense how
+can you encode kind of the
+00:01:10,300 --> 00:01:13,840
+the nuances and complexities
+of human ethics and
+00:01:13,840 --> 00:01:17,760
+values in kind of these
+numerical utility functions
+00:01:17,760 --> 00:01:21,780
+right and this second point
+relates to a further point
+00:01:21,780 --> 00:01:26,000
+which is that we don't
+really even ourselves we as
+00:01:26,000 --> 00:01:30,600
+humans don't find it difficult
+to encode our kind of
+00:01:30,600 --> 00:01:33,320
+ethics and our values and
+the utility function after
+00:01:33,320 --> 00:01:37,320
+all it's not that we
+especially with kind of really
+00:01:37,320 --> 00:01:40,700
+ethically difficult or morally
+difficult decisions it's
+00:01:40,700 --> 00:01:43,920
+not that we come already
+equipped with us with
+00:01:43,920 --> 00:01:47,380
+absolute certainty about what
+we think is right and wrong
+00:01:47,380 --> 00:01:50,280
+what we think about what
+is right and wrong our
+00:01:50,280 --> 00:01:54,600
+values our ethical preferences
+are actually are in fact
+00:01:54,600 --> 00:01:58,620
+they're shaped by argument
+and discussion and debate
+00:01:58,700 --> 00:02:01,380
+you know when we talk about
+the right or the rightness
+00:02:01,380 --> 00:02:04,380
+or wrongness of say
+abortion it's not that we
+00:02:04,380 --> 00:02:08,660
+already have a fixed idea
+ideally we should engage in
+00:02:08,660 --> 00:02:12,140
+debate and discussion and
+then arrive at a considered
+00:02:12,140 --> 00:02:16,520
+position as to whether we
+think it's right or wrong
+00:02:16,680 --> 00:02:21,240
+right so these are some of
+the the problems for reasoning
+00:02:21,240 --> 00:02:23,660
+about ethics and values
+that we as humans face
+00:02:23,660 --> 00:02:26,900
+but also these are concerns
+for how we should make sure
+00:02:26,900 --> 00:02:29,920
+that ai systems make
+decisions that are aligned
+00:02:29,920 --> 00:02:35,800
+with human values and
+preferences right now from the
+00:02:35,800 --> 00:02:38,940
+point of view of ai one
+solution to this what some of
+00:02:38,940 --> 00:02:42,560
+these problems is that when
+an AI system is making a
+00:02:42,560 --> 00:02:47,000
+decision that has significant
+ethical impact, right,
+00:02:47,000 --> 00:02:51,440
+that's kind of very much
+relates to the kind of human
+00:02:51,440 --> 00:02:54,720
+values and what we think
+about is right and wrong,
+00:02:54,820 --> 00:02:56,880
+one solution is that when
+00:02:56,880 --> 00:02:58,380
+an AI makes such a decision,
+00:02:58,640 --> 00:03:01,740
+they should consult
+with humans so as
+00:03:01,740 --> 00:03:05,140
+to learn human
+preferences on the fly,
+00:03:05,360 --> 00:03:09,720
+right? So, in other words,
+we wouldn't want these
+00:03:09,720 --> 00:03:13,000
+AI systems to be let
+loose with a kind of fixed
+00:03:13,000 --> 00:03:17,200
+utility functions that
+capture some values or
+00:03:17,200 --> 00:03:20,480
+preferences that we might
+have held some time ago.
+00:03:20,480 --> 00:03:25,660
+No, we want these AI systems
+to make decisions and
+00:03:26,010 --> 00:03:29,520
+consult humans so that
+they can acquire and learn
+00:03:29,520 --> 00:03:34,660
+human preferences and values
+as they evolve over time.
+00:03:34,970 --> 00:03:38,480
+And then, of course, as
+I've already mentioned,
+00:03:38,600 --> 00:03:42,300
+even if these AI systems
+were to consult humans
+00:03:42,300 --> 00:03:45,040
+about what are their
+values, what are their
+00:03:45,040 --> 00:03:49,340
+ethical preferences,
+we humans often aren't
+00:03:49,340 --> 00:03:52,820
+able to say determinately,
+yes, I think this
+00:03:52,820 --> 00:03:55,640
+is right and wrong, I
+prefer this to that. No,
+00:03:56,000 --> 00:04:01,340
+we humans ideally should
+take into account various
+00:04:01,340 --> 00:04:04,640
+arguments in helping us
+to shape our preferences.
+00:04:04,640 --> 00:04:08,680
+And in fact, the AI systems
+of the future can both
+00:04:08,680 --> 00:04:12,640
+consult us on our ethical
+preferences, but we could
+00:04:12,640 --> 00:04:17,340
+use the AI systems to
+generate and provide us with
+00:04:17,340 --> 00:04:20,540
+information that we can
+use to argue and deliberate
+00:04:20,540 --> 00:04:23,300
+about what our actual
+ethical preferences are.
+00:04:24,910 --> 00:04:27,770
+So let me give you
+a kind of small
+00:04:27,770 --> 00:04:31,400
+scale example of what
+I'm talking about.
+00:04:31,400 --> 00:04:34,140
+So what we have here,
+imagine a human, we have
+00:04:34,140 --> 00:04:37,780
+human H on the left and it
+has its personal assistant
+00:04:37,780 --> 00:04:40,640
+large language model
+on the right in green.
+00:04:41,180 --> 00:04:44,380
+And the human and the
+large language model are
+00:04:44,380 --> 00:04:47,740
+engaging in a joint
+decision, a joint decision
+00:04:47,740 --> 00:04:50,720
+making dialogue of the type
+I've already described.
+00:04:51,040 --> 00:04:54,320
+Notice in the top half
+of this slide, the
+00:04:54,320 --> 00:04:58,240
+dialogue establishes
+an argument framework.
+00:04:58,240 --> 00:05:00,260
+We saw that you see
+at the top left,
+00:05:00,580 --> 00:05:04,700
+right? And we want
+essentially that the dialogue
+00:05:04,700 --> 00:05:08,220
+establishes in this
+particular case that Malaga
+00:05:08,220 --> 00:05:13,040
+is the best option for
+the human to visit on
+00:05:13,040 --> 00:05:17,300
+holiday, if and only
+if that decision option
+00:05:17,300 --> 00:05:21,580
+Malaga is a non-monotonic
+inference from the contents
+00:05:21,580 --> 00:05:23,820
+of what has been
+exchanged in the dialogue.
+00:05:23,860 --> 00:05:26,540
+So that's just a quick
+recap on the general
+00:05:26,540 --> 00:05:29,680
+picture of how we can
+think about applications of
+00:05:29,680 --> 00:05:31,440
+the kinds of dialogue that
+I've already described
+00:05:31,440 --> 00:05:34,500
+to a particular decision
+-making scenario.
+00:05:35,000 --> 00:05:38,420
+OK, let's get now to
+some of the details of
+00:05:38,420 --> 00:05:41,580
+the decision-making
+scenario itself. a scenario
+00:05:41,580 --> 00:05:46,240
+that illustrates the
+human and the large
+00:05:46,240 --> 00:05:49,220
+language model jointly
+coming to a decision,
+00:05:49,500 --> 00:05:51,800
+but also, as you will see,
+00:05:52,330 --> 00:05:56,140
+a scenario in which the
+large language model learns
+00:05:56,140 --> 00:05:59,860
+the human preferences and
+also helps shape the human
+00:05:59,860 --> 00:06:03,920
+preferences by providing
+information that the human
+00:06:03,920 --> 00:06:07,740
+can use in arguing about
+what it thinks is the best
+00:06:07,740 --> 00:06:12,220
+option to take. so let's just
+have a quick look at this
+00:06:12,220 --> 00:06:17,160
+example so in this example
+the human starts by with
+00:06:17,160 --> 00:06:24,160
+a locution requesting given
+its particular preferences
+00:06:24,160 --> 00:06:27,380
+a locution requesting
+decision options from the
+00:06:27,380 --> 00:06:29,880
+large language model so
+the large language model so
+00:06:29,880 --> 00:06:31,720
+we join the dialogue when
+the large language model
+00:06:31,720 --> 00:06:35,080
+says well look given your
+budget your timing and your
+00:06:35,080 --> 00:06:37,800
+kind of where the kind of
+landscape you like and your
+00:06:37,800 --> 00:06:40,880
+weather required what kind
+of weather you like here
+00:06:40,880 --> 00:06:43,880
+i propose as a large
+language model three holiday
+00:06:43,880 --> 00:06:49,800
+options or itineraries abadi
+malaga or lanzarote now at
+00:06:49,800 --> 00:06:54,320
+this stage the human says
+well look i'm perhaps i
+00:06:54,320 --> 00:06:59,000
+should reject your abadi
+option as i've heard that um
+00:06:59,000 --> 00:07:02,620
+you know they use unethical
+labor practices in in in
+00:07:02,620 --> 00:07:06,260
+abadi but the human's not
+quite sure about this right
+00:07:06,260 --> 00:07:08,780
+so the human said well i've
+heard this so the human
+00:07:08,780 --> 00:07:11,720
+asked the large language
+model has this claim been
+00:07:11,720 --> 00:07:15,900
+confirmed by experts the
+large language model then
+00:07:15,900 --> 00:07:20,340
+returns with locution l4
+says look um actually there's
+00:07:20,340 --> 00:07:23,720
+a report by the ifa stating
+that abadi is unethical
+00:07:24,520 --> 00:07:29,620
+the humans a bit uh sort of
+skeptical about this this
+00:07:29,620 --> 00:07:33,240
+l4 locution um could
+that be fake news is that
+00:07:33,240 --> 00:07:38,720
+misinformation so the human
+actually sort of does a kind
+00:07:38,720 --> 00:07:41,220
+of verification check and
+works out from you know just
+00:07:41,220 --> 00:07:45,140
+doing a quick search
+actually this IFA report is
+00:07:45,140 --> 00:07:48,940
+fake and the human gives
+evidence as to why it's fake.
+00:07:49,300 --> 00:07:53,260
+Then the large downing model
+retrieves another expert
+00:07:53,260 --> 00:07:58,060
+opinion from Amcinity
+International saying that Abadi
+00:07:58,060 --> 00:08:01,880
+is unethical. So notice
+at so far in this dialogue
+00:08:01,880 --> 00:08:08,140
+that in locution L1, the
+large language model, PAL,
+00:08:08,300 --> 00:08:11,760
+has used information about
+the human's preferences
+00:08:12,220 --> 00:08:15,720
+to select a number
+of decision options.
+00:08:15,740 --> 00:08:20,540
+The human has then started
+to debate with the larger
+00:08:20,540 --> 00:08:23,640
+man to reject holiday
+option on the grounds of
+00:08:23,640 --> 00:08:26,420
+unethical labour practices.
+And notice, of course,
+00:08:26,760 --> 00:08:32,260
+that this ethical issue about
+00:08:32,260 --> 00:08:33,900
+unethical labour practices,
+00:08:34,180 --> 00:08:37,920
+this ethically salient
+information, can
+00:08:37,920 --> 00:08:40,520
+now be learnt by
+the large language
+00:08:40,520 --> 00:08:43,100
+model and reused in
+future deliberations.
+00:08:43,310 --> 00:08:45,680
+This is why we have on
+the right-hand side of
+00:08:45,680 --> 00:08:48,740
+the slide this arrow
+dotted, this dashed arrow
+00:08:48,740 --> 00:08:52,900
+going down to PAL. That
+dashed arrow indicates
+00:08:52,900 --> 00:08:55,520
+that Powell is, during the
+course of the dialogue,
+00:08:55,540 --> 00:08:57,960
+learning more about the
+human's preferences.
+00:08:59,430 --> 00:09:01,390
+OK, so at this stage,
+00:09:01,580 --> 00:09:05,540
+the two decision options
+are Malaga and Lanzarote.
+00:09:06,100 --> 00:09:10,360
+Now, let's imagine a
+continuation of this dialogue in
+00:09:11,200 --> 00:09:15,180
+which the human, now faced
+with the two options of
+00:09:15,180 --> 00:09:23,420
+Malaga and Lanzarote, is
+interested in kind of comparing
+00:09:23,420 --> 00:09:26,440
+the carbon footprints of
+these two remaining options.
+00:09:27,220 --> 00:09:29,960
+Okay, so what we're going
+to illustrate now is how
+00:09:30,680 --> 00:09:35,440
+with this kind of ethically
+salient issue in mind,
+00:09:35,820 --> 00:09:40,420
+the human leverages
+the capabilities of the
+00:09:40,420 --> 00:09:42,380
+large language model
+personal assistant
+00:09:42,380 --> 00:09:46,980
+and so asks PAL to
+estimate the carbon
+00:09:46,980 --> 00:09:50,780
+footprints of the Malaga
+and Lanzarote options.
+00:09:51,340 --> 00:09:55,900
+PAL then estimates
+these carbon footprints
+00:09:56,830 --> 00:10:00,440
+and concludes and gives
+kind of a breakdown to the
+00:10:00,440 --> 00:10:05,120
+human user showing that
+the Lanzarote trip has
+00:10:05,120 --> 00:10:08,060
+a much greater carbon
+footprint than the Malaga
+00:10:08,060 --> 00:10:13,010
+trip. So according to the
+sustainability criteria,
+00:10:16,330 --> 00:10:20,360
+Malaga should be the
+preferred option to Lanzarote.
+00:10:20,360 --> 00:10:25,480
+But because of previous
+interactions between
+00:10:25,480 --> 00:10:30,940
+the personal assistant
+LLM and their human user,
+00:10:31,760 --> 00:10:37,140
+the PAL knows that
+in the past, the user
+00:10:37,140 --> 00:10:39,960
+has always gone for
+holiday options where
+00:10:39,960 --> 00:10:43,140
+the restaurants are
+better value for money.
+00:10:43,380 --> 00:10:46,140
+So according to that criterion,
+00:10:47,080 --> 00:10:50,620
+Lanzarote is a better option
+than Malaga. so we have
+00:10:50,620 --> 00:10:53,080
+according to the sustainability
+malaga is a better
+00:10:53,080 --> 00:10:55,920
+option than lanzarote
+according to value for money
+00:10:55,920 --> 00:10:58,720
+restaurants the preference
+is the other way around
+00:11:00,800 --> 00:11:06,060
+okay so pal has used the
+prior information about the
+00:11:06,060 --> 00:11:09,520
+user's preferences we now
+have new information that
+00:11:09,520 --> 00:11:14,040
+the user has brought to
+mind okay and and which is
+00:11:14,040 --> 00:11:18,040
+sustainability and now the
+user can be prompted to
+00:11:18,040 --> 00:11:21,540
+say well look what matters
+to you more sustainability
+00:11:21,540 --> 00:11:25,580
+or better value for money
+restaurants and the user
+00:11:25,580 --> 00:11:28,580
+says sustainability is the
+more important option more
+00:11:28,580 --> 00:11:32,880
+important ethical criteria
+by which to compare
+00:11:32,880 --> 00:11:36,980
+these decision options and
+as a result of the dialogue
+00:11:37,600 --> 00:11:42,420
+the decision is made to
+go to malaga so in the
+00:11:42,420 --> 00:11:45,960
+dialogue graph assuming this
+continuation of the dialogue
+00:11:45,960 --> 00:11:50,140
+here in the dialogue
+graph the Malaga option
+00:11:50,140 --> 00:11:53,720
+that locution would be
+established as the winning
+00:11:53,720 --> 00:11:58,700
+locution this corresponds
+to the argument for the
+00:11:58,700 --> 00:12:01,620
+Malaga option being preferred
+the justified argument
+00:12:01,620 --> 00:12:04,800
+in the argument framework
+built from the contents
+00:12:04,800 --> 00:12:08,020
+of what's been uttered in
+the dialogue which equates
+00:12:08,020 --> 00:12:11,500
+with Malaga being a non
+-monotonic inference from
+00:12:11,500 --> 00:12:13,960
+all the information that
+has been brought to the
+00:12:13,960 --> 00:12:16,600
+table or shared during the
+course of the dialogue.
+00:12:16,740 --> 00:12:20,680
+So what I'm trying to do
+here is illustrate how
+00:12:20,680 --> 00:12:24,700
+these dialogical models of
+reasoning can be adapted
+00:12:24,700 --> 00:12:28,420
+to support value-aligned
+dialogues in which the
+00:12:28,420 --> 00:12:31,880
+human's ethical preferences
+are not only learnt and
+00:12:31,880 --> 00:12:34,840
+applied by the large language
+models, but the large
+00:12:34,840 --> 00:12:37,880
+language model enables a
+human through the construction
+00:12:37,880 --> 00:12:40,720
+of arguments for the
+sustainability for example
+00:12:40,720 --> 00:12:46,060
+the carbon footprints to
+help hone and refine the
+00:12:46,060 --> 00:12:49,340
+human's own understanding
+of what matters to them
+00:12:52,780 --> 00:12:57,300
+okay uh a final um and
+second applicant of course
+00:12:57,300 --> 00:12:59,600
+there are many many
+applications of dialogical
+00:12:59,600 --> 00:13:02,180
+formalizations of reasoning
+but what i want to particularly
+00:13:02,180 --> 00:13:06,060
+focus on here in the
+final couple of minutes of
+00:13:06,060 --> 00:13:10,380
+this lecture is the use
+of these dialogical models
+00:13:10,380 --> 00:13:13,340
+of distributed reasoning
+in educational settings.
+00:13:13,660 --> 00:13:17,060
+So it's clear now
+that we live in a
+00:13:17,060 --> 00:13:19,600
+kind of information
+age in which there's
+00:13:19,600 --> 00:13:21,590
+a hell of a lot
+more misinformation,
+00:13:22,460 --> 00:13:26,520
+polarization of opinions,
+and you've probably heard the
+00:13:26,520 --> 00:13:31,480
+phrase the post-truth crisis
+we live in. And And part
+00:13:31,480 --> 00:13:38,440
+of the issue is that part
+of the problem, of course,
+00:13:38,440 --> 00:13:40,860
+is not just that there's a
+00:13:40,860 --> 00:13:42,860
+huge amount of misinformation,
+00:13:43,080 --> 00:13:45,860
+but the extent to which
+we critically engage
+00:13:45,860 --> 00:13:48,560
+with information is
+being undermined. We just
+00:13:48,560 --> 00:13:51,940
+sort of tend to, in our
+contemporary culture,
+00:13:52,820 --> 00:13:58,300
+there's so much information
+out there that those skills
+00:13:58,300 --> 00:14:01,260
+that are required to
+interrogate the veracity the
+00:14:01,260 --> 00:14:04,400
+truthfulness of information
+are beginning to decline
+00:14:04,400 --> 00:14:09,760
+so ideally what one would
+want in educational settings
+00:14:09,820 --> 00:14:13,740
+is the kind of pedagogic
+dialogues right in which
+00:14:13,740 --> 00:14:17,080
+a teacher and a student engage
+a kind of back and forth
+00:14:17,080 --> 00:14:21,900
+dialogue and as a result
+the idea is that the teacher
+00:14:21,900 --> 00:14:25,820
+would improve and
+inculcate critical thinking
+00:14:25,820 --> 00:14:31,200
+skills in students of course
+you know in our contemporary
+00:14:31,200 --> 00:14:35,360
+culture given the resources
+we have it unfortunately
+00:14:35,360 --> 00:14:38,760
+teachers don't have that
+much time one-on-one to
+00:14:38,760 --> 00:14:41,770
+engage in these kinds of
+dialogues with students right
+00:14:42,560 --> 00:14:48,120
+so that's one issue ideally
+to kind of combat or to
+00:14:48,120 --> 00:14:52,560
+help combat some of the
+some of what we see in this
+00:14:52,560 --> 00:14:55,320
+kind of information current
+information age we would
+00:14:55,320 --> 00:15:00,540
+ideally want critical thinking
+skills to be inculcated
+00:15:00,540 --> 00:15:05,000
+to be developed from an early
+early age in educational
+00:15:05,000 --> 00:15:08,700
+settings to help as it
+were forearm digital
+00:15:08,700 --> 00:15:12,860
+citizens against some of this
+misinformation and the post
+00:15:12,860 --> 00:15:16,160
+-truth crisis another issue
+of course is that as ai
+00:15:16,160 --> 00:15:19,600
+systems becoming more and
+more integrated into our
+00:15:19,600 --> 00:15:22,780
+working lives, our personal
+lives, there'll be much
+00:15:22,780 --> 00:15:26,120
+more importance attached to
+critical thinking skills in
+00:15:26,120 --> 00:15:29,880
+humans. A lot of the kind
+of menial, quote-unquote
+00:15:29,880 --> 00:15:33,500
+menial information processing
+tasks will be performed
+00:15:33,500 --> 00:15:36,560
+more and more by AI systems.
+So what would be the
+00:15:36,560 --> 00:15:40,060
+role of humans as we look
+forward to the work environments
+00:15:40,060 --> 00:15:44,240
+of the next 20, 30, 100
+years? Well, arguably,
+00:15:44,240 --> 00:15:47,880
+humans could bring to bear
+more of the critical thinking
+00:15:47,880 --> 00:15:52,100
+skills, reflection on
+issues and more of a deep
+00:15:52,100 --> 00:15:56,740
+dive into kind of reflecting
+on the conclusions and
+00:15:56,740 --> 00:16:00,040
+some of the information
+processing the AI systems do.
+00:16:01,040 --> 00:16:06,080
+So one way to address both
+these issues, improving
+00:16:06,080 --> 00:16:10,160
+critical thinking skills and
+preparing citizens for the
+00:16:10,160 --> 00:16:15,040
+digital future, is the use
+of these dialogical models
+00:16:15,040 --> 00:16:20,640
+in what I call Socratic apps.
+You can imagine a Socratic
+00:16:20,640 --> 00:16:24,860
+app on a phone in educational
+settings being used,
+00:16:24,860 --> 00:16:29,440
+sort of operating like a
+teacher, prompting the student
+00:16:29,440 --> 00:16:34,940
+to think and reflect on
+their claims or their
+00:16:34,940 --> 00:16:38,920
+understanding or learning of
+a particular topic. this this
+00:16:38,920 --> 00:16:42,520
+kind of socratic back and
+forth is a dialogue in in
+00:16:42,520 --> 00:16:46,920
+which a teacher doesn't so
+much tell the student what
+00:16:46,920 --> 00:16:50,060
+is the case or correct the
+student but rather helps to
+00:16:50,060 --> 00:16:53,940
+elicit the reasoning and
+the thinking skills and
+00:16:53,940 --> 00:16:58,440
+processes of the students
+through dialogue this was um this
+00:16:58,440 --> 00:17:00,820
+this technique or this kind
+of socratic dialogues of
+00:17:00,820 --> 00:17:04,220
+course were common uh in the
+ancient greek times where
+00:17:04,220 --> 00:17:06,940
+in particular of course
+Socrates would go out into
+00:17:06,940 --> 00:17:12,500
+the Athenian squares, the
+Athenian Agora as they were
+00:17:12,500 --> 00:17:15,320
+called, these were public
+squares and Socrates would
+00:17:15,320 --> 00:17:20,260
+press and probe the young
+Athenians into examining and
+00:17:20,260 --> 00:17:23,860
+reflecting on their own
+ethical claims and how they
+00:17:23,860 --> 00:17:27,220
+think about the world and
+thereby help improve the critical
+00:17:27,220 --> 00:17:31,940
+thinking skills of these
+young Athenians. so here's
+00:17:31,940 --> 00:17:35,160
+an example of the kind of
+dialogue that were that
+00:17:35,160 --> 00:17:41,180
+would what a socratic app
+could lead imagine um um we
+00:17:41,180 --> 00:17:44,200
+have a student and this is of
+course it's not necessarily
+00:17:44,200 --> 00:17:47,380
+i'm saying that the
+student definitively says
+00:17:47,380 --> 00:17:50,710
+abortion should be legal this
+is rather just to exemplify
+00:17:51,720 --> 00:17:56,380
+how socratic dialogues
+proceed and how the dialogical
+00:17:56,380 --> 00:17:58,820
+formalization of non
+-monotronic reasoning that I've
+00:17:58,820 --> 00:18:01,580
+described up to now can be
+implemented in these kinds
+00:18:01,580 --> 00:18:04,660
+of diet in these kind of
+Socratic apps so the student
+00:18:04,660 --> 00:18:08,100
+says well look abortion
+should be illegal so the
+00:18:08,100 --> 00:18:11,900
+Socratic app says why the
+human says well human life
+00:18:11,900 --> 00:18:16,850
+is sacred and a fetus is
+human so at this point the
+00:18:17,640 --> 00:18:21,480
+Socratic app will prompt
+the human into saying well
+00:18:21,480 --> 00:18:25,680
+so so what what why is it
+the case that if a human
+00:18:25,680 --> 00:18:27,920
+life is sacred and a fetus
+is human that should mean
+00:18:27,920 --> 00:18:31,320
+abortion is illegal to which
+the student replies well
+00:18:31,320 --> 00:18:35,650
+if a life is sacred okay
+it should not be terminated
+00:18:36,500 --> 00:18:41,720
+now the socratic absence
+so from your previous
+00:18:41,720 --> 00:18:44,100
+statements this
+implies you should be
+00:18:44,100 --> 00:18:46,720
+against the death penalty
+to which the student
+00:18:46,720 --> 00:18:49,020
+replies no i'm in favor
+of the death penalty
+00:18:50,320 --> 00:18:54,600
+so now at this point what
+Socrates has done or the
+00:18:54,600 --> 00:18:57,420
+Socratic app has done is
+it's revealed in the student
+00:18:57,420 --> 00:19:02,220
+an inconsistency in their
+reasoning right after all
+00:19:02,220 --> 00:19:05,340
+the student thinks that if
+a life is sacred it should
+00:19:05,340 --> 00:19:09,080
+not be terminated a human
+life is sacred and a fetus
+00:19:09,080 --> 00:19:12,860
+is a human so therefore
+abortion should be legal but
+00:19:12,860 --> 00:19:17,160
+by the same reasoning a
+murderer's life is sacred and
+00:19:17,160 --> 00:19:19,800
+should not be terminated
+but on the other hand the
+00:19:19,800 --> 00:19:21,660
+student says well look
+they're in favor of the death
+00:19:21,660 --> 00:19:25,700
+penalty but now notice socrates
+is not is not necessarily
+00:19:25,700 --> 00:19:28,200
+saying well this is right
+or this is wrong what
+00:19:28,620 --> 00:19:32,200
+the socratic app can help
+the student do is refine
+00:19:32,200 --> 00:19:37,780
+their premise to a human life
+is sacred unless it takes
+00:19:37,780 --> 00:19:42,580
+the life of another now
+given this refined premise
+00:19:43,040 --> 00:19:46,660
+the student can
+be in favor of the
+00:19:46,660 --> 00:19:48,580
+death penalty but
+against abortion
+00:19:49,960 --> 00:19:52,600
+but then the socratic act
+might say well what about
+00:19:52,600 --> 00:19:55,220
+the executioner's life that
+the executioner will be
+00:19:55,220 --> 00:19:59,000
+taking the life of the
+convict does that mean the
+00:19:59,000 --> 00:20:02,120
+executioner's life is not
+sacred and so the humans oh
+00:20:02,120 --> 00:20:05,010
+well actually no maybe a
+human life is sacred unless
+00:20:06,040 --> 00:20:09,060
+unsanctioned by the state
+it takes the life of
+00:20:09,060 --> 00:20:13,600
+another the executioner's
+role in in in as it
+00:20:13,600 --> 00:20:15,720
+were pulling the switch
+is sanctioned by the state
+00:20:15,720 --> 00:20:19,260
+so what i'm trying to
+illustrate here is how
+00:20:19,260 --> 00:20:23,360
+this kind of dialogue can
+be used to support and
+00:20:23,360 --> 00:20:25,880
+refine one's critical
+thinking skills and can
+00:20:25,880 --> 00:20:29,260
+be automated using these
+kinds of Socratic apps.
+00:20:30,720 --> 00:20:34,860
+So look, just to
+conclude then these two
+00:20:34,860 --> 00:20:36,780
+weeks, what do you need
+to know for the exams?
+00:20:36,820 --> 00:20:41,240
+Well, we've discussed the
+previous week all those
+00:20:41,240 --> 00:20:46,320
+learning outcomes and how
+to kind of formalise non
+00:20:46,320 --> 00:20:49,140
+-monotonic reasoning and
+how to formalise argument,
+00:20:49,700 --> 00:20:52,940
+to construct argument graphs
+from a knowledge base.
+00:20:53,110 --> 00:20:55,530
+From the point of view
+of this week's material,
+00:20:55,530 --> 00:20:58,840
+what you need to know
+for the exams is how to
+00:20:58,840 --> 00:21:01,300
+identify how to use game
+theories to establish
+00:21:01,300 --> 00:21:04,160
+whether an argument is
+in the grounded extension
+00:21:04,160 --> 00:21:07,340
+of a framework or a
+preferred extension right
+00:21:08,280 --> 00:21:11,440
+in terms of the second
+half of this week's lecture
+00:21:11,440 --> 00:21:14,500
+the last third if you like
+of this week's lecture in
+00:21:14,500 --> 00:21:16,940
+which i've just described
+how argument games can be
+00:21:16,940 --> 00:21:19,620
+generalized to dialogues and
+the applications of these
+00:21:19,620 --> 00:21:22,700
+in ai these the important
+point to remember is these
+00:21:22,700 --> 00:21:26,140
+will not be examined in the
+exams, these two topics.
+00:21:26,140 --> 00:21:29,840
+The main reason why I want
+to discuss these topics
+00:21:29,840 --> 00:21:33,780
+is to essentially illustrate
+to you, the students,
+00:21:34,800 --> 00:21:37,860
+why you learn, what's
+the importance, the
+00:21:37,860 --> 00:21:42,020
+long-term importance of
+the technical material
+00:21:42,020 --> 00:21:44,740
+I've covered in
+these last two weeks.

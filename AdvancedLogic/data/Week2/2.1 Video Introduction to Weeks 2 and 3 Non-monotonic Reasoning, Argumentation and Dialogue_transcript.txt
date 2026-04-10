@@ -1,0 +1,133 @@
+Hello, my name is Sanjay
+Modgill and I'll be
+conducting the lectures for
+the next two weeks taking
+over from Chris and the
+topic for the next two weeks
+is the overall title is
+non-monotonic reasoning,
+argumentation and dialogue.
+So Chris in the first
+week already gave a
+semantic presentation of
+non-monotonic reasoning.
+In this week's
+lectures, week two,
+I'm going to describe
+three syntactic
+examples of non
+-monautonic logics.
+So these are specific
+examples of non-monotonic
+logics whose semantics
+can be described
+in the terms Chris
+presented in week one.
+Then in the second part
+of this week's lectures,
+I'll describe how we
+can formalize these
+processes of non-monotonic
+reasoning or non-monotonic
+logics in terms of the
+exchange of arguments,
+the kinds of exchange
+of arguments that
+we witness in everyday
+debate and discussion.
+So it really kind of gives
+a much more practical,
+intuitive way of doing
+non-monotonic reasoning
+through the exchange
+of arguments.
+In particular,
+I'll describe how, given a
+knowledge base of formulae,
+one can construct arguments and
+counter-arguments
+from these formulae.
+Then,
+apply preferences to
+decide whether one counter
+-argument legitimately
+challenges another.
+And I'll describe how,
+given this framework
+in which you
+arrange arguments and
+counter-arguments,
+what rules can you use
+to label these arguments
+to decide which are
+the winning arguments?
+So I'll be basically
+giving you or describing
+argumentative formalizations
+of these non-monotonic logics.
+Then next week,
+I'll describe argument
+game proof theories.
+So the idea is that
+you've got this argument
+framework. You've got a
+whole bunch of arguments.
+They're related to each
+other in like a graph,
+where if one argument
+is linked to another,
+then that indicates
+that that argument
+is a counter-argument
+to the other.
+So you've got these argument
+frameworks. As I
+described just earlier,
+we can apply labelling
+algorithms to
+decide which
+arguments are winning.
+But next week,
+I'll also describe
+argument game proof theories.
+So these are like argument
+games, more like discussions,
+which decide,
+given a framework,
+which arguments are winning.
+Now, the advantage of
+these argument game proof
+theories is that these can
+then be generalized to give
+accounts of distributed
+non-monautonic reasoning
+in which multiple agents,
+AI agents, human agents,
+can jointly communicate
+with each other,
+pool their knowledge
+and reason together.
+So the idea is that
+these argument game proof
+theories can be developed
+so as to enable distributed
+or communicative accounts
+of non-monotonic reasoning.
+The kinds of reasoning
+whereby we, might put
+our heads together, pool
+our knowledge together,
+and reason about
+the information we
+bring to bear in a
+discussion or debate.
+And then next week,
+I'll finish off by
+describing some of the
+importance of these
+dialogical accounts of
+non-monotonic reasoning,
+given all the recent
+developments and
+advances in artificial
+intelligence.

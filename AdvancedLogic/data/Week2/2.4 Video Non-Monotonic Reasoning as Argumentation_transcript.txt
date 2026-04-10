@@ -1,0 +1,801 @@
+00:00:07,580 --> 00:00:11,200
+OK, so now we've
+studied a few non
+00:00:11,200 --> 00:00:13,600
+-monotonic logics.
+In the next part of
+00:00:13,600 --> 00:00:16,060
+this lecture, we'll
+look at how to,
+00:00:16,180 --> 00:00:19,580
+given a knowledge base
+of formulas and rules,
+00:00:19,580 --> 00:00:21,840
+inference rules of
+a logic, how can we
+00:00:21,840 --> 00:00:26,460
+construct arguments from
+that knowledge base and
+00:00:26,460 --> 00:00:30,200
+rules, relate these
+arguments to each other,
+00:00:30,580 --> 00:00:33,560
+and then evaluate
+which are the winning
+00:00:33,560 --> 00:00:38,200
+arguments. we'll then see
+that the claims of these
+00:00:38,200 --> 00:00:42,420
+winning arguments
+correspond exactly to the
+00:00:42,420 --> 00:00:45,740
+non-monotonic logic
+consequences that one
+00:00:45,740 --> 00:00:48,500
+would get from the
+underlying knowledge base
+00:00:52,040 --> 00:00:55,940
+so basically if we look at
+the maxi-consistent approaches
+00:00:55,940 --> 00:00:59,060
+for example to non-monotonic
+reasoning we can think
+00:00:59,060 --> 00:01:02,120
+of non-monotonic reasoning
+essentially as a decision
+00:01:02,120 --> 00:01:06,240
+procedure for choosing between
+contradictory classical
+00:01:06,240 --> 00:01:10,220
+monotonic consequences
+and then we can generalize
+00:01:10,220 --> 00:01:14,020
+this idea right so we can think
+of non-monotonic reasoning
+00:01:14,020 --> 00:01:18,340
+as a decision procedure
+for choosing between
+00:01:18,340 --> 00:01:23,120
+arguments for conflicting
+claims as I said these arguments
+00:01:23,120 --> 00:01:27,220
+are constructed from the
+knowledge base taking premises
+00:01:27,220 --> 00:01:31,160
+and rules from the
+knowledge base to construct
+00:01:31,160 --> 00:01:35,830
+arguments in support of a claim
+and these kind of argumentative
+00:01:35,840 --> 00:01:41,360
+decision procedures are
+the kinds of ways in
+00:01:41,360 --> 00:01:45,120
+which we use argument in
+everyday discussion and debate
+00:01:46,270 --> 00:01:50,100
+okay so to give you a let's
+let's have a look at an
+00:01:50,100 --> 00:01:54,740
+example take the earlier
+knowledge base from which the
+00:01:54,740 --> 00:01:58,400
+logic programming knowledge
+base from which we non
+00:01:58,400 --> 00:02:04,180
+-modernically concluded that
+Tweety flies now if we look
+00:02:04,180 --> 00:02:07,480
+at the fact that Tweety is
+a penguin number one plus
+00:02:07,480 --> 00:02:11,200
+the rules two and three we
+can see that we could chain
+00:02:11,200 --> 00:02:15,380
+as it were the rules and
+the fact to construct an
+00:02:15,380 --> 00:02:21,180
+argument right that says well
+look Tweety is a penguin and
+00:02:21,180 --> 00:02:23,760
+then with the rule that
+penguins implies bird Tweety
+00:02:23,760 --> 00:02:27,620
+is a bird and because it's
+not abnormal it flies so
+00:02:28,200 --> 00:02:31,340
+we have an argument let's
+call that a1 that makes use
+00:02:31,340 --> 00:02:34,980
+of one two and three to
+construct an argument that
+00:02:34,980 --> 00:02:39,900
+claims that Tweety flies now
+it's the only argument that
+00:02:39,900 --> 00:02:42,220
+we have at the moment so
+we can say it's basically a
+00:02:42,220 --> 00:02:45,260
+winning argument right so
+the claim of this winning
+00:02:45,260 --> 00:02:51,740
+argument fly Tweety corresponds
+to the logic programming
+00:02:51,740 --> 00:02:56,500
+non-monotonic inference
+from KB1 that Tweetie flies.
+00:02:59,090 --> 00:03:02,360
+Now, recall that we can
+add to that knowledge
+00:03:02,360 --> 00:03:07,280
+base some more information
+about penguins.
+00:03:07,380 --> 00:03:09,960
+In particular, rule four,
+which says that if something
+00:03:09,960 --> 00:03:13,620
+is a penguin and it's
+not a DC comic penguin,
+00:03:14,500 --> 00:03:17,840
+then it is abnormal
+with respect
+00:03:17,840 --> 00:03:19,320
+to the property of flight.
+00:03:19,920 --> 00:03:24,060
+right and recall from our
+logic programming example
+00:03:24,060 --> 00:03:29,570
+that because we can prove
+that that a particular
+00:03:29,570 --> 00:03:32,160
+penguin is abnormal you
+know that penguins are
+00:03:32,160 --> 00:03:34,560
+abnormal with respect to
+the property of flight
+00:03:34,890 --> 00:03:38,680
+right then we can't apply
+rule three to conclude
+00:03:38,680 --> 00:03:42,380
+that tweety flies in this
+case so we can no longer
+00:03:42,380 --> 00:03:45,880
+derive the non-monotonic
+consequence fly tweety
+00:03:46,580 --> 00:03:49,960
+now let's think about how
+one could construct an
+00:03:49,960 --> 00:03:54,540
+argument from fact one,
+Tweetie is a penguin and
+00:03:54,540 --> 00:03:58,520
+rule four, okay so we
+have Tweetie is a penguin
+00:03:58,820 --> 00:04:02,020
+we have no reason to think that
+00:04:02,500 --> 00:04:08,260
+Tweetie is a DC comic
+penguin so not DC comic
+00:04:08,260 --> 00:04:13,540
+penguin is the case and we
+can so therefore construct
+00:04:13,540 --> 00:04:15,640
+from the fact that Tweetie
+is a penguin and rule
+00:04:15,640 --> 00:04:22,760
+4, the argument A2, which
+claims that Tweety is
+00:04:22,760 --> 00:04:25,220
+abnormal with respect to
+the property of flight.
+00:04:26,880 --> 00:04:31,000
+Now notice that the argument A2
+00:04:31,000 --> 00:04:34,700
+attacks the argument A1. Why?
+00:04:35,260 --> 00:04:40,960
+Because A2's claim,
+right, remember from 1 and
+00:04:40,960 --> 00:04:44,760
+4, A2's claim that Tweety
+is abnormal with respect
+00:04:44,760 --> 00:04:48,840
+to the property of flight
+challenges the assumption
+00:04:48,840 --> 00:04:53,920
+within the argument
+A1 that Tweety is not
+00:04:53,920 --> 00:04:56,820
+abnormal with respect to
+the property of flight.
+00:04:57,440 --> 00:05:02,100
+Okay, so essentially not
+abnormal with respect to
+00:05:02,100 --> 00:05:03,980
+the property of flight is
+basically saying we cannot
+00:05:03,980 --> 00:05:08,140
+prove, we have no argument
+to the effect that
+00:05:08,140 --> 00:05:10,040
+Tweety is abnormal with
+respect to the property of
+00:05:10,040 --> 00:05:13,700
+flight. But now that we
+have rule four in fact we
+00:05:13,700 --> 00:05:18,140
+can construct such an
+argument a2 and so therefore
+00:05:18,140 --> 00:05:23,820
+a2 challenges the assumption
+in a1 that tweety is
+00:05:23,820 --> 00:05:26,300
+not abnormal with respect
+to the property of flight
+00:05:28,840 --> 00:05:32,440
+okay so now we can see
+well look a21 is not
+00:05:32,440 --> 00:05:34,680
+attacked by any argument
+there's not there's
+00:05:34,680 --> 00:05:37,660
+no counter-argument to
+A2, so A2 is winning.
+00:05:38,520 --> 00:05:42,880
+A1 now is losing,
+is a losing argument
+00:05:42,880 --> 00:05:45,300
+because it itself
+is attacked by a
+00:05:45,300 --> 00:05:48,440
+winning argument,
+in other words, A2.
+00:05:49,820 --> 00:05:54,840
+So, if we look at these
+arguments, we have a
+00:05:54,840 --> 00:05:58,480
+winning argument for
+the claim that Tweety is
+00:05:58,480 --> 00:06:00,480
+abnormal with respect to
+the property of flight.
+00:06:01,120 --> 00:06:03,640
+The argument A1 that claims
+00:06:03,640 --> 00:06:05,540
+that Tweety flies is losing.
+00:06:06,000 --> 00:06:09,640
+And so just looking at
+the arguments we cannot,
+00:06:09,640 --> 00:06:12,400
+we have no argument,
+winning argument
+00:06:12,400 --> 00:06:15,360
+claiming that Tweety
+flies. And of course this
+00:06:15,360 --> 00:06:21,040
+corresponds to not being
+able to from KB2 derive
+00:06:21,040 --> 00:06:23,800
+the logic programming
+inference fly Tweety.
+00:06:25,260 --> 00:06:29,720
+And so again remember
+in KB3 we then
+00:06:29,720 --> 00:06:31,920
+discover that
+Tweety is a DC comic
+00:06:32,760 --> 00:06:34,860
+character, right?
+00:06:35,100 --> 00:06:40,020
+So we have an argument A3
+now that just makes use
+00:06:40,020 --> 00:06:45,120
+of this fact so argument
+A3 claims well look, given
+00:06:45,120 --> 00:06:49,060
+the fact given our knowledge
+now, our new knowledge
+00:06:49,060 --> 00:06:52,420
+that Tweety is a DC comic
+character we have an
+00:06:52,420 --> 00:06:56,360
+argument claiming that Tweety
+is a DC comic character
+00:06:57,440 --> 00:07:01,040
+A2, which makes the
+assumption, is built
+00:07:01,040 --> 00:07:03,380
+on the assumption that
+Tweety is not a DC
+00:07:03,380 --> 00:07:07,520
+comic character is
+therefore attacked by A3
+00:07:08,420 --> 00:07:11,840
+and of course we already
+have that A2 attacks A1
+00:07:12,760 --> 00:07:14,360
+so intuitively,
+00:07:14,500 --> 00:07:17,340
+as before,
+00:07:18,070 --> 00:07:21,480
+A3, the argument A3
+is unattacked, so
+00:07:21,480 --> 00:07:23,200
+it's winning there
+is no counter
+00:07:23,200 --> 00:07:25,680
+-argument to A3, it's
+a winning argument
+00:07:26,180 --> 00:07:32,960
+now notice the argument
+A2 is losing because it is
+00:07:32,960 --> 00:07:36,520
+itself attacked by a winning
+argument in other words A3
+00:07:37,300 --> 00:07:40,220
+and now notice that A1
+00:07:40,990 --> 00:07:43,580
+although it's attacked by A2
+00:07:44,440 --> 00:07:47,720
+all of A1's
+attackers are losing
+00:07:48,380 --> 00:07:50,980
+so A1 is now winning
+00:07:51,770 --> 00:07:54,410
+so if we just look
+at these arguments
+00:07:55,060 --> 00:07:58,100
+and we think about the
+attacks between these
+00:07:58,100 --> 00:08:00,740
+arguments and we work out
+the winning arguments,
+00:08:01,300 --> 00:08:05,400
+we see we now have a
+winning argument for A1.
+00:08:06,400 --> 00:08:08,400
+We have a winning argument for
+00:08:08,400 --> 00:08:10,680
+the claim that Tweety flies.
+00:08:11,540 --> 00:08:15,840
+And this corresponds
+to being able to infer
+00:08:16,280 --> 00:08:21,000
+from the logic programming
+KB3 that Tweety flies.
+00:08:21,180 --> 00:08:23,680
+So what I'm trying to
+demonstrate and show here is
+00:08:23,680 --> 00:08:27,940
+how you can construct arguments
+from a knowledge base,
+00:08:29,600 --> 00:08:33,100
+relate these arguments according
+to whether one argument
+00:08:33,100 --> 00:08:36,200
+is a counter-argument or
+attacks another argument,
+00:08:37,600 --> 00:08:40,980
+evaluate which are the
+winning arguments, and
+00:08:40,980 --> 00:08:43,650
+the claims of the winning
+arguments correspond
+00:08:44,590 --> 00:08:48,240
+to what you could
+have non-monotonically
+00:08:48,240 --> 00:08:50,760
+inferred from the
+underlying knowledge base.
+00:08:50,940 --> 00:08:55,280
+But of course, doing it
+in terms of argument and
+00:08:55,280 --> 00:08:57,340
+counter-argument of course
+is much more familiar
+00:08:57,340 --> 00:09:01,480
+to the way we humans
+exchange and use arguments
+00:09:05,020 --> 00:09:07,140
+OK, so I've given
+you a very simple
+00:09:07,140 --> 00:09:10,840
+example of how you can
+give an argumentative
+00:09:10,840 --> 00:09:13,020
+characterisation of
+logic programming
+00:09:13,500 --> 00:09:14,500
+OK,
+00:09:14,800 --> 00:09:17,180
+but there's one more
+issue we need to deal with
+00:09:17,180 --> 00:09:22,000
+sometimes we cannot decide
+which arguments are winning
+00:09:22,000 --> 00:09:25,140
+or losing there are sort
+of real dilemmas and in
+00:09:25,140 --> 00:09:28,460
+that case we can make use
+of preferences to decide
+00:09:28,460 --> 00:09:32,140
+whether one argument
+legitimately attacks another
+00:09:32,800 --> 00:09:36,740
+so take this example another
+logic program but now
+00:09:36,740 --> 00:09:39,840
+we have two rules and we're
+going to start bringing
+00:09:39,840 --> 00:09:43,160
+in some of these kind of
+attitudes that we humans
+00:09:43,160 --> 00:09:46,020
+make use of in our everyday
+reasoning like we have
+00:09:46,020 --> 00:09:51,700
+certain beliefs we have
+certain desires goals etc so
+00:09:51,700 --> 00:09:58,040
+let's say we have two
+rules both rules are based
+00:09:58,040 --> 00:10:02,960
+on premises that one believes
+it's one's birthday and
+00:10:02,960 --> 00:10:05,540
+that one wants to has a
+desire to celebrate one's
+00:10:05,540 --> 00:10:10,300
+birthday but rule one says
+well given these belief
+00:10:10,300 --> 00:10:16,660
+in this desire And given my
+belief that it's normally
+00:10:16,660 --> 00:10:23,580
+the case that it's not
+the case that the cinema
+00:10:23,580 --> 00:10:28,000
+is closed, and in rule two,
+given I believe it's not
+00:10:28,000 --> 00:10:30,700
+typically the case that
+the restaurant is closed,
+00:10:31,600 --> 00:10:34,560
+then you can from
+that logic program
+00:10:34,560 --> 00:10:38,680
+and essentially you
+can construct two
+00:10:39,700 --> 00:10:45,340
+two you can non-monitorally
+infer you know that
+00:10:45,340 --> 00:10:47,100
+you could go to the
+cinema or the restaurant
+00:10:47,100 --> 00:10:51,410
+so from rule one and
+fact three and four you
+00:10:51,420 --> 00:10:54,180
+can conclude the goal
+of going to the cinema
+00:10:54,840 --> 00:10:58,500
+and from rule two and
+fact three and four in the
+00:10:58,500 --> 00:11:01,540
+logic program you can
+conclude the goal of going to
+00:11:01,540 --> 00:11:06,880
+the restaurant but then the
+question is well which do
+00:11:06,880 --> 00:11:10,540
+i choose right there's
+if we look now at the
+00:11:10,540 --> 00:11:13,840
+arguments that you can construct
+from this knowledge base
+00:11:14,140 --> 00:11:16,660
+you can see again as i
+said from three four and
+00:11:16,660 --> 00:11:20,740
+one we can construct an
+argument for the claim that
+00:11:20,740 --> 00:11:23,020
+one should pursue the goal
+of going to the cinema
+00:11:23,770 --> 00:11:28,080
+and from rule two and
+fact three and four we can
+00:11:28,080 --> 00:11:33,220
+construct an argument a2 for
+the alternative option of
+00:11:33,220 --> 00:11:37,460
+going to the restaurant
+but as you these arguments
+00:11:38,040 --> 00:11:42,560
+they attack each other they
+attack each other because
+00:11:42,560 --> 00:11:47,300
+they are now in this case
+because they're making claims
+00:11:47,300 --> 00:11:51,520
+for alternative options
+alternative decision options
+00:11:52,280 --> 00:11:53,520
+OK,
+00:11:53,820 --> 00:11:55,280
+so in this case,
+00:11:56,060 --> 00:12:01,540
+they essentially,
+00:12:03,120 --> 00:12:08,160
+these arguments are
+used, as it were, in a
+00:12:08,160 --> 00:12:11,160
+decision-making context.
+So where we have now
+00:12:11,160 --> 00:12:15,740
+additional reasons or
+rationales for saying that one
+00:12:15,740 --> 00:12:18,540
+argument attacks another.
+Remember earlier on,
+00:12:18,540 --> 00:12:21,080
+in the earlier logic
+programming example, we
+00:12:21,080 --> 00:12:24,400
+said one argument attacks
+another if it makes a
+00:12:24,400 --> 00:12:27,960
+claim that the other
+assumes was not provable.
+00:12:28,080 --> 00:12:30,890
+Now we have another
+rationale for attacks
+00:12:30,890 --> 00:12:32,750
+when we start to think
+about beliefs and
+00:12:32,750 --> 00:12:35,000
+desires and goals,
+which is that if we have
+00:12:35,000 --> 00:12:37,440
+arguments for alternative
+decision options,
+00:12:37,910 --> 00:12:40,340
+these arguments then
+attack each other.
+00:12:41,140 --> 00:12:45,000
+So now we are in a
+real genuine dilemma.
+00:12:45,000 --> 00:12:47,040
+we cannot really say that A1 is
+00:12:47,040 --> 00:12:49,360
+winning and A2 is
+losing or vice versa
+00:12:51,160 --> 00:12:53,160
+now in this case then
+00:12:55,120 --> 00:12:58,950
+supposing we come to a
+conclusion we think well look
+00:12:58,950 --> 00:13:02,580
+I prefer to go to the
+restaurant than the cinema
+00:13:02,840 --> 00:13:06,170
+so I prefer the
+goal of going to the
+00:13:06,170 --> 00:13:08,000
+restaurant than the goal
+of going to the cinema
+00:13:08,520 --> 00:13:11,580
+so the knowledge base
+has been expanded to
+00:13:11,580 --> 00:13:15,900
+include this preference
+are indicated by five.
+00:13:18,360 --> 00:13:21,840
+Now, what we can
+use this preference
+00:13:21,840 --> 00:13:26,140
+for the goal of going
+to the restaurant
+00:13:27,430 --> 00:13:29,400
+over the goal of
+going to the cinema,
+00:13:29,920 --> 00:13:34,620
+we can use this
+preference to decide which
+00:13:34,620 --> 00:13:38,060
+argument successfully
+counterattacks the other.
+00:13:39,300 --> 00:13:44,440
+So, what we see here Is
+that the argument A1 for
+00:13:44,440 --> 00:13:49,600
+the cinema, we can remove
+the attack from A1 to A2.
+00:13:50,340 --> 00:13:52,340
+In other words, A1 does not
+00:13:52,340 --> 00:13:56,220
+successfully challenge
+the argument A2.
+00:13:56,240 --> 00:14:01,420
+Why? Because A2's
+claim of going to the
+00:14:01,420 --> 00:14:05,240
+restaurant is preferred
+as a decision option
+00:14:05,240 --> 00:14:08,580
+to A1's claim of
+going to the cinema.
+00:14:10,000 --> 00:14:14,020
+OK, so given five, given
+the preference information,
+00:14:14,180 --> 00:14:17,240
+A2 is a stronger argument
+than A1. It's preferred to
+00:14:17,240 --> 00:14:21,700
+A1. And so we cancel out
+the attack from A1 to A2.
+00:14:23,080 --> 00:14:28,460
+OK, we have the only remaining
+attack from A2 to A1.
+00:14:29,040 --> 00:14:30,660
+A2 is winning.
+00:14:31,400 --> 00:14:34,980
+And A2 is winning.
+A1 is losing.
+00:14:36,060 --> 00:14:39,940
+and so we're looking at
+the arguments now having
+00:14:39,940 --> 00:14:43,580
+applied the preferences
+to decide which attacks
+00:14:43,580 --> 00:14:47,980
+succeed or not we have a
+winning argument a2 a losing
+00:14:47,980 --> 00:14:51,380
+argument a1 and we have
+the winning argument for
+00:14:51,380 --> 00:14:54,910
+the decision option of
+going to the restaurant now
+00:14:55,440 --> 00:15:00,120
+again there are various
+versions of logic programming
+00:15:00,120 --> 00:15:02,280
+we're just looking at
+the logic programs we
+00:15:02,280 --> 00:15:04,300
+forget about the arguments
+So just looking at the
+00:15:04,300 --> 00:15:08,060
+logic program, these kinds
+of preferences can then,
+00:15:08,300 --> 00:15:11,020
+from the logic
+programming point of view,
+00:15:11,160 --> 00:15:15,120
+yield the only logic
+programming non-monotonic
+00:15:15,120 --> 00:15:18,840
+inference for the decision
+option, go to the restaurant.
+00:15:20,940 --> 00:15:23,020
+So we have this now,
+00:15:23,200 --> 00:15:24,980
+again, correspondence.
+00:15:25,180 --> 00:15:27,460
+We have a winning argument,
+having made use of
+00:15:27,460 --> 00:15:29,660
+preferences, we have
+a winning argument for
+00:15:29,660 --> 00:15:31,120
+the decision option of
+going to the restaurant.
+00:15:31,120 --> 00:15:35,820
+that corresponds to
+restaurant being a logic
+00:15:35,820 --> 00:15:38,440
+programming inference
+from the knowledge base.
+00:15:42,120 --> 00:15:47,220
+So, we can apply the same idea
+that I've just illustrated
+00:15:47,340 --> 00:15:50,800
+to the case of logic
+programming non-monotonic
+00:15:50,800 --> 00:15:54,860
+inference. We can apply the
+same idea to maxi-consistent
+00:15:54,860 --> 00:15:57,640
+and default logic
+approaches to argumentation.
+00:15:57,840 --> 00:16:01,540
+The general idea is, as I
+said, you take your knowledge
+00:16:01,540 --> 00:16:05,920
+base, you may have ordering,
+in this case, in the
+00:16:05,920 --> 00:16:09,020
+case of maxi-consistent and
+default logic approaches, you
+00:16:09,020 --> 00:16:11,860
+have an ordering over
+classical logic formulas, in
+00:16:11,860 --> 00:16:15,320
+the case of maxi-consistent
+approaches, or an ordering
+00:16:15,320 --> 00:16:17,860
+over the set of defaults,
+there's a priority ordering.
+00:16:18,360 --> 00:16:21,480
+So you can construct
+your arguments and
+00:16:21,480 --> 00:16:24,720
+attacks from these
+knowledge bases, use these
+00:16:24,720 --> 00:16:28,500
+orderings to apply
+preferences to determine
+00:16:28,500 --> 00:16:32,720
+which attacks succeed
+and which fail,
+00:16:33,480 --> 00:16:37,580
+evaluate the winning
+arguments, and then the claims
+00:16:37,580 --> 00:16:42,140
+of the winning arguments
+correspond to the non-monotonic
+00:16:42,140 --> 00:16:44,680
+consequences from the
+underlying knowledge base.
+00:16:45,420 --> 00:16:50,780
+OK, so you can give
+argumentative characterisations
+00:16:50,780 --> 00:16:55,120
+not only of logic programming
+inference, but also of
+00:16:55,120 --> 00:16:58,900
+non-monotonic inference
+in the maxi-consistent and
+00:16:58,900 --> 00:17:03,620
+default logic approaches
+to non-monotonic reasoning.
+00:17:06,420 --> 00:17:10,200
+now in the following
+slides i'm just
+00:17:10,200 --> 00:17:12,100
+literally going to flip
+through them in this
+00:17:12,100 --> 00:17:14,200
+recorded presentation
+because i'm going to
+00:17:14,200 --> 00:17:16,660
+use that i'm going to
+apply that same idea
+00:17:17,700 --> 00:17:21,080
+to give argumentative
+characterizations of the kinds
+00:17:21,080 --> 00:17:24,360
+of maxi consistent non
+-monotonic reasoning that we've
+00:17:24,360 --> 00:17:27,340
+seen earlier in this lecture
+now i'm only just going
+00:17:27,340 --> 00:17:30,100
+to flip through them very
+quickly I invite you to
+00:17:30,100 --> 00:17:33,320
+look at these slides and think
+about and try to understand
+00:17:33,320 --> 00:17:36,440
+them in your own time
+but note you will not be
+00:17:36,440 --> 00:17:41,960
+examined on argumentative
+formalizations or characterizations
+00:17:41,960 --> 00:17:45,080
+of maxi-consistent non
+-monotonic reasoning.
+00:17:46,470 --> 00:17:49,800
+So these are slides you can
+look at in your own time.

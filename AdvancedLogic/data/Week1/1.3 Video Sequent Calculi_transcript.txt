@@ -1,0 +1,475 @@
+00:00:06,970 --> 00:00:08,530
+When it comes to proof systems,
+00:00:08,530 --> 00:00:11,010
+natural deduction is not
+the only player in town.
+00:00:12,370 --> 00:00:14,070
+In the land of syntax,
+00:00:14,070 --> 00:00:16,110
+there also live
+completely different genre
+00:00:16,110 --> 00:00:18,130
+of proof systems,
+such as Hilbert
+00:00:18,130 --> 00:00:20,750
+systems, favored by
+logician David Hilbert,
+00:00:21,190 --> 00:00:24,330
+where proofs are simply
+sequences of formulas,
+00:00:24,330 --> 00:00:27,350
+each of which is either
+an axiom or an application
+00:00:27,350 --> 00:00:30,070
+of one of a very small
+number of logical rules.
+00:00:31,450 --> 00:00:34,130
+Or sequent calculi,
+sometimes known as
+00:00:34,130 --> 00:00:37,170
+Gensen systems, after
+logician Gerhard Gensen,
+00:00:37,170 --> 00:00:39,940
+who first proposed
+such systems in 1935.
+00:00:41,590 --> 00:00:44,230
+Unlike natural deduction
+and Hilbert systems,
+00:00:44,230 --> 00:00:46,030
+which operate on the
+level of formulas,
+00:00:46,030 --> 00:00:48,270
+the rules of sequent
+calcule operate
+00:00:48,270 --> 00:00:49,910
+on objects known as sequence.
+00:00:52,990 --> 00:00:55,030
+So just what is a sequent?
+00:00:56,150 --> 00:00:58,670
+Put simply, a sequent
+is just a pair
+00:00:58,670 --> 00:01:00,990
+of finite sets or
+lists of formulas.
+00:01:02,710 --> 00:01:04,730
+typically sequence
+are denoted with an
+00:01:04,730 --> 00:01:08,250
+implication symbol like
+so but conventions do vary
+00:01:10,750 --> 00:01:13,750
+although formally a sequence
+is just a finite sequence
+00:01:13,750 --> 00:01:16,030
+of formulas split into
+a left-hand side and a
+00:01:16,030 --> 00:01:18,870
+right-hand side we can
+intuitively interpret a sequence
+00:01:18,870 --> 00:01:22,410
+as saying if everything
+on the left-hand side is
+00:01:22,410 --> 00:01:26,490
+true then something on the
+right-hand side is true
+00:01:28,750 --> 00:01:31,730
+This is of course purely
+a design choice which
+00:01:31,730 --> 00:01:33,570
+then motivates the
+kinds of rules that we
+00:01:33,570 --> 00:01:36,090
+introduce as part of our
+sequent calculus system.
+00:01:39,250 --> 00:01:42,150
+We can think of a sequent
+calculus as a kind of
+00:01:42,150 --> 00:01:44,810
+meta proof that operates
+directly on the consequence
+00:01:44,810 --> 00:01:47,550
+relation between finite
+sets of formulas in
+00:01:47,550 --> 00:01:49,710
+contrast to natural
+deduction or Hilbert systems
+00:01:49,710 --> 00:01:52,210
+that operate at the level
+of individual formulas.
+00:01:54,530 --> 00:01:58,250
+A sequent rule is a rule
+that takes as input zero or
+00:01:58,250 --> 00:02:00,650
+more sequence which we
+call the premises of the
+00:02:00,650 --> 00:02:04,450
+rule and returns a single
+sequence as its conclusion.
+00:02:05,870 --> 00:02:08,790
+In general a rule may have
+one or more side conditions
+00:02:08,790 --> 00:02:11,150
+that stipulate any
+additional criteria under
+00:02:11,150 --> 00:02:15,790
+which the rule may be applied
+and a sequent rule with
+00:02:15,790 --> 00:02:18,550
+zero premises is referred
+to as an axiom schema.
+00:02:20,810 --> 00:02:24,010
+We can collect together any
+finite set of rules into
+00:02:24,010 --> 00:02:26,790
+a proof system which we
+call a sequent calculus.
+00:02:31,830 --> 00:02:34,550
+We have a reflexivity
+axiom schema that says
+00:02:34,550 --> 00:02:36,730
+that for any formula
+f we can always infer
+00:02:36,730 --> 00:02:39,150
+a sequent in which f
+appears on both sides.
+00:02:40,140 --> 00:02:41,890
+In other words
+saying that we can
+00:02:41,890 --> 00:02:44,290
+always prove that f implies f.
+00:02:47,030 --> 00:02:49,550
+Next we have a left
+conjunction rule that says
+00:02:49,550 --> 00:02:52,510
+that if f and g are any
+two formulas that appear
+00:02:52,510 --> 00:02:55,610
+on the right hand side
+of a sequent then we can
+00:02:55,610 --> 00:02:57,670
+always join these together
+with a conjunction.
+00:03:00,610 --> 00:03:04,090
+We also have a right
+conjunction rule that says that
+00:03:04,090 --> 00:03:07,130
+if we can prove the sequent
+gamma implies delta and
+00:03:07,130 --> 00:03:12,050
+f and a sequent gamma
+implies delta and g then we
+00:03:12,050 --> 00:03:15,050
+can join together the f and
+g with a conjunction and
+00:03:15,050 --> 00:03:18,510
+get the single sequent
+gamma implies delta f and g.
+00:03:21,610 --> 00:03:24,430
+Similarly we have a left
+disjunction rule that
+00:03:24,430 --> 00:03:26,970
+says that if we can
+prove a sequence gamma f
+00:03:26,970 --> 00:03:31,230
+implies delta and a sequence
+gamma g implies delta
+00:03:31,630 --> 00:03:34,190
+then we can join together
+the f and g with a
+00:03:34,190 --> 00:03:38,030
+disjunction to get that
+gamma f or g implies delta.
+00:03:40,890 --> 00:03:43,510
+We also have a right
+disjunction rule that says
+00:03:43,510 --> 00:03:45,410
+that if we can prove
+a sequence in which f
+00:03:45,410 --> 00:03:48,790
+and g both appear on the
+right-hand side then we
+00:03:48,790 --> 00:03:51,270
+can join f and g together
+with a disjunction.
+00:03:54,330 --> 00:03:56,950
+Next we have a left
+negation rule that says that
+00:03:56,950 --> 00:03:59,150
+we can move any formula
+from the right-hand side
+00:03:59,150 --> 00:04:01,870
+to the left-hand side by
+simply adding a negation.
+00:04:04,750 --> 00:04:07,810
+And similarly a right
+negation rule that says that
+00:04:07,810 --> 00:04:09,970
+we can move any formula
+from the left-hand side
+00:04:09,970 --> 00:04:12,650
+to the right-hand side
+also by adding a negation.
+00:04:15,350 --> 00:04:18,490
+The left implication rule
+behaves similarly to the
+00:04:18,490 --> 00:04:21,070
+left disjunction rule which
+should come as no surprise
+00:04:21,070 --> 00:04:23,830
+since we know that implications
+are logically equivalent
+00:04:23,830 --> 00:04:26,870
+to a disjunction of the
+consequent and the negation
+00:04:26,870 --> 00:04:32,390
+of the antecedent, while
+the right implication
+00:04:32,390 --> 00:04:35,630
+rule behaves similarly to
+the right disjunction rule.
+00:04:38,550 --> 00:04:42,520
+finally we have two so
+-called structural rules the
+00:04:43,110 --> 00:04:46,430
+first monotonicity says
+that we can add any formula
+00:04:46,430 --> 00:04:49,490
+or formulas to the left-hand
+side of any sequent that
+00:04:49,490 --> 00:04:53,070
+we have already proved here
+theater just stands for
+00:04:53,070 --> 00:04:55,630
+any finite list of formulas
+that we may wish to add
+00:04:58,350 --> 00:05:01,170
+the second is the cut
+rule that says that we can
+00:05:01,170 --> 00:05:04,150
+merge together to sequence
+and cut out any formula or
+00:05:04,150 --> 00:05:06,350
+formulas that appear on
+the right hand side of one
+00:05:06,350 --> 00:05:09,080
+sequent and the left hand
+side of the other sequent.
+00:05:09,950 --> 00:05:13,350
+Again theta here can be any
+finite list of formulas.
+00:05:16,330 --> 00:05:19,330
+As with natural deduction
+each rule acts as a
+00:05:19,330 --> 00:05:21,570
+template that can be
+instantiated with arbitrary
+00:05:21,570 --> 00:05:25,370
+formulas that fit the same
+syntactic pattern and we
+00:05:25,370 --> 00:05:28,270
+call such instantiations
+instances of the rule.
+00:05:28,490 --> 00:05:31,670
+For example a possible
+instance of the right negation
+00:05:31,670 --> 00:05:41,210
+rule could be this or this
+or even this a proof in a
+00:05:41,210 --> 00:05:44,310
+sequent calculus s is a
+finite directed tree in which
+00:05:44,310 --> 00:05:47,050
+each vertex of the tree is
+labeled by some sequent rule
+00:05:47,050 --> 00:05:51,410
+from s such that if a
+vertex V is labeled by an
+00:05:51,410 --> 00:05:56,130
+instance of a rule with n
+premises then V has n children
+00:05:56,130 --> 00:06:00,650
+u1 to u n such that each ui
+is labelled by an instance
+00:06:00,650 --> 00:06:03,790
+of a rule whose conclusion
+is the i-th premise of v.
+00:06:07,110 --> 00:06:10,130
+We say that f is provable
+or derivable from
+00:06:10,130 --> 00:06:12,110
+a set of formulas
+gamma if there is a
+00:06:12,110 --> 00:06:15,290
+proof of the sequent
+gamma prime implies f for
+00:06:15,290 --> 00:06:17,770
+some finite subset
+gamma prime of gamma.
+00:06:19,050 --> 00:06:22,250
+In which case we write
+gamma proves f with a
+00:06:22,250 --> 00:06:24,730
+superscript s to indicate
+that the proof is within
+00:06:24,730 --> 00:06:28,770
+the sequent calculus s
+however we can omit the
+00:06:28,770 --> 00:06:31,110
+superscript whenever the
+sequent calculus is clear
+00:06:31,110 --> 00:06:37,610
+from context as an exercise
+see if you can prove
+00:06:37,610 --> 00:06:41,130
+the consequence that not
+p and q proves not p or
+00:06:41,130 --> 00:06:44,410
+not q is derivable from
+our sequent calculus s it
+00:06:52,050 --> 00:06:54,410
+is common in sequent
+calculate proofs to work
+00:06:54,410 --> 00:06:56,670
+backwards from the root
+of our proof tree starting
+00:06:56,670 --> 00:06:58,590
+with the sequence that
+we intend to prove.
+00:07:01,010 --> 00:07:03,350
+Here we notice that we
+have a disjunction on
+00:07:03,350 --> 00:07:05,150
+the right-hand side
+and so if we were to
+00:07:05,150 --> 00:07:07,390
+apply the right disjunction
+rule it would be
+00:07:07,390 --> 00:07:09,550
+sufficient to have first
+proved this sequence.
+00:07:13,110 --> 00:07:15,850
+Applying the right negation
+rule we can move the Q
+00:07:15,850 --> 00:07:18,650
+across to the left-hand side
+eliminating the negation.
+00:07:20,570 --> 00:07:22,410
+And similarly with P.
+00:07:26,010 --> 00:07:28,610
+Likewise, we can use
+the left negation rule
+00:07:28,610 --> 00:07:31,430
+to move the formula P
+and Q across to the right
+00:07:31,430 --> 00:07:33,730
+-hand side, again
+eliminating the negation.
+00:07:36,170 --> 00:07:38,630
+Now we have a conjunction
+on the right-hand
+00:07:38,630 --> 00:07:40,970
+side, and so by the
+right conjunction rule,
+00:07:40,970 --> 00:07:42,710
+it would be sufficient
+to have first proved
+00:07:42,710 --> 00:07:48,710
+the sequence PQ implies
+P and PQ implies Q.
+00:07:51,230 --> 00:07:53,590
+however each of these
+are instances of our
+00:07:53,590 --> 00:07:57,210
+reflexivity schema since in
+the first case p appears on
+00:07:57,210 --> 00:08:00,710
+both sides of the sequent
+whereas in the second
+00:08:00,710 --> 00:08:03,010
+case it is q that appears
+on both sides of the
+00:08:03,010 --> 00:08:08,130
+sequent once we have reached
+the leaves of our tree
+00:08:08,130 --> 00:08:10,950
+terminating instances of
+our axiom we know that
+00:08:10,950 --> 00:08:17,790
+we are done with our
+proof next let's see if we
+00:08:17,790 --> 00:08:20,930
+can prove the consequence
+that not p or q proves
+00:08:20,930 --> 00:08:24,730
+not p and not q is
+derivable from our calculus.
+00:08:32,610 --> 00:08:34,890
+As before we start at the
+root of our proof with
+00:08:34,890 --> 00:08:38,890
+the sequence not p or q
+implies not p and not q.
+00:08:42,170 --> 00:08:44,910
+This time by the right
+conjunction rule we see
+00:08:44,910 --> 00:08:47,650
+that this is enough to
+prove the sequence not p
+00:08:47,650 --> 00:08:52,010
+or q implies not p and
+not p or q implies not q.
+00:08:54,370 --> 00:08:57,370
+in the first case we
+can move the p across to
+00:08:57,370 --> 00:08:59,810
+the left hand side using
+the right negation rule
+00:09:01,730 --> 00:09:03,950
+and similarly for the q in
+00:09:03,950 --> 00:09:05,290
+the second branch of our proof
+00:09:08,530 --> 00:09:11,290
+we can then use the left
+negation rule to move
+00:09:11,290 --> 00:09:13,930
+the p or q across to
+the right hand side in
+00:09:13,930 --> 00:09:18,190
+both the first branch
+and in the second branch
+00:09:21,510 --> 00:09:23,970
+The right disjunction
+rule now allows us to
+00:09:23,970 --> 00:09:26,310
+split this disjunction
+in both the first branch
+00:09:26,690 --> 00:09:29,090
+and likewise in
+the second branch.
+00:09:32,550 --> 00:09:35,390
+However, each of these
+sequence are now instances
+00:09:35,390 --> 00:09:38,290
+of our reflexivity schema
+and so we are done.
+00:09:43,420 --> 00:09:46,080
+As with natural deduction,
+we can show that this sequent
+00:09:46,080 --> 00:09:48,640
+calculus is sound and
+complete with respect to the
+00:09:48,640 --> 00:09:51,420
+usual truth table semantics
+for propositional logic.
+00:09:52,600 --> 00:09:55,860
+That is to say that every
+consequence that is provable
+00:09:55,860 --> 00:09:58,680
+with these rules is indeed
+a logical consequence.
+00:10:00,020 --> 00:10:03,120
+And conversely, every
+logical consequence can be
+00:10:03,120 --> 00:10:06,120
+proved with some finite proof
+from these sequent rules.

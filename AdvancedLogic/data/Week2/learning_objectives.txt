@@ -1,0 +1,29 @@
+Learning Objectives
+
+By the end of this week, you will be able to:
+
+LO1: Evaluate the non-monotonic consequences for three types of non-monotonic logic.
+LO2: Construct an argument framework (AF) of arguments and their relations from a  knowledge base (KB) of formulas and the inference rules of a logic. 
+
+LO3: Apply preferences to determine whether one argument is a legitimate counter-argument to another.
+LO4: Apply labelling rules to determine the winning sets of arguments in an AF. 
+LO5: Relate the claims of winning arguments to KB’s non-monotonic logic consequences 
+
+Instructions
+
+Please watch the videos before you come to the LGT and attempt the below exercises before the LGT. We will go through the solutions to the exercises in the LGT and and answer any questions about the material in the lecture.
+
+Learning Objectives
+
+By the end of this week, you will be able to:
+
+LO1: Evaluate the non-monotonic consequences for three types of non-monotonic logic.
+LO2: Construct an argument framework (AF) of arguments and their relations from a  knowledge base (KB) of formulas and the inference rules of a logic. 
+
+LO3: Apply preferences to determine whether one argument is a legitimate counter-argument to another.
+LO4: Apply labelling rules to determine the winning sets of arguments in an AF. 
+LO5: Relate the claims of winning arguments to KB’s non-monotonic logic consequences 
+
+Instructions
+
+Please watch the videos before you come to the LGT and attempt the below exercises before the LGT. We will go through the solutions to the exercises in the LGT and and answer any questions about the material in the lecture.

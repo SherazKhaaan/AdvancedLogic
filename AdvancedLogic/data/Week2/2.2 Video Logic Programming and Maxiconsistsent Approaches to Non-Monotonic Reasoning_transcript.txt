@@ -1,0 +1,1127 @@
+00:00:06,650 --> 00:00:08,870
+So let's now get
+to the contents of
+00:00:08,870 --> 00:00:12,310
+week two, in which
+we'll basically cover
+00:00:12,310 --> 00:00:14,970
+three types of non
+-monotonic logic,
+00:00:14,990 --> 00:00:18,050
+each of which, as
+I said earlier,
+00:00:18,250 --> 00:00:21,990
+can be given a non
+-monotonic semantics
+00:00:21,990 --> 00:00:23,910
+of the type described by Chris.
+00:00:24,150 --> 00:00:27,150
+We can start off with
+something which I hope is
+00:00:27,150 --> 00:00:29,710
+familiar to you from your
+first year, logic program,
+00:00:29,710 --> 00:00:32,990
+and in particular prologue.
+And recall, of course,
+00:00:33,470 --> 00:00:36,590
+that in logic programs, one
+doesn't have strict negation,
+00:00:36,590 --> 00:00:39,810
+but instead has negation
+as failure or not. So let's
+00:00:39,810 --> 00:00:43,670
+take this logic program
+KB1, KB for knowledge base,
+00:00:43,930 --> 00:00:47,170
+consisting of fact,
+penguin, tweety, and
+00:00:47,170 --> 00:00:50,430
+two rules. One which
+says that if some
+00:00:50,430 --> 00:00:53,030
+X is a penguin, then
+that X is a bird.
+00:00:53,590 --> 00:00:59,330
+and rule three which says
+if x is a bird and x is
+00:00:59,330 --> 00:01:02,750
+not abnormal with respect
+to the property of flight
+00:01:03,610 --> 00:01:08,930
+then x flies okay so
+intuitively again recall from
+00:01:08,930 --> 00:01:12,150
+chris's lecture in the most
+preferred or normal worlds
+00:01:12,150 --> 00:01:16,610
+in which x is a bird x flies
+so that's what rule three
+00:01:16,610 --> 00:01:20,310
+says so i hope you can
+easily see that from this
+00:01:20,310 --> 00:01:23,990
+knowledge base we can
+conclude that tweety flies now
+00:01:25,480 --> 00:01:31,190
+supposing we add rule four
+to the knowledge base kb1 to
+00:01:31,190 --> 00:01:37,550
+obtain kb2 and the rule
+four says if x is a penguin
+00:01:39,270 --> 00:01:43,950
+then x is abnormal with
+respect to the property of
+00:01:43,950 --> 00:01:48,090
+flight in the most normal
+world in which x is a penguin
+00:01:48,090 --> 00:01:51,430
+in other words in worlds
+in which say for example x
+00:01:51,430 --> 00:01:55,420
+does not happen to be you
+know dc comic character okay
+00:01:55,770 --> 00:02:00,630
+so we cannot prove x is
+a dc comic character and
+00:02:00,750 --> 00:02:05,470
+therefore from the fact that
+root 20 is a penguin we can
+00:02:05,470 --> 00:02:09,150
+apply rule four and conclude
+that tweety is in fact
+00:02:09,150 --> 00:02:13,330
+abnormal with respect to the
+property of flight we cannot
+00:02:13,330 --> 00:02:18,250
+now apply rule three because
+rule three says abnormal
+00:02:18,250 --> 00:02:21,510
+fly tweety cannot be
+proven but we have already
+00:02:21,510 --> 00:02:28,210
+shown that with rule four so
+now we see that fly tweety
+00:02:28,210 --> 00:02:32,470
+is no longer a consequence
+of the expanded knowledge
+00:02:32,470 --> 00:02:36,050
+base kb2 in which we've added
+the rule So we have this
+00:02:36,050 --> 00:02:39,530
+clear, obvious, non-monotonic
+consequence relation.
+00:02:43,250 --> 00:02:47,570
+Of course, if it turns
+out that we are in an
+00:02:47,570 --> 00:02:50,710
+abnormal world with respect
+to penguins, in other
+00:02:50,710 --> 00:02:54,270
+words, let me put it
+simply, in the vast
+00:02:54,270 --> 00:02:58,110
+majority of worlds in
+which some X is a penguin,
+00:02:58,290 --> 00:03:02,830
+the X is not a DC
+comic character.
+00:03:03,190 --> 00:03:06,570
+so let's assume we are
+so now let's add the fact
+00:03:06,920 --> 00:03:09,390
+that in fact we are in
+such an abnormal world
+00:03:09,390 --> 00:03:11,250
+in which Tweety in fact
+turns out to be a DC
+00:03:11,250 --> 00:03:16,950
+comic character so from
+rule four we now not DC
+00:03:16,950 --> 00:03:20,910
+comic Tweety cannot be
+you know is provable
+00:03:20,910 --> 00:03:25,530
+right it is provable so
+we cannot apply rule four
+00:03:26,250 --> 00:03:29,110
+So now, rule three,
+00:03:29,590 --> 00:03:35,710
+we cannot, we can no
+longer conclude that Tweety
+00:03:35,710 --> 00:03:37,990
+is abnormal with respect
+to the property of flight.
+00:03:38,070 --> 00:03:42,870
+So now, FlyTweety
+is reinstated as a
+00:03:42,870 --> 00:03:45,350
+consequence of the
+expanding knowledge base.
+00:03:46,810 --> 00:03:50,770
+So what I've just illustrated
+here is our, in effect,
+00:03:51,050 --> 00:03:54,410
+logic program is a kind of
+non-monotonic logic, right?
+00:03:54,410 --> 00:03:57,790
+which as you expand the
+knowledge base, you may
+00:03:57,790 --> 00:04:01,150
+invalidate consequences that
+were previously derivable.
+00:04:04,080 --> 00:04:06,090
+Now let's look at a second
+00:04:06,090 --> 00:04:08,250
+type of non-monotonic logic.
+00:04:08,920 --> 00:04:11,930
+These are what they
+call maxi-consistent
+00:04:11,930 --> 00:04:14,010
+approaches to non
+-monotonic reasoning.
+00:04:14,110 --> 00:04:18,550
+And they basically,
+what these approaches do
+00:04:18,550 --> 00:04:22,170
+is they identify
+subsets of a classical
+00:04:22,170 --> 00:04:25,910
+knowledge base. so recall
+that classical logic
+00:04:25,910 --> 00:04:30,650
+is monotonic if alpha
+follows from some Kb
+00:04:31,230 --> 00:04:34,750
+and some knowledge
+base Kb and we
+00:04:34,750 --> 00:04:36,950
+expand that knowledge
+base with beta
+00:04:37,730 --> 00:04:41,230
+monotonically we still
+conclude alpha so this is
+00:04:41,230 --> 00:04:44,050
+the essential, as you've
+seen already the essential
+00:04:44,050 --> 00:04:46,530
+notion of a monotonic
+consequence relation classical
+00:04:46,530 --> 00:04:50,270
+logic yields a monotonic
+consequence relation
+00:04:51,650 --> 00:04:55,710
+but one can also think of
+non-monotonic reasoning
+00:04:56,130 --> 00:04:59,150
+as a decision procedure
+for choosing between
+00:04:59,150 --> 00:05:02,730
+contradictory classical
+monotonic consequences
+00:05:02,990 --> 00:05:04,510
+let me explain
+00:05:06,050 --> 00:05:09,790
+let's take KB1 it's a
+classical well-formed
+00:05:09,790 --> 00:05:12,190
+formula now so we're not
+dealing with logic program
+00:05:12,190 --> 00:05:14,150
+we've got some classical
+well-formed formula
+00:05:14,280 --> 00:05:16,850
+in particular we have
+the fact that Tweed is
+00:05:16,850 --> 00:05:20,410
+a penguin the implication
+that if X is a penguin
+00:05:20,410 --> 00:05:24,650
+then X is a bird and
+if X is a bird then X
+00:05:24,650 --> 00:05:27,850
+flies and we conclude
+from Kb1 that Tweety flies
+00:05:29,430 --> 00:05:32,670
+now analogous to the
+logic program example
+00:05:32,670 --> 00:05:36,450
+supposing we add or
+expand Kb1 to yield
+00:05:36,450 --> 00:05:40,410
+Kb2 so that Kb2
+includes the additional
+00:05:40,410 --> 00:05:44,870
+rule if X is a penguin
+then X does not fly
+00:05:46,230 --> 00:05:51,510
+So, in essence, what we
+have here, from a purely
+00:05:51,510 --> 00:05:58,110
+classical perspective, we have
+two classical consequences
+00:05:58,110 --> 00:06:00,990
+of this set of classical
+well-formed formulae.
+00:06:01,230 --> 00:06:02,350
+Tweety flies,
+00:06:03,050 --> 00:06:07,670
+which is obtained
+from fact one,
+00:06:07,910 --> 00:06:11,450
+rule two and rule three.
+and tweetie does not
+00:06:11,450 --> 00:06:17,550
+fly which is obtained from
+fact one and rule four
+00:06:19,850 --> 00:06:23,850
+and as i said the idea is
+that we can formalize non
+00:06:23,850 --> 00:06:27,890
+-monotronic reasoning by
+basically deciding in favor
+00:06:28,340 --> 00:06:32,130
+of negation fly tweetie
+over fly tweetie so in other
+00:06:32,130 --> 00:06:36,350
+words in that by by deciding
+in favor of the consequence
+00:06:36,350 --> 00:06:40,670
+negation fly tweety we
+invalidate the consequence
+00:06:40,670 --> 00:06:44,350
+fly tweety so that fly
+tweety no longer is the
+00:06:44,350 --> 00:06:47,310
+consequences in other words
+the idea is we therefore or
+00:06:47,310 --> 00:06:51,270
+thereby obtain a non-monotonic
+consequence relation so
+00:06:51,270 --> 00:06:57,020
+how can we do this well
+look intuitively right
+00:06:57,210 --> 00:07:01,530
+penguins are a special type of
+bird right they're a subclass
+00:07:01,530 --> 00:07:06,170
+of the of the genus bird
+okay this is this this
+00:07:06,170 --> 00:07:10,110
+information is is is indicated
+in the knowledge base
+00:07:10,110 --> 00:07:13,750
+by the implication which
+says if x is a penguin then
+00:07:13,750 --> 00:07:17,610
+x is a bird in other words
+penguins are a special
+00:07:17,610 --> 00:07:21,470
+subclass of birds and
+therefore they may not inherit
+00:07:21,470 --> 00:07:24,430
+all the properties of birds
+they're exceptional or
+00:07:24,430 --> 00:07:27,730
+abnormal births with respect
+to the property of flying.
+00:07:28,410 --> 00:07:34,870
+So this subclass
+principle justifies why
+00:07:34,870 --> 00:07:37,990
+we should prefer the
+consequence negation
+00:07:37,990 --> 00:07:41,490
+fly tweety to the
+consequence fly tweety.
+00:07:41,510 --> 00:07:46,890
+The subclass principle says
+if something, some x, is
+00:07:46,890 --> 00:07:51,050
+a subclass of some y, then
+it's not necessarily the
+00:07:51,050 --> 00:07:56,630
+case that x inherits all
+the properties that y has
+00:07:58,370 --> 00:08:02,930
+so a subclass principle
+says well look because
+00:08:02,930 --> 00:08:05,930
+penguins are a special
+class or a subclass of
+00:08:05,930 --> 00:08:11,570
+birds rules that express
+properties of penguins in
+00:08:11,570 --> 00:08:15,410
+other words in this case
+rule four take priority
+00:08:15,410 --> 00:08:20,810
+take preference over rules
+that express properties
+00:08:20,810 --> 00:08:23,670
+of the superclass of
+penguins, i.e. birds.
+00:08:24,790 --> 00:08:26,170
+Okay?
+00:08:26,170 --> 00:08:30,190
+So the idea is that
+we're using the subclass
+00:08:30,190 --> 00:08:33,550
+principle as it
+applies to properties
+00:08:38,890 --> 00:08:42,930
+to prioritise the non
+-monotonic consequence
+00:08:43,630 --> 00:08:46,490
+negation fly tweety
+over fly tweety
+00:08:47,610 --> 00:08:53,050
+how can we do this well
+let's assume we have
+00:08:53,050 --> 00:08:58,630
+a total let's let's
+prioritize our formula
+00:09:00,450 --> 00:09:04,810
+by by having a total
+ordering over the classical
+00:09:04,810 --> 00:09:07,310
+logic formula and the
+knowledge base right so
+00:09:07,310 --> 00:09:11,230
+let's assume we now have
+a total ordering over the
+00:09:11,230 --> 00:09:13,810
+classical logic formulas
+in the knowledge base.
+00:09:14,650 --> 00:09:16,730
+And the total
+orderings expresses
+00:09:16,730 --> 00:09:18,610
+the standard greater
+than or equal.
+00:09:18,830 --> 00:09:21,510
+And recall that if X is
+greater than or equal
+00:09:21,510 --> 00:09:25,010
+to Y and Y is not greater
+than or equal to X,
+00:09:25,770 --> 00:09:29,250
+we can then say that X is
+strictly greater than Y.
+00:09:29,330 --> 00:09:33,770
+And if X is greater than or
+equal to Y and Y is greater
+00:09:33,770 --> 00:09:37,930
+than or equal to X, we can
+say that X and Y have the
+00:09:37,930 --> 00:09:40,990
+same priority or belong to
+the same equivalence class
+00:09:41,690 --> 00:09:47,070
+so these are the basic
+properties of total orderings
+00:09:50,170 --> 00:09:52,950
+so let's look at our
+knowledge base the
+00:09:52,950 --> 00:09:55,450
+expanded knowledge
+base containing the
+00:09:55,450 --> 00:09:58,430
+rule 4 which says
+penguins do not fly
+00:09:59,990 --> 00:10:05,770
+we can now represent
+the totally ordered
+00:10:05,770 --> 00:10:08,890
+formulae as a stratified
+knowledge base with
+00:10:08,890 --> 00:10:11,370
+each stratum representing
+an equivalence class
+00:10:11,370 --> 00:10:15,160
+and formulas in a
+higher stratum being
+00:10:15,310 --> 00:10:17,840
+strictly greater than
+those in a lower stratum.
+00:10:18,590 --> 00:10:19,430
+OK?
+00:10:19,650 --> 00:10:24,530
+So we've got these
+formulas in Kb2.
+00:10:25,580 --> 00:10:27,830
+We can say, well, look,
+00:10:28,330 --> 00:10:31,430
+facts and formulas
+expressing subclass
+00:10:31,430 --> 00:10:34,210
+relationships always
+have highest priority.
+00:10:34,810 --> 00:10:40,110
+right so the fact one that
+tweet is a penguin and
+00:10:40,110 --> 00:10:43,210
+rule two which expresses
+that penguins are a special
+00:10:43,210 --> 00:10:47,470
+subclass of birds these
+kinds of formulas always
+00:10:47,470 --> 00:10:50,510
+have the highest priority
+and in particular
+00:10:50,510 --> 00:10:53,750
+always have higher priority
+than rules such as three
+00:10:53,750 --> 00:10:57,550
+and four which express
+properties of certain kinds
+00:10:57,550 --> 00:11:03,110
+of individuals okay and
+then of course we can
+00:11:03,110 --> 00:11:12,110
+also prioritize rule four
+over rule three why because
+00:11:12,110 --> 00:11:15,000
+rule four expressing
+a property of penguins
+00:11:15,000 --> 00:11:19,150
+takes priority over rules
+expressing properties of
+00:11:19,150 --> 00:11:21,850
+birds given that penguins
+are a subclass of birds
+00:11:22,420 --> 00:11:27,950
+so we have fact one
+and rule two they're of
+00:11:27,950 --> 00:11:30,730
+equal priority they belong
+to the same equivalence
+00:11:30,730 --> 00:11:33,190
+class they're in the
+top stratum of the
+00:11:33,190 --> 00:11:36,070
+stratified knowledge
+base let's call that s1
+00:11:37,610 --> 00:11:41,110
+facts and subclass
+relationships have higher
+00:11:41,110 --> 00:11:45,650
+priority over rules
+expressing properties
+00:11:46,060 --> 00:11:51,070
+so we have that 1 and 2
+are greater than 3 and 4
+00:11:52,850 --> 00:11:58,990
+so now we also have as I
+said earlier, that rule 4
+00:11:59,490 --> 00:12:04,570
+expressing that penguins do
+not fly has greater priority
+00:12:04,570 --> 00:12:07,930
+than rule 3 which expresses
+that birds do fly so
+00:12:07,930 --> 00:12:14,770
+we get this stratum S1, S2,
+S3 a stratified knowledge
+00:12:14,770 --> 00:12:19,330
+base where each stratum
+contains formulas in the
+00:12:19,330 --> 00:12:22,470
+same equivalence class
+according to the total ordering
+00:12:23,210 --> 00:12:27,310
+and where formula
+in lower strata
+00:12:28,790 --> 00:12:32,390
+are strictly less
+according to the total
+00:12:32,390 --> 00:12:35,530
+ordering than formulas
+in higher strata.
+00:12:36,990 --> 00:12:40,930
+So here we've used, in this
+particular example, we've
+00:12:40,930 --> 00:12:44,950
+used a subclass principle
+to order rule three to be
+00:12:44,950 --> 00:12:49,290
+strictly preferred to rule
+for but there are other means
+00:12:49,290 --> 00:12:52,050
+there are other criteria
+for ordering formulas for
+00:12:52,050 --> 00:12:54,980
+example the temporal ordering
+of formula intuitively
+00:12:56,970 --> 00:13:01,430
+information that one
+acquires later always takes
+00:13:01,430 --> 00:13:04,730
+priority over older
+information so that's that's
+00:13:04,730 --> 00:13:07,670
+an example of a different
+criterion for ordering
+00:13:07,670 --> 00:13:11,010
+formula temporal criterion
+for ordering formulas
+00:13:11,010 --> 00:13:14,490
+In this example, we're
+just using the subclass
+00:13:14,740 --> 00:13:20,330
+criterion for ordering
+rules such as 3 and 4.
+00:13:22,050 --> 00:13:23,290
+OK,
+00:13:23,570 --> 00:13:24,750
+so now,
+00:13:24,890 --> 00:13:27,790
+given this stratified
+knowledge base
+00:13:27,790 --> 00:13:30,830
+respecting the total
+ordering of a formulae,
+00:13:31,190 --> 00:13:34,690
+the idea is that we can
+select the maximal consistent
+00:13:34,690 --> 00:13:39,690
+subsets of the whole
+knowledge base, but in
+00:13:39,690 --> 00:13:43,150
+a way that respects
+this prioritisation or
+00:13:43,150 --> 00:13:47,030
+stratification of formulas
+and intuitively the idea is
+00:13:47,030 --> 00:13:51,490
+we say let's start with
+the top stratum S1 the top
+00:13:51,490 --> 00:13:54,930
+equivalence class of
+formulas and let's identify
+00:13:54,930 --> 00:13:57,890
+the maximal consistent
+subsets of these formulas
+00:13:58,890 --> 00:14:02,790
+then for each of these
+maximal consistent subsets
+00:14:03,390 --> 00:14:06,350
+maximally consistently
+extend with formulas from
+00:14:06,350 --> 00:14:13,310
+S2 and so on it's probably
+easiest to explain
+00:14:13,310 --> 00:14:17,610
+this procedure with an
+example so let's imagine
+00:14:17,610 --> 00:14:21,150
+we have a knowledge base
+containing three stratum
+00:14:21,150 --> 00:14:25,450
+or three strata three
+strata of formulae right
+00:14:25,450 --> 00:14:28,470
+respecting the total
+ordering so the highest
+00:14:28,470 --> 00:14:31,950
+ordered formulas are a a
+implies b and negation b
+00:14:33,390 --> 00:14:34,890
+So remember,
+00:14:35,510 --> 00:14:38,350
+the procedure is to
+choose the maximal
+00:14:38,350 --> 00:14:42,670
+consistent subsets of
+the first stratum So what
+00:14:42,670 --> 00:14:45,010
+are the maximal
+consistent subsets of S1?
+00:14:45,830 --> 00:14:52,350
+Well, we start with A We
+add A implies B That's
+00:14:52,350 --> 00:14:56,390
+consistent with A But we can't
+add negation B That wouldn't
+00:14:56,390 --> 00:15:02,090
+be consistent so E1 is A
+maximal consistent subset
+00:15:02,090 --> 00:15:05,730
+of S1 but there are
+other maximal consistent
+00:15:05,730 --> 00:15:12,030
+subsets of S1 instead of
+supplementing A by A implies B
+00:15:12,030 --> 00:15:17,670
+we can construct E2 which
+contains A and negation B
+00:15:21,910 --> 00:15:24,930
+and then we can
+construct a third
+00:15:24,930 --> 00:15:27,550
+maximal consistent
+subset that says, OK,
+00:15:28,330 --> 00:15:32,950
+I can extract from
+the top stratum S1
+00:15:32,950 --> 00:15:35,510
+the formula A implies
+B and negation B.
+00:15:35,530 --> 00:15:37,710
+I cannot add A because then, of
+00:15:37,710 --> 00:15:38,650
+course, it would
+be inconsistent.
+00:15:39,090 --> 00:15:43,150
+So we have three
+maximal, under set
+00:15:43,150 --> 00:15:46,390
+inclusion, consistent
+subsets of S1.
+00:15:47,310 --> 00:15:50,530
+Now, then the idea,
+as I said, is to
+00:15:50,530 --> 00:15:53,670
+extend each of
+these with as many
+00:15:53,670 --> 00:15:57,010
+formulas as you
+consistently can from S2
+00:15:59,210 --> 00:16:00,410
+so
+00:16:03,050 --> 00:16:07,110
+let's take E1 that's
+the first maximal
+00:16:07,110 --> 00:16:09,710
+consistent subset
+we extracted from S1
+00:16:10,570 --> 00:16:16,810
+we can extend it with
+C to obtain E1.1 can
+00:16:16,850 --> 00:16:20,240
+we extend E1.1 with
+negation C? obviously
+00:16:20,240 --> 00:16:22,180
+not, because you'd end
+up in inconsistency
+00:16:24,290 --> 00:16:27,650
+So, an alternative then is
+00:16:27,650 --> 00:16:30,050
+to extend E1 with negation C
+00:16:32,410 --> 00:16:34,870
+Similarly, let's
+take a look at the
+00:16:34,870 --> 00:16:38,170
+second maximal
+consistent subset of S1
+00:16:38,170 --> 00:16:41,950
+which is E2 containing
+A and negation B
+00:16:43,410 --> 00:16:51,470
+Again, we can consistently
+extend E2 with C we
+00:16:51,470 --> 00:16:54,990
+can't of course then add
+negation C so we stop there
+00:16:54,990 --> 00:16:57,650
+but an alternative would
+have been to consistently
+00:16:57,650 --> 00:17:02,590
+extend E2 with negation
+C and similarly for E3
+00:17:03,870 --> 00:17:07,870
+so our maximal
+consistent subsets
+00:17:09,230 --> 00:17:14,210
+from S1 and S2 are E1.1, E1
+00:17:14,210 --> 00:17:19,670
+.2, E2.1, E2.2, E3.1 and E3.2
+00:17:21,270 --> 00:17:26,970
+right? Okay, so now we
+take each of these E 1.1 to
+00:17:26,970 --> 00:17:31,110
+E 3.2 we take each of
+these and we maximally
+00:17:31,110 --> 00:17:35,010
+consistently extend each of
+these with formula from S3
+00:17:36,190 --> 00:17:39,210
+and clearly we can
+add D to all of them
+00:17:41,450 --> 00:17:45,190
+so if we look at the
+bottom row we have six
+00:17:45,190 --> 00:17:49,370
+maximal consistent subsets
+which we've constructed,
+00:17:49,810 --> 00:17:53,570
+right, starting from the
+top stratum and maximally
+00:17:53,570 --> 00:17:56,850
+consistently extending from
+each stratum as we continue.
+00:17:56,890 --> 00:18:01,750
+Each time we have an
+alternative formula we can add
+00:18:01,750 --> 00:18:05,410
+from any stratum, we fork,
+as it were, and so we
+00:18:05,410 --> 00:18:11,070
+end up with this set of
+maximal consistent subsets.
+00:18:12,350 --> 00:18:13,510
+okay
+00:18:14,470 --> 00:18:18,210
+so here's a more formal
+definition but as I said
+00:18:18,210 --> 00:18:21,570
+I think the example really
+helps to kind of get a
+00:18:21,570 --> 00:18:26,510
+grip of the formal
+definition we have a total
+00:18:26,510 --> 00:18:29,470
+ordering greater than or
+equal over a knowledge base
+00:18:30,150 --> 00:18:34,930
+and a stratification S1 to
+Sn of that knowledge base
+00:18:35,470 --> 00:18:40,830
+such that any stratum Si
+contains formulas alpha beta
+00:18:41,550 --> 00:18:44,450
+if and only if alpha
+and beta are in the same
+00:18:44,450 --> 00:18:47,890
+equivalence class according
+to the total ordering
+00:18:49,010 --> 00:18:52,310
+and if some alpha is in SI
+00:18:53,230 --> 00:18:55,970
+like S1 for example
+and some beta
+00:18:55,970 --> 00:18:59,350
+in SJ where say
+for example J is 2
+00:18:59,690 --> 00:19:03,630
+then it must be the case
+that according to the total
+00:19:03,630 --> 00:19:06,810
+ordering alpha is strictly
+greater than B, beta
+00:19:08,470 --> 00:19:11,270
+and then a preferred
+maximal consistent
+00:19:11,270 --> 00:19:16,690
+subset is a set E
+equals E1 union EN
+00:19:18,740 --> 00:19:21,750
+such that for I equals 1 to N
+00:19:23,090 --> 00:19:27,930
+E1 union and so on
+EI is a maximal under
+00:19:27,930 --> 00:19:31,330
+set inclusion consistent
+subset of S1 to SN
+00:19:31,930 --> 00:19:36,650
+as I said have a close look
+at this formal definition
+00:19:39,010 --> 00:19:44,290
+it exactly corresponds
+to how I've
+00:19:44,290 --> 00:19:46,930
+intuitively illustrated
+the construction
+00:19:46,930 --> 00:19:49,870
+of all the maximal
+consistent subsets
+00:19:54,900 --> 00:19:59,410
+so we have what we
+call at the end of this
+00:19:59,410 --> 00:20:02,870
+procedure the preferred
+maximal consistent subsets
+00:20:03,450 --> 00:20:08,010
+E1.1.3 all the way
+through to E3.2.3
+00:20:16,280 --> 00:20:20,560
+Now, let's take our
+penguin example Remember,
+00:20:20,560 --> 00:20:25,520
+we started with the
+fact penguin is a Tweety
+00:20:27,040 --> 00:20:32,220
+and the material implication
+that if something is a
+00:20:32,220 --> 00:20:34,820
+penguin then it is a bird
+the subclass relationship
+00:20:35,500 --> 00:20:37,180
+expressing that penguins are
+00:20:37,180 --> 00:20:38,760
+a special subclass of birds
+00:20:40,200 --> 00:20:41,740
+and we have the rule
+00:20:42,380 --> 00:20:45,220
+the material implication
+that if x is a bird it flies
+00:20:46,040 --> 00:20:48,840
+now there is a single preferred
+00:20:48,840 --> 00:20:51,060
+maximal consistent subset
+00:20:51,820 --> 00:20:55,060
+containing all these formulas,
+they're all consistent
+00:20:57,960 --> 00:21:02,120
+and we see from the
+maximal consistent subset E
+00:21:02,420 --> 00:21:04,240
+that fly tweety
+00:21:04,640 --> 00:21:09,820
+is a non-monotonic consequence
+right so if we look
+00:21:09,820 --> 00:21:13,580
+at this single preferred
+maximal consistent subset
+00:21:13,580 --> 00:21:20,860
+we see that fly tweety
+follows classically from that
+00:21:20,860 --> 00:21:24,580
+set and so fly tweety is a
+non-monotonic consequence
+00:21:24,580 --> 00:21:30,900
+of kb1 but now if we expand
+kb1 with the rule that
+00:21:30,900 --> 00:21:34,720
+penguins do not fly and
+remember now we insert
+00:21:34,720 --> 00:21:38,000
+penguins do not fly above
+the rule birds fly because
+00:21:38,000 --> 00:21:43,660
+penguins are a special subclass
+of birds, we now obtain,
+00:21:43,690 --> 00:21:46,420
+let's start with S1, we
+have Tweety is a penguin
+00:21:47,180 --> 00:21:50,540
+penguins are birds, we can
+add the rule moving down
+00:21:50,540 --> 00:21:55,440
+the stratum, the strata, we
+can add the rule if X is a
+00:21:55,440 --> 00:22:00,100
+penguin it does not fly, we
+can not then additionally
+00:22:00,100 --> 00:22:04,120
+add the rule that if If X
+is a bird, it flies, because
+00:22:04,120 --> 00:22:06,410
+we'd end up with an
+inconsistent set of formulae.
+00:22:06,520 --> 00:22:09,700
+So we now have a single
+preferred maximal consistent
+00:22:09,700 --> 00:22:13,260
+subset that contains the
+rule that X is a penguin.
+00:22:13,270 --> 00:22:16,100
+If X is a penguin, it
+does not fly, instead
+00:22:16,100 --> 00:22:19,680
+of the rule, if X is
+a bird, then X flies.
+00:22:19,980 --> 00:22:27,420
+And so from Kb2, we can no
+longer derive the consequence
+00:22:27,420 --> 00:22:31,650
+fly-tweety. in other words
+from the new preferred
+00:22:32,000 --> 00:22:35,840
+maximal consistent subset
+E we have the classical
+00:22:35,840 --> 00:22:40,280
+consequence that Tweety
+does not fly we no longer
+00:22:40,280 --> 00:22:43,980
+have the classical consequence
+that Tweety flies and
+00:22:43,980 --> 00:22:47,080
+so we obtain this non
+-monotonic consequence relation
+00:22:48,940 --> 00:22:53,000
+prior to adding that rule
+we could conclude that
+00:22:53,000 --> 00:22:55,540
+Tweety flies from the
+maximal consistent subset
+00:22:55,710 --> 00:22:59,520
+now we conclude that Twiti
+does not fly from the
+00:22:59,520 --> 00:23:02,480
+single preferred maximal
+consistent subset and
+00:23:02,480 --> 00:23:04,760
+so we obtain a non-monotonic
+consequence relation
+00:23:07,580 --> 00:23:08,660
+ok
+00:23:09,060 --> 00:23:11,820
+what if there were more
+than one preferred maximal
+00:23:11,820 --> 00:23:14,140
+consistent subset as an
+example we started with
+00:23:14,140 --> 00:23:17,320
+earlier where we had these
+six preferred maximal
+00:23:17,320 --> 00:23:22,000
+consistent subsets well in
+that case we have a choice
+00:23:22,220 --> 00:23:25,360
+we can define what is called
+a credulous consequence
+00:23:25,360 --> 00:23:31,980
+relation which basically
+says that alpha is a
+00:23:31,980 --> 00:23:36,300
+credulous non-monotonic
+consequence relation of Kb if
+00:23:36,300 --> 00:23:40,860
+and only if there is at
+least one preferred maximal
+00:23:40,860 --> 00:23:43,840
+consistent subset that
+classically entails alpha.
+00:23:45,560 --> 00:23:50,180
+okay so in this example we
+00:23:50,180 --> 00:23:53,220
+can see that well look e 1.1.3
+00:23:54,120 --> 00:24:00,500
+uh and classically entails
+a as do the next the
+00:24:00,500 --> 00:24:04,040
+three the following three
+maximal preferred subsets
+00:24:04,040 --> 00:24:07,720
+preferred maximal
+consistent subsets so a is a
+00:24:07,720 --> 00:24:12,780
+credulous consequence right
+and so are all the other
+00:24:12,780 --> 00:24:16,840
+formulae in the so all the
+so in other words all the
+00:24:16,840 --> 00:24:19,780
+consequences of the
+individual preferred maximal
+00:24:19,780 --> 00:24:23,180
+consistent subsets are
+credulous consequences notice
+00:24:23,180 --> 00:24:28,560
+that no individual
+preferred maximal consistent
+00:24:28,560 --> 00:24:32,800
+subset is inconsistent so
+falsum is not a credulous
+00:24:34,980 --> 00:24:41,080
+consequence okay we can
+also define a skeptical
+00:24:41,080 --> 00:24:43,400
+consequence consequence
+relation in fact this is the
+00:24:43,400 --> 00:24:46,000
+consequence relation that
+assumed by Krauss-Lehmann and
+00:24:46,000 --> 00:24:51,860
+Majidor in Chris's first
+lecture so a skeptical
+00:24:51,860 --> 00:24:57,100
+consequence relation says well
+alpha is a non-skeptical non
+00:24:57,100 --> 00:25:00,700
+-monotonic consequence of
+the knowledge base KB, if
+00:25:00,700 --> 00:25:04,880
+and only if alpha is
+classically entailed from every
+00:25:05,600 --> 00:25:09,100
+preferred maximal
+consistent subset.
+00:25:09,970 --> 00:25:16,300
+OK? So we can see in this
+example that, of course,
+00:25:16,300 --> 00:25:23,860
+A is not classically entailed
+from E3.1.3 or E3.2.3.
+00:25:24,560 --> 00:25:26,360
+And similarly
+00:25:26,880 --> 00:25:30,860
+negation b is not a classical
+consequence of all the
+00:25:30,860 --> 00:25:33,560
+preferred subsets in
+particular it's not a classical
+00:25:33,560 --> 00:25:40,460
+consequence of e1.1.3 and
+e1.2.3 the top two so none
+00:25:40,460 --> 00:25:44,320
+of these are skeptical
+consequences however d is
+00:25:44,320 --> 00:25:49,120
+contained in every preferred
+maximal consistent subset and
+00:25:49,120 --> 00:25:52,480
+so is a consequence of
+every single one of these
+00:25:52,480 --> 00:25:57,760
+subsets and so is a skeptical
+non-monotonic consequence
+00:26:04,410 --> 00:26:09,090
+okay so back to our penguin
+example take the first
+00:26:09,090 --> 00:26:13,270
+knowledge base kb1
+there's only one preferred
+00:26:13,270 --> 00:26:16,930
+preferred maximal consistent
+subset of kb1 it contains
+00:26:16,930 --> 00:26:21,070
+all the formulae shown
+in kb1 and of course
+00:26:21,070 --> 00:26:26,250
+therefore fly tweety is
+a both a skeptical and
+00:26:26,250 --> 00:26:29,950
+credulous consequence of
+kb1 but when we add the rule
+00:26:30,310 --> 00:26:34,110
+penguins do not fly to
+obtain a different preferred
+00:26:34,110 --> 00:26:37,610
+maximal consistent subset
+what only one of course
+00:26:37,610 --> 00:26:42,530
+containing the formula in
+s1 and s2 then we no longer
+00:26:42,530 --> 00:26:45,170
+have that fly tweety is
+a skeptical or credulous
+00:26:45,170 --> 00:26:48,610
+preferred consequence
+normatonic consequence but
+00:26:48,610 --> 00:26:53,650
+of course from the new
+preferred maximal consistent
+00:26:53,650 --> 00:26:56,970
+subset containing all of
+the formula in S1 and S2,
+00:26:56,970 --> 00:27:00,710
+we have that negation
+fly to ET is a classical
+00:27:00,710 --> 00:27:04,430
+consequence of that preferred
+subset and so is both a
+00:27:04,430 --> 00:27:08,130
+sceptical and credulous
+non-monotonic consequence.

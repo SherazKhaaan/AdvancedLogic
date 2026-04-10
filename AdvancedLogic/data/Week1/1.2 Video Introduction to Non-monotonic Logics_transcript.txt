@@ -1,0 +1,200 @@
+00:00:07,830 --> 00:00:09,230
+Suppose we are told that Tweety
+00:00:09,230 --> 00:00:12,690
+is a bird, and
+that birds can fly.
+00:00:13,450 --> 00:00:15,390
+It would seem
+reasonable enough to
+00:00:15,390 --> 00:00:17,630
+conclude, therefore,
+that Tweety can fly.
+00:00:18,550 --> 00:00:21,030
+Indeed, we could represent
+this with propositional
+00:00:21,030 --> 00:00:25,750
+logic as T implies B, B
+implies F, therefore T implies
+00:00:25,750 --> 00:00:28,710
+F, which of course is a
+valid logical consequence.
+00:00:30,310 --> 00:00:32,750
+However, if we were to
+then learn that Tweety
+00:00:32,750 --> 00:00:36,570
+is a penguin, and that
+penguins can't fly,
+00:00:36,630 --> 00:00:38,570
+then we may not be
+quite so committed
+00:00:38,570 --> 00:00:40,610
+to our conclusion
+that Tweety can fly.
+00:00:40,890 --> 00:00:43,170
+And yet, classical logics, both
+00:00:43,170 --> 00:00:45,870
+propositional and
+predicate, are monotonic.
+00:00:46,110 --> 00:00:48,670
+In other words, adding
+additional premises
+00:00:48,670 --> 00:00:50,970
+to our argument
+cannot invalidate any
+00:00:50,970 --> 00:00:52,890
+conclusions that have
+already been drawn.
+00:00:53,290 --> 00:00:56,370
+And so, if we reason about
+the world monotonically,
+00:00:56,370 --> 00:00:58,360
+or develop systems that
+reason about the world
+00:00:58,360 --> 00:01:01,550
+monotonically, then we, or
+they, would be unable to
+00:01:01,550 --> 00:01:04,670
+retract the conclusion that
+Tweety can fly, even in
+00:01:04,670 --> 00:01:07,010
+the face of additional
+information to the contrary.
+00:01:07,370 --> 00:01:09,930
+Worse still is the fact
+that introducing these
+00:01:09,930 --> 00:01:12,290
+additional premises into
+our knowledge base ends up
+00:01:12,290 --> 00:01:14,910
+poisoning the whole system,
+since we can now derive
+00:01:14,910 --> 00:01:17,930
+the contradiction that
+Tweety can and cannot fly,
+00:01:18,170 --> 00:01:21,310
+from which we can then
+derive any statement we like,
+00:01:21,310 --> 00:01:24,150
+such as that Tyrannosaurs
+make excellent accountants.
+00:01:24,430 --> 00:01:26,350
+This phenomenon is known as
+00:01:26,350 --> 00:01:27,830
+the principle of explosion.
+00:01:30,270 --> 00:01:32,290
+So what went wrong?
+00:01:33,850 --> 00:01:36,070
+Well, with the benefit
+of hindsight, we can
+00:01:36,070 --> 00:01:37,810
+perhaps identify
+that the problematic
+00:01:37,810 --> 00:01:40,790
+premise here is premise
+two, that birds can fly,
+00:01:40,790 --> 00:01:43,230
+which we now realize
+to have been false.
+00:01:45,670 --> 00:01:48,310
+It is tempting, therefore,
+to simply remove
+00:01:48,310 --> 00:01:50,010
+this premise entirely
+from our knowledge
+00:01:50,010 --> 00:01:51,810
+base on the basis
+that we don't want to
+00:01:51,810 --> 00:01:54,190
+store false premises
+in our knowledge base.
+00:01:54,870 --> 00:01:57,350
+However, this would mean
+throwing out a rule that,
+00:01:57,350 --> 00:02:00,350
+in most usual circumstances,
+is actually very useful.
+00:02:01,300 --> 00:02:03,110
+Indeed, what we
+should have said
+00:02:03,110 --> 00:02:05,430
+is that birds can usually fly.
+00:02:08,690 --> 00:02:11,430
+Non-monotonic logics
+allow us to deal with
+00:02:11,430 --> 00:02:13,670
+potentially conflicting
+information and reason
+00:02:13,670 --> 00:02:16,390
+with so-called defeasible
+inferences that usually
+00:02:16,390 --> 00:02:18,910
+hold but may fail in
+some exceptional cases.
+00:02:20,250 --> 00:02:23,990
+To emphasise the non
+-monotonicity, we use this symbol
+00:02:23,990 --> 00:02:26,430
+to denote the consequence
+relation of a non-monotonic
+00:02:26,430 --> 00:02:30,170
+logic with the intended
+interpretation that G usually
+00:02:30,170 --> 00:02:33,810
+follows from gamma or that
+gamma usually implies G.
+00:02:34,370 --> 00:02:36,470
+Where here G can be any formula
+00:02:36,470 --> 00:02:38,890
+and gamma is any
+set of formulas.
+00:02:39,950 --> 00:02:42,450
+Although throughout what
+follows we will focus on
+00:02:42,450 --> 00:02:45,110
+the case where gamma
+contains a single formula, F.
+00:02:47,470 --> 00:02:50,810
+So now the question is,
+how do we define such
+00:02:50,810 --> 00:02:52,990
+a consequence relation
+that would satisfy our
+00:02:52,990 --> 00:02:55,390
+implicit intuitions
+of what it means for a
+00:02:55,390 --> 00:02:58,010
+conclusion to usually
+follow from some premises.
+00:03:00,450 --> 00:03:02,850
+In contrast to a
+propositional and predicate
+00:03:02,850 --> 00:03:05,570
+logic, where we first
+defined a suitable semantics
+00:03:05,570 --> 00:03:07,870
+and then sought a proof
+system that was sound
+00:03:07,870 --> 00:03:09,880
+and complete with
+respect to the semantics.
+00:03:12,330 --> 00:03:15,510
+For non-monotonic logics,
+where we don't have an
+00:03:15,510 --> 00:03:17,890
+immediate notion of what
+a non-monotonic model
+00:03:17,890 --> 00:03:20,570
+should look like, it is
+more reasonable to start
+00:03:20,570 --> 00:03:23,250
+by defining a proof
+system that captures how
+00:03:23,250 --> 00:03:25,590
+we would like our consequence
+relation to behave
+00:03:26,170 --> 00:03:29,270
+and then seek a
+corresponding semantics.
+00:03:30,870 --> 00:03:33,090
+This is the approach
+that we will take here.

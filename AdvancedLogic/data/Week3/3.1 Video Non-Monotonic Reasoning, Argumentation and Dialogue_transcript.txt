@@ -1,0 +1,775 @@
+00:00:07,870 --> 00:00:11,410
+So welcome to the second
+week of lectures on non
+00:00:11,410 --> 00:00:14,930
+-monotonic reasoning,
+argumentation and dialogue.
+00:00:15,690 --> 00:00:18,870
+In this week, what we'll
+do is we'll look at
+00:00:18,870 --> 00:00:22,450
+an alternative way of
+establishing whether,
+00:00:22,890 --> 00:00:25,750
+given an argument in
+an argument framework,
+00:00:25,930 --> 00:00:31,710
+can that argument be
+said to be winning or in,
+00:00:31,710 --> 00:00:36,470
+in the grounded or a
+preferred labelling. And the
+00:00:36,470 --> 00:00:39,030
+basic idea is that we'll
+use argument game proof
+00:00:39,030 --> 00:00:44,250
+theories to establish
+whether an argument is in
+00:00:44,250 --> 00:00:46,650
+the grounded or a
+preferred labelling as an
+00:00:46,650 --> 00:00:50,430
+alternative to the labellings
+I described last week.
+00:00:51,010 --> 00:00:54,830
+and one of the
+advantages or reasons why
+00:00:54,830 --> 00:00:57,490
+we use the argument
+game proof theories
+00:00:58,090 --> 00:01:00,430
+is that actually these proof
+00:01:00,430 --> 00:01:01,890
+theories can be generalized
+00:01:02,670 --> 00:01:06,510
+to yield dialogues for
+distributed non-monotonic
+00:01:06,510 --> 00:01:10,610
+reasoning so the idea is
+that we can start to develop
+00:01:10,610 --> 00:01:14,350
+these kinds of argument
+game proof theories in such
+00:01:14,350 --> 00:01:20,070
+a way that we can have
+formal models that support
+00:01:20,070 --> 00:01:23,910
+not individual agents
+reasoning non-monotonically
+00:01:23,910 --> 00:01:29,130
+over a belief base, but
+rather having multiple agents,
+00:01:29,130 --> 00:01:33,230
+humans and AI agents
+perhaps together, or AI
+00:01:33,230 --> 00:01:37,750
+agents communicating through
+dialogue with other AI
+00:01:37,750 --> 00:01:43,530
+agents in such a way that
+they effectively reason
+00:01:43,530 --> 00:01:46,910
+together right so last week
+we looked at individual
+00:01:46,910 --> 00:01:50,370
+agents reasoning over a
+given belief base of formulas
+00:01:50,660 --> 00:01:55,090
+of course now as we see
+ai models being deployed
+00:01:55,090 --> 00:02:00,190
+more and more given recent
+advantages in ai we need
+00:02:00,190 --> 00:02:04,590
+to anticipate a time when
+we have ai like large
+00:02:04,590 --> 00:02:08,470
+language models or other AI
+agents jointly reasoning,
+00:02:08,470 --> 00:02:11,150
+collaboratively reasoning
+with other human agents.
+00:02:11,330 --> 00:02:16,710
+So that's why in some sense
+I'm going to talk in some
+00:02:16,710 --> 00:02:21,670
+detail about these argument
+game proof theories to
+00:02:22,230 --> 00:02:26,250
+then give you some idea of
+how these proof theories
+00:02:26,250 --> 00:02:30,350
+can support these kinds of
+dialogues between multiple
+00:02:30,350 --> 00:02:36,570
+agents so just a quick
+recap on last week we we
+00:02:36,570 --> 00:02:39,450
+we reviewed the idea that
+from a knowledge base you
+00:02:39,450 --> 00:02:44,230
+can construct an argument
+framework of attacks relating
+00:02:44,230 --> 00:02:48,030
+arguments use preferences
+to decide which attacks
+00:02:48,030 --> 00:02:54,170
+succeed and you thereby
+establish or can specify
+00:02:54,410 --> 00:02:57,860
+basically a directed graph
+where the nodes are arguments
+00:02:57,860 --> 00:03:00,730
+and the relations between
+the nodes are attacks.
+00:03:00,790 --> 00:03:05,410
+And then we looked
+at legal rules for
+00:03:05,410 --> 00:03:09,590
+labelling arguments in
+a given framework such
+00:03:09,590 --> 00:03:13,030
+that we can identify
+preferred labellings
+00:03:13,290 --> 00:03:15,790
+and the grounded labelling.
+00:03:17,350 --> 00:03:21,390
+So let's now look, as I
+said, at an alternative way
+00:03:21,390 --> 00:03:28,110
+of establishing whether a
+given argument is in the
+00:03:28,110 --> 00:03:31,030
+grounded labelling of a
+given argument framework,
+00:03:31,030 --> 00:03:35,790
+or whether an argument is
+in a preferred labelling.
+00:03:36,520 --> 00:03:38,710
+And the basic idea
+is as follows.
+00:03:39,410 --> 00:03:43,610
+Suppose you want to know,
+given an existing argument
+00:03:43,610 --> 00:03:46,190
+framework, suppose you
+want to know whether
+00:03:46,190 --> 00:03:50,170
+some argument X in that
+framework is in or winning
+00:03:51,910 --> 00:03:57,830
+so if the argument X is
+the one under test the
+00:03:57,830 --> 00:04:02,670
+idea is you have a
+proponent pro that moves X
+00:04:02,730 --> 00:04:07,070
+and the opponent's role
+is always to find any
+00:04:07,070 --> 00:04:10,410
+arguments that counter
+-attack pro's arguments
+00:04:10,770 --> 00:04:17,070
+okay so pro moves x the
+opponent or op then looks
+00:04:17,070 --> 00:04:20,290
+at the framework and
+sees is there an argument
+00:04:20,290 --> 00:04:25,270
+that attacks x and then
+if so moves that argument
+00:04:25,270 --> 00:04:30,350
+of course in turn pro
+also wants to look at
+00:04:30,350 --> 00:04:34,710
+the framework and attack
+any of opponent's arguments
+00:04:34,710 --> 00:04:38,670
+so as to thereby defend
+pro's own arguments
+00:04:39,990 --> 00:04:45,290
+so in this running example
+pro has moved x op moves
+00:04:45,290 --> 00:04:49,730
+some y okay then pro looks
+at the framework sees that
+00:04:49,730 --> 00:04:54,530
+there is an argument z that
+attacks y and so moves that
+00:04:54,530 --> 00:04:59,930
+argument z against y
+effectively thereby defending x
+00:04:59,930 --> 00:05:04,350
+and so on and so forth so
+op then counter attack z and
+00:05:04,350 --> 00:05:09,170
+so on the moves that each
+that proponent and opponent
+00:05:09,170 --> 00:05:13,990
+make must always be by
+reference to the given argument
+00:05:13,990 --> 00:05:18,030
+framework right so they can
+only make moves with arguments
+00:05:18,030 --> 00:05:21,690
+that actually attack the
+targets in the framework
+00:05:25,070 --> 00:05:29,890
+one more thing to notice
+if at any stage either
+00:05:29,890 --> 00:05:32,250
+player gets stuck and
+cannot move a counter
+00:05:32,250 --> 00:05:34,170
+-attack So there is no
+argument in the framework
+00:05:34,170 --> 00:05:38,250
+that legitimately attacks
+the proposed target.
+00:05:38,810 --> 00:05:43,670
+Then that player can
+always backtrack to a
+00:05:43,670 --> 00:05:46,270
+previous move and try
+an alternative attack.
+00:05:47,040 --> 00:05:49,970
+Because, of course, at
+any point in the game,
+00:05:49,970 --> 00:05:52,990
+let's say there's an
+argument X in the framework,
+00:05:52,990 --> 00:05:56,060
+and X is attacked by
+both Y and Z. right
+00:05:56,240 --> 00:06:01,530
+so op would move y but
+later on in the game op
+00:06:01,530 --> 00:06:05,070
+can backtrack and try
+the alternative move z
+00:06:06,890 --> 00:06:12,250
+so let's see how this works
+right so we've got the
+00:06:12,250 --> 00:06:16,530
+framework on the left pro
+wants to establish whether
+00:06:16,530 --> 00:06:23,570
+the argument a is winning
+or in um is in so pro moves
+00:06:23,570 --> 00:06:27,770
+a opponent op looks at
+the framework sees that b
+00:06:27,770 --> 00:06:31,790
+attacks a so moves b
+similarly pro looks at the
+00:06:31,790 --> 00:06:36,750
+framework sees that c attacks
+b moves c op then moves d
+00:06:36,750 --> 00:06:44,250
+now at this point pro has
+no possible counter attack
+00:06:44,250 --> 00:06:47,910
+to d looking at framework
+no argument attacks d but
+00:06:47,970 --> 00:06:53,750
+of course notice that
+when pro moves c against b
+00:06:53,750 --> 00:06:56,990
+there was an alternative e
+that pro could have moved
+00:06:56,990 --> 00:07:02,970
+so at this point pro
+backstracks and tries the
+00:07:02,970 --> 00:07:09,770
+alternative counter attack
+moving e again now notice at
+00:07:09,770 --> 00:07:14,710
+this point op has no possible
+counter attack against
+00:07:14,710 --> 00:07:20,500
+e given the framework but
+op can backtrack right
+00:07:20,500 --> 00:07:24,770
+and move f against a because
+when pro initially moved
+00:07:24,770 --> 00:07:30,390
+a op had a choice do i move
+b or f they tried b now
+00:07:30,390 --> 00:07:33,630
+at this point that that
+choice has been exhausted
+00:07:33,750 --> 00:07:37,670
+because pro can successfully
+counter-attack b with e
+00:07:38,110 --> 00:07:41,970
+so then op backtracks
+and moves f against a
+00:07:43,310 --> 00:07:48,570
+now pro loses this game
+because it's not the case
+00:07:48,570 --> 00:07:52,710
+that every op move is counter
+-attacked by a pro move
+00:07:52,710 --> 00:07:57,270
+in particular the op move
+f is cannot be counter
+00:07:57,270 --> 00:08:01,410
+-attacked by pro so pro loses
+the game now intuitively
+00:08:01,410 --> 00:08:04,430
+you can see how this relates
+to the labelings right
+00:08:04,430 --> 00:08:09,870
+the argument a cannot be
+winning It cannot be in because
+00:08:10,270 --> 00:08:14,350
+there is a winning in
+argument F that attacks A.
+00:08:14,670 --> 00:08:17,890
+So you can see that
+that should be fairly
+00:08:17,890 --> 00:08:21,390
+straightforward to see
+why pro loses the game.
+00:08:23,530 --> 00:08:26,630
+So if we look at this
+example, there are
+00:08:26,630 --> 00:08:28,490
+a couple of bits of
+terminology that are
+00:08:28,490 --> 00:08:30,470
+going to be important
+as we go forward.
+00:08:31,290 --> 00:08:34,810
+the whole game that
+I've just described
+00:08:35,310 --> 00:08:37,770
+is called the game tree
+00:08:38,210 --> 00:08:42,810
+of course with root A
+and leafs D, E and F
+00:08:43,330 --> 00:08:47,030
+and each path from root to leaf
+00:08:47,650 --> 00:08:49,850
+is called a dispute
+00:08:50,570 --> 00:08:53,050
+so this game tree
+consists of three
+00:08:53,050 --> 00:08:57,310
+disputes D1, the
+path from A to D
+00:08:58,190 --> 00:09:00,990
+D2, the path from A to E
+00:09:01,850 --> 00:09:06,270
+and D3, the path from A to F
+00:09:10,770 --> 00:09:13,430
+Now, that's not the whole story
+00:09:14,330 --> 00:09:17,430
+So remember, we're interested
+in establishing using
+00:09:17,430 --> 00:09:19,890
+these argument game proof
+theories whether a given
+00:09:19,890 --> 00:09:24,670
+argument is in the grounded
+or a preferred labelling but
+00:09:24,670 --> 00:09:26,390
+depending upon whether
+we're interested in the
+00:09:26,390 --> 00:09:31,570
+grounded or preferred we put
+restrictions on the moves and
+00:09:31,570 --> 00:09:35,690
+these restrictions determine
+which moves are legal
+00:09:37,870 --> 00:09:40,770
+so in the grounded game
+00:09:41,970 --> 00:09:44,930
+the restriction is on pro
+00:09:45,590 --> 00:09:49,790
+pro cannot repeat an
+argument in the same dispute
+00:09:49,790 --> 00:09:53,410
+that is in the same
+path from root to leaf
+00:09:53,410 --> 00:09:58,210
+Notice that pro can
+repeat an argument if that
+00:09:58,210 --> 00:10:01,610
+argument was used in
+another dispute, but pro
+00:10:01,610 --> 00:10:04,610
+cannot repeat an argument
+in the same dispute.
+00:10:05,030 --> 00:10:08,010
+And the flip side is
+that in a preferred game,
+00:10:08,130 --> 00:10:12,630
+op cannot repeat an argument
+in the same dispute.
+00:10:14,170 --> 00:10:17,710
+So let's see why this is
+the case. Let's explain
+00:10:17,710 --> 00:10:23,440
+the rules of the games. and
+to do this let us recall
+00:10:23,440 --> 00:10:27,050
+the argument framework
+we discussed or described
+00:10:27,050 --> 00:10:31,470
+in the last lecture now
+in this framework we
+00:10:31,470 --> 00:10:36,150
+have if you remember two
+preferred labellings ad and
+00:10:36,150 --> 00:10:39,130
+bd and the grounded
+labeling is the empty set
+00:10:39,130 --> 00:10:43,480
+there are no there's no in
+arguments intuitively the
+00:10:43,480 --> 00:10:47,090
+grounded labeling makes
+A, B, C, D all undecided
+00:10:48,230 --> 00:10:49,610
+now notice
+00:10:51,470 --> 00:10:54,030
+if you look at these
+preferred labellings if
+00:10:54,030 --> 00:10:55,820
+you look at them as
+just a set of arguments
+00:10:57,230 --> 00:10:59,990
+you have one preferred set of
+00:10:59,990 --> 00:11:02,070
+arguments A, D and another B, D
+00:11:03,570 --> 00:11:05,870
+intuitively imagine
+a discussion
+00:11:06,590 --> 00:11:09,610
+in which I move an argument A
+00:11:10,290 --> 00:11:12,910
+my opponent moves an argument B
+00:11:13,410 --> 00:11:19,050
+but i given that a also
+attacks b i can move a again
+00:11:19,050 --> 00:11:23,090
+a can sort of self
+-defend itself against b's
+00:11:23,090 --> 00:11:28,150
+attack this is what
+preferred labelings allow for
+00:11:28,150 --> 00:11:31,950
+effectively right they
+allow for arguments to self
+00:11:31,950 --> 00:11:38,740
+-defend themselves okay so
+just bear this in mind that
+00:11:38,740 --> 00:11:41,230
+that's the key intuition
+about the preferred
+00:11:41,230 --> 00:11:46,390
+versus the grounded in the
+preferred arguments can can
+00:11:46,390 --> 00:11:48,550
+self-defend themselves in
+the grounded they cannot
+00:11:49,430 --> 00:11:54,210
+okay now how does this
+flesh out in terms of the
+00:11:54,210 --> 00:12:01,730
+restrictions on moves in
+a preferred game well it
+00:12:01,730 --> 00:12:04,890
+fleshy this this kind of
+notion where pro can self
+00:12:04,890 --> 00:12:09,470
+-defend itself fleshes
+out by, in the sense that
+00:12:10,250 --> 00:12:15,770
+op cannot repeat itself in
+a dispute so essentially
+00:12:15,770 --> 00:12:20,330
+the question is why the
+rule preventing op from
+00:12:20,330 --> 00:12:24,170
+repeating an argument
+in dispute, two reasons,
+00:12:24,170 --> 00:12:27,830
+one because otherwise the
+game may go on forever
+00:12:28,670 --> 00:12:31,750
+but more importantly or
+more kind of as it were
+00:12:33,150 --> 00:12:35,330
+conceptually, the
+real conceptual reason
+00:12:35,330 --> 00:12:38,210
+is that Pro has
+already defended
+00:12:38,210 --> 00:12:41,110
+itself against Op's
+repeated argument.
+00:12:41,730 --> 00:12:45,330
+See, if Op is repeating an
+argument in the dispute,
+00:12:45,810 --> 00:12:48,350
+that means that
+the Op's argument
+00:12:48,350 --> 00:12:50,990
+must appear further
+up in the dispute,
+00:12:51,470 --> 00:12:55,030
+in which case Pro has already
+00:12:55,030 --> 00:12:57,350
+defended itself
+against Op's argument.
+00:12:58,920 --> 00:13:00,430
+So let's try to
+make this a bit more
+00:13:00,430 --> 00:13:02,310
+concrete with a
+very simple example.
+00:13:02,630 --> 00:13:05,790
+So we have the
+argument framework, in
+00:13:05,790 --> 00:13:07,850
+which a and b attack
+each other now
+00:13:08,590 --> 00:13:10,910
+intuitively there is
+a preferred labeling
+00:13:11,370 --> 00:13:14,750
+right that contains
+the argument a and a
+00:13:14,750 --> 00:13:16,730
+preferred labeling that
+contains the argument b
+00:13:17,410 --> 00:13:18,850
+but let's just look
+at the preferred
+00:13:18,850 --> 00:13:20,670
+labeling that contains
+the argument a
+00:13:21,550 --> 00:13:24,650
+right we can intuitively
+see given what i've just
+00:13:24,650 --> 00:13:27,750
+described discussed that
+a defends itself against
+00:13:27,750 --> 00:13:32,030
+b so b attacks a but a
+attacks b back and so defends
+00:13:32,030 --> 00:13:37,050
+itself now in a game if
+we did not restrict op
+00:13:37,750 --> 00:13:41,610
+okay if we just had a moving
+pro moving a op moving
+00:13:41,610 --> 00:13:45,510
+b pro moving a to defend
+itself again op moving
+00:13:45,510 --> 00:13:48,830
+b pro moving a and so
+on it will go on forever
+00:13:49,810 --> 00:13:55,290
+of course the point is
+that pro has already
+00:13:55,290 --> 00:13:59,910
+defended itself against
+b so why defend itself
+00:13:59,910 --> 00:14:03,370
+again and this pans
+out of course as i
+00:14:03,370 --> 00:14:08,380
+said by restricting op
+from moving b again so
+00:14:08,570 --> 00:14:11,190
+i think you can see
+this quite clearly now
+00:14:11,670 --> 00:14:17,350
+when i impose the rule
+preventing op from repeating
+00:14:17,350 --> 00:14:23,470
+b it's because a pro has
+already defended itself
+00:14:23,470 --> 00:14:27,110
+against b because a b appears
+further up in the dispute
+00:14:28,590 --> 00:14:31,810
+okay so that explains
+the rules the
+00:14:31,810 --> 00:14:33,890
+the basic rule of
+the preferred game
+00:14:37,030 --> 00:14:42,030
+okay and so at this point op
+is prevented from repeating
+00:14:42,030 --> 00:14:46,570
+b pro wins and there is a
+prefer and of course this
+00:14:46,570 --> 00:14:49,330
+is entirely as one would
+expect given that there is a
+00:14:49,330 --> 00:14:52,130
+preferred labeling consisting
+of just the argument A.
+00:14:54,150 --> 00:14:56,070
+What about the grounded game?
+00:14:56,690 --> 00:15:00,650
+Now, essentially, I
+think it should be
+00:15:00,650 --> 00:15:03,470
+intuitively obvious from
+this example argument
+00:15:03,470 --> 00:15:07,570
+framework, right? Because
+recall, you have two
+00:15:07,570 --> 00:15:10,330
+preferred in-labellings,
+A and D, B and D.
+00:15:11,110 --> 00:15:12,110
+Effectively,
+00:15:12,710 --> 00:15:15,230
+they're kind of the
+two horns of a dilemma,
+00:15:16,010 --> 00:15:18,130
+if you like, right? Right.
+00:15:18,330 --> 00:15:18,950
+So,
+00:15:19,250 --> 00:15:23,950
+excuse me, either,
+you know, if you
+00:15:23,950 --> 00:15:25,230
+look at this
+framework, it's really
+00:15:25,230 --> 00:15:27,210
+a choice, isn't it,
+between A and B.
+00:15:27,750 --> 00:15:29,950
+Right. So basically,
+the two preferred
+00:15:29,950 --> 00:15:33,110
+extensions indicate
+that, you know,
+00:15:33,110 --> 00:15:35,010
+if you have A as a
+winning argument,
+00:15:35,380 --> 00:15:37,110
+then also you have D.
+00:15:37,830 --> 00:15:39,970
+But alternatively, you
+could have had B as a
+00:15:39,970 --> 00:15:41,490
+winning argument, in which
+case you would have also
+00:15:41,490 --> 00:15:44,070
+had D. So you get these
+two preferred labellings.
+00:15:46,490 --> 00:15:49,310
+And you get these two
+preferred labellings
+00:15:49,310 --> 00:15:51,630
+precisely because
+arguments can defend
+00:15:51,630 --> 00:15:53,750
+themselves against
+attack. A defends itself
+00:15:53,750 --> 00:15:56,270
+against B, B defends
+itself against A.
+00:15:56,270 --> 00:15:58,590
+But in the grounded labellings,
+00:15:58,840 --> 00:16:01,290
+there's a higher
+burden of proof.
+00:16:02,530 --> 00:16:04,590
+In the grounded labellings,
+00:16:04,590 --> 00:16:06,550
+for this example in particular,
+00:16:07,030 --> 00:16:09,030
+you say, well, look, there
+is a dilemma. I'm going
+00:16:09,030 --> 00:16:11,770
+to be sceptical. I'm going
+to withhold judgment.
+00:16:12,270 --> 00:16:16,930
+So in the grounded labellings,
+the higher burden of
+00:16:16,930 --> 00:16:25,470
+proof manifests in terms of
+pro not being able to vend
+00:16:25,470 --> 00:16:29,510
+itself against attacks,
+either directly or indirectly.
+00:16:30,740 --> 00:16:35,110
+So what does that mean?
+that means that in a dispute
+00:16:35,110 --> 00:16:42,490
+pro rather than op cannot
+repeat an argument if it if
+00:16:42,490 --> 00:16:46,730
+pro did repeat an argument
+in a dispute okay it would
+00:16:46,730 --> 00:16:51,030
+be so just to recall pro
+has moved some argument x
+00:16:51,030 --> 00:16:54,270
+in a dispute further on down
+and later on in the dispute
+00:16:54,270 --> 00:16:59,370
+if pro to repeat x again
+effectively that that second
+00:16:59,370 --> 00:17:04,110
+instance of X would be
+directly or indirectly
+00:17:04,110 --> 00:17:08,290
+defending the first higher up
+instance of the argument X.
+00:17:10,210 --> 00:17:15,230
+So this is why we
+prevent pro from
+00:17:15,230 --> 00:17:17,710
+repeating an argument
+in a dispute.
+00:17:17,730 --> 00:17:20,070
+So if we look at this basic
+00:17:20,070 --> 00:17:22,450
+framework again and
+ask the question,
+00:17:23,810 --> 00:17:27,890
+is A in the grounded
+labelling pro moves A,
+00:17:27,890 --> 00:17:33,470
+op moves B now at
+this stage pro should
+00:17:33,470 --> 00:17:36,210
+not be allowed to repeat
+A and defend itself
+00:17:36,730 --> 00:17:39,210
+according to the rules
+of the grounded game
+00:17:39,770 --> 00:17:43,150
+and so the rule
+00:17:43,790 --> 00:17:46,710
+imposing that
+rule means we deny
+00:17:46,710 --> 00:17:49,750
+the pro's option of repeating A
+00:17:52,070 --> 00:17:55,770
+the argument b now has
+not been defended and
+00:17:55,770 --> 00:17:58,590
+pro loses and this is
+entirely consistent as
+00:17:58,590 --> 00:18:02,610
+i said with the grounded
+labeling um making
+00:18:02,610 --> 00:18:05,490
+no arguments in so
+it's just you know the
+00:18:05,490 --> 00:18:07,400
+The grounded labeling
+is just A is undecided,
+00:18:07,690 --> 00:18:09,450
+B is undecided.

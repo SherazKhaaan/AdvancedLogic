@@ -1,0 +1,33 @@
+Learning Objectives
+
+By the end of this week, you will be able to:
+
+LO1: Identify how to use argument game proof theories to establish whether an
+argument is in the grounded labelling of an argument framework
+LO2: Identify how to use argument game proof theories to establish whether an
+argument is in a preferred labelling of an argument framework
+LO3: Describe how argument game proof theories can be generalized to dialogues for
+distributed non-monotonic reasoning
+LO4: Describe the importance of these dialogues given recent advances in Artificial
+Intelligence
+
+Instructions
+
+Please complete the following exercises in the small group tutorial (SGT). During the LGT I will answer any questions you have. You will then work on the exercises in the LGT worksheet and we will go through the solutions.
+
+Learning Objectives
+
+By the end of this week, you will be able to:
+
+LO1: Identify how to use argument game proof theories to establish whether an
+argument is in the grounded labelling of an argument framework
+LO2: Identify how to use argument game proof theories to establish whether an
+argument is in a preferred labelling of an argument framework
+LO3: Describe how argument game proof theories can be generalized to dialogues for
+distributed non-monotonic reasoning
+LO4: Describe the importance of these dialogues given recent advances in Artificial
+Intelligence
+
+Instructions
+
+Please complete the following exercises in the small group tutorial (SGT). During the LGT I will answer any questions you have. You will then work on the exercises in the LGT worksheet and we will go through the solutions.

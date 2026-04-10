@@ -1,0 +1,255 @@
+00:00:06,650 --> 00:00:09,150
+In contrast to classical
+propositional logic,
+00:00:09,150 --> 00:00:11,890
+for non-monotonic logics,
+we start by defining
+00:00:11,890 --> 00:00:14,790
+the syntactic rules that
+we expect any reasonable
+00:00:14,790 --> 00:00:17,190
+interpretation of
+usually should follow.
+00:00:18,010 --> 00:00:20,490
+One such set of rules
+are those proposed
+00:00:20,490 --> 00:00:22,570
+by Dolph Gabbay
+and David Makinson,
+00:00:22,570 --> 00:00:24,670
+which we call the
+Gabbay-Makinson rules.
+00:00:26,950 --> 00:00:29,890
+In order to distinguish
+the sequence used here from
+00:00:29,890 --> 00:00:32,450
+the Sequent Calculus 4
+propositional logic, we
+00:00:32,450 --> 00:00:34,970
+will make a stylistic choice
+to denote the sequence
+00:00:34,970 --> 00:00:38,110
+of the Gabbay-Makinson
+rules using this symbol.
+00:00:39,310 --> 00:00:42,470
+We will also for the sake
+of simplicity focus on
+00:00:42,470 --> 00:00:44,530
+the case where we have a
+single formula appearing
+00:00:44,530 --> 00:00:46,910
+on the left-hand side
+of each of our sequence.
+00:00:48,690 --> 00:00:52,330
+Colloquially we might
+read this as F snakes G.
+00:00:55,650 --> 00:00:58,090
+As with the sequent
+calculus for propositional
+00:00:58,090 --> 00:01:00,990
+logic we have a single
+reflexivity axiom schema
+00:01:00,990 --> 00:01:03,350
+that says that we are
+always allowed to infer
+00:01:03,350 --> 00:01:06,850
+that F usually follows
+from F for any formula F.
+00:01:09,390 --> 00:01:12,310
+We also borrow the right
+conjunction rule from
+00:01:12,310 --> 00:01:15,910
+propositional logic which in
+this context says that if G
+00:01:15,910 --> 00:01:21,130
+usually follows from F and H
+also usually follows from F
+00:01:21,390 --> 00:01:26,070
+then their conjunction G and
+H usually follows from F.
+00:01:28,630 --> 00:01:32,570
+And similarly we borrow the
+left disjunction rule which
+00:01:32,570 --> 00:01:37,370
+here says that if H usually
+follows from F and H
+00:01:37,370 --> 00:01:41,650
+usually follows from G then
+it should not matter which
+00:01:41,650 --> 00:01:47,050
+of F or G is true for H to
+usually follow that is to
+00:01:47,050 --> 00:01:54,190
+say that H usually follows
+from F or G next we have
+00:01:54,190 --> 00:01:57,310
+a rule called left logical
+equivalence that says that
+00:01:57,310 --> 00:02:01,830
+if G usually follows from
+F and we also know that F
+00:02:01,830 --> 00:02:05,090
+is logically equivalent to
+H according to classical
+00:02:05,090 --> 00:02:09,890
+logic then we can infer that
+G usually follows from H.
+00:02:12,390 --> 00:02:15,430
+Strictly speaking to
+avoid mixing classical
+00:02:15,430 --> 00:02:18,230
+logic and non-monotonic
+logics the condition that
+00:02:18,230 --> 00:02:20,630
+F is logically
+equivalent to G should be
+00:02:20,630 --> 00:02:22,930
+considered as a side
+condition under which this
+00:02:22,930 --> 00:02:26,530
+rule is applicable
+but it is notationally
+00:02:26,530 --> 00:02:29,210
+convenient to write this
+as a premise to the rule.
+00:02:32,110 --> 00:02:34,630
+Similar to left
+logical equivalence, we
+00:02:34,630 --> 00:02:37,050
+have a rule called
+right weakening that
+00:02:37,050 --> 00:02:39,550
+says that if G
+usually follows from F
+00:02:40,270 --> 00:02:43,910
+and G logically implies
+H, which is to say
+00:02:43,910 --> 00:02:46,010
+that H is a logically
+weaker statement,
+00:02:46,950 --> 00:02:50,430
+then we can infer that H
+usually follows from F.
+00:02:51,710 --> 00:02:54,150
+Note that this rule
+does not require that
+00:02:54,150 --> 00:02:56,470
+G and H are logically
+equivalent, only
+00:02:56,470 --> 00:02:58,770
+that H can be classically
+inferred from G.
+00:03:02,380 --> 00:03:04,350
+We now have two
+rules that represent
+00:03:04,350 --> 00:03:06,490
+weakened forms of monotonicity.
+00:03:07,030 --> 00:03:09,190
+Cautious monotonicity says that
+00:03:09,190 --> 00:03:11,150
+if H usually follows from F,
+00:03:11,770 --> 00:03:15,270
+then H usually follows
+from F and G together,
+00:03:16,450 --> 00:03:20,150
+provided that G also
+usually follows from F.
+00:03:21,270 --> 00:03:25,390
+This rule says that in some
+sense f and g is not too
+00:03:25,390 --> 00:03:28,370
+unlikely a scenario for us
+not to be able to conclude
+00:03:28,370 --> 00:03:32,210
+h since g is usually
+present whenever f is true.
+00:03:35,290 --> 00:03:37,770
+Rational monotonicity
+on the other hand says
+00:03:37,770 --> 00:03:40,830
+that if we know that h
+usually follows from f
+00:03:41,520 --> 00:03:43,630
+then we can again
+conclude that h
+00:03:43,630 --> 00:03:46,070
+usually follows from
+f and g together
+00:03:47,130 --> 00:03:51,770
+provided that not G does
+not usually follow from F.
+00:03:53,000 --> 00:03:55,290
+Note that this rule is
+saying something quite
+00:03:55,290 --> 00:03:58,270
+different than cautious
+monotonicity since it could
+00:03:58,270 --> 00:04:02,190
+be that neither G nor not
+G usually follow from F.
+00:04:03,010 --> 00:04:05,150
+For instance, we could
+have the statement
+00:04:05,150 --> 00:04:09,010
+F being I flip a
+fair coin and G being
+00:04:09,010 --> 00:04:11,170
+the statement the
+coin lands on heads.
+00:04:11,830 --> 00:04:13,950
+then clearly we would
+not find it plausible
+00:04:13,950 --> 00:04:16,170
+to say either that g
+usually follows from
+00:04:16,170 --> 00:04:18,790
+f or that not g
+usually follows from f.
+00:04:24,640 --> 00:04:26,900
+We define proofs in the
+same way as we do for
+00:04:26,900 --> 00:04:29,300
+propositional logic as
+label trees in which
+00:04:29,300 --> 00:04:31,700
+each node of the tree
+is labeled by a rule
+00:04:32,340 --> 00:04:34,800
+such that if a
+vertex is labeled by
+00:04:34,800 --> 00:04:36,900
+an instance of a
+rule with n premises
+00:04:37,720 --> 00:04:41,300
+then that vertex has
+n children u1 to un
+00:04:41,300 --> 00:04:44,320
+such that ui is labeled
+by an instance of
+00:04:44,320 --> 00:04:47,440
+a rule whose conclusion
+is fi snakes gi.
+00:04:51,030 --> 00:04:54,620
+Finally, we say that g is
+provable or derivable from
+00:04:54,620 --> 00:04:57,440
+f in this system if there
+is some proof of the
+00:04:57,440 --> 00:05:01,300
+sequent f snakes g using only
+the Gabay-Makinson rules.
+00:05:02,580 --> 00:05:05,520
+In which case we write
+f snakes g with the
+00:05:05,520 --> 00:05:07,640
+superscript gm to
+indicate that we are
+00:05:07,640 --> 00:05:09,720
+working within the
+Gabay-Makinson system.
+00:05:10,620 --> 00:05:13,320
+However, we will
+simply write f snakes g
+00:05:13,320 --> 00:05:15,480
+if this can be
+understood from context.
